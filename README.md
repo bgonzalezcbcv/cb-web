@@ -6,7 +6,6 @@ Colegio Bilingue React Web App Repository
 
 To get started, in the root of the project run the following commands:
 
-npm install
-npm run start
+npm install && npm start
 
 Then open http://localhost:3000/ on your web browser.
