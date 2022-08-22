@@ -1,0 +1,8 @@
+.create-teachers {
+    display: grid;
+    place-items: center;
+
+    &__form {
+        gap: 3px
+    }
+}

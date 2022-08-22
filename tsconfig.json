@@ -18,7 +18,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "paths": {      
+      "@rjsf/material-ui/*": ["./node_modules/@rjsf/material-ui/dist/*"]
+    }
   },
   "include": [
     "src"

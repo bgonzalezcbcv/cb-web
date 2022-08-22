@@ -1,26 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// First we import the named libraries: React, lodash, react-router-dom, etc.
+import React from "react";
+
+// Secondly we import our types, pages, components and lastly images.
+import Teachers from "./pages/teachers/Teachers";
+
+// Lastly we import our stylesheets.
+import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		<div className="App">
+			<Teachers />
+		</div>
+	);
 }
 
 export default App;
