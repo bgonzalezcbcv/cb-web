@@ -1,12 +1,16 @@
 import React from "react";
 import { Box } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { VisualComponent } from "../../../../interfaces";
+import { VisualComponent } from "../../../../core/interfaces";
+import { DataStore } from "../../../../core/DataStore";
+import { observer } from "mobx-react-lite";
 
 interface ShowTeachersProps extends VisualComponent {}
 
-export default function ShowTeachers(props: ShowTeachersProps) {
+function ShowTeachers(props: ShowTeachersProps) {
 	const { width, height } = props;
+
+	const dataStore = DataStore.getInstance();
 
 	const columns: GridColDef[] = [
 		{ field: "id", headerName: "ID", width: 40 },
@@ -28,6 +32,12 @@ export default function ShowTeachers(props: ShowTeachersProps) {
 			width: 150,
 			editable: false,
 		},
+		{
+			field: "subjects",
+			headerName: "Materias",
+			width: 150,
+			editable: false,
+		},
 	];
 
 	const rows = [
@@ -44,7 +54,10 @@ export default function ShowTeachers(props: ShowTeachersProps) {
 	return (
 		<Box sx={{ height: height ?? "100%", width: width ?? "100%" }}>
 			<DataGrid
-				rows={rows}
+				rows={dataStore.teachers.map((teacher, index) => ({
+					id: index,
+					...teacher,
+				}))}
 				columns={columns}
 				pageSize={5}
 				rowsPerPageOptions={[5]}
@@ -55,3 +68,5 @@ export default function ShowTeachers(props: ShowTeachersProps) {
 		</Box>
 	);
 }
+
+export default observer(ShowTeachers);

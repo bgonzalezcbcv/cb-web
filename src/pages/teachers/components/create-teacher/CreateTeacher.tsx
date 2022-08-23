@@ -2,7 +2,8 @@ import React from "react";
 import Form from "@rjsf/material-ui/v5";
 import { AjvError, ISubmitEvent } from "@rjsf/core";
 
-import { VisualComponent } from "../../../../interfaces";
+import { DataStore } from "../../../../core/DataStore";
+import { Teacher, VisualComponent } from "../../../../core/interfaces";
 import schema from "./schema.json";
 import ui from "./ui.json";
 
@@ -14,8 +15,12 @@ interface CreateTeacherProps extends VisualComponent {}
 export default function CreateTeacher(props: CreateTeacherProps) {
 	const { width, height } = props;
 
+	const dataStore = DataStore.getInstance();
+
 	function onSubmit(event: ISubmitEvent<any>) {
 		console.log(event.formData);
+
+		dataStore.addTeacher(event.formData as Teacher);
 	}
 
 	function transformErrors(errors: AjvError[]) {

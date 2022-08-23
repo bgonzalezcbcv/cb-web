@@ -9,6 +9,7 @@
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -19,6 +20,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "useDefineForClassFields": true,
     "paths": {      
       "@rjsf/material-ui/*": ["./node_modules/@rjsf/material-ui/dist/*"]
     }
