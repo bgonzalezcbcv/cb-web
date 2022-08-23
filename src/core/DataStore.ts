@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { makeAutoObservable, action, reaction } from "mobx";
 
 import { Teacher } from "./interfaces";
@@ -13,8 +14,16 @@ export class DataStore {
         if (savedStateJson) {
             try {
                 const savedState = JSON.parse(savedStateJson);
+
+                const clonedState = _.cloneDeep(this);
+
                 Object.keys(this).forEach((attribute) =>
-                    this[attribute as keyof DataStore] = savedState[attribute]
+                    clonedState[attribute as keyof DataStore] = savedState[attribute]
+                )
+
+                Object.keys(this).forEach((attribute) =>
+                    /*@ts-ignore*/
+                    this[attribute as keyof DataStore] = clonedState[attribute]
                 )
             } catch (err) {
                 console.error(err);
