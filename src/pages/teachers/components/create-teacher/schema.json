@@ -19,8 +19,7 @@
       "type": "array",
       "title": "Materias",
       "items": {
-        "type": "string",
-        "default": "lorem ipsum"
+        "type": "string"
       }
     }
   },

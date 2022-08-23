@@ -44,7 +44,11 @@ export default function CreateTeacher(props: CreateTeacherProps) {
 	return (
 		<Card
 			className="create-teachers"
-			sx={{ width: width ?? "100%", height: height ?? "100%" }}>
+			sx={{
+				width: width ?? "100%",
+				height: height ?? "100%",
+				overflowY: "auto",
+			}}>
 			<CardContent>
 				<Form
 					className="create-teachers__form"
