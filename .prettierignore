@@ -1,0 +1,6 @@
+build
+config/vendors/
+node_modules/
+src/**/__snapshots__/
+package.json
+package-lock.json
