@@ -1,0 +1,10 @@
+.create-teachers {
+    display: grid;
+    place-items: center;
+
+    overflow: scroll;
+
+    &__form {
+        gap: 3px
+    }
+}

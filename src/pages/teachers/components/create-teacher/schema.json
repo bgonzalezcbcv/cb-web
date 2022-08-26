@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "title": "Crear profesor",
+  "properties": {
+    "ci": {
+      "type": "string",
+      "title": "Cedula de identidad",
+      "pattern": "\\d(\\.\\d{3}){2}-\\d"
+    },
+    "firstName": {
+      "type": "string",
+      "title": "Nombres"
+    },
+    "lastName": {
+      "type": "string",
+      "title": "Apellidos"
+    },
+    "subjects": {
+      "type": "array",
+      "title": "Materias",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "ci",
+    "firstName",
+    "lastName",
+    "subjects"
+  ]
+}
