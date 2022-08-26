@@ -3,4 +3,4 @@
 
 npx pretty-quick --staged
 npx eslint src/ --fix
-CI=true npm test
+CI=true npm test --passWithNoTests
