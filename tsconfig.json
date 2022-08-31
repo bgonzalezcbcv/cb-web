@@ -1,32 +1,26 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": false,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-    "useDefineForClassFields": true,
-    "paths": {      
-      "@rjsf/material-ui/*": ["./node_modules/@rjsf/material-ui/dist/*"]
-    }
-  },
-  "include": [
-    "src"
-  ],
-  "exclude": [".vscode", "build", "node_modules", "public"]
+	"compilerOptions": {
+		"target": "es5",
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"allowJs": false,
+		"skipLibCheck": true,
+		"esModuleInterop": true,
+		"experimentalDecorators": true,
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"noFallthroughCasesInSwitch": true,
+		"module": "esnext",
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"noEmit": true,
+		"jsx": "react-jsx",
+		"useDefineForClassFields": true,
+		"paths": {
+			"@rjsf/material-ui/*": ["./node_modules/@rjsf/material-ui/dist/*"]
+		}
+	},
+	"include": ["src", "cypress"],
+	"exclude": [".vscode", "build", "node_modules", "public"]
 }

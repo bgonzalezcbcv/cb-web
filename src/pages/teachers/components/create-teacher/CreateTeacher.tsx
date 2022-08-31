@@ -1,6 +1,6 @@
 import React from "react";
 import { AjvError, ISubmitEvent } from "@rjsf/core";
-import { Card, CardContent } from "@mui/material";
+import { Card, CardContent, Button } from "@mui/material";
 import MuiForm from "@rjsf/material-ui/v5";
 
 import { DataStore } from "../../../../core/DataStore";
@@ -50,8 +50,11 @@ export default function CreateTeacher(props: VisualComponent): React.ReactElemen
 					uiSchema={ui}
 					onSubmit={onSubmit}
 					transformErrors={transformErrors}
-					showErrorList={false}
-				/>
+					showErrorList={false}>
+					<Button id="submitNewTeacher" type="submit" variant="contained">
+						Agregar Profesor
+					</Button>
+				</MuiForm>
 			</CardContent>
 		</Card>
 	);
