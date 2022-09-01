@@ -55,7 +55,7 @@ function Login(props: VisualComponent): JSX.Element {
 							transformErrors={transformErrors}
 							showErrorList={false}>
 							<Button variant="contained" type="submit">
-								Log in!
+								Iniciar Sesión!
 							</Button>
 						</MuiForm>
 					</CardContent>
