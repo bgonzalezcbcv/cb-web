@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AjvError } from "@rjsf/core";
 import { useNavigate } from "react-router-dom";
 
@@ -9,6 +9,7 @@ import { Alert, Button, Card, CardContent, Grid } from "@mui/material";
 
 import schema from "./login-schema.json";
 import ui from "./login-ui.json";
+import { observer } from "mobx-react-lite";
 
 function Login(props: VisualComponent): JSX.Element {
 	const { width, height } = props;
@@ -19,9 +20,12 @@ function Login(props: VisualComponent): JSX.Element {
 
 	const navigate = useNavigate();
 
+	useEffect(() => {
+		dataStore.loggedUser && navigate("/");
+	}, [dataStore.loggedUser, navigate]);
+
 	function onSubmit(): void {
-		if (dataStore.logIn()) navigate("/");
-		else {
+		if (!dataStore.logIn()) {
 			setErrorAlert("Hubo un error al iniciar sesión. Intente de nuevo.");
 			setTimeout(() => setErrorAlert(undefined), 2000);
 		}
@@ -75,4 +79,4 @@ function Login(props: VisualComponent): JSX.Element {
 	);
 }
 
-export default Login;
+export default observer(Login);
