@@ -1,11 +1,11 @@
-import React from "react";
-import { AjvError, ISubmitEvent } from "@rjsf/core";
+import React, { useState } from "react";
+import { AjvError } from "@rjsf/core";
 import { useNavigate } from "react-router-dom";
 
 import { VisualComponent } from "../../core/interfaces";
 import { DataStore } from "../../core/DataStore";
 import MuiForm from "@rjsf/material-ui/v5";
-import { Button, Card, CardContent, Grid } from "@mui/material";
+import { Alert, Button, Card, CardContent, Grid } from "@mui/material";
 
 import schema from "./login-schema.json";
 import ui from "./login-ui.json";
@@ -13,13 +13,18 @@ import ui from "./login-ui.json";
 function Login(props: VisualComponent): JSX.Element {
 	const { width, height } = props;
 
+	const [errorAlert, setErrorAlert] = useState<string | undefined>(undefined);
+
 	const dataStore = DataStore.getInstance();
 
 	const navigate = useNavigate();
 
-	function onSubmit(event: ISubmitEvent<unknown>): void {
-
+	function onSubmit(): void {
 		if (dataStore.logIn()) navigate("/");
+		else {
+			setErrorAlert("Hubo un error al iniciar sesión. Intente de nuevo.");
+			setTimeout(() => setErrorAlert(undefined), 2000);
+		}
 	}
 
 	function transformErrors(errors: AjvError[]): AjvError[] {
@@ -57,6 +62,12 @@ function Login(props: VisualComponent): JSX.Element {
 								Iniciar Sesión!
 							</Button>
 						</MuiForm>
+
+						{errorAlert ? (
+							<Alert severity="error" onClose={(): void => setErrorAlert(undefined)}>
+								{errorAlert}
+							</Alert>
+						) : null}
 					</CardContent>
 				</Card>
 			</Grid>
