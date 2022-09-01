@@ -18,7 +18,6 @@ function Login(props: VisualComponent): JSX.Element {
 	const navigate = useNavigate();
 
 	function onSubmit(event: ISubmitEvent<unknown>): void {
-		console.log(event);
 
 		if (dataStore.logIn()) navigate("/");
 	}
