@@ -44,7 +44,7 @@ function Login(props: VisualComponent): JSX.Element {
 						overflowY: "auto",
 					}}>
 					<CardContent>
-						<h1>Login</h1>
+						<h1>Iniciar Sesión</h1>
 
 						<MuiForm
 							className="create-teachers__form"
