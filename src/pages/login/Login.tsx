@@ -25,7 +25,6 @@ function Login(props: VisualComponent): JSX.Element {
 	function transformErrors(errors: AjvError[]): AjvError[] {
 		return errors.map((error) => {
 			if (error.property === ".email") {
-				console.log(error);
 				error.message = "Ingrese un email correcto";
 			}
 
