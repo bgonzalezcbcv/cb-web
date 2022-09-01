@@ -1,0 +1,16 @@
+{
+	"type": "object",
+	"properties": {
+		"email": {
+			"type": "string",
+			"format": "email",
+			"title": "Correo electrónico"
+		},
+		"password": {
+			"type": "string",
+			"format": "password",
+			"title": "Constraseña"
+		}
+	},
+	"required": ["email", "password"]
+}

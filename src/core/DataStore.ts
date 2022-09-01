@@ -1,10 +1,12 @@
 import _ from "lodash";
 import { makeAutoObservable, action, reaction } from "mobx";
 
-import { Teacher } from "./interfaces";
+import { User, Teacher } from "./interfaces";
 
 export class DataStore {
 	private static instance: DataStore;
+
+	public loggedUser: User | null = null;
 
 	public teachers: Teacher[] = [];
 
@@ -37,6 +39,22 @@ export class DataStore {
 		if (!DataStore.instance) DataStore.instance = new DataStore();
 
 		return this.instance;
+	}
+
+	// todo: need to implement this function.
+	@action
+	public logIn(): boolean {
+		this.loggedUser = {
+			email: "testingEmail@xmail.test",
+			token: "notAToken",
+		};
+
+		return true;
+	}
+
+	@action
+	public logOut(): void {
+		this.loggedUser = null;
 	}
 
 	@action
