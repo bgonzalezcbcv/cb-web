@@ -54,7 +54,6 @@ function CSVUploader(props: VisualComponent): React.ReactElement {
 
 		setRows(rowsJson);
 
-		console.log(rowsJson);
 	}
 
 	function handleOnClickUpload(event: React.ChangeEvent<HTMLInputElement>): void {
