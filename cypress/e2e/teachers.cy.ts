@@ -1,12 +1,14 @@
-describe("new teacher", () => {
+describe("Teachers", () => {
 	beforeEach(() => {
 		cy.login();
-		cy.wait(100);
+
+		cy.wait(500);
+
 		cy.visit("/teachers");
-		cy.get("#root_firstName");
 	});
+
 	it("loads page", () => {
-		cy.get(".App");
+		cy.get("#root_firstName").should("be.visible");
 	});
 
 	it("can type on fields and add subject", () => {

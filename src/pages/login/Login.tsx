@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { AjvError } from "@rjsf/core";
 import { useNavigate } from "react-router-dom";
+import { observer } from "mobx-react-lite";
 
 import { VisualComponent } from "../../core/interfaces";
 import { DataStore } from "../../core/DataStore";
+import { useIsMounted } from "../../hooks/useIsMounted";
 import MuiForm from "@rjsf/material-ui/v5";
 import { Alert, Button, Card, CardContent, Grid } from "@mui/material";
 
 import schema from "./login-schema.json";
 import ui from "./login-ui.json";
-import { observer } from "mobx-react-lite";
 
 function Login(props: VisualComponent): JSX.Element {
 	const { width, height } = props;
 
 	const [errorAlert, setErrorAlert] = useState<string | undefined>(undefined);
+
+	const [isMounted] = useIsMounted();
 
 	const dataStore = DataStore.getInstance();
 
@@ -41,6 +44,8 @@ function Login(props: VisualComponent): JSX.Element {
 		});
 	}
 
+	if (!isMounted) return <></>;
+
 	return (
 		<Grid container alignContent="center" justifyContent="center" height="100%" style={{ background: "#8ea8d9" }}>
 			<Grid item height="fitcontent">
@@ -62,7 +67,7 @@ function Login(props: VisualComponent): JSX.Element {
 							onError={(error): void => console.log(error)}
 							transformErrors={transformErrors}
 							showErrorList={false}>
-							<Button variant="contained" type="submit">
+							<Button id="login-submit" variant="contained" type="submit">
 								Iniciar Sesión!
 							</Button>
 						</MuiForm>
