@@ -21,9 +21,6 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "useDefineForClassFields": true,
-    "paths": {      
-      "@rjsf/material-ui/*": ["./node_modules/@rjsf/material-ui/dist/*"]
-    }
   },
   "include": [
     "src"
