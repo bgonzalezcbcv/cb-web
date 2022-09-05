@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import * as XLSX from "xlsx";
 
-import { VisualComponent } from "../../../../core/interfaces";
+import { VisualComponent } from "../../core/interfaces";
+import { processXLSXtoJSON } from "../../core/CoreHelper";
 import { Card, Grid } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
@@ -45,27 +45,16 @@ function CSVUploader(props: VisualComponent): React.ReactElement {
 		{ field: "nombres", headerName: "Nombres", width: 150 },
 	];
 
-	async function handleFileUpload(file: File): Promise<void> {
-		const data = await file.arrayBuffer();
-
-		const workbook = XLSX.read(data);
-
-		const rowsJson = XLSX.utils.sheet_to_json<Alumno>(workbook.Sheets[workbook.SheetNames[0]]);
-
-		setRows(rowsJson);
-
-	}
-
-	function handleOnClickUpload(event: React.ChangeEvent<HTMLInputElement>): void {
+	async function handleOnClickUpload(event: React.ChangeEvent<HTMLInputElement>): Promise<void> {
 		event.preventDefault();
 
 		const file = event.target.files?.[0];
 
 		if (!file) return;
-		else handleFileUpload(file);
+		else setRows(await processXLSXtoJSON<Alumno>(file));
 	}
 
-	function handleOnDropUpload(event: React.DragEvent<HTMLDivElement>): void {
+	async function handleOnDropUpload(event: React.DragEvent<HTMLDivElement>): Promise<void> {
 		event.preventDefault();
 		event.stopPropagation();
 
@@ -74,7 +63,7 @@ function CSVUploader(props: VisualComponent): React.ReactElement {
 		const file = event.dataTransfer.files?.[0];
 
 		if (!file) return;
-		else handleFileUpload(file);
+		else setRows(await processXLSXtoJSON<Alumno>(file));
 	}
 
 	return (

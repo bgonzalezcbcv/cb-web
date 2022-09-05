@@ -7,7 +7,7 @@ import { observer } from "mobx-react-lite";
 import { DataStore } from "./core/DataStore";
 import Login from "./pages/login/Login";
 import Teachers from "./pages/teachers/Teachers";
-import CSVUploader from "./pages/teachers/components/csv-uploader/CSVUploader";
+import CSVUploader from "./components/csv-uploader/CSVUploader";
 
 // Lastly we import our stylesheets.
 import "./App.css";
