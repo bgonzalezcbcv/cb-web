@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { JsonForms } from "@jsonforms/react";
+import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
+import { Alert, Button, Card, CardContent, Grid } from "@mui/material";
 import { VisualComponent } from "../../core/interfaces";
 import { DataStore } from "../../core/DataStore";
-import { Alert, Button, Card, CardContent, Grid } from "@mui/material";
 
 import schema from "./login-schema.json";
 import ui from "./login-ui.json";
-import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
-import { JsonForms } from "@jsonforms/react";
 
 function Login(props: VisualComponent): JSX.Element {
 	const { width, height } = props;
@@ -44,11 +44,11 @@ function Login(props: VisualComponent): JSX.Element {
 							data={data}
 							renderers={materialRenderers}
 							cells={materialCells}
-							onChange={({data}):void => setData(data)}
+							onChange={({ data }): void => setData(data)}
 						/>
-							<Button variant="contained" onClick={onSubmit}>
-								Iniciar Sesión!
-							</Button>
+						<Button variant="contained" onClick={onSubmit}>
+							Iniciar Sesión!
+						</Button>
 						{errorAlert ? (
 							<Alert severity="error" onClose={(): void => setErrorAlert(undefined)}>
 								{errorAlert}

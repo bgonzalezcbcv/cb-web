@@ -1,150 +1,151 @@
 import React, { useState } from "react";
 
-import { JsonForms } from '@jsonforms/react';
+import { JsonForms } from "@jsonforms/react";
+import { JsonSchema7, Translator } from "@jsonforms/core";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
-import { Translator } from "@jsonforms/core";
 
-const schema = {
-	type: 'object',
+const schema: JsonSchema7 = {
+	type: "object",
 	properties: {
 		nombres: {
-			type: 'string',
+			type: "string",
 			minLength: 1,
 		},
 		apellidos: {
-			type: 'string',
+			type: "string",
 			minLength: 1,
 		},
 		ci: {
-			type: 'string',
+			type: "string",
 			minLength: 1,
 		},
 		clase: {
-			type: 'string',
+			type: "string",
 			minLength: 0,
 		},
 		subgrupo: {
-			type: 'string',
+			type: "string",
 			minLength: 0,
 		},
 		matricula: {
-			type: 'number',
+			type: "number",
 		},
 		nroReferencia: {
-			type: 'number',
+			type: "number",
 		},
 		lugarNacimiento: {
-			type: 'string',
+			type: "string",
 		},
 		nacionalidad: {
-			type: 'string',
+			type: "string",
 		},
 		lenguaMaterna: {
-			type: 'string',
+			type: "string",
 		},
 		direccion: {
-			type: 'string',
+			type: "string",
 		},
 		barrio: {
-			type: 'string',
+			type: "string",
 		},
 		coberturaMedica: {
-			type: 'string',
+			type: "string",
 		},
 		emergencia: {
-			type: 'string',
+			type: "string",
 		},
 		vacunas: {
-			type: 'string',
+			type: "string",
 		},
 	},
-	required: ['names'],
+	required: ["names"],
 };
+
 const uischema = {
-	"type": "VerticalLayout",
-	"elements": [
+	type: "VerticalLayout",
+	elements: [
 		{
-			"type": "HorizontalLayout",
-			"elements": [
+			type: "HorizontalLayout",
+			elements: [
 				{
-					"type": "Control",
-					"scope": "#/properties/nombres"
+					type: "Control",
+					scope: "#/properties/nombres",
 				},
 				{
-					"type": "Control",
-					"scope": "#/properties/apellidos"
+					type: "Control",
+					scope: "#/properties/apellidos",
 				},
-			]
+			],
 		},
 		{
-			"type": "Control",
-			"scope": "#/properties/ci"
+			type: "Control",
+			scope: "#/properties/ci",
 		},
 		{
-			"type": "HorizontalLayout",
-			"elements": [
+			type: "HorizontalLayout",
+			elements: [
 				{
-					"type": "Control",
-					"scope": "#/properties/clase"
+					type: "Control",
+					scope: "#/properties/clase",
 				},
 				{
-					"type": "Control",
-					"scope": "#/properties/subgrupo"
+					type: "Control",
+					scope: "#/properties/subgrupo",
 				},
 				{
-					"type": "Control",
-					"scope": "#/properties/matricula"
+					type: "Control",
+					scope: "#/properties/matricula",
 				},
-			]
+			],
 		},
 		{
-			"type": "HorizontalLayout",
-			"elements": [
+			type: "HorizontalLayout",
+			elements: [
 				{
-					"type": "Control",
-					"scope": "#/properties/lugarNacimiento"
+					type: "Control",
+					scope: "#/properties/lugarNacimiento",
 				},
 				{
-					"type": "Control",
-					"scope": "#/properties/nacionalidad"
+					type: "Control",
+					scope: "#/properties/nacionalidad",
 				},
 				{
-					"type": "Control",
-					"scope": "#/properties/lenguaMaterna"
+					type: "Control",
+					scope: "#/properties/lenguaMaterna",
 				},
-			]
+			],
 		},
 		{
-			"type": "HorizontalLayout",
-			"elements": [
+			type: "HorizontalLayout",
+			elements: [
 				{
-					"type": "Control",
-					"scope": "#/properties/direccion"
+					type: "Control",
+					scope: "#/properties/direccion",
 				},
 				{
-					"type": "Control",
-					"scope": "#/properties/barrio"
+					type: "Control",
+					scope: "#/properties/barrio",
 				},
-			]
+			],
 		},
 		{
-			"type": "HorizontalLayout",
-			"elements": [
+			type: "HorizontalLayout",
+			elements: [
 				{
-					"type": "Control",
-					"scope": "#/properties/coberturaMedica"
+					type: "Control",
+					scope: "#/properties/coberturaMedica",
 				},
 				{
-					"type": "Control",
-					"scope": "#/properties/emergencia"
+					type: "Control",
+					scope: "#/properties/emergencia",
 				},
-			]
+			],
 		},
 		{
-			"type": "Control",
-			"scope": "#/properties/vacunas"
+			type: "Control",
+			scope: "#/properties/vacunas",
 		},
-]
+	],
 };
 
 const initialData = {};
@@ -153,22 +154,20 @@ export default function StudentForm(): React.ReactElement {
 	const [data, setData] = useState(initialData);
 
 	const translator = (id: string, defaultMessage: string | undefined): string => {
-		console.log(`Key: ${id}, Default Message: ${defaultMessage}`);
-
-		if(id.includes('nombres.error')) return "Pone un nombre mas largo :C"
-		return defaultMessage ?? 'lmao';
+		if (id.includes("nombres.error")) return "Ingresar nombre/s";
+		return defaultMessage ?? "Error";
 	};
 
 	return (
 		<div>
 			<JsonForms
-				i18n={{translate: translator as Translator} }
+				i18n={{ translate: translator as Translator }}
 				schema={schema}
 				uischema={uischema}
 				data={data}
 				renderers={materialRenderers}
 				cells={materialCells}
-				onChange={({data}):void => setData(data)}
+				onChange={({ data }): void => setData(data)}
 			/>
 		</div>
 	);
