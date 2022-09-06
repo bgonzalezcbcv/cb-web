@@ -1,17 +1,19 @@
 import React, { useState } from "react";
-import { AjvError } from "@rjsf/core";
 import { useNavigate } from "react-router-dom";
 
+import { JsonForms } from "@jsonforms/react";
+import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
+import { Alert, Button, Card, CardContent, Grid } from "@mui/material";
 import { VisualComponent } from "../../core/interfaces";
 import { DataStore } from "../../core/DataStore";
-import MuiForm from "@rjsf/material-ui/v5";
-import { Alert, Button, Card, CardContent, Grid } from "@mui/material";
 
 import schema from "./login-schema.json";
 import ui from "./login-ui.json";
 
 function Login(props: VisualComponent): JSX.Element {
 	const { width, height } = props;
+
+	const [data, setData] = useState({});
 
 	const [errorAlert, setErrorAlert] = useState<string | undefined>(undefined);
 
@@ -21,20 +23,6 @@ function Login(props: VisualComponent): JSX.Element {
 
 	function onSubmit(): void {
 		if (dataStore.logIn()) navigate("/");
-		else {
-			setErrorAlert("Hubo un error al iniciar sesión. Intente de nuevo.");
-			setTimeout(() => setErrorAlert(undefined), 2000);
-		}
-	}
-
-	function transformErrors(errors: AjvError[]): AjvError[] {
-		return errors.map((error) => {
-			if (error.property === ".email") {
-				error.message = "Ingrese un email correcto";
-			}
-
-			return error;
-		});
 	}
 
 	return (
@@ -50,19 +38,17 @@ function Login(props: VisualComponent): JSX.Element {
 					<CardContent>
 						<h1>Iniciar Sesión</h1>
 
-						<MuiForm
-							className="create-teachers__form"
-							schema={schema as Record<string, unknown>}
-							uiSchema={ui}
-							onSubmit={onSubmit}
-							onError={(error): void => console.log(error)}
-							transformErrors={transformErrors}
-							showErrorList={false}>
-							<Button variant="contained" type="submit">
-								Iniciar Sesión!
-							</Button>
-						</MuiForm>
-
+						<JsonForms
+							schema={schema}
+							uischema={ui}
+							data={data}
+							renderers={materialRenderers}
+							cells={materialCells}
+							onChange={({ data }): void => setData(data)}
+						/>
+						<Button variant="contained" onClick={onSubmit}>
+							Iniciar Sesión!
+						</Button>
 						{errorAlert ? (
 							<Alert severity="error" onClose={(): void => setErrorAlert(undefined)}>
 								{errorAlert}
