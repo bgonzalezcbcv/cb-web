@@ -1,27 +1,31 @@
 describe("Login", () => {
+	const emailFieldID = "#\\#\\/properties\\/email2-input";
+	const passwordFieldID = "#\\#\\/properties\\/password2-input";
+	const loginButtonID = ".MuiButton-root";
+
 	beforeEach(() => {
 		cy.visit("/login");
 	});
 
 	it("can login", () => {
-		cy.get("#root_email").type("aa@a.a");
-		cy.get("#root_password").type("password");
-		cy.get("#login-submit").click();
+		cy.get(emailFieldID).type("aa@a.a");
+		cy.get(passwordFieldID).type("password");
+		cy.get(loginButtonID).click();
 
 		cy.url().should("not.include", "/login");
 	});
 
 	it("cannot login with wrong email", () => {
-		cy.get("#root_email").type("@notEmail.com");
-		cy.get("#root_password").type("password");
-		cy.get("#login-submit").click();
+		cy.get(emailFieldID).type("@notEmail.com");
+		cy.get(passwordFieldID).type("password");
+		cy.get(loginButtonID).click();
 
 		cy.url().should("include", "/login");
 	});
 
-	it("cannot login without introducing password", () => {
-		cy.get("#root_email").type("@notEmail.com");
-		cy.get("#login-submit").click();
+	it("cannot login without inputting password", () => {
+		cy.get(emailFieldID).type("@notEmail.com");
+		cy.get(loginButtonID).click();
 
 		cy.url().should("include", "/login");
 	});
