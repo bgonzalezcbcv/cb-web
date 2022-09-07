@@ -2,6 +2,10 @@
 	"type": "VerticalLayout",
 	"elements": [
 		{
+			"type": "Control",
+			"scope": "#/properties/ci"
+		},
+		{
 			"type": "HorizontalLayout",
 			"elements": [
 				{

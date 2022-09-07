@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Card, CardContent } from "@mui/material";
 
 import { JsonForms } from "@jsonforms/react";
-import { JsonSchema7 } from "@jsonforms/core";
+import { JsonSchema7, ValidationMode } from "@jsonforms/core";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
 import { DataStore } from "../../../../core/DataStore";
 import { Teacher, VisualComponent } from "../../../../core/interfaces";
@@ -20,8 +20,16 @@ export default function CreateTeacher(props: VisualComponent): React.ReactElemen
 	const dataStore = DataStore.getInstance();
 
 	const [data, setData] = useState(initialData);
+	const [errors, setErrors] = useState<unknown[]>([]);
+	const [validationMode, setValidationMode] = useState<ValidationMode>("ValidateAndHide");
 
-	function handleOnClick(): void {
+	function handleOnSubmit(): void {
+		setValidationMode("ValidateAndShow");
+
+		console.log(data, errors);
+
+		if (errors.length > 0) return;
+
 		dataStore.addTeacher(data as Teacher);
 	}
 
@@ -41,11 +49,15 @@ export default function CreateTeacher(props: VisualComponent): React.ReactElemen
 						data={data}
 						renderers={materialRenderers}
 						cells={materialCells}
-						onChange={({ data }): void => setData(data)}
+						onChange={({ errors, data }): void => {
+							setErrors(errors ?? []);
+							setData(data);
+						}}
+						validationMode={validationMode}
 					/>
 				</CardContent>
 
-				<Button onClick={handleOnClick}>Agregar</Button>
+				<Button onClick={handleOnSubmit}>Agregar</Button>
 			</Card>
 		</div>
 	);

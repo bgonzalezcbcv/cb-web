@@ -3,13 +3,17 @@
 	"properties": {
 		"email": {
 			"type": "string",
+			"title": "Correo electrónico",
 			"format": "email",
-			"title": "Correo electrónico"
+			"minLength": 6,
+			"maxLength": 127
 		},
 		"password": {
 			"type": "string",
+			"title": "Constraseña",
 			"format": "password",
-			"title": "Constraseña"
+			"minLength": 6,
+			"maxLength": 127
 		}
 	},
 	"required": ["email", "password"]

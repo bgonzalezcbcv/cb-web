@@ -11,7 +11,7 @@
 //
 //
 // -- This is a parent command --
-Cypress.Commands.add("login", (email = "a@a.a", password = "password") => {
+Cypress.Commands.add("login", (email = "aa@a.a", password = "password") => {
 	const emailFieldID = "#\\#\\/properties\\/email2-input";
 	const passwordFieldID = "#\\#\\/properties\\/password2-input";
 	const loginButtonID = ".MuiButton-root";
@@ -20,6 +20,8 @@ Cypress.Commands.add("login", (email = "a@a.a", password = "password") => {
 	cy.wait(100);
 	cy.get(emailFieldID).type(email);
 	cy.get(passwordFieldID).type(password);
+	cy.wait(1000);
+
 	cy.get(loginButtonID).click();
 });
 //

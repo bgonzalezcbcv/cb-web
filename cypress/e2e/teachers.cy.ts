@@ -1,4 +1,5 @@
 describe("Teachers", () => {
+	const teacherCIInputID = "#\\#\\/properties\\/ci2-input";
 	const teacherFirstNameInputID = "#\\#\\/properties\\/firstName2-input";
 	const teacherLastNameInputID = "#\\#\\/properties\\/lastName2-input";
 	const addSubjectButtonID = ".MuiTableCell-alignRight > .MuiButtonBase-root";
@@ -13,7 +14,7 @@ describe("Teachers", () => {
 	beforeEach(() => {
 		cy.login();
 
-		cy.wait(500);
+		cy.wait(300);
 
 		cy.visit("/teachers");
 	});
@@ -31,6 +32,7 @@ describe("Teachers", () => {
 	});
 
 	it("can add teacher successfully and it is added to the list", () => {
+		cy.get(teacherCIInputID).type("1.111.111-7");
 		cy.get(teacherFirstNameInputID).type("Roberto Rigoberto");
 		cy.get(teacherLastNameInputID).type("Rodriguez Ramos");
 		cy.get(addSubjectButtonID).click();

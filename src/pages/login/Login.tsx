@@ -11,11 +11,14 @@ import { useIsMounted } from "../../hooks/useIsMounted";
 
 import schema from "./login-schema.json";
 import ui from "./login-ui.json";
+import { ValidationMode } from "@jsonforms/core";
 
 function Login(props: VisualComponent): JSX.Element {
 	const { width, height } = props;
 
 	const [data, setData] = useState({});
+	const [errors, setErrors] = useState<unknown[]>([]);
+	const [validationMode, setValidationMode] = useState<ValidationMode>("ValidateAndHide");
 
 	const [errorAlert, setErrorAlert] = useState<string | undefined>(undefined);
 
@@ -30,6 +33,10 @@ function Login(props: VisualComponent): JSX.Element {
 	}, [dataStore.loggedUser, navigate]);
 
 	function onSubmit(): void {
+		setValidationMode("ValidateAndShow");
+
+		if (errors.length > 0) return;
+
 		if (!dataStore.logIn()) {
 			setErrorAlert("Hubo un error al iniciar sesión. Intente de nuevo.");
 			setTimeout(() => setErrorAlert(undefined), 2000);
@@ -57,11 +64,17 @@ function Login(props: VisualComponent): JSX.Element {
 							data={data}
 							renderers={materialRenderers}
 							cells={materialCells}
-							onChange={({ data }): void => setData(data)}
+							onChange={({ errors, data }): void => {
+								setErrors(errors ?? []);
+								setData(data);
+							}}
+							validationMode={validationMode}
 						/>
+
 						<Button variant="contained" onClick={onSubmit}>
 							Iniciar Sesión!
 						</Button>
+
 						{errorAlert ? (
 							<Alert severity="error" onClose={(): void => setErrorAlert(undefined)}>
 								{errorAlert}
