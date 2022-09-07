@@ -1,9 +1,10 @@
 import React from "react";
-import { Box } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { observer } from "mobx-react-lite";
+
 import { VisualComponent } from "../../../../core/interfaces";
 import { DataStore } from "../../../../core/DataStore";
-import { observer } from "mobx-react-lite";
+import { Box } from "@mui/material";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 function ShowTeachers(props: VisualComponent): React.ReactElement {
 	const { width, height } = props;

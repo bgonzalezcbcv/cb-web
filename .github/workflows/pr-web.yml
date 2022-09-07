@@ -1,27 +1,26 @@
 name: React PR Pipeline
 
-on: 
-  pull_request:
-      branches: [ "develop" ]
+on:
+    pull_request:
+        branches: ["develop"]
 
 jobs:
-  test:
+    test:
+        runs-on: ubuntu-latest
 
-    runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [16.x]
 
-    strategy:
-      matrix:
-        node-version: [16.x]
-
-    steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm install --force
-    - run: npx pretty-quick --staged
-    - run: npx eslint src/ --fix
-    - run: npm run build --if-present
-    - run: npm test -- --coverage --passWithNoTests
+        steps:
+            - uses: actions/checkout@v3
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: "npm"
+            - run: npm install --force
+            - run: npx pretty-quick --staged
+            - run: npx eslint src/ --fix
+            - run: npm run build --if-present
+            - run: npm test -- --coverage --passWithNoTests

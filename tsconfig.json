@@ -16,10 +16,7 @@
 		"isolatedModules": true,
 		"noEmit": true,
 		"jsx": "react-jsx",
-		"useDefineForClassFields": true,
-		"paths": {
-			"@rjsf/material-ui/*": ["./node_modules/@rjsf/material-ui/dist/*"]
-		}
+		"useDefineForClassFields": true
 	},
 	"include": ["src", "cypress"],
 	"exclude": [".vscode", "build", "node_modules", "public"]

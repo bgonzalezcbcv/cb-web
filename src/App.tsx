@@ -11,6 +11,7 @@ import CSVUploader from "./pages/teachers/components/csv-uploader/CSVUploader";
 
 // Lastly we import our stylesheets.
 import "./App.css";
+import StudentForm from "./pages/studentForm/StudentForm";
 
 function App(): React.ReactElement {
 	const loggedUser = DataStore.getInstance().loggedUser;
@@ -22,6 +23,7 @@ function App(): React.ReactElement {
 					{loggedUser ? (
 						<>
 							<Route path="/teachers" element={<Teachers />} />
+							<Route path="/studentform" element={<StudentForm />} />
 							<Route path="/CSVUploader" element={<CSVUploader />} />
 							<Route path="/login" element={<Login />} />
 							<Route path="*" element={<Teachers />} />
