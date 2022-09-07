@@ -1,13 +1,36 @@
 #root {
-  height: auto;
-  min-height: 100vh;
+	height: auto;
+	min-height: 100vh;
 }
 
 .App {
-  display: grid;
-  place-items: center;
-  text-align: center;
+	display: flex;
+	flex: 1;
+	text-align: center;
+	min-height: 100vh;
+}
 
-  height: auto;
-    min-height: 100vh;
+.sidebar {
+	display: flex;
+	flex: 1;
+	margin-right: 50px;
+}
+
+.navbar {
+	display: flex;
+	flex-direction: row;
+	width: "100%";
+}
+
+.content {
+	display: flex;
+	flex: 1;
+	padding: 10px;
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	flex: 1;
 }
