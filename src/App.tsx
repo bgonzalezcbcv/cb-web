@@ -25,9 +25,7 @@ function App(): React.ReactElement {
 		<div className="App">
 			<BrowserRouter>
 				<div className="container">
-					<div className="navbar">
-						<Navbar></Navbar>
-					</div>
+					<div className="navbar">{loggedUser && <Navbar />}</div>
 					<div className="content">
 						{loggedUser?.role && <Sidebar sections={sidebarSections} />}
 
