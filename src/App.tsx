@@ -46,6 +46,7 @@ function App(): React.ReactElement {
 										<Route path="/teachers" element={<Teachers />} />
 										<Route path="/studentform" element={<StudentForm />} />
 										<Route path="/CSVUploader" element={<CSVUploader />} />
+										<Route path="/login" element={<Login />} />
 										<Route path="*" element={<Teachers />} />
 									</>
 								) : (
