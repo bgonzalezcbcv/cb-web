@@ -1,0 +1,43 @@
+{
+	"type": "VerticalLayout",
+	"elements": [
+		{
+			"type": "HorizontalLayout",
+			"elements": [
+				{
+					"type": "Control",
+					"scope": "#/properties/type"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/firstName"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/lastName"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/ci"
+				}
+			]
+		},
+		{
+			"type": "HorizontalLayout",
+			"elements": [
+				{
+					"type": "Control",
+					"scope": "#/properties/country"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/nationality"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/language"
+				}
+			]
+		}
+	]
+}

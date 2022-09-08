@@ -1,0 +1,126 @@
+{
+	"type": "object",
+	"title": "Editar responsable",
+	"properties": {
+		"type": {
+			"oneOf": [
+				{
+					"const": "mother",
+					"title": "Madre"
+				},
+				{
+					"const": "father",
+					"title": "Padre"
+				},
+				{
+					"const": "guardian",
+					"title": "Tutor"
+				}
+			],
+			"title": "Cedula de identidad",
+			"pattern": "\\d(\\.\\d{3}){2}-\\d"
+		},
+		"firstName": {
+			"type": "string",
+			"title": "Nombres"
+		},
+		"lastName": {
+			"type": "string",
+			"title": "Apellidos"
+		},
+		"country": {
+			"type": "string",
+			"title": "País de nacimiento"
+		},
+		"nationality": {
+			"type": "string",
+			"title": "Nacionalidad"
+		},
+		"language": {
+			"type": "string",
+			"title": "Lengua materna"
+		},
+		"ci": {
+			"type": "string",
+			"title": "Cedula de identidad",
+			"pattern": "\\d(\\.\\d{3}){2}-\\d"
+		},
+		"maritalStatus": {
+			"oneOf": [
+				{
+					"const": "single",
+					"title": "Soltero/a"
+				},
+				{
+					"const": "married",
+					"title": "Casado/a"
+				},
+				{
+					"const": "widow",
+					"title": "Viudo/a"
+				}
+			],
+			"type": "string",
+			"title": "Estado civil"
+		},
+		"cellphone": {
+			"type": "int",
+			"title": "Teléfono celular"
+		},
+		"mail": {
+			"type": "string",
+			"title": "E-mail",
+			"pattern": "\\[a-zA-Z]+\\@."
+		},
+		"address": {
+			"type": "string",
+			"title": "Dirección"
+		},
+		"neighborhood": {
+			"type": "string",
+			"title": "Barrio de residencia"
+		},
+		"education": {
+			"oneOf": [
+				{
+					"const": "none",
+					"title": "Ninguno"
+				},
+				{
+					"const": "school",
+					"title": "Primaria"
+				},
+				{
+					"const": "highSchool",
+					"title": "Secundaria"
+				},
+				{
+					"const": "tertiary",
+					"title": "Terciario"
+				}
+			],
+			"title": "Nivel educativo"
+		},
+		"work": {
+			"type": "string",
+			"title": "Trabajo-Ocupación"
+		},
+		"company": {
+			"type": "string",
+			"title": "Empresa de trabajo"
+		},
+		"workAddress": {
+			"type": "string",
+			"title": "Dirección laboral"
+		},
+		"workNeighborhood": {
+			"type": "string",
+			"title": "Barrio laboral"
+		},
+		"workPhone": {
+			"type": "int",
+			"title": "Teléfono laboral"
+		}
+	},
+	"required": ["type", "ci"]
+}
