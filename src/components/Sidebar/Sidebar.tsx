@@ -2,7 +2,7 @@ import React from "react";
 import { NavigateOptions, useNavigate } from "react-router-dom";
 
 import Drawer from "@mui/material/Drawer";
-import { Accordion, AccordionDetails, AccordionSummary, createTheme, List, ListItem, ListItemButton, ListItemText, ThemeProvider } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, createTheme, List, ListItem, ListItemButton, ListItemText, ThemeProvider } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import "./Sidebar.scss";
@@ -40,7 +40,7 @@ function renderSections(sections: SidebarSection[]): React.ReactElement {
 									const { navigationRoute, navigationParams } = item;
 
 									return (
-										<ListItem key={item.title} className="section-item" sx={{ paddingY: 0 }}>
+										<ListItem key={item.title} className="section-item" sx={{ paddingY: 0 }} divider={true}>
 											<ListItemButton onClick={(): void => navigate(navigationRoute, navigationParams)}>
 												<ListItemText primary={item.title} sx={{ textAlign: "center" }} />
 											</ListItemButton>
@@ -63,7 +63,9 @@ function Sidebar(props: SidebarProps): React.ReactElement {
 		components: {
 			MuiAccordion: {
 				styleOverrides: {
-					root: { marginY: 0 },
+					root: {
+						marginY: 0,
+					},
 				},
 			},
 			MuiAccordionSummary: {
@@ -100,7 +102,7 @@ function Sidebar(props: SidebarProps): React.ReactElement {
 
 	return (
 		<ThemeProvider theme={theme}>
-			<div>
+			<Box sx={{ boxShadow: 8 }}>
 				<Drawer //
 					className="sidebar-container"
 					variant="permanent"
@@ -108,7 +110,7 @@ function Sidebar(props: SidebarProps): React.ReactElement {
 					<img className="logo" src={require("../../assets/logo-colegio-bilingue.png")}></img>
 					{renderSections(sections)}
 				</Drawer>
-			</div>
+			</Box>
 		</ThemeProvider>
 	);
 }
