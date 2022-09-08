@@ -1,26 +1,7 @@
 import { SidebarSection } from "../components/Sidebar/Sidebar";
 import { User, UserRole } from "./interfaces";
 
-export function userRoleToString(userRole?: UserRole): string {
-	switch (userRole) {
-		case UserRole.Administrador:
-			return "Administrador";
-		case UserRole.Administrativo:
-			return "Administrativo";
-		case UserRole.Adscripto:
-			return "Adscripto";
-		case UserRole.Director:
-			return "Director";
-		case UserRole.Docente:
-			return "Docente";
-		case UserRole.Recepcion:
-			return "Recepción";
-		default:
-			return "error";
-	}
-}
-
-export function getSidebarSectionsByUserRole(user: User | null): SidebarSection[] {
+export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 	switch (user?.role) {
 		case UserRole.Administrador:
 			return [

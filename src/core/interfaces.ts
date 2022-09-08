@@ -11,12 +11,12 @@ export interface Teacher {
 }
 
 export enum UserRole {
-	Administrador,
-	Administrativo,
-	Adscripto,
-	Director,
-	Docente,
-	Recepcion,
+	Administrador = "Administrador",
+	Administrativo = "Administrativo",
+	Adscripto = "Adscripto",
+	Director = "Director",
+	Docente = "Docente",
+	Recepcion = "Recepción",
 }
 
 export interface User {

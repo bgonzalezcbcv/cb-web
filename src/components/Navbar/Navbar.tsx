@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DataStore } from "../../core/DataStore";
 import { UserRole } from "../../core/interfaces";
-import { userRoleToString } from "../../core/userRoleHelper";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import "./Navbar.scss";
 
@@ -75,7 +74,7 @@ function Navbar(): React.ReactElement {
 					{renderUserAvatar()}
 					<div className="user-name-and-role">
 						{loggedUser?.displayName}
-						<Chip sx={{ bgcolor: roleToAvatarColor(loggedUser?.role) }} className="rolePill" label={userRoleToString(loggedUser?.role)} />
+						<Chip sx={{ bgcolor: roleToAvatarColor(loggedUser?.role) }} className="rolePill" label={loggedUser?.role} />
 					</div>
 				</div>
 
