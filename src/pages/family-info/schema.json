@@ -17,8 +17,8 @@
 					"title": "Tutor"
 				}
 			],
-			"title": "Cedula de identidad",
-			"pattern": "\\d(\\.\\d{3}){2}-\\d"
+			"title": "Tipo de responsable",
+			"default": "mother"
 		},
 		"firstName": {
 			"type": "string",
@@ -64,13 +64,12 @@
 			"title": "Estado civil"
 		},
 		"cellphone": {
-			"type": "int",
+			"type": "number",
 			"title": "Teléfono celular"
 		},
 		"mail": {
 			"type": "string",
-			"title": "E-mail",
-			"pattern": "\\[a-zA-Z]+\\@."
+			"title": "E-mail"
 		},
 		"address": {
 			"type": "string",
@@ -118,7 +117,7 @@
 			"title": "Barrio laboral"
 		},
 		"workPhone": {
-			"type": "int",
+			"type": "number",
 			"title": "Teléfono laboral"
 		}
 	},
