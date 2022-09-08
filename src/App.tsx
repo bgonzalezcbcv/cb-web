@@ -5,16 +5,16 @@ import { observer } from "mobx-react-lite";
 
 // Secondly we import our types, core elements, pages, components and lastly images.
 import { DataStore } from "./core/DataStore";
+import { getSidebarSectionsByUser } from "./core/userRoleHelper";
 import Login from "./pages/login/Login";
+import StudentForm from "./pages/studentForm/StudentForm";
 import Teachers from "./pages/teachers/Teachers";
 import CSVUploader from "./pages/teachers/components/csv-uploader/CSVUploader";
+import Sidebar from "./components/Sidebar/Sidebar";
+import Navbar from "./components/Navbar/Navbar";
 
 // Lastly we import our stylesheets.
 import "./App.css";
-import StudentForm from "./pages/studentForm/StudentForm";
-import Sidebar from "./components/Sidebar/Sidebar";
-import Navbar from "./components/Navbar/Navbar";
-import { getSidebarSectionsByUser } from "./core/userRoleHelper";
 
 function App(): React.ReactElement {
 	const loggedUser = DataStore.getInstance().loggedUser;

@@ -1,9 +1,11 @@
 import React from "react";
-import Drawer from "@mui/material/Drawer";
-import "./Sidebar.scss";
-import { Accordion, AccordionDetails, AccordionSummary, createTheme, List, ListItem, ListItemButton, ListItemText, ThemeProvider } from "@mui/material";
 import { NavigateOptions, useNavigate } from "react-router-dom";
+
+import Drawer from "@mui/material/Drawer";
+import { Accordion, AccordionDetails, AccordionSummary, createTheme, List, ListItem, ListItemButton, ListItemText, ThemeProvider } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
+import "./Sidebar.scss";
 
 interface SidebarItem {
 	title: string;
@@ -70,9 +72,6 @@ function Sidebar(props: SidebarProps): React.ReactElement {
 						"& .MuiAccordionSummary-content": { justifyContent: "center" },
 						borderBottom: 2,
 						borderColor: "rgb(117,117,117)",
-					},
-					expanded: {
-						backgroundColor: "yellow",
 					},
 				},
 			},
