@@ -2,22 +2,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { DataStore } from "../../core/DataStore";
-import { UserRole } from "../../core/interfaces";
 import { AppBar, Avatar, Badge, Box, Button, Chip, Menu, MenuItem, Toolbar } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 
 import "./Navbar.scss";
-
-function roleToColor(userRole?: UserRole): string {
-	switch (userRole) {
-		case UserRole.Administrador:
-			return "blue";
-		case UserRole.Administrativo:
-			return "red";
-		default:
-			return "gray";
-	}
-}
+import { getColorByUserRole, getUserRoleName } from "../../core/userRoleHelper";
 
 function userNameToInitials(displayName?: string): string {
 	return (
@@ -66,7 +55,7 @@ function Navbar(): React.ReactElement {
 	};
 
 	const renderUserAvatar = (): React.ReactElement => {
-		return <Avatar sx={{ bgcolor: roleToColor(loggedUser?.role) }}>{userNameToInitials(loggedUser?.displayName)}</Avatar>;
+		return <Avatar sx={{ bgcolor: getColorByUserRole(loggedUser?.role) }}>{userNameToInitials(loggedUser?.displayName)}</Avatar>;
 	};
 
 	const renderProfileMenuContent = (): React.ReactElement => {
@@ -77,7 +66,7 @@ function Navbar(): React.ReactElement {
 					<div className="user-name-and-role">
 						{loggedUser?.displayName}
 
-						<Chip sx={{ bgcolor: roleToColor(loggedUser?.role) }} className="rolePill" label={loggedUser?.role} />
+						<Chip sx={{ bgcolor: getColorByUserRole(loggedUser?.role) }} className="rolePill" label={getUserRoleName(loggedUser?.role)} />
 					</div>
 				</div>
 
