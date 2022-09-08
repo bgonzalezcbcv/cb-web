@@ -14,12 +14,12 @@ import "./App.css";
 import StudentForm from "./pages/studentForm/StudentForm";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Navbar from "./components/Navbar/Navbar";
-import { getSidebarPropsByUserRole } from "./core/userRoleHelper";
+import { getSidebarSectionsByUserRole as getSidebarSectionsByUserRole } from "./core/userRoleHelper";
 
 function App(): React.ReactElement {
 	const loggedUser = DataStore.getInstance().loggedUser;
 
-	const sidebarSections = getSidebarPropsByUserRole(loggedUser?.role).sections;
+	const sidebarSections = getSidebarSectionsByUserRole(loggedUser);
 
 	return (
 		<div className="App">
