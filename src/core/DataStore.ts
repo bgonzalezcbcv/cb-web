@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { makeAutoObservable, action, reaction } from "mobx";
 
-import { User, Teacher } from "./interfaces";
+import { User, Teacher, UserRole } from "./interfaces";
 
 export class DataStore {
 	private static instance: DataStore;
@@ -47,6 +47,8 @@ export class DataStore {
 		this.loggedUser = {
 			email: "testingEmail@xmail.test",
 			token: "notAToken",
+			displayName: "Juan Prueba",
+			role: UserRole.Administrativo,
 		};
 
 		return true;

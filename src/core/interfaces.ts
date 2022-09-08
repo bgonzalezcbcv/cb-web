@@ -10,7 +10,18 @@ export interface Teacher {
 	subjects: string[];
 }
 
+export enum UserRole {
+	Administrador,
+	Administrativo,
+	Adscripto,
+	Director,
+	Docente,
+	Recepcion,
+}
+
 export interface User {
 	email: string;
 	token: string;
+	displayName: string;
+	role: UserRole;
 }

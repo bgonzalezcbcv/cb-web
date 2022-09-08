@@ -11,12 +11,12 @@ interface SidebarItem {
 	navigationParams?: NavigateOptions;
 }
 
-interface SidebarSection {
+export interface SidebarSection {
 	sectionTitle: string;
 	items: SidebarItem[];
 }
 
-interface SidebarProps {
+export interface SidebarProps {
 	sections: SidebarSection[];
 }
 

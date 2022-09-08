@@ -12,11 +12,14 @@ import CSVUploader from "./pages/teachers/components/csv-uploader/CSVUploader";
 // Lastly we import our stylesheets.
 import "./App.css";
 import StudentForm from "./pages/studentForm/StudentForm";
-import Sidebar from "./core/Sidebar/Sidebar";
-import Navbar from "./core/Navbar/Navbar";
+import Sidebar from "./components/Sidebar/Sidebar";
+import Navbar from "./components/Navbar/Navbar";
+import { getSidebarPropsByUserRole } from "./core/userRoleHelper";
 
 function App(): React.ReactElement {
 	const loggedUser = DataStore.getInstance().loggedUser;
+
+	const sidebarSections = getSidebarPropsByUserRole(loggedUser?.role).sections;
 
 	return (
 		<div className="App">
@@ -26,18 +29,7 @@ function App(): React.ReactElement {
 						<Navbar></Navbar>
 					</div>
 					<div className="content">
-						<Sidebar
-							sections={[
-								{
-									sectionTitle: "Alumnos",
-									items: [
-										{ title: "Ver Todos", navigationRoute: "/teachers" },
-										{ title: "Dar de alta", navigationRoute: "/studentform" },
-									],
-								},
-								{ sectionTitle: "Grupos", items: [{ title: "a", navigationRoute: "/CSVUploader" }] },
-							]}
-						/>
+						{loggedUser?.role && <Sidebar sections={sidebarSections} />}
 
 						<div className="page-container">
 							<Routes>
