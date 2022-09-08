@@ -1,5 +1,4 @@
-import { SidebarSection } from "../components/Sidebar/Sidebar";
-import { User, UserRole } from "./interfaces";
+import { User, UserRole, SidebarSection } from "./interfaces";
 
 export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 	switch (user?.role) {

@@ -1,22 +1,12 @@
 import React from "react";
-import { NavigateOptions, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import Drawer from "@mui/material/Drawer";
 import { Accordion, AccordionDetails, AccordionSummary, Box, createTheme, List, ListItem, ListItemButton, ListItemText, ThemeProvider } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import "./Sidebar.scss";
-
-interface SidebarItem {
-	title: string;
-	navigationRoute: string;
-	navigationParams?: NavigateOptions;
-}
-
-export interface SidebarSection {
-	sectionTitle: string;
-	items: SidebarItem[];
-}
+import { SidebarSection } from "../../core/interfaces";
 
 export interface SidebarProps {
 	sections: SidebarSection[];

@@ -1,3 +1,4 @@
+import { NavigateOptions } from "react-router-dom";
 export interface VisualComponent {
 	width?: string;
 	height?: string;
@@ -24,4 +25,15 @@ export interface User {
 	token: string;
 	displayName: string;
 	role: UserRole;
+}
+
+export interface SidebarItem {
+	title: string;
+	navigationRoute: string;
+	navigationParams?: NavigateOptions;
+}
+
+export interface SidebarSection {
+	sectionTitle: string;
+	items: SidebarItem[];
 }
