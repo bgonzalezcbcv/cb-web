@@ -60,7 +60,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					sectionTitle: "Grupos",
 					items: [
 						{
-							title: "aa",
+							title: "Ver Todos",
 							navigationRoute: "/teachers",
 						},
 					],
@@ -69,7 +69,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					sectionTitle: "Docentes",
 					items: [
 						{
-							title: "aa",
+							title: "Ver Todos",
 							navigationRoute: "/teachers",
 						},
 					],
@@ -94,7 +94,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					sectionTitle: "Grupos",
 					items: [
 						{
-							title: "aa",
+							title: "Ver Mis Grupos",
 							navigationRoute: "/teachers",
 						},
 					],
@@ -103,7 +103,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					sectionTitle: "Docentes",
 					items: [
 						{
-							title: "aa",
+							title: "Ver Docentes",
 							navigationRoute: "/teachers",
 						},
 					],
@@ -112,7 +112,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					sectionTitle: "Perfil",
 					items: [
 						{
-							title: "aa",
+							title: "Ver perfiles",
 							navigationRoute: "/teachers",
 						},
 					],
@@ -137,7 +137,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					sectionTitle: "Grupos",
 					items: [
 						{
-							title: "aa",
+							title: "Ver Todos",
 							navigationRoute: "/teachers",
 						},
 					],
@@ -146,7 +146,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					sectionTitle: "Docentes",
 					items: [
 						{
-							title: "aa",
+							title: "Ver Todos",
 							navigationRoute: "/teachers",
 						},
 					],
@@ -155,7 +155,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					sectionTitle: "Perfil",
 					items: [
 						{
-							title: "aa",
+							title: "Ver Todos",
 							navigationRoute: "/teachers",
 						},
 					],
@@ -167,7 +167,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					sectionTitle: "Alumnos",
 					items: [
 						{
-							title: "aa",
+							title: "Ver Todos",
 							navigationRoute: "/teachers",
 						},
 					],
@@ -180,7 +180,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					sectionTitle: "Perfil",
 					items: [
 						{
-							title: "aa",
+							title: "Ver Todos",
 							navigationRoute: "/teachers",
 						},
 					],
@@ -209,7 +209,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					sectionTitle: "Grupos",
 					items: [
 						{
-							title: "aa",
+							title: "Ver Todos",
 							navigationRoute: "/teachers",
 						},
 					],
@@ -218,7 +218,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					sectionTitle: "Docentes",
 					items: [
 						{
-							title: "aa",
+							title: "Ver Todos",
 							navigationRoute: "/teachers",
 						},
 					],
