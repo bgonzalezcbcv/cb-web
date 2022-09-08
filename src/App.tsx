@@ -39,7 +39,7 @@ function App(): React.ReactElement {
 							]}
 						/>
 
-						<div className="page">
+						<div className="page-container">
 							<Routes>
 								{loggedUser ? (
 									<>

@@ -1,8 +1,9 @@
 import React from "react";
 import Drawer from "@mui/material/Drawer";
 import "./Sidebar.scss";
-import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, createTheme, List, ListItem, ListItemButton, ListItemText, ThemeProvider } from "@mui/material";
 import { NavigateOptions, useNavigate } from "react-router-dom";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 interface SidebarItem {
 	title: string;
@@ -19,31 +20,35 @@ interface SidebarProps {
 	sections: SidebarSection[];
 }
 
-function renderSection(section: SidebarSection): React.ReactElement {
-	const navigate = useNavigate();
-	return (
-		<div className="section-container">
-			<List className="section-header">{section.sectionTitle}</List>
-
-			{section.items.map((item) => {
-				const { navigationRoute, navigationParams } = item;
-				return (
-					<ListItem className="section-item" key="bb" disablePadding>
-						<ListItemButton onClick={(): void => navigate(navigationRoute, navigationParams)}>
-							<ListItemText primary={item.title} />
-						</ListItemButton>
-					</ListItem>
-				);
-			})}
-		</div>
-	);
-}
-
 function renderSections(sections: SidebarSection[]): React.ReactElement {
+	const navigate = useNavigate();
+
 	return (
 		<div>
 			{sections.map((section) => {
-				return renderSection(section);
+				return (
+					<Accordion key={section.sectionTitle} className="section-container">
+						<AccordionSummary className="section-title" expandIcon={<ExpandMoreIcon />}>
+							{section.sectionTitle}
+						</AccordionSummary>
+
+						<AccordionDetails>
+							<List disablePadding>
+								{section.items.map((item) => {
+									const { navigationRoute, navigationParams } = item;
+
+									return (
+										<ListItem key={item.title} className="section-item" sx={{ paddingY: 0 }}>
+											<ListItemButton onClick={(): void => navigate(navigationRoute, navigationParams)}>
+												<ListItemText primary={item.title} sx={{ textAlign: "center" }} />
+											</ListItemButton>
+										</ListItem>
+									);
+								})}
+							</List>
+						</AccordionDetails>
+					</Accordion>
+				);
 			})}
 		</div>
 	);
@@ -52,26 +57,60 @@ function renderSections(sections: SidebarSection[]): React.ReactElement {
 function Sidebar(props: SidebarProps): React.ReactElement {
 	const { sections } = props;
 
-	return (
-		<div>
-			<Drawer //
-				className="sidebar-container"
-				variant="permanent"
-				anchor="left"
-				sx={{
-					width: 240,
-					flexShrink: 0,
-					"& .MuiDrawer-paper": {
+	const theme = createTheme({
+		components: {
+			MuiAccordion: {
+				styleOverrides: {
+					root: { marginY: 0 },
+				},
+			},
+			MuiAccordionSummary: {
+				styleOverrides: {
+					root: {
+						"& .MuiAccordionSummary-content": { justifyContent: "center" },
+						borderBottom: 2,
+						borderColor: "rgb(117,117,117)",
+					},
+					expanded: {
+						backgroundColor: "yellow",
+					},
+				},
+			},
+			MuiAccordionDetails: {
+				styleOverrides: {
+					root: { padding: 0 },
+				},
+			},
+			MuiDrawer: {
+				styleOverrides: {
+					root: {
+						height: "100%",
 						width: 240,
-						boxSizing: "border-box",
+						flexShrink: 0,
+						"& .MuiDrawer-paper": {
+							width: 240,
+							boxSizing: "border-box",
+							position: "relative",
+						},
 						position: "relative",
 					},
-					position: "relative",
-				}}>
-				<img className="logo" src={require("../../assets/logo-colegio-bilingue.png")}></img>
-				{renderSections(sections)}
-			</Drawer>
-		</div>
+				},
+			},
+		},
+	});
+
+	return (
+		<ThemeProvider theme={theme}>
+			<div>
+				<Drawer //
+					className="sidebar-container"
+					variant="permanent"
+					anchor="left">
+					<img className="logo" src={require("../../assets/logo-colegio-bilingue.png")}></img>
+					{renderSections(sections)}
+				</Drawer>
+			</div>
+		</ThemeProvider>
 	);
 }
 

@@ -2,12 +2,28 @@
 	display: flex;
 	width: 240;
 	flex-shrink: 0;
-	position: relative !important;
 }
 .section-item {
-	padding: 0;
+	border-bottom: 1px solid rgb(117, 117, 117);
+	&:last-child {
+		border-bottom: 0px;
+	}
+	text-align: center;
+	background-color: rgb(224, 224, 224);
+}
+
+.section-container {
+	margin-top: 0px !important;
+	margin-bottom: 0px !important;
+}
+
+.section-title {
+	text-align: center;
+	justify-content: center;
+	font-size: large;
+	border-bottom: 2px solid rgb(117, 117, 117);
 }
 
 .logo {
-	padding: 10px;
+	padding: 40px 20px 30px 20px;
 }

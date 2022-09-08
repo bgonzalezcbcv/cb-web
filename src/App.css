@@ -25,7 +25,6 @@
 .content {
 	display: flex;
 	flex: 1;
-	padding: 10px;
 }
 
 .container {
@@ -33,4 +32,11 @@
 	flex-direction: column;
 	justify-content: space-between;
 	flex: 1;
+}
+
+.page-container {
+	display: flex;
+	flex: 1;
+	justify-content: center;
+	align-items: center;
 }
