@@ -2,7 +2,7 @@
 	"type": "object",
 	"title": "Editar responsable",
 	"properties": {
-		"type": {
+		"role": {
 			"oneOf": [
 				{
 					"const": "mother",
@@ -17,18 +17,19 @@
 					"title": "Tutor"
 				}
 			],
+			"type": "string",
 			"title": "Tipo de responsable",
 			"default": "mother"
 		},
-		"firstName": {
+		"fullName": {
 			"type": "string",
-			"title": "Nombres"
+			"title": "Nombre completo"
 		},
-		"lastName": {
-			"type": "string",
-			"title": "Apellidos"
+		"birthDate": {
+			"type": "date",
+			"title": "Fecha de nacimiento"
 		},
-		"country": {
+		"birthCountry": {
 			"type": "string",
 			"title": "País de nacimiento"
 		},
@@ -36,7 +37,7 @@
 			"type": "string",
 			"title": "Nacionalidad"
 		},
-		"language": {
+		"motherToungue": {
 			"type": "string",
 			"title": "Lengua materna"
 		},
@@ -67,7 +68,7 @@
 			"type": "number",
 			"title": "Teléfono celular"
 		},
-		"mail": {
+		"email": {
 			"type": "string",
 			"title": "E-mail"
 		},
@@ -75,11 +76,11 @@
 			"type": "string",
 			"title": "Dirección"
 		},
-		"neighborhood": {
+		"residenceNeighborhood": {
 			"type": "string",
 			"title": "Barrio de residencia"
 		},
-		"education": {
+		"educationLevel": {
 			"oneOf": [
 				{
 					"const": "none",
@@ -100,23 +101,23 @@
 			],
 			"title": "Nivel educativo"
 		},
-		"work": {
+		"occupation": {
 			"type": "string",
 			"title": "Trabajo-Ocupación"
 		},
-		"company": {
+		"workplace": {
 			"type": "string",
 			"title": "Empresa de trabajo"
 		},
-		"workAddress": {
+		"workplaceAddress": {
 			"type": "string",
 			"title": "Dirección laboral"
 		},
-		"workNeighborhood": {
+		"workplaceNeighborhood": {
 			"type": "string",
 			"title": "Barrio laboral"
 		},
-		"workPhone": {
+		"workplacePhone": {
 			"type": "number",
 			"title": "Teléfono laboral"
 		}
