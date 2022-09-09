@@ -1,4 +1,4 @@
-name: Stagong Deploy to Amazon ECS
+name: Staging Deploy to Amazon ECS
 
 on:
   workflow_dispatch:
