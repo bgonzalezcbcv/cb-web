@@ -29,7 +29,7 @@
 			"type": "string",
 			"format": "date",
 			"dateTimeFormat": "DD/MM/YY",
-			"dateTimeSaveFormat": "DD-MM-YY",
+			"dateTimeSaveFormat": "DD/MM/YY",
 			"title": "Fecha de nacimiento"
 		},
 		"birthCountry": {

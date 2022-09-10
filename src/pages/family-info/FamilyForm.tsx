@@ -11,6 +11,7 @@ import "./FamilyForm.scss";
 
 import { createAjv } from "@jsonforms/core";
 import { Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
+
 export type FamilyFormProps = {
 	family: FamilyMember[];
 	onChange: (data: FamilyMember[]) => unknown;
@@ -38,36 +39,63 @@ export type FamilyMember = {
 };
 
 export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
-	const [canSave, setCanSave] = useState(false);
-	const [data1, setData1] = useState(props.family[0]);
-	const [data2, setData2] = useState(props.family[1]);
+	const [canSaveArray, setCanSave] = useState(Array(props.family.length).fill(false));
+	const [data, setData] = useState(props.family);
 	const [familyIndex, setFamilyIndex] = useState(0);
 	const setFamilyIndexFromButton = (event: React.MouseEvent<HTMLElement>, newIndex: number): void => {
+		if (newIndex < 0) {
+			const dataCopy = data.slice();
+			dataCopy.push({} as FamilyMember);
+			setData(dataCopy);
+			setFamilyIndex(data.length - 1);
+			return;
+		}
 		setFamilyIndex(newIndex);
 	};
 	const handleDefaultsAjv = createAjv({ useDefaults: true });
 	function getCurrentData(): unknown {
-		let data = data1;
-		if (familyIndex != 0) {
-			data = data2;
-		}
-		return data;
+		return data[familyIndex];
 	}
-	function setCurrentData(data: FamilyMember, errors: unknown[] | undefined): void {
-		console.log(errors);
-		setCanSave(!errors || errors.length == 0);
-		if (familyIndex == 0) {
-			setData1(data);
-		} else {
-			setData2(data);
-		}
+	function setCurrentData(dataFamilyMember: FamilyMember, errors: unknown[] | undefined): void {
+		const canSaveArrayCopy = canSaveArray.slice();
+		canSaveArrayCopy[familyIndex] = !errors || errors.length == 0;
+		setCanSave(canSaveArrayCopy);
+		const dataCopy = data.slice();
+		dataCopy[familyIndex] = dataFamilyMember;
+		setData(dataCopy);
 	}
+	function canSave(): boolean {
+		let canSave = true;
+		canSaveArray.forEach((element) => {
+			canSave = canSave && element;
+		});
+		return canSave;
+	}
+	const toggleButtons = data.map((step, index) => {
+		let text = "Familiar " + (index + 1).toString();
+		if (step && step.fullName) text = step.fullName;
+		return (
+			<ToggleButton key={index} value={index}>
+				{text}
+			</ToggleButton>
+		);
+	});
+	const allButtons = (): JSX.Element[] => {
+		const toggleButtonArray = toggleButtons;
+		if (data.length <= 1) {
+			toggleButtonArray.push(
+				<ToggleButton key={-1} value={-1}>
+					+
+				</ToggleButton>
+			);
+		}
+		return toggleButtonArray;
+	};
 	return (
 		<div>
 			<div>
 				<ToggleButtonGroup value={familyIndex} exclusive onChange={setFamilyIndexFromButton}>
-					<ToggleButton value={0}>Familiar 1</ToggleButton>
-					<ToggleButton value={1}>Familiar 2</ToggleButton>
+					{allButtons()}
 				</ToggleButtonGroup>
 			</div>
 			<JsonForms
@@ -82,9 +110,9 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 			<div style={{ textAlign: "right" }}>
 				<Button
 					variant="contained"
-					disabled={!canSave}
+					disabled={!canSave()}
 					onClick={(): void => {
-						props.onChange([data1, data2]);
+						props.onChange(data);
 					}}>
 					Guardar
 				</Button>
