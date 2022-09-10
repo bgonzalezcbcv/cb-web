@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { JsonForms } from "@jsonforms/react";
-import { JsonSchema7 } from "@jsonforms/core";
+import { JsonSchema7, Translator } from "@jsonforms/core";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
 
 import schema from "./schema.json";
@@ -47,7 +47,7 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 			const dataCopy = data.slice();
 			dataCopy.push({} as FamilyMember);
 			setData(dataCopy);
-			setFamilyIndex(data.length - 1);
+			setFamilyIndex(dataCopy.length - 1);
 			return;
 		}
 		setFamilyIndex(newIndex);
@@ -91,6 +91,11 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 		}
 		return toggleButtonArray;
 	};
+
+	const translator = (id: string, defaultMessage: string | undefined): string => {
+		if (id.includes("ci.error")) return "La cédula debe seguir el formato 1.234.567-8 y no puede quedar vacía";
+		return defaultMessage ?? "";
+	};
 	return (
 		<div>
 			<div>
@@ -99,6 +104,7 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 				</ToggleButtonGroup>
 			</div>
 			<JsonForms
+				i18n={{ translate: translator as Translator }}
 				schema={schema as JsonSchema7}
 				uischema={ui}
 				data={getCurrentData()}

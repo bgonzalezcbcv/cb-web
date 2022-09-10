@@ -15,7 +15,12 @@
 				{
 					"type": "Control",
 					"scope": "#/properties/ci"
-				},
+				}
+			]
+		},
+		{
+			"type": "HorizontalLayout",
+			"elements": [
 				{
 					"type": "Control",
 					"scope": "#/properties/birthDate",
@@ -24,6 +29,14 @@
 						"dateFormat": "DD/MM/YYYY",
 						"dateSaveFormat": "DD/MM/YYYY"
 					}
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/maritalStatus"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/cellphone"
 				}
 			]
 		},
@@ -41,20 +54,12 @@
 				{
 					"type": "Control",
 					"scope": "#/properties/motherToungue"
-				},
-				{
-					"type": "Control",
-					"scope": "#/properties/maritalStatus"
 				}
 			]
 		},
 		{
 			"type": "HorizontalLayout",
 			"elements": [
-				{
-					"type": "Control",
-					"scope": "#/properties/cellphone"
-				},
 				{
 					"type": "Control",
 					"scope": "#/properties/email"
