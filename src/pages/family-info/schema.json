@@ -129,5 +129,5 @@
 			"pattern": "\\d{8,9}"
 		}
 	},
-	"required": ["type", "ci"]
+	"required": ["role", "ci"]
 }

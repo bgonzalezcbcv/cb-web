@@ -9,13 +9,38 @@ import ui from "./ui.json";
 
 import "./FamilyForm.scss";
 
-const initialData = {};
 import { createAjv } from "@jsonforms/core";
 import { Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
+export type FamilyFormProps = {
+	family: FamilyMember[];
+	onChange: (data: FamilyMember[]) => unknown;
+	editable: boolean;
+};
+export type FamilyMember = {
+	role: string;
+	fullName: string;
+	birthDate: Date;
+	birthCountry: string;
+	nationality: string;
+	motherTongue: string;
+	ci: number;
+	maritalStatus: string;
+	cellphone: string;
+	email: string;
+	address: string;
+	residenceNeighbourhood: string;
+	educationLevel: string;
+	occupation: string;
+	workplace: string;
+	workplaceAddress: string;
+	workplaceNeighbourhood: string;
+	workplacePhone: string;
+};
 
-export default function FamilyForm(): React.ReactElement {
-	const [data1, setData1] = useState(initialData);
-	const [data2, setData2] = useState(initialData);
+export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
+	const [canSave, setCanSave] = useState(false);
+	const [data1, setData1] = useState(props.family[0]);
+	const [data2, setData2] = useState(props.family[1]);
 	const [familyIndex, setFamilyIndex] = useState(0);
 	const setFamilyIndexFromButton = (event: React.MouseEvent<HTMLElement>, newIndex: number): void => {
 		setFamilyIndex(newIndex);
@@ -28,7 +53,9 @@ export default function FamilyForm(): React.ReactElement {
 		}
 		return data;
 	}
-	function setCurrentData(data: Record<string, unknown>): void {
+	function setCurrentData(data: FamilyMember, errors: unknown[] | undefined): void {
+		console.log(errors);
+		setCanSave(!errors || errors.length == 0);
 		if (familyIndex == 0) {
 			setData1(data);
 		} else {
@@ -49,11 +76,18 @@ export default function FamilyForm(): React.ReactElement {
 				data={getCurrentData()}
 				renderers={materialRenderers}
 				cells={materialCells}
-				onChange={({ data }): void => setCurrentData(data)}
+				onChange={({ data, errors }): void => setCurrentData(data, errors)}
 				ajv={handleDefaultsAjv}
 			/>
 			<div style={{ textAlign: "right" }}>
-				<Button variant="contained">Guardar</Button>
+				<Button
+					variant="contained"
+					disabled={!canSave}
+					onClick={(): void => {
+						props.onChange([data1, data2]);
+					}}>
+					Guardar
+				</Button>
 			</div>
 		</div>
 	);
