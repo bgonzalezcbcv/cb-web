@@ -18,7 +18,12 @@
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/birthDate"
+					"scope": "#/properties/birthDate",
+					"options": {
+						"format": "date",
+						"dateFormat": "DD/MM/YYYY",
+						"dateSaveFormat": "DD/MM/YYYY"
+					}
 				}
 			]
 		},

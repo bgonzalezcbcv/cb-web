@@ -27,9 +27,8 @@
 		},
 		"birthDate": {
 			"type": "string",
-			"format": "date",
-			"dateTimeFormat": "DD/MM/YY",
-			"dateTimeSaveFormat": "DD/MM/YY",
+			"dateFormat": "DD/MM/YYYY",
+			"dateSaveFormat": "DD/MM/YYYY",
 			"title": "Fecha de nacimiento"
 		},
 		"birthCountry": {
