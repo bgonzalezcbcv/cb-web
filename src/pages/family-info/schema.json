@@ -26,7 +26,10 @@
 			"title": "Nombre completo"
 		},
 		"birthDate": {
-			"type": "date",
+			"type": "string",
+			"format": "date",
+			"dateTimeFormat": "DD/MM/YY",
+			"dateTimeSaveFormat": "DD-MM-YY",
 			"title": "Fecha de nacimiento"
 		},
 		"birthCountry": {
@@ -62,11 +65,13 @@
 				}
 			],
 			"type": "string",
-			"title": "Estado civil"
+			"title": "Estado civil",
+			"default": "single"
 		},
 		"cellphone": {
-			"type": "number",
-			"title": "Teléfono celular"
+			"type": "string",
+			"title": "Teléfono celular",
+			"pattern": "\\d{9}"
 		},
 		"email": {
 			"type": "string",
@@ -99,7 +104,8 @@
 					"title": "Terciario"
 				}
 			],
-			"title": "Nivel educativo"
+			"title": "Nivel educativo",
+			"default": "none"
 		},
 		"occupation": {
 			"type": "string",
@@ -119,7 +125,8 @@
 		},
 		"workplacePhone": {
 			"type": "number",
-			"title": "Teléfono laboral"
+			"title": "Teléfono laboral",
+			"pattern": "\\d{8,9}"
 		}
 	},
 	"required": ["type", "ci"]

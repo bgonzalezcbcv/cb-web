@@ -15,6 +15,10 @@
 				{
 					"type": "Control",
 					"scope": "#/properties/ci"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/birthDate"
 				}
 			]
 		},
@@ -23,7 +27,7 @@
 			"elements": [
 				{
 					"type": "Control",
-					"scope": "#/properties/country"
+					"scope": "#/properties/birthCountry"
 				},
 				{
 					"type": "Control",
@@ -31,7 +35,66 @@
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/language"
+					"scope": "#/properties/motherToungue"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/maritalStatus"
+				}
+			]
+		},
+		{
+			"type": "HorizontalLayout",
+			"elements": [
+				{
+					"type": "Control",
+					"scope": "#/properties/cellphone"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/email"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/address"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/residenceNeighborhood"
+				}
+			]
+		},
+		{
+			"type": "HorizontalLayout",
+			"elements": [
+				{
+					"type": "Control",
+					"scope": "#/properties/educationLevel"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/occupation"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/workplace"
+				}
+			]
+		},
+		{
+			"type": "HorizontalLayout",
+			"elements": [
+				{
+					"type": "Control",
+					"scope": "#/properties/workplaceAddress"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/workplaceNeighborhood"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/workplacePhone"
 				}
 			]
 		}
