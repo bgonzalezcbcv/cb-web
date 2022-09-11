@@ -1,0 +1,108 @@
+.administrative-info {
+  display: flex;
+  flex-direction: row;
+  place-items: center;
+  justify-content: space-between;
+
+  overflow: scroll;
+  overflow-y: auto;
+
+  .form-container {
+    width: 30%;
+    padding-left: 30px;
+  }
+
+  .payment-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60%;
+
+    .payment-container {
+      width: 90%;
+      height: 200px;
+      margin: 10px 0;
+    }
+
+    .payment-content {
+      display: flex;
+      flex-direction: column;
+      height: 40%;
+    }
+
+    .payment-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding-left: 10px;
+      padding-right: 10px;
+      height: 40px;
+    }
+
+    .current-payment-method-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+
+      .year {
+        padding: 10px;
+        height: 20px;
+        font-weight: 700;
+      }
+
+      .payment-method-form {
+        margin: 10px;
+        min-width: 150px;
+      }
+    }
+
+    .discount-container-wrapper {
+      width: 90%;
+      height: 330px;
+      margin: 10px 0;
+    }
+
+    .discount-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .current-discount-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding-left: 10px;
+    }
+
+    .discount-reason-form {
+      margin: 10px;
+      min-width: 150px;
+    }
+
+    .discount-type-form {
+      min-width: 150px;
+      margin-right: 20px;
+    }
+
+    .current-discount-type-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0 10px 10px;
+    }
+
+    .validity-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0 10px 10px;
+    }
+  }
+}
+
+

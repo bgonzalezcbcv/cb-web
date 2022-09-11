@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "title": "Información administrativa",
+  "properties": {
+    "enrollmentDate": {
+      "type": "string",
+      "format": "date",
+      "title": "Fecha de inscripción"
+    },
+    "startDate": {
+      "type": "string",
+      "format": "date",
+      "title": "Fecha de comienzo"
+    },
+    "enrollmentCompromise": {
+      "type": "string",
+      "title": "Compromiso de inscripción"
+    },
+    "scholarshipType": {
+      "type": "string",
+      "oneOf": [
+        {
+          "const": "Licitación",
+          "title": "Licitación"
+        },
+        {
+          "const": "Bonificada",
+          "title": "Bonificada"
+        },
+        {
+          "const": "Convenio",
+          "title": "Convenio"
+        },
+        {
+          "const": "Especial",
+          "title": "Especial"
+        }
+      ],
+      "title": "Tipo de escolaridad"
+    },
+    "agreementType": {
+      "type": "string",
+      "title": "En caso de convenio, especificar cual"
+    },
+    "comments": {
+      "type": "string",
+      "title": "Comentarios"
+    }
+  }
+}
