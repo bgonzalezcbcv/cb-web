@@ -75,16 +75,16 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 		let text = "Familiar " + (index + 1).toString();
 		if (step && step.fullName) text = step.fullName;
 		return (
-			<ToggleButton key={index} value={index}>
+			<ToggleButton id={"family" + index.toString()} key={index} value={index}>
 				{text}
 			</ToggleButton>
 		);
 	});
 	const allButtons = (): JSX.Element[] => {
 		const toggleButtonArray = toggleButtons;
-		if (data.length <= 1) {
+		if (data.length <= 1 && props.editable) {
 			toggleButtonArray.push(
-				<ToggleButton key={-1} value={-1}>
+				<ToggleButton id="addFamilyMember" key={-1} value={-1}>
 					+
 				</ToggleButton>
 			);
@@ -111,17 +111,21 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 				renderers={materialRenderers}
 				cells={materialCells}
 				onChange={({ data, errors }): void => setCurrentData(data, errors)}
+				readonly={!props.editable}
 				ajv={handleDefaultsAjv}
 			/>
 			<div style={{ textAlign: "right" }}>
-				<Button
-					variant="contained"
-					disabled={!canSave()}
-					onClick={(): void => {
-						props.onChange(data);
-					}}>
-					Guardar
-				</Button>
+				{props.editable ? (
+					<Button
+						id="saveButton"
+						variant="contained"
+						disabled={!canSave()}
+						onClick={(): void => {
+							props.onChange(data);
+						}}>
+						Guardar
+					</Button>
+				) : null}
 			</div>
 		</div>
 	);
