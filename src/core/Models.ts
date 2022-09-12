@@ -30,6 +30,51 @@ export interface FamilyMember {
 	workplace_phone: string;
 }
 
+enum Scholarship {
+	Bonificada = "bonificada",
+}
+
+enum Agreement {
+	None = "ninguno",
+}
+
+enum AvailablePaymentMethods {
+	Card = "tarjeta",
+}
+
+enum PaymentMethodsOptions {
+	Cash = "contado",
+}
+
+interface PaymentMethod {
+	method: AvailablePaymentMethods;
+	option: PaymentMethodsOptions;
+}
+
+enum DiscountExplanation {
+	Brother = "hermano",
+}
+
+interface Discount {
+	percentage: number;
+	starting_date: Date;
+	ending_date: Date;
+	type: string;
+	explanation: DiscountExplanation;
+	report_url: string;
+}
+
+export interface AdministrativeInfo {
+	inscription_date: Date;
+	starting_date: Date;
+	registration_commitment_url: string;
+	scholarship_type: Scholarship;
+	agreement_type: Agreement;
+	comments: string;
+	payment_methods: PaymentMethod[];
+	discounts: Discount[];
+}
+
 export interface Student {
 	id: string; //auto
 	ci: string; //unique
@@ -58,6 +103,7 @@ export interface Student {
 	vaccine_expiration: Date;
 	family: FamilyMember[];
 	question_categories: QuestionCategories[];
+	administrative_info: AdministrativeInfo;
 	contact: string;
 	contact_phone: string;
 }
