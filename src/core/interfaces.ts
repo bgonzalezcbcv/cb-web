@@ -1,4 +1,5 @@
 import { NavigateOptions } from "react-router-dom";
+
 export interface VisualComponent {
 	width?: string;
 	height?: string;
