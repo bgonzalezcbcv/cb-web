@@ -11,11 +11,6 @@ export interface Teacher {
 	subjects: string[];
 }
 
-export interface UserRoleInfo {
-	displayName: string;
-	color: string;
-}
-
 export enum UserRoleName {
 	Administrador = "Administrador",
 	Administrativo = "Administrativo",
