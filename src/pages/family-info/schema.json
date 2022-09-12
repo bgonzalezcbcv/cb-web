@@ -28,7 +28,6 @@
 		"birthDate": {
 			"type": "string",
 			"dateFormat": "DD/MM/YYYY",
-			"dateSaveFormat": "DD/MM/YYYY",
 			"title": "Fecha de nacimiento"
 		},
 		"birthCountry": {
@@ -44,9 +43,9 @@
 			"title": "Lengua materna"
 		},
 		"ci": {
-			"type": "string",
+			"type": "integer",
 			"title": "Cedula de identidad",
-			"pattern": "\\d(\\.\\d{3}){2}-\\d"
+			"minimum": 0
 		},
 		"maritalStatus": {
 			"oneOf": [

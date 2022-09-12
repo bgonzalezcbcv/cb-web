@@ -37,6 +37,26 @@ export type FamilyMember = {
 	workplaceNeighbourhood: string;
 	workplacePhone: string;
 };
+type FamilyMemberData = {
+	role: string;
+	fullName: string;
+	birthDate: string;
+	birthCountry: string;
+	nationality: string;
+	motherTongue: string;
+	ci: number;
+	maritalStatus: string;
+	cellphone: string;
+	email: string;
+	address: string;
+	residenceNeighbourhood: string;
+	educationLevel: string;
+	occupation: string;
+	workplace: string;
+	workplaceAddress: string;
+	workplaceNeighbourhood: string;
+	workplacePhone: string;
+};
 
 export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 	const [canSaveArray, setCanSave] = useState(Array(props.family.length).fill(false));
@@ -54,12 +74,19 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 	};
 	const handleDefaultsAjv = createAjv({ useDefaults: true });
 	function getCurrentData(): unknown {
-		return data[familyIndex];
+		const dataCopy = data[familyIndex] as unknown as FamilyMemberData;
+		if (data[familyIndex] && data[familyIndex].birthDate) {
+			dataCopy.birthDate = data[familyIndex].birthDate.toString();
+		}
+		return dataCopy;
 	}
 	function setCurrentData(dataFamilyMember: FamilyMember, errors: unknown[] | undefined): void {
 		const canSaveArrayCopy = canSaveArray.slice();
 		canSaveArrayCopy[familyIndex] = !errors || errors.length == 0;
 		setCanSave(canSaveArrayCopy);
+		if (dataFamilyMember && dataFamilyMember.birthDate) {
+			dataFamilyMember.birthDate = new Date(dataFamilyMember.birthDate);
+		}
 		const dataCopy = data.slice();
 		dataCopy[familyIndex] = dataFamilyMember;
 		setData(dataCopy);
@@ -93,12 +120,12 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 	};
 
 	const translator = (id: string, defaultMessage: string | undefined): string => {
-		if (id.includes("ci.error")) return "La cédula debe seguir el formato 1.234.567-8 y no puede quedar vacía";
+		if (id.includes("ci.error")) return "Se deben ingresar solo los números, sin puntos ni guiones y no puede quedar vacía";
 		return defaultMessage ?? "";
 	};
 	return (
 		<div>
-			<div>
+			<div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end" }}>
 				<ToggleButtonGroup value={familyIndex} exclusive onChange={setFamilyIndexFromButton}>
 					{allButtons()}
 				</ToggleButtonGroup>
@@ -114,7 +141,7 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 				readonly={!props.editable}
 				ajv={handleDefaultsAjv}
 			/>
-			<div style={{ textAlign: "right" }}>
+			<div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end" }}>
 				{props.editable ? (
 					<Button
 						id="saveButton"

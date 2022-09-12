@@ -11,6 +11,7 @@ describe("EditFamilyForm", () => {
 	const fullNameRef = "#fullName2-input";
 	const member1Ref = "#family0";
 	const member2Ref = "#family1";
+	const birthDateRef = "#birthDate2-input";
 
 	test("Should not be able to edit when editable=false", async () => {
 		const wrapper = render(
@@ -33,7 +34,7 @@ describe("EditFamilyForm", () => {
 		const ciField = wrapper.container.querySelector(ciRef);
 		if (ciField === null) return;
 		await act(async () => {
-			fireEvent.change(ciField, { target: "1.123.123-1" });
+			fireEvent.change(ciField, { target: "11231231" });
 		});
 
 		expect(ciField?.textContent).toEqual("");
@@ -64,23 +65,23 @@ describe("EditFamilyForm", () => {
 		const member2 = wrapper.container.querySelector(member2Ref);
 		if (member2 === null) return;
 		await act(async () => {
-			fireEvent.change(ciField, { target: "1.123.123-1" });
+			fireEvent.change(ciField, { target: "11231231" });
 			fireEvent.click(member2);
 		});
-		expect(ciField?.textContent).toEqual("1.123.123-1");
+		expect(ciField?.textContent).toEqual("11231231");
 
 		const ciField2 = wrapper.container.querySelector(ciRef);
 		const save = wrapper.container.querySelector(saveButtonRef);
 		if (ciField2 === null) return;
 		if (save === null) return;
 		await act(async () => {
-			fireEvent.change(ciField2, { target: "4.456.456-7" });
+			fireEvent.change(ciField2, { target: "4454567" });
 			fireEvent.click(save);
 		});
-		expect(ciField2?.textContent).toEqual("4.456.456-7");
+		expect(ciField2?.textContent).toEqual("4454567");
 
-		expect(info[0].ci).toEqual("1.123.123-1");
-		expect(info[1].ci).toEqual("4.456.456-7");
+		expect(info[0].ci).toEqual("11231231");
+		expect(info[1].ci).toEqual("4454567");
 	});
 
 	test("Shouldn't save with errors in form", async () => {
@@ -146,7 +147,7 @@ describe("EditFamilyForm", () => {
 		const ciField = wrapper.container.querySelector(ciRef);
 		if (ciField === null) return;
 		await act(async () => {
-			fireEvent.change(ciField, { target: "1.123.123-1" });
+			fireEvent.change(ciField, { target: "11231231" });
 			fireEvent.click(plusButton);
 		});
 
@@ -158,10 +159,10 @@ describe("EditFamilyForm", () => {
 		if (ciField2 === null) return;
 
 		await act(async () => {
-			fireEvent.change(ciField2, { target: "4.456.456-7" });
+			fireEvent.change(ciField2, { target: "4454567" });
 			fireEvent.click(save);
 		});
-		expect(ciField2?.textContent).toEqual("4.456.456-7");
+		expect(ciField2?.textContent).toEqual("4454567");
 		expect(info.length).toEqual(2);
 	});
 
@@ -188,5 +189,37 @@ describe("EditFamilyForm", () => {
 			fireEvent.change(fullNameField, { target: "Name LastName" });
 		});
 		expect(member1?.textContent).toEqual("Name LastName");
+	});
+
+	test("Should save birthday correctly", async () => {
+		let info = Array(1).fill(null);
+		const wrapper = render(
+			<FamilyForm
+				onChange={(data: FamilyMember[]): void => {
+					info = data;
+					return;
+				}}
+				family={Array(1).fill(null)}
+				editable={true}
+			/>,
+			{ wrapper: BrowserRouter }
+		);
+
+		const ciField = wrapper.container.querySelector(ciRef);
+		if (ciField === null) return;
+		const birthdateField = wrapper.container.querySelector(birthDateRef);
+		if (birthdateField === null) return;
+		const save = wrapper.container.querySelector(saveButtonRef);
+		expect(save).not.toEqual(null);
+		if (save === null) return;
+		await act(async () => {
+			fireEvent.change(ciField, { target: "11231231" });
+			fireEvent.change(birthdateField, { target: "01/01/1999" });
+			fireEvent.click(save);
+		});
+
+		expect(ciField?.textContent).toEqual("11231231");
+		expect(birthdateField?.textContent).toEqual("01/01/1999");
+		expect(info[0].birthDate).toEqual(new Date(1999, 1, 1));
 	});
 });
