@@ -12,10 +12,6 @@
       "format": "date",
       "title": "Fecha de comienzo"
     },
-    "enrollmentCompromise": {
-      "type": "string",
-      "title": "Compromiso de inscripción"
-    },
     "scholarshipType": {
       "type": "string",
       "oneOf": [
@@ -41,10 +37,6 @@
     "agreementType": {
       "type": "string",
       "title": "En caso de convenio, especificar cual"
-    },
-    "comments": {
-      "type": "string",
-      "title": "Comentarios"
     }
   }
 }

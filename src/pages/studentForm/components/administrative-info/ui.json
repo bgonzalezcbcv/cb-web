@@ -11,22 +11,11 @@
     },
     {
       "type": "Control",
-      "scope": "#/properties/enrollmentCompromise"
-    },
-    {
-      "type": "Control",
       "scope": "#/properties/scholarshipType"
     },
     {
       "type": "Control",
       "scope": "#/properties/agreementType"
-    },
-    {
-      "type": "Control",
-      "scope": "#/properties/comments",
-      "options": {
-        "multi": true
-      }
     }
   ]
 }

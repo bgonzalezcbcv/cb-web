@@ -12,13 +12,13 @@
     padding-left: 30px;
   }
 
-  .payment-wrapper {
+  .payment-details-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 60%;
 
-    .payment-container {
+    .payment-method-container {
       width: 90%;
       height: 200px;
       margin: 10px 0;
@@ -40,69 +40,66 @@
       height: 40px;
     }
 
-    .current-payment-method-container {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-
-      .year {
-        padding: 10px;
-        height: 20px;
-        font-weight: 700;
-      }
-
-      .payment-method-form {
-        margin: 10px;
-        min-width: 150px;
-      }
-    }
-
-    .discount-container-wrapper {
+    .discount-wrapper {
       width: 90%;
       height: 330px;
       margin: 10px 0;
     }
-
-    .discount-container {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .current-discount-container {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      padding-left: 10px;
-    }
-
-    .discount-reason-form {
-      margin: 10px;
-      min-width: 150px;
-    }
-
-    .discount-type-form {
-      min-width: 150px;
-      margin-right: 20px;
-    }
-
-    .current-discount-type-container {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 0 10px 10px;
-    }
-
-    .validity-container {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 0 10px 10px;
-    }
   }
 }
+
+.payment-method-modal-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.payment-method-modal-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  width: 60%;
+}
+
+.discount-container-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.discount-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 10px;
+}
+
+.discount-type-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0 10px 10px;
+}
+
+.validity-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 10px 10px;
+}
+
+.validity-dates-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
+
+
 
 
