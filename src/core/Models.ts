@@ -30,19 +30,19 @@ export interface FamilyMember {
 	workplace_phone: string;
 }
 
-enum Scholarship {
+enum Scholarship { //todo: rellenar
 	Bonificada = "bonificada",
 }
 
-enum Agreement {
+enum Agreement { //todo: rellenar
 	None = "ninguno",
 }
 
-enum AvailablePaymentMethods {
+enum AvailablePaymentMethods {//todo: rellenar
 	Card = "tarjeta",
 }
 
-enum PaymentMethodsOptions {
+enum PaymentMethodsOptions {//todo: rellenar
 	Cash = "contado",
 }
 
@@ -51,7 +51,7 @@ interface PaymentMethod {
 	option: PaymentMethodsOptions;
 }
 
-enum DiscountExplanation {
+enum DiscountExplanation {//todo: rellenar
 	Brother = "hermano",
 }
 
@@ -75,18 +75,14 @@ export interface AdministrativeInfo {
 	discounts: Discount[];
 }
 
-export interface Student {
-	id: string; //auto
-	ci: string; //unique
+export interface Student { //Esto es lo que quiero obtener al fetchear un Student.
+	id: string;
+	ci: string;
 	email: string;
 	name: string;
 	surname: string;
-	// surname: string;
-	// second_surname: string;
-	// first_name: string;
-	// middle_name: string;
-	scheduler_start: string;
-	scheduler_end: string;
+	schedule_start: string;
+	schedule_end: string;
 	tuition: string;
 	reference_number: number;
 	birthplace: string;
@@ -99,7 +95,7 @@ export interface Student {
 	neighborhood: string;
 	medical_assurance: string;
 	emergency: string;
-	phone_number: string; //este no esta en el otro excel
+	phone_number: string; // este no esta en el otro excel
 	vaccine_expiration: Date;
 	family: FamilyMember[];
 	question_categories: QuestionCategories[];
@@ -108,32 +104,35 @@ export interface Student {
 	contact_phone: string;
 }
 
-export interface StudentToCreate {
-	address: string;
-	birthdate: Date;
-	birthplace: string;
+export interface StudentToCreate { // Lo que recibe el endpoint para crear usuario.
 	ci: string;
 	email: string;
-	emergency: string;
-	first_language: string;
-	first_name: string;
-	id?: string;
-	medical_assurance: string;
-	middle_name?: string;
-	nationality: string;
-	neighborhood: string;
-	office?: string;
-	phone_number: string;
-	reference_number?: number;
-	scheduler_end?: string;
-	scheduler_start?: string;
-	second_surname?: string;
-	state?: string;
+	name: string;
 	surname: string;
-	tuition?: string;
-
-	// family: FamilyMember[];
-	// question: Question[];
+	schedule_start: string;
+	schedule_end: string;
+	tuition: string;
+	reference_number: number;
+	birthplace: string;
+	birthdate: Date;
+	nationality: string;
+	first_language: string;
+	office: string;
+	state: string;
+	address: string;
+	neighborhood: string;
+	medical_assurance: string;
+	emergency: string;
+	phone_number: string; // este no esta en el otro excel
+	vaccine_expiration: Date;
+	inscription_date: Date;
+	starting_date: Date;
+	registration_commitment_url: string;
+	scholarship_type: Scholarship;
+	agreement_type: Agreement;
+	comments: string;
+	contact: string;
+	contact_phone: string;
 }
 
 export interface StudentCreationForm {
