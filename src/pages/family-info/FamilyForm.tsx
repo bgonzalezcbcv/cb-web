@@ -59,20 +59,18 @@ type FamilyMemberData = {
 };
 
 export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
+	// const {family, onChange, editable} = props;
+
 	const [canSaveArray, setCanSave] = useState(Array(props.family.length).fill(false));
 	const [data, setData] = useState(props.family);
 	const [familyIndex, setFamilyIndex] = useState(0);
-	const setFamilyIndexFromButton = (event: React.MouseEvent<HTMLElement>, newIndex: number): void => {
-		if (newIndex < 0) {
-			const dataCopy = data.slice();
-			dataCopy.push({} as FamilyMember);
-			setData(dataCopy);
-			setFamilyIndex(dataCopy.length - 1);
-			return;
-		}
-		setFamilyIndex(newIndex);
-	};
+
 	const handleDefaultsAjv = createAjv({ useDefaults: true });
+
+	const setFamilyIndexFromButton = (event: React.MouseEvent<HTMLElement>, newIndex: number): void => {
+		newIndex !== null && setFamilyIndex(newIndex);
+	};
+
 	function getCurrentData(): unknown {
 		const dataCopy = data[familyIndex] as unknown as FamilyMemberData;
 		if (data[familyIndex] && data[familyIndex].birthDate) {
@@ -80,6 +78,7 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 		}
 		return dataCopy;
 	}
+
 	function setCurrentData(dataFamilyMember: FamilyMember, errors: unknown[] | undefined): void {
 		const canSaveArrayCopy = canSaveArray.slice();
 		canSaveArrayCopy[familyIndex] = !errors || errors.length == 0;
@@ -91,6 +90,7 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 		dataCopy[familyIndex] = dataFamilyMember;
 		setData(dataCopy);
 	}
+
 	function canSave(): boolean {
 		let canSave = true;
 		canSaveArray.forEach((element) => {
@@ -98,6 +98,7 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 		});
 		return canSave;
 	}
+
 	const toggleButtons = data.map((step, index) => {
 		let text = "Familiar " + (index + 1).toString();
 		if (step && step.fullName) text = step.fullName;
@@ -107,27 +108,23 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 			</ToggleButton>
 		);
 	});
-	const allButtons = (): JSX.Element[] => {
-		const toggleButtonArray = toggleButtons;
-		if (data.length <= 1 && props.editable) {
-			toggleButtonArray.push(
-				<ToggleButton id="addFamilyMember" key={-1} value={-1}>
-					+
-				</ToggleButton>
-			);
-		}
-		return toggleButtonArray;
-	};
 
 	const translator = (id: string, defaultMessage: string | undefined): string => {
 		if (id.includes("ci.error")) return "Se deben ingresar solo los números, sin puntos ni guiones y no puede quedar vacía";
 		return defaultMessage ?? "";
 	};
+
 	return (
 		<div>
 			<div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end" }}>
 				<ToggleButtonGroup value={familyIndex} exclusive onChange={setFamilyIndexFromButton}>
-					{allButtons()}
+					{toggleButtons}
+
+					{data.length <= 1 && props.editable ? (
+						<ToggleButton id="addFamilyMember" value={data.length} onClick={(): void => setData([...data, {} as FamilyMember])}>
+							+
+						</ToggleButton>
+					) : null}
 				</ToggleButtonGroup>
 			</div>
 			<JsonForms
