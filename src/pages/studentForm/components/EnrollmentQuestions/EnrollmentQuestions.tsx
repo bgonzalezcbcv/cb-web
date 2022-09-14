@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import _ from "lodash";
 
-import { JsonSchema } from "@jsonforms/core";
 import { Divider, Grid, List, ListItem, TextField, Typography } from "@mui/material";
+
+import useDebounce from "../../../../hooks/useDebounce";
 
 export type Question = {
 	id: string;
@@ -15,46 +17,66 @@ export interface QuestionCategories {
 }
 
 export interface EnrollmentQuestionsProps {
-	studentData: QuestionCategories[];
+	studentQuestionCategories: QuestionCategories[];
 	editable: boolean;
-	onChange: () => void;
-	userSchema?: JsonSchema;
+	onChange: (newData: QuestionCategories[]) => void;
 }
 
 export function EnrollmentQuestions(props: EnrollmentQuestionsProps): React.ReactElement {
-	const { studentData, editable, onChange } = props;
+	const { studentQuestionCategories, editable, onChange } = props;
+
+	const onChangeHandler = (changedQuestionCategoryIndex: number, changedQuestionIndex: number, newAnserValue: string): void => {
+		const newQuestionCategories: QuestionCategories[] = _.cloneDeep(studentQuestionCategories);
+		newQuestionCategories[changedQuestionCategoryIndex].questions[changedQuestionIndex].answer = newAnserValue;
+		onChange(newQuestionCategories);
+	};
 
 	console.log(editable);
-	onChange();
 
 	return (
 		<div>
 			<List>
-				{studentData.map((category): React.ReactElement => {
+				{studentQuestionCategories.map((category, categoryIndex): React.ReactElement => {
 					return (
-						<div key={"category" + category}>
+						<div key={"category" + categoryIndex}>
 							<Typography variant="h4" gutterBottom>
 								{category.category}
 							</Typography>
 
-							{category.questions.map((question): React.ReactElement => {
+							{category.questions.map((question, questionIndex): React.ReactElement => {
+								const [answer, setAnswer] = useState(question.answer);
+								const debouncedAnswer = useDebounce<string>(answer, 500);
+
+								useEffect(() => {
+									onChangeHandler(categoryIndex, questionIndex, debouncedAnswer);
+								}, [debouncedAnswer]);
+
 								return (
-									<div key={question.id}>
+									<div key={"question" + question.id + questionIndex}>
 										<ListItem>
-											<Grid container spacing={2} sx={{ justifyContent: "center" }}>
+											<Grid container spacing={2} sx={{ justifyContent: "space-between" }}>
 												<Grid item xs={4}>
 													<div style={{ paddingRight: 20 }}>{question.question}</div>
 												</Grid>
 
-												<Grid item xs={4}>
-													<TextField multiline maxRows={8} fullWidth />
+												<Grid item xs={6}>
+													<TextField
+														multiline
+														maxRows={8}
+														fullWidth
+														value={answer}
+														onChange={(e): void => {
+															setAnswer(e.target.value);
+														}}
+													/>
 												</Grid>
 											</Grid>
 										</ListItem>
+										<Divider />
 									</div>
 								);
 							})}
-							<Divider />
+							{categoryIndex < studentQuestionCategories.length - 1 && <Divider />}
 						</div>
 					);
 				})}
