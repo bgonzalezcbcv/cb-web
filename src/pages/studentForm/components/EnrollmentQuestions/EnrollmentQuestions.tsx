@@ -16,22 +16,25 @@ export interface QuestionCategories {
 	questions: Question[];
 }
 
+export interface Student {
+	question_categories: QuestionCategories[];
+}
+
 export interface EnrollmentQuestionsProps {
-	studentQuestionCategories: QuestionCategories[];
+	studentData: Student;
 	editable: boolean;
-	onChange: (newData: QuestionCategories[]) => void;
+	onChange: (newData: Student) => void;
 }
 
 export function EnrollmentQuestions(props: EnrollmentQuestionsProps): React.ReactElement {
-	const { studentQuestionCategories, editable, onChange } = props;
+	const { studentData, editable, onChange } = props;
+	const studentQuestionCategories = studentData.question_categories;
 
 	const onChangeHandler = (changedQuestionCategoryIndex: number, changedQuestionIndex: number, newAnserValue: string): void => {
-		const newQuestionCategories: QuestionCategories[] = _.cloneDeep(studentQuestionCategories);
-		newQuestionCategories[changedQuestionCategoryIndex].questions[changedQuestionIndex].answer = newAnserValue;
-		onChange(newQuestionCategories);
+		const newStudentData: Student = _.cloneDeep(studentData);
+		newStudentData.question_categories[changedQuestionCategoryIndex].questions[changedQuestionIndex].answer = newAnserValue;
+		onChange(newStudentData);
 	};
-
-	console.log(editable);
 
 	return (
 		<div>
@@ -62,6 +65,7 @@ export function EnrollmentQuestions(props: EnrollmentQuestionsProps): React.Reac
 												<Grid item xs={6}>
 													<TextField
 														multiline
+														disabled={!editable}
 														maxRows={8}
 														fullWidth
 														value={answer}
