@@ -14,3 +14,18 @@ export interface User {
 	email: string;
 	token: string;
 }
+
+export interface Question {
+	id: string;
+	question: string;
+	answer: string;
+}
+
+export interface QuestionCategories {
+	category: string;
+	questions: Question[];
+}
+
+export interface Student {
+	question_categories: QuestionCategories[];
+}
