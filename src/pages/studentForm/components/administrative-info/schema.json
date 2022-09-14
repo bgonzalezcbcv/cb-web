@@ -36,7 +36,7 @@
     },
     "agreementType": {
       "type": "string",
-      "title": "En caso de convenio, especificar cual"
+      "title": "Convenio"
     }
   }
 }

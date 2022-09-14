@@ -3,11 +3,17 @@
   "elements": [
     {
       "type": "Control",
-      "scope": "#/properties/enrollmentDate"
+      "scope": "#/properties/enrollmentDate",
+      "options": {
+        "dateFormat": "DD/MM/YYYY"
+      }
     },
     {
       "type": "Control",
-      "scope": "#/properties/startDate"
+      "scope": "#/properties/startDate",
+      "options": {
+        "dateFormat": "DD/MM/YYYY"
+      }
     },
     {
       "type": "Control",

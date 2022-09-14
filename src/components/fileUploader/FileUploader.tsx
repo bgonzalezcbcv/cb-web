@@ -6,6 +6,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 export type FileUploaderProps = {
     label: string;
     width: number | string;
+    uploadedFile: (file: File) => void;
 }
 
 export default function FileUploader(props: FileUploaderProps): React.ReactElement {
@@ -42,6 +43,8 @@ export default function FileUploader(props: FileUploaderProps): React.ReactEleme
         if (!file) return;
 
         setFileName(file.name);
+
+        props.uploadedFile(file);
     }
 
     async function handleOnDropUpload(event: React.DragEvent<HTMLDivElement>): Promise<void> {
