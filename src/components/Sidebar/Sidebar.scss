@@ -1,0 +1,25 @@
+.sidebar-container {
+	display: flex;
+	flex-shrink: 0;
+	width: 240;
+}
+.section-item {
+	text-align: center;
+	background-color: rgba(243, 243, 243, 0.74);
+}
+
+.section-container {
+	margin-top: 0px !important;
+	margin-bottom: 0px !important;
+}
+
+.section-title {
+	text-align: center;
+	justify-content: center;
+	font-size: large;
+	border-bottom: 2px solid rgb(117, 117, 117);
+}
+
+.logo {
+	padding: 40px 20px 30px 20px;
+}

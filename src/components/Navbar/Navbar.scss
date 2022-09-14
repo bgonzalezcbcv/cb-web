@@ -1,0 +1,39 @@
+.profile-menu {
+	display: flex;
+	flex: 1;
+}
+
+.logged-user-controls {
+	display: flex;
+	flex: 0;
+}
+
+.menu-content {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	min-width: 200px;
+	padding: 10px 20px;
+}
+
+.user-info {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	padding-bottom: 20px;
+}
+
+.user-name-and-role {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.notifications-icon {
+	display: flex;
+	flex: 1;
+	height: 100px;
+}
