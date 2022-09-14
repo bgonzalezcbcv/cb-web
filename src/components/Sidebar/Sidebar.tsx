@@ -19,7 +19,7 @@ function renderSections(sections: SidebarSection[]): React.ReactElement {
 		<div>
 			{sections.map((section) => {
 				return (
-					<Accordion key={section.sectionTitle} className="section-container">
+					<Accordion key={section.sectionTitle} className="section-container" disableGutters square>
 						<AccordionSummary className="section-title" expandIcon={<ExpandMoreIcon />}>
 							{section.sectionTitle}
 						</AccordionSummary>
@@ -51,19 +51,10 @@ function Sidebar(props: SidebarProps): React.ReactElement {
 
 	const theme = createTheme({
 		components: {
-			MuiAccordion: {
-				styleOverrides: {
-					root: {
-						marginY: 0,
-					},
-				},
-			},
 			MuiAccordionSummary: {
 				styleOverrides: {
 					root: {
 						"& .MuiAccordionSummary-content": { justifyContent: "center" },
-						borderBottom: 2,
-						borderColor: "rgb(117,117,117)",
 					},
 				},
 			},
