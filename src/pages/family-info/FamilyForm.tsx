@@ -58,11 +58,30 @@ type FamilyMemberData = {
 	workplacePhone: string;
 };
 
-export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
-	// const {family, onChange, editable} = props;
+function parseFamilyMemberData(familyMember: FamilyMember): FamilyMemberData {
+	return {
+		...familyMember,
+		birthDate: familyMember?.birthDate?.toString() ?? "",
+	};
+}
 
-	const [canSaveArray, setCanSave] = useState(Array(props.family.length).fill(false));
-	const [data, setData] = useState(props.family);
+function parseFamilyMember(familyMemberData: FamilyMemberData): FamilyMember {
+	return {
+		...familyMemberData,
+		birthDate: new Date(familyMemberData?.birthDate ?? ""), // TODO: check
+	};
+}
+
+function canParseFamilyMember(familyMemberData: FamilyMemberData): boolean {
+	const date = Date.parse(familyMemberData?.birthDate);
+	return !isNaN(date);
+}
+
+export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
+	const { family, onChange, editable } = props;
+
+	const [hasErrorsArray, setHasErrorsArray] = useState<boolean[]>(Array(family.length).fill(false));
+	const [familyMemberDatas, setFamilyMemberDatas] = useState<FamilyMemberData[]>(family.map(parseFamilyMemberData));
 	const [familyIndex, setFamilyIndex] = useState(0);
 
 	const handleDefaultsAjv = createAjv({ useDefaults: true });
@@ -71,35 +90,27 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 		newIndex !== null && setFamilyIndex(newIndex);
 	};
 
-	function getCurrentData(): unknown {
-		const dataCopy = data[familyIndex] as unknown as FamilyMemberData;
-		if (data[familyIndex] && data[familyIndex].birthDate) {
-			dataCopy.birthDate = data[familyIndex].birthDate.toString();
-		}
-		return dataCopy;
-	}
-
-	function setCurrentData(dataFamilyMember: FamilyMember, errors: unknown[] | undefined): void {
-		const canSaveArrayCopy = canSaveArray.slice();
+	function setCurrentData(dataFamilyMember: FamilyMemberData, errors: unknown[] | undefined): void {
+		const canSaveArrayCopy = hasErrorsArray.slice();
 		canSaveArrayCopy[familyIndex] = !errors || errors.length == 0;
-		setCanSave(canSaveArrayCopy);
-		if (dataFamilyMember && dataFamilyMember.birthDate) {
-			dataFamilyMember.birthDate = new Date(dataFamilyMember.birthDate);
-		}
-		const dataCopy = data.slice();
-		dataCopy[familyIndex] = dataFamilyMember;
-		setData(dataCopy);
+		setHasErrorsArray(canSaveArrayCopy);
+
+		if (!canParseFamilyMember(dataFamilyMember)) return;
+
+		const familyMemberDatasCopy = familyMemberDatas.slice();
+		familyMemberDatasCopy[familyIndex] = dataFamilyMember;
+		setFamilyMemberDatas(familyMemberDatasCopy);
 	}
 
 	function canSave(): boolean {
 		let canSave = true;
-		canSaveArray.forEach((element) => {
+		hasErrorsArray.forEach((element) => {
 			canSave = canSave && element;
 		});
 		return canSave;
 	}
 
-	const toggleButtons = data.map((step, index) => {
+	const toggleButtons = familyMemberDatas.map((step, index) => {
 		let text = "Familiar " + (index + 1).toString();
 		if (step && step.fullName) text = step.fullName;
 		return (
@@ -120,8 +131,11 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 				<ToggleButtonGroup value={familyIndex} exclusive onChange={setFamilyIndexFromButton}>
 					{toggleButtons}
 
-					{data.length <= 1 && props.editable ? (
-						<ToggleButton id="addFamilyMember" value={data.length} onClick={(): void => setData([...data, {} as FamilyMember])}>
+					{familyMemberDatas.length <= 1 && editable ? (
+						<ToggleButton
+							id="addFamilyMember"
+							value={familyMemberDatas.length}
+							onClick={(): void => setFamilyMemberDatas([...familyMemberDatas, {} as FamilyMemberData])}>
 							+
 						</ToggleButton>
 					) : null}
@@ -131,21 +145,21 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 				i18n={{ translate: translator as Translator }}
 				schema={schema as JsonSchema7}
 				uischema={ui}
-				data={getCurrentData()}
+				data={familyMemberDatas[familyIndex]}
 				renderers={materialRenderers}
 				cells={materialCells}
 				onChange={({ data, errors }): void => setCurrentData(data, errors)}
-				readonly={!props.editable}
+				readonly={!editable}
 				ajv={handleDefaultsAjv}
 			/>
 			<div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end" }}>
-				{props.editable ? (
+				{editable ? (
 					<Button
 						id="saveButton"
 						variant="contained"
 						disabled={!canSave()}
 						onClick={(): void => {
-							props.onChange(data);
+							onChange(familyMemberDatas.map(parseFamilyMember));
 						}}>
 						Guardar
 					</Button>
