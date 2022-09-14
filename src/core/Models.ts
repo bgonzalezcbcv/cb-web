@@ -90,7 +90,7 @@ export interface Student { //Esto es lo que quiero obtener al fetchear un Studen
 	nationality: string;
 	first_language: string;
 	office: string;
-	state: string;
+	status: string;
 	address: string;
 	neighborhood: string;
 	medical_assurance: string;
@@ -118,7 +118,7 @@ export interface StudentToCreate { // Lo que recibe el endpoint para crear usuar
 	nationality: string;
 	first_language: string;
 	office: string;
-	state: string;
+	status: string;
 	address: string;
 	neighborhood: string;
 	medical_assurance: string;
