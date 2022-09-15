@@ -61,9 +61,8 @@ describe("EditFamilyForm", () => {
 		expect(plusButton).toEqual(null);
 
 		const ciField = wrapper.container.querySelector(ciRef);
-		if (ciField === null) return;
 		const member2 = wrapper.container.querySelector(member2Ref);
-		if (member2 === null) return;
+		if (member2 === null || ciField === null) return;
 		await act(async () => {
 			fireEvent.change(ciField, { target: "11231231" });
 			fireEvent.click(member2);
@@ -72,8 +71,7 @@ describe("EditFamilyForm", () => {
 
 		const ciField2 = wrapper.container.querySelector(ciRef);
 		const save = wrapper.container.querySelector(saveButtonRef);
-		if (ciField2 === null) return;
-		if (save === null) return;
+		if (save === null || ciField2 === null) return;
 		await act(async () => {
 			fireEvent.change(ciField2, { target: "4454567" });
 			fireEvent.click(save);
@@ -142,10 +140,9 @@ describe("EditFamilyForm", () => {
 		// plus button only available when editting and only one member
 		const plusButton = wrapper.container.querySelector(addMemberRef);
 		expect(plusButton).not.toEqual(null);
-		if (plusButton === null) return;
 
 		const ciField = wrapper.container.querySelector(ciRef);
-		if (ciField === null) return;
+		if (ciField === null || plusButton === null) return;
 		await act(async () => {
 			fireEvent.change(ciField, { target: "11231231" });
 			fireEvent.click(plusButton);
@@ -153,10 +150,11 @@ describe("EditFamilyForm", () => {
 
 		const save = wrapper.container.querySelector(saveButtonRef);
 		expect(save).not.toEqual(null);
-		if (save === null) return;
-
 		const ciField2 = wrapper.container.querySelector(ciRef);
-		if (ciField2 === null) return;
+		const member2 = wrapper.container.querySelector(member2Ref);
+		expect(member2).not.toEqual(null);
+		if (ciField2 === null || save === null || member2 === null) return;
+		expect(member2.ariaPressed).toEqual("true");
 
 		await act(async () => {
 			fireEvent.change(ciField2, { target: "4454567" });
@@ -180,10 +178,9 @@ describe("EditFamilyForm", () => {
 
 		const member1 = wrapper.container.querySelector(member1Ref);
 		expect(member1).not.toEqual(null);
-		if (member1 === null) return;
 		expect(member1?.textContent).toEqual("Familiar 1");
 		const fullNameField = wrapper.container.querySelector(fullNameRef);
-		if (fullNameField === null) return;
+		if (fullNameField === null || member1 === null) return;
 
 		await act(async () => {
 			fireEvent.change(fullNameField, { target: "Name LastName" });
@@ -206,12 +203,10 @@ describe("EditFamilyForm", () => {
 		);
 
 		const ciField = wrapper.container.querySelector(ciRef);
-		if (ciField === null) return;
 		const birthdateField = wrapper.container.querySelector(birthDateRef);
-		if (birthdateField === null) return;
 		const save = wrapper.container.querySelector(saveButtonRef);
 		expect(save).not.toEqual(null);
-		if (save === null) return;
+		if (save === null || ciField === null || birthdateField === null) return;
 		await act(async () => {
 			fireEvent.change(ciField, { target: "11231231" });
 			fireEvent.change(birthdateField, { target: "01/01/1999" });

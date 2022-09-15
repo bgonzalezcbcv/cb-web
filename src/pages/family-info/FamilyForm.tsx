@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 
 import { JsonForms } from "@jsonforms/react";
-import { JsonSchema7, Translator } from "@jsonforms/core";
+import { JsonSchema7, Translator, createAjv } from "@jsonforms/core";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
+import { Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
 
 import schema from "./schema.json";
 import ui from "./ui.json";
 
 import "./FamilyForm.scss";
-
-import { createAjv } from "@jsonforms/core";
-import { Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
 
 export type FamilyFormProps = {
 	family: FamilyMember[];
