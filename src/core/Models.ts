@@ -30,44 +30,56 @@ export interface FamilyMember {
 	workplace_phone: string;
 }
 
-export enum Scholarship { //todo: rellenar
-	Bonificada = "bonificada",
+export enum ScholarshipType {
+	Bidding = "licitación",
+	Subsidized = "bonificada",
+	Agreement = "convenio",
+	Special = "especial",
 }
 
-export enum Agreement { //todo: rellenar
-	None = "ninguno",
-}
-
-export enum AvailablePaymentMethods { //todo: rellenar
-	Card = "tarjeta",
-}
-
-export enum PaymentMethodsOptions { //todo: rellenar
+export enum PaymentMethodOption {
 	Cash = "contado",
+	Financing = "financiacion",
+	Bidding = "licitacion",
+}
+
+export enum AgreementType { //TODO: Estos son agregados por el admin del sistema
+	None = 'ninguno'
+}
+
+export enum DiscountType {
+	Direction = "dirección",
+	SocialAssistant = "asistente social",
+}
+
+export enum DiscountExplanation {
+	Sibling = "hermano",
+	Resolution = "resolución",
 }
 
 interface PaymentMethod {
-	method: AvailablePaymentMethods;
-	option: PaymentMethodsOptions;
-}
-
-export enum DiscountExplanation { //todo: rellenar
-	Brother = "hermano",
+	year: number;
+	method: PaymentMethodOption;
+	yearly_payment_url: string;
 }
 
 interface Discount {
 	percentage: number;
-	starting_date: string;
-	ending_date: string;
-	type: string;
+	starting_date: Date;
+	ending_date: Date;
+	type: DiscountType;
+	resolution_url: string;
 	explanation: DiscountExplanation;
 	report_url: string;
+	description: string;
 }
 
 export interface AdministrativeInfo {
+	enrollment_date: Date;
+	starting_date: Date;
 	registration_commitment_url: string;
-	scholarship_type: Scholarship;
-	agreement_type: Agreement;
+	scholarship_type: ScholarshipType;
+	agreement_type: AgreementType;
 	comments: string;
 	payment_methods: PaymentMethod[];
 	discounts: Discount[];
