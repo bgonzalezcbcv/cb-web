@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
 
-import { Divider, Grid, List, ListItem, TextField, Typography } from "@mui/material";
+import { Box, Divider, Grid, List, ListItem, TextField, Typography } from "@mui/material";
 import useDebounce from "../../../../hooks/useDebounce";
 import { Student } from "../../../../core/interfaces";
 
@@ -18,6 +18,7 @@ export function EnrollmentQuestions(props: EnrollmentQuestionsProps): React.Reac
 	const onChangeHandler = (changedQuestionCategoryIndex: number, changedQuestionIndex: number, newAnserValue: string): void => {
 		const newStudentData: Student = _.cloneDeep(studentData);
 		newStudentData.question_categories[changedQuestionCategoryIndex].questions[changedQuestionIndex].answer = newAnserValue;
+
 		onChange(newStudentData);
 	};
 
@@ -30,39 +31,48 @@ export function EnrollmentQuestions(props: EnrollmentQuestionsProps): React.Reac
 							{category.category}
 						</Typography>
 
-						{category.questions.map((question, questionIndex): React.ReactElement => {
-							const [answer, setAnswer] = useState(question.answer);
-							const debouncedAnswer = useDebounce<string>(answer, 500);
+						<Grid container spacing={2} sx={{ justifyContent: "space-between" }}>
+							{category.questions.map((question, questionIndex): React.ReactElement => {
+								const [answer, setAnswer] = useState(question.answer);
+								const debouncedAnswer = useDebounce<string>(answer, 500);
 
-							useEffect(() => {
-								onChangeHandler(categoryIndex, questionIndex, debouncedAnswer);
-							}, [debouncedAnswer]);
+								useEffect(() => {
+									onChangeHandler(categoryIndex, questionIndex, debouncedAnswer);
+								}, [debouncedAnswer]);
 
-							return (
-								<div key={"question" + question.id + questionIndex}>
-									<ListItem>
-										<Grid container spacing={2} sx={{ justifyContent: "space-between" }}>
-											<Grid item xs={4}>
-												<div style={{ paddingRight: 20 }}>{question.question}</div>
-											</Grid>
-
-											<Grid item xs={6}>
+								return (
+									<Grid item sm={12} lg={6} xl={4} key={"question" + question.id + questionIndex} sx={{ width: "100%" }}>
+										<ListItem sx={{ flex: 1, height: "100%" }}>
+											<Box
+												sx={{
+													flexDirection: "column",
+													justifyContent: "space-between",
+													display: "flex",
+													flex: 1,
+													height: "100%",
+													alignContent: "center",
+												}}>
+												<Typography style={{ paddingRight: 20 }} gutterBottom variant="body2">
+													{question.question}
+												</Typography>
 												<TextField
 													multiline
+													minRows={4}
 													disabled={!editable}
-													maxRows={8}
+													maxRows={4}
 													fullWidth
+													placeholder="Ingrese la respuesta"
 													value={answer}
-													onChange={(e): void => {
-														setAnswer(e.target.value);
+													onChange={(event): void => {
+														setAnswer(event.target.value);
 													}}
 												/>
-											</Grid>
-										</Grid>
-									</ListItem>
-								</div>
-							);
-						})}
+											</Box>
+										</ListItem>
+									</Grid>
+								);
+							})}
+						</Grid>
 
 						{categoryIndex < studentQuestionCategories.length - 1 && <Divider />}
 					</div>

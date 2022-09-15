@@ -1,0 +1,371 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EnrollmentQuestions should render correctly 1`] = `
+<div>
+  <ul
+    class="MuiList-root MuiList-padding css-h4y409-MuiList-root"
+  >
+    <div>
+      <h4
+        class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom css-1vw6mcs-MuiTypography-root"
+      >
+        categoria 1
+      </h4>
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-1xu1mzw-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-12 MuiGrid-grid-lg-6 MuiGrid-grid-xl-4 css-9h66bi-MuiGrid-root"
+        >
+          <li
+            class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1ss44p5-MuiListItem-root"
+          >
+            <div
+              class="MuiBox-root css-7n0sq1"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body2 MuiTypography-gutterBottom css-ejgmvm-MuiTypography-root"
+                style="padding-right: 20px;"
+              >
+                question 1 pero es mucho muchomuchomuchomucho muchomuchomuchomuchomucho muchomuchomuchomuchomuchomuchomucho muchomuchomuchomuchomuchomuchomuchomuchomucho mas larga para romper todo
+              </p>
+              <div
+                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
+              >
+                <div
+                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline css-8ewcdo-MuiInputBase-root-MuiOutlinedInput-root"
+                >
+                  <textarea
+                    aria-invalid="false"
+                    class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
+                    id=":r0:"
+                    placeholder="Ingrese la respuesta"
+                    style="height: 0px; overflow: hidden;"
+                  >
+                    answer 1a
+                  </textarea>
+                  <textarea
+                    aria-hidden="true"
+                    class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
+                    readonly=""
+                    style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); padding: 0px; width: 100%;"
+                    tabindex="-1"
+                  />
+                  <fieldset
+                    aria-hidden="true"
+                    class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                  >
+                    <legend
+                      class="css-hdw1oc"
+                    >
+                      <span
+                        class="notranslate"
+                      >
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+          </li>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-12 MuiGrid-grid-lg-6 MuiGrid-grid-xl-4 css-9h66bi-MuiGrid-root"
+        >
+          <li
+            class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1ss44p5-MuiListItem-root"
+          >
+            <div
+              class="MuiBox-root css-7n0sq1"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body2 MuiTypography-gutterBottom css-ejgmvm-MuiTypography-root"
+                style="padding-right: 20px;"
+              >
+                question 2
+              </p>
+              <div
+                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
+              >
+                <div
+                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline css-8ewcdo-MuiInputBase-root-MuiOutlinedInput-root"
+                >
+                  <textarea
+                    aria-invalid="false"
+                    class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
+                    id=":r1:"
+                    placeholder="Ingrese la respuesta"
+                    style="height: 0px; overflow: hidden;"
+                  >
+                    answer 2
+                  </textarea>
+                  <textarea
+                    aria-hidden="true"
+                    class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
+                    readonly=""
+                    style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); padding: 0px; width: 100%;"
+                    tabindex="-1"
+                  />
+                  <fieldset
+                    aria-hidden="true"
+                    class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                  >
+                    <legend
+                      class="css-hdw1oc"
+                    >
+                      <span
+                        class="notranslate"
+                      >
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+          </li>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-12 MuiGrid-grid-lg-6 MuiGrid-grid-xl-4 css-9h66bi-MuiGrid-root"
+        >
+          <li
+            class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1ss44p5-MuiListItem-root"
+          >
+            <div
+              class="MuiBox-root css-7n0sq1"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body2 MuiTypography-gutterBottom css-ejgmvm-MuiTypography-root"
+                style="padding-right: 20px;"
+              >
+                question 3
+              </p>
+              <div
+                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
+              >
+                <div
+                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline css-8ewcdo-MuiInputBase-root-MuiOutlinedInput-root"
+                >
+                  <textarea
+                    aria-invalid="false"
+                    class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
+                    id=":r2:"
+                    placeholder="Ingrese la respuesta"
+                    style="height: 0px; overflow: hidden;"
+                  >
+                    answer 3
+                  </textarea>
+                  <textarea
+                    aria-hidden="true"
+                    class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
+                    readonly=""
+                    style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); padding: 0px; width: 100%;"
+                    tabindex="-1"
+                  />
+                  <fieldset
+                    aria-hidden="true"
+                    class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                  >
+                    <legend
+                      class="css-hdw1oc"
+                    >
+                      <span
+                        class="notranslate"
+                      >
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+          </li>
+        </div>
+      </div>
+      <hr
+        class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+      />
+    </div>
+    <div>
+      <h4
+        class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom css-1vw6mcs-MuiTypography-root"
+      >
+        categoria 2
+      </h4>
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-1xu1mzw-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-12 MuiGrid-grid-lg-6 MuiGrid-grid-xl-4 css-9h66bi-MuiGrid-root"
+        >
+          <li
+            class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1ss44p5-MuiListItem-root"
+          >
+            <div
+              class="MuiBox-root css-7n0sq1"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body2 MuiTypography-gutterBottom css-ejgmvm-MuiTypography-root"
+                style="padding-right: 20px;"
+              >
+                question 12
+              </p>
+              <div
+                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
+              >
+                <div
+                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline css-8ewcdo-MuiInputBase-root-MuiOutlinedInput-root"
+                >
+                  <textarea
+                    aria-invalid="false"
+                    class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
+                    id=":r3:"
+                    placeholder="Ingrese la respuesta"
+                    style="height: 0px; overflow: hidden;"
+                  >
+                    answer 12
+                  </textarea>
+                  <textarea
+                    aria-hidden="true"
+                    class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
+                    readonly=""
+                    style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); padding: 0px; width: 100%;"
+                    tabindex="-1"
+                  />
+                  <fieldset
+                    aria-hidden="true"
+                    class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                  >
+                    <legend
+                      class="css-hdw1oc"
+                    >
+                      <span
+                        class="notranslate"
+                      >
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+          </li>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-12 MuiGrid-grid-lg-6 MuiGrid-grid-xl-4 css-9h66bi-MuiGrid-root"
+        >
+          <li
+            class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1ss44p5-MuiListItem-root"
+          >
+            <div
+              class="MuiBox-root css-7n0sq1"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body2 MuiTypography-gutterBottom css-ejgmvm-MuiTypography-root"
+                style="padding-right: 20px;"
+              >
+                question 22
+              </p>
+              <div
+                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
+              >
+                <div
+                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline css-8ewcdo-MuiInputBase-root-MuiOutlinedInput-root"
+                >
+                  <textarea
+                    aria-invalid="false"
+                    class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
+                    id=":r4:"
+                    placeholder="Ingrese la respuesta"
+                    style="height: 0px; overflow: hidden;"
+                  >
+                    answer 22
+                  </textarea>
+                  <textarea
+                    aria-hidden="true"
+                    class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
+                    readonly=""
+                    style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); padding: 0px; width: 100%;"
+                    tabindex="-1"
+                  />
+                  <fieldset
+                    aria-hidden="true"
+                    class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                  >
+                    <legend
+                      class="css-hdw1oc"
+                    >
+                      <span
+                        class="notranslate"
+                      >
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+          </li>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-12 MuiGrid-grid-lg-6 MuiGrid-grid-xl-4 css-9h66bi-MuiGrid-root"
+        >
+          <li
+            class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1ss44p5-MuiListItem-root"
+          >
+            <div
+              class="MuiBox-root css-7n0sq1"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body2 MuiTypography-gutterBottom css-ejgmvm-MuiTypography-root"
+                style="padding-right: 20px;"
+              >
+                question 32
+              </p>
+              <div
+                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
+              >
+                <div
+                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline css-8ewcdo-MuiInputBase-root-MuiOutlinedInput-root"
+                >
+                  <textarea
+                    aria-invalid="false"
+                    class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
+                    id=":r5:"
+                    placeholder="Ingrese la respuesta"
+                    style="height: 0px; overflow: hidden;"
+                  >
+                    answer 32
+                  </textarea>
+                  <textarea
+                    aria-hidden="true"
+                    class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
+                    readonly=""
+                    style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); padding: 0px; width: 100%;"
+                    tabindex="-1"
+                  />
+                  <fieldset
+                    aria-hidden="true"
+                    class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                  >
+                    <legend
+                      class="css-hdw1oc"
+                    >
+                      <span
+                        class="notranslate"
+                      >
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+          </li>
+        </div>
+      </div>
+    </div>
+  </ul>
+</div>
+`;
