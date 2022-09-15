@@ -12,11 +12,11 @@ export interface QuestionCategories {
 export interface FamilyMember {
 	role: string;
 	full_name: string;
-	birthdate: Date;
+	birthdate: string;
 	birthplace: string;
 	nationality: string;
 	first_language: string;
-	ci: number;
+	ci: string;
 	marital_status: string;
 	cellphone: string;
 	email: string;
@@ -30,19 +30,19 @@ export interface FamilyMember {
 	workplace_phone: string;
 }
 
-enum Scholarship { //todo: rellenar
+export enum Scholarship { //todo: rellenar
 	Bonificada = "bonificada",
 }
 
-enum Agreement { //todo: rellenar
+export enum Agreement { //todo: rellenar
 	None = "ninguno",
 }
 
-enum AvailablePaymentMethods {//todo: rellenar
+export enum AvailablePaymentMethods { //todo: rellenar
 	Card = "tarjeta",
 }
 
-enum PaymentMethodsOptions {//todo: rellenar
+export enum PaymentMethodsOptions { //todo: rellenar
 	Cash = "contado",
 }
 
@@ -51,22 +51,20 @@ interface PaymentMethod {
 	option: PaymentMethodsOptions;
 }
 
-enum DiscountExplanation {//todo: rellenar
+export enum DiscountExplanation { //todo: rellenar
 	Brother = "hermano",
 }
 
 interface Discount {
 	percentage: number;
-	starting_date: Date;
-	ending_date: Date;
+	starting_date: string;
+	ending_date: string;
 	type: string;
 	explanation: DiscountExplanation;
 	report_url: string;
 }
 
 export interface AdministrativeInfo {
-	inscription_date: Date;
-	starting_date: Date;
 	registration_commitment_url: string;
 	scholarship_type: Scholarship;
 	agreement_type: Agreement;
@@ -75,10 +73,9 @@ export interface AdministrativeInfo {
 	discounts: Discount[];
 }
 
-export interface Student { //Esto es lo que quiero obtener al fetchear un Student.
+export interface Student {
 	id: string;
 	ci: string;
-	email: string;
 	name: string;
 	surname: string;
 	schedule_start: string;
@@ -86,7 +83,7 @@ export interface Student { //Esto es lo que quiero obtener al fetchear un Studen
 	tuition: string;
 	reference_number: number;
 	birthplace: string;
-	birthdate: Date;
+	birthdate: string;
 	nationality: string;
 	first_language: string;
 	office: string;
@@ -95,44 +92,16 @@ export interface Student { //Esto es lo que quiero obtener al fetchear un Studen
 	neighborhood: string;
 	medical_assurance: string;
 	emergency: string;
-	phone_number: string; // este no esta en el otro excel
-	vaccine_expiration: Date;
+	phone_number: string;
+	vaccine_expiration: string;
+	inscription_date: string;
+	starting_date: string;
+	contact: string;
+	contact_phone: string;
+	email: string;
 	family: FamilyMember[];
 	question_categories: QuestionCategories[];
 	administrative_info: AdministrativeInfo;
-	contact: string;
-	contact_phone: string;
-}
-
-export interface StudentToCreate { // Lo que recibe el endpoint para crear usuario.
-	ci: string;
-	email: string;
-	name: string;
-	surname: string;
-	schedule_start: string;
-	schedule_end: string;
-	tuition: string;
-	reference_number: number;
-	birthplace: string;
-	birthdate: Date;
-	nationality: string;
-	first_language: string;
-	office: string;
-	status: string;
-	address: string;
-	neighborhood: string;
-	medical_assurance: string;
-	emergency: string;
-	phone_number: string; // este no esta en el otro excel
-	vaccine_expiration: Date;
-	inscription_date: Date;
-	starting_date: Date;
-	registration_commitment_url: string;
-	scholarship_type: Scholarship;
-	agreement_type: Agreement;
-	comments: string;
-	contact: string;
-	contact_phone: string;
 }
 
 export interface StudentCreationForm {
