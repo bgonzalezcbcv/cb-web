@@ -1,4 +1,11 @@
-import { Agreement, AvailablePaymentMethods, DiscountExplanation, PaymentMethodsOptions, Scholarship, Student } from "../../core/Models";
+import {
+	AgreementType,
+	DiscountExplanation,
+	DiscountType,
+	PaymentMethodOption,
+	ScholarshipType,
+	Student
+} from "../../core/Models";
 
 const defaultStudent: Student = {
 	id: "",
@@ -61,24 +68,29 @@ const defaultStudent: Student = {
 		},
 	],
 	administrative_info: {
+		enrollment_date: new Date("1/2/2022"),
+		starting_date: new Date("1/3/2022"),
 		registration_commitment_url: "",
-		scholarship_type: Scholarship.Bonificada,
-		agreement_type: Agreement.None,
+		scholarship_type: ScholarshipType.Subsidized,
+		agreement_type: AgreementType.None,
 		comments: "",
 		payment_methods: [
 			{
-				method: AvailablePaymentMethods.Card,
-				option: PaymentMethodsOptions.Cash,
+				year: 2022,
+				method: PaymentMethodOption.Cash,
+				yearly_payment_url: ""
 			},
 		],
 		discounts: [
 			{
-				starting_date: "",
-				ending_date: "",
-				explanation: DiscountExplanation.Brother,
-				percentage: 2,
-				type: "",
+				percentage: 10,
+				starting_date: new Date("1/3/2022"),
+				ending_date: new Date("10/8/2022"),
+				type: DiscountType.Direction,
+				resolution_url: "",
+				explanation: DiscountExplanation.Sibling,
 				report_url: "",
+				description: "",
 			},
 		],
 	},
