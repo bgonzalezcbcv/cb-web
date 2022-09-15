@@ -74,6 +74,7 @@ function parseFamilyMember(familyMemberData: FamilyMemberData): FamilyMember {
 
 function canParseFamilyMember(familyMemberData: FamilyMemberData): boolean {
 	const date = Date.parse(familyMemberData?.birthDate);
+	if (!familyMemberData || !familyMemberData.birthDate) return true;
 	return !isNaN(date);
 }
 
