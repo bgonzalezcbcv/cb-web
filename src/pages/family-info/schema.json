@@ -21,16 +21,16 @@
 			"title": "Tipo de responsable",
 			"default": "mother"
 		},
-		"fullName": {
+		"full_name": {
 			"type": "string",
 			"title": "Nombre completo"
 		},
-		"birthDate": {
+		"birthdate": {
 			"type": "string",
 			"dateFormat": "DD/MM/YYYY",
 			"title": "Fecha de nacimiento"
 		},
-		"birthCountry": {
+		"birthplace": {
 			"type": "string",
 			"title": "País de nacimiento"
 		},
@@ -38,7 +38,7 @@
 			"type": "string",
 			"title": "Nacionalidad"
 		},
-		"motherToungue": {
+		"first_language": {
 			"type": "string",
 			"title": "Lengua materna"
 		},
@@ -47,7 +47,7 @@
 			"title": "Cedula de identidad",
 			"minimum": 0
 		},
-		"maritalStatus": {
+		"marital_status": {
 			"oneOf": [
 				{
 					"const": "single",
@@ -79,11 +79,11 @@
 			"type": "string",
 			"title": "Dirección"
 		},
-		"residenceNeighborhood": {
+		"neighbourhood": {
 			"type": "string",
 			"title": "Barrio de residencia"
 		},
-		"educationLevel": {
+		"education_level": {
 			"oneOf": [
 				{
 					"const": "none",
@@ -113,15 +113,15 @@
 			"type": "string",
 			"title": "Empresa de trabajo"
 		},
-		"workplaceAddress": {
+		"workplace_address": {
 			"type": "string",
 			"title": "Dirección laboral"
 		},
-		"workplaceNeighborhood": {
+		"workplace_neighbourhood": {
 			"type": "string",
 			"title": "Barrio laboral"
 		},
-		"workplacePhone": {
+		"workplace_phone": {
 			"type": "number",
 			"title": "Teléfono laboral",
 			"pattern": "\\d{8,9}"

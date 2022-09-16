@@ -4,6 +4,7 @@ import { JsonForms } from "@jsonforms/react";
 import { JsonSchema7, Translator, createAjv } from "@jsonforms/core";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
 import { Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { FamilyMember, Student } from "../../core/Models";
 
 import schema from "./schema.json";
 import ui from "./ui.json";
@@ -11,76 +12,18 @@ import ui from "./ui.json";
 import "./FamilyForm.scss";
 
 export type FamilyFormProps = {
-	family: FamilyMember[];
-	onChange: (data: FamilyMember[]) => unknown;
+	student: Student;
+	onChange: (data: Student) => unknown;
 	editable: boolean;
 };
-export type FamilyMember = {
-	role: string;
-	fullName: string;
-	birthDate: Date;
-	birthCountry: string;
-	nationality: string;
-	motherTongue: string;
-	ci: number;
-	maritalStatus: string;
-	cellphone: string;
-	email: string;
-	address: string;
-	residenceNeighbourhood: string;
-	educationLevel: string;
-	occupation: string;
-	workplace: string;
-	workplaceAddress: string;
-	workplaceNeighbourhood: string;
-	workplacePhone: string;
-};
-type FamilyMemberData = {
-	role: string;
-	fullName: string;
-	birthDate: string;
-	birthCountry: string;
-	nationality: string;
-	motherTongue: string;
-	ci: number;
-	maritalStatus: string;
-	cellphone: string;
-	email: string;
-	address: string;
-	residenceNeighbourhood: string;
-	educationLevel: string;
-	occupation: string;
-	workplace: string;
-	workplaceAddress: string;
-	workplaceNeighbourhood: string;
-	workplacePhone: string;
-};
-
-function parseFamilyMemberData(familyMember: FamilyMember): FamilyMemberData {
-	return {
-		...familyMember,
-		birthDate: familyMember?.birthDate?.toString() ?? "",
-	};
-}
-
-function parseFamilyMember(familyMemberData: FamilyMemberData): FamilyMember {
-	return {
-		...familyMemberData,
-		birthDate: new Date(familyMemberData?.birthDate ?? ""), // TODO: check
-	};
-}
-
-function canParseFamilyMember(familyMemberData: FamilyMemberData): boolean {
-	const date = Date.parse(familyMemberData?.birthDate);
-	if (!familyMemberData || !familyMemberData.birthDate) return true;
-	return !isNaN(date);
-}
 
 export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
-	const { family, onChange, editable } = props;
+	const { student, onChange, editable } = props;
+
+	const family = student.family;
 
 	const [hasErrorsArray, setHasErrorsArray] = useState<boolean[]>(Array(family.length).fill(false));
-	const [familyMemberDatas, setFamilyMemberDatas] = useState<FamilyMemberData[]>(family.map(parseFamilyMemberData));
+	const [familyMembers, setFamilyMembers] = useState<FamilyMember[]>(family);
 	const [familyIndex, setFamilyIndex] = useState(0);
 
 	const handleDefaultsAjv = createAjv({ useDefaults: true });
@@ -89,16 +32,14 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 		newIndex !== null && setFamilyIndex(newIndex);
 	};
 
-	function setCurrentData(dataFamilyMember: FamilyMemberData, errors: unknown[] | undefined): void {
+	function setCurrentData(dataFamilyMember: FamilyMember, errors: unknown[] | undefined): void {
 		const canSaveArrayCopy = hasErrorsArray.slice();
 		canSaveArrayCopy[familyIndex] = !errors || errors.length == 0;
 		setHasErrorsArray(canSaveArrayCopy);
 
-		if (!canParseFamilyMember(dataFamilyMember)) return;
-
-		const familyMemberDatasCopy = familyMemberDatas.slice();
-		familyMemberDatasCopy[familyIndex] = dataFamilyMember;
-		setFamilyMemberDatas(familyMemberDatasCopy);
+		const familyMembersCopy = familyMembers.slice();
+		familyMembersCopy[familyIndex] = dataFamilyMember;
+		setFamilyMembers(familyMembersCopy);
 	}
 
 	function canSave(): boolean {
@@ -109,9 +50,9 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 		return canSave;
 	}
 
-	const toggleButtons = familyMemberDatas.map((step, index) => {
+	const toggleButtons = familyMembers.map((step, index) => {
 		let text = "Familiar " + (index + 1).toString();
-		if (step && step.fullName) text = step.fullName;
+		if (step && step.full_name) text = step.full_name;
 		return (
 			<ToggleButton id={"family" + index.toString()} key={index} value={index}>
 				{text}
@@ -130,11 +71,11 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 				<ToggleButtonGroup value={familyIndex} exclusive onChange={setFamilyIndexFromButton}>
 					{toggleButtons}
 
-					{familyMemberDatas.length <= 1 && editable ? (
+					{familyMembers.length <= 1 && editable ? (
 						<ToggleButton
 							id="addFamilyMember"
-							value={familyMemberDatas.length}
-							onClick={(): void => setFamilyMemberDatas([...familyMemberDatas, {} as FamilyMemberData])}>
+							value={familyMembers.length}
+							onClick={(): void => setFamilyMembers([...familyMembers, {} as FamilyMember])}>
 							+
 						</ToggleButton>
 					) : null}
@@ -144,7 +85,7 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 				i18n={{ translate: translator as Translator }}
 				schema={schema as JsonSchema7}
 				uischema={ui}
-				data={familyMemberDatas[familyIndex]}
+				data={familyMembers[familyIndex]}
 				renderers={materialRenderers}
 				cells={materialCells}
 				onChange={({ data, errors }): void => setCurrentData(data, errors)}
@@ -158,7 +99,7 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 						variant="contained"
 						disabled={!canSave()}
 						onClick={(): void => {
-							onChange(familyMemberDatas.map(parseFamilyMember));
+							onChange({ ...student, family: familyMembers });
 						}}>
 						Guardar
 					</Button>

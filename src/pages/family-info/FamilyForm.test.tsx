@@ -1,8 +1,13 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import { act, fireEvent, render } from "@testing-library/react";
+import { Student } from "../../core/Models";
 
-import FamilyForm, { FamilyMember } from "./FamilyForm";
+import FamilyForm from "./FamilyForm";
+
+function EmptyStudentWithFamily(familyCount: number): Student {
+	return { family: Array(familyCount).fill(null) } as Student;
+}
 
 describe("EditFamilyForm", () => {
 	const saveButtonRef = "#saveButton";
@@ -19,7 +24,7 @@ describe("EditFamilyForm", () => {
 				onChange={(): void => {
 					return;
 				}}
-				family={Array(1).fill(null)}
+				student={EmptyStudentWithFamily(1)}
 				editable={false}
 			/>,
 			{ wrapper: BrowserRouter }
@@ -41,14 +46,14 @@ describe("EditFamilyForm", () => {
 	});
 
 	test("Edit and save family members when editable=true", async () => {
-		let info = Array(2).fill(null);
+		let info = EmptyStudentWithFamily(2);
 		const wrapper = render(
 			<FamilyForm
-				onChange={(data: FamilyMember[]): void => {
+				onChange={(data: Student): void => {
 					info = data;
 					return;
 				}}
-				family={info}
+				student={info}
 				editable={true}
 			/>,
 			{ wrapper: BrowserRouter }
@@ -78,19 +83,19 @@ describe("EditFamilyForm", () => {
 		});
 		expect(ciField2?.textContent).toEqual("4454567");
 
-		expect(info[0].ci).toEqual("11231231");
-		expect(info[1].ci).toEqual("4454567");
+		expect(info.family[0].ci).toEqual("11231231");
+		expect(info.family[1].ci).toEqual("4454567");
 	});
 
 	test("Shouldn't save with errors in form", async () => {
-		let info = Array(1).fill(null);
+		let info = EmptyStudentWithFamily(1);
 		const wrapper = render(
 			<FamilyForm
-				onChange={(data: FamilyMember[]): void => {
+				onChange={(data: Student): void => {
 					info = data;
 					return;
 				}}
-				family={info}
+				student={info}
 				editable={true}
 			/>,
 			{ wrapper: BrowserRouter }
@@ -109,26 +114,26 @@ describe("EditFamilyForm", () => {
 		await act(async () => {
 			fireEvent.click(save);
 		});
-		expect(info[0]).toEqual(null);
+		expect(info.family[0]).toEqual(null);
 		const ciField = wrapper.container.querySelector(ciRef);
 		if (ciField === null) return;
 		await act(async () => {
 			fireEvent.change(ciField, { target: "123aa" });
 			fireEvent.click(save);
 		});
-		expect(info[0]).toEqual(null);
+		expect(info.family[0]).toEqual(null);
 	});
 
 	// eslint-disable-next-line max-statements
 	test("Should add family member with + button", async () => {
-		let info = Array(1).fill(null);
+		let info = EmptyStudentWithFamily(1);
 		const wrapper = render(
 			<FamilyForm
-				onChange={(data: FamilyMember[]): void => {
+				onChange={(data: Student): void => {
 					info = data;
 					return;
 				}}
-				family={info}
+				student={info}
 				editable={true}
 			/>,
 			{ wrapper: BrowserRouter }
@@ -161,7 +166,7 @@ describe("EditFamilyForm", () => {
 			fireEvent.click(save);
 		});
 		expect(ciField2?.textContent).toEqual("4454567");
-		expect(info.length).toEqual(2);
+		expect(info.family.length).toEqual(2);
 	});
 
 	test("Should change family member button to full name value", async () => {
@@ -170,7 +175,7 @@ describe("EditFamilyForm", () => {
 				onChange={(): void => {
 					return;
 				}}
-				family={Array(1).fill(null)}
+				student={EmptyStudentWithFamily(1)}
 				editable={true}
 			/>,
 			{ wrapper: BrowserRouter }
@@ -189,14 +194,14 @@ describe("EditFamilyForm", () => {
 	});
 
 	test("Should save birthday correctly", async () => {
-		let info = Array(1).fill(null);
+		let info = EmptyStudentWithFamily(1);
 		const wrapper = render(
 			<FamilyForm
-				onChange={(data: FamilyMember[]): void => {
+				onChange={(data: Student): void => {
 					info = data;
 					return;
 				}}
-				family={Array(1).fill(null)}
+				student={EmptyStudentWithFamily(1)}
 				editable={true}
 			/>,
 			{ wrapper: BrowserRouter }
@@ -215,6 +220,6 @@ describe("EditFamilyForm", () => {
 
 		expect(ciField?.textContent).toEqual("11231231");
 		expect(birthdateField?.textContent).toEqual("01/01/1999");
-		expect(info[0].birthDate).toEqual(new Date(1999, 1, 1));
+		expect(info.family[0].birthdate).toEqual(new Date(1999, 1, 1));
 	});
 });

@@ -10,7 +10,7 @@
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/fullName"
+					"scope": "#/properties/full_name"
 				},
 				{
 					"type": "Control",
@@ -23,7 +23,7 @@
 			"elements": [
 				{
 					"type": "Control",
-					"scope": "#/properties/birthDate",
+					"scope": "#/properties/birthdate",
 					"options": {
 						"format": "date",
 						"dateFormat": "DD/MM/YYYY",
@@ -32,7 +32,7 @@
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/maritalStatus"
+					"scope": "#/properties/marital_status"
 				},
 				{
 					"type": "Control",
@@ -45,7 +45,7 @@
 			"elements": [
 				{
 					"type": "Control",
-					"scope": "#/properties/birthCountry"
+					"scope": "#/properties/birthplace"
 				},
 				{
 					"type": "Control",
@@ -53,7 +53,7 @@
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/motherToungue"
+					"scope": "#/properties/first_language"
 				}
 			]
 		},
@@ -70,7 +70,7 @@
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/residenceNeighborhood"
+					"scope": "#/properties/neighbourhood"
 				}
 			]
 		},
@@ -79,7 +79,7 @@
 			"elements": [
 				{
 					"type": "Control",
-					"scope": "#/properties/educationLevel"
+					"scope": "#/properties/education_level"
 				},
 				{
 					"type": "Control",
@@ -96,15 +96,15 @@
 			"elements": [
 				{
 					"type": "Control",
-					"scope": "#/properties/workplaceAddress"
+					"scope": "#/properties/workplace_address"
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/workplaceNeighborhood"
+					"scope": "#/properties/workplace_neighbourhood"
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/workplacePhone"
+					"scope": "#/properties/workplace_phone"
 				}
 			]
 		}
