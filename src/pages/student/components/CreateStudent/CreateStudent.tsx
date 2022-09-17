@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { StudentCreationForm, StudentToCreate } from "../../../../core/Models";
+import { Student, StudentCreationForm } from "../../../../core/Models";
 import { parseFormToStudent } from "../../../../core/Parsers";
 import { processXLSXtoJSON } from "../../../../core/CoreHelper";
 import { Box, Card, CardContent, Grid, Typography } from "@mui/material";
@@ -13,16 +13,17 @@ import "./CreateStudent.scss";
 const acceptedExtensions = [".xlsx", ".csv", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"];
 
 interface CreateStudentProps {
-	onUpload?: (student: StudentToCreate) => void;
+	studentProp: Student;
+	onUpload: (newStudent: Student) => void;
 }
 
 function CreateStudent(props: CreateStudentProps): JSX.Element {
-	const { onUpload } = props;
+	const { studentProp, onUpload } = props;
 
 	const [readyToNavigate, setReadyToNavigate] = useState(false);
 	const [fileOver, setFileOver] = useState(false);
 	const [fileName, setFileName] = useState("");
-	const [student, setStudent] = useState<StudentToCreate>();
+	const [student, setStudent] = useState<Student>(studentProp);
 	const [error, setError] = useState<string | null>(null);
 	const [loadingFile, setLoadingFile] = useState(false);
 
@@ -45,7 +46,7 @@ function CreateStudent(props: CreateStudentProps): JSX.Element {
 		if (acceptedExtensions.includes(file.type)) {
 			const processedForm = await processXLSXtoJSON<StudentCreationForm>(file);
 
-			const parsedForm = parseFormToStudent(processedForm[0]);
+			const parsedForm = parseFormToStudent(processedForm[0], student);
 
 			if (!parsedForm) {
 				setError("El formato del excel subido no es correcto");
@@ -84,7 +85,7 @@ function CreateStudent(props: CreateStudentProps): JSX.Element {
 	}
 
 	function handleCreate(): void {
-		student && onUpload?.(student);
+		student && onUpload(student);
 	}
 
 	return (

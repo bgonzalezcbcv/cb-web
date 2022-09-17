@@ -6,7 +6,6 @@ import Box from "@mui/material/Box";
 import Tabs, { tabsClasses } from "@mui/material/Tabs";
 import { Button, Card, Dialog, DialogContent, DialogTitle, Typography } from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
-import { Button, Card, Typography } from "@mui/material";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -14,6 +13,9 @@ import SendIcon from "@mui/icons-material/Send";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
 import { TabPanel } from "./components/TabPanel";
+import CreateStudent from "./components/CreateStudent/CreateStudent";
+
+import { defaultStudent } from "./DefaultStudent";
 import StudentInfo from "./components/studentInfo/StudentInfo";
 import { AdministrativeInfo, FamilyMember, Question, QuestionCategories } from "../../core/Models";
 import { setEnvironmentData } from "worker_threads";
@@ -83,6 +85,7 @@ const studentPrueba = {
 
 export default function Student(): React.ReactElement {
 	const [value, setValue] = React.useState(0);
+	const [student, setStudent] = React.useState(defaultStudent);
 	const [data, setData] = React.useState(studentPrueba);
 	const [editMode, setEditMode] = React.useState(true);
 	const [isFormUploadOpen, setIsFormUploadOpen] = React.useState(false);
@@ -140,7 +143,13 @@ export default function Student(): React.ReactElement {
 				<DialogTitle>Subir formulario de inscripción</DialogTitle>
 
 				<DialogContent>
-					<CreateStudent onUpload={(): void => setIsFormUploadOpen(false)} />
+					<CreateStudent
+						studentProp={student}
+						onUpload={(newStudent): void => {
+							setStudent(newStudent);
+							setIsFormUploadOpen(false);
+						}}
+					/>
 				</DialogContent>
 			</Dialog>
 		</Card>

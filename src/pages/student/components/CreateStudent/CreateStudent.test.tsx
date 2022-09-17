@@ -6,6 +6,7 @@ import * as Parsers from "../../../../core/Parsers";
 import * as CoreHelper from "../../../../core/CoreHelper";
 import CreateStudent from "./CreateStudent";
 import userEvent from "@testing-library/user-event";
+import { defaultStudent } from "../../DefaultStudent";
 
 describe("CreateStudent", () => {
 	const dropZoneRef = "#file-drop-zone";
@@ -20,7 +21,7 @@ describe("CreateStudent", () => {
 	});
 
 	test("Should not load file with incorrect extension when dropped", async () => {
-		const wrapper = render(<CreateStudent />, { wrapper: BrowserRouter });
+		const wrapper = render(<CreateStudent studentProp={defaultStudent} onUpload={console.log} />, { wrapper: BrowserRouter });
 
 		const testingFile = new File(["testing data"], "data.png", { type: "png" });
 
@@ -39,7 +40,7 @@ describe("CreateStudent", () => {
 	});
 
 	test("Should not load file with incorrect extension when clicked", async () => {
-		const wrapper = render(<CreateStudent />, { wrapper: BrowserRouter });
+		const wrapper = render(<CreateStudent studentProp={defaultStudent} onUpload={console.log} />, { wrapper: BrowserRouter });
 
 		const testingFile = new File(["testing data"], "photo.png", { type: "png" });
 
@@ -58,7 +59,7 @@ describe("CreateStudent", () => {
 	});
 
 	test("Should show error on empty file and hide it after 3 seconds", async () => {
-		const wrapper = render(<CreateStudent />, { wrapper: BrowserRouter });
+		const wrapper = render(<CreateStudent studentProp={defaultStudent} onUpload={console.log} />, { wrapper: BrowserRouter });
 
 		const fileInput = wrapper.container.querySelector(fileInputRef);
 		if (fileInput === null) return;
@@ -82,7 +83,7 @@ describe("CreateStudent", () => {
 	test("Should show error on parse error", async () => {
 		jest.spyOn(Parsers, "parseFormToStudent").mockReturnValue(null);
 
-		const wrapper = render(<CreateStudent />, { wrapper: BrowserRouter });
+		const wrapper = render(<CreateStudent studentProp={defaultStudent} onUpload={console.log} />, { wrapper: BrowserRouter });
 
 		const testingFile = new File(["testing data"], "data.xlsx", { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
 
@@ -98,32 +99,9 @@ describe("CreateStudent", () => {
 	});
 
 	test("Should load file with correct extension when dropped", async () => {
-		jest.spyOn(Parsers, "parseFormToStudent").mockReturnValue({
-			address: "",
-			birthdate: new Date(),
-			birthplace: "",
-			ci: "",
-			email: "",
-			emergency: "",
-			first_language: "",
-			first_name: "",
-			id: "",
-			medical_assurance: "",
-			middle_name: "",
-			nationality: "",
-			neighborhood: "",
-			office: "",
-			phone_number: "",
-			reference_number: 0,
-			scheduler_end: "",
-			scheduler_start: "",
-			second_surname: "",
-			state: "",
-			surname: "",
-			tuition: "",
-		});
+		jest.spyOn(Parsers, "parseFormToStudent").mockReturnValue(defaultStudent);
 
-		const wrapper = render(<CreateStudent />, { wrapper: BrowserRouter });
+		const wrapper = render(<CreateStudent studentProp={defaultStudent} onUpload={console.log} />, { wrapper: BrowserRouter });
 
 		const testingFile = new File(["testing data"], "data.xlsx", { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
 
@@ -139,32 +117,9 @@ describe("CreateStudent", () => {
 	});
 
 	test("Should load file with correct extension when clicked", async () => {
-		jest.spyOn(Parsers, "parseFormToStudent").mockReturnValue({
-			address: "",
-			birthdate: new Date(),
-			birthplace: "",
-			ci: "",
-			email: "",
-			emergency: "",
-			first_language: "",
-			first_name: "",
-			id: "",
-			medical_assurance: "",
-			middle_name: "",
-			nationality: "",
-			neighborhood: "",
-			office: "",
-			phone_number: "",
-			reference_number: 0,
-			scheduler_end: "",
-			scheduler_start: "",
-			second_surname: "",
-			state: "",
-			surname: "",
-			tuition: "",
-		});
+		jest.spyOn(Parsers, "parseFormToStudent").mockReturnValue(defaultStudent);
 
-		const wrapper = render(<CreateStudent />, { wrapper: BrowserRouter });
+		const wrapper = render(<CreateStudent studentProp={defaultStudent} onUpload={console.log} />, { wrapper: BrowserRouter });
 
 		const testingFile = new File(["testing data"], "data.xlsx", { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
 
@@ -180,7 +135,7 @@ describe("CreateStudent", () => {
 	});
 
 	test("Should show 'Tire el archivo.' on drag enter and 'Tire el archivo excel del alumno aquí ó haga click.' on drag exit", async () => {
-		const wrapper = render(<CreateStudent />, { wrapper: BrowserRouter });
+		const wrapper = render(<CreateStudent studentProp={defaultStudent} onUpload={console.log} />, { wrapper: BrowserRouter });
 
 		const dropZone = wrapper.container.querySelector(dropZoneRef);
 
@@ -200,34 +155,11 @@ describe("CreateStudent", () => {
 	});
 
 	test("Should call callback on 'Crear Alumno'", async () => {
-		jest.spyOn(Parsers, "parseFormToStudent").mockReturnValue({
-			address: "",
-			birthdate: new Date(),
-			birthplace: "",
-			ci: "",
-			email: "",
-			emergency: "",
-			first_language: "",
-			first_name: "",
-			id: "",
-			medical_assurance: "",
-			middle_name: "",
-			nationality: "",
-			neighborhood: "",
-			office: "",
-			phone_number: "",
-			reference_number: 0,
-			scheduler_end: "",
-			scheduler_start: "",
-			second_surname: "",
-			state: "",
-			surname: "",
-			tuition: "",
-		});
+		jest.spyOn(Parsers, "parseFormToStudent").mockReturnValue(defaultStudent);
 
 		const onUploadCallback = jest.fn();
 
-		const wrapper = render(<CreateStudent onUpload={onUploadCallback} />, { wrapper: BrowserRouter });
+		const wrapper = render(<CreateStudent studentProp={defaultStudent} onUpload={onUploadCallback} />, { wrapper: BrowserRouter });
 
 		const testingFile = new File(["testing data"], "data.xlsx", { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
 
