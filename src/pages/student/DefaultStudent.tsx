@@ -1,12 +1,6 @@
-import {
-	DiscountExplanation,
-	DiscountType,
-	PaymentMethodOption,
-	ScholarshipType,
-	Student
-} from "../../core/Models";
+import {  DiscountExplanation, DiscountType, PaymentMethodOption, ScholarshipType, Student } from "../../core/Models";
 
-const defaultStudent: Student = {
+export const defaultStudent: Student = {
 	id: "",
 	ci: "",
 	name: "",
@@ -77,7 +71,7 @@ const defaultStudent: Student = {
 			{
 				year: 2022,
 				method: PaymentMethodOption.Cash,
-				yearly_payment_url: ""
+				yearly_payment_url: "",
 			},
 		],
 		discounts: [

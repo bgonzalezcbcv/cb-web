@@ -4,7 +4,8 @@ import * as React from "react";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import Tabs, { tabsClasses } from "@mui/material/Tabs";
-import { Button, Card, Typography } from "@mui/material";
+import { Button, Card, Dialog, DialogContent, DialogTitle, Typography } from "@mui/material";
+import UploadFileIcon from "@mui/icons-material/UploadFile";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -12,6 +13,9 @@ import SendIcon from "@mui/icons-material/Send";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
 import { TabPanel } from "./components/TabPanel";
+import CreateStudent from "./components/CreateStudent/CreateStudent";
+
+import { defaultStudent } from "./DefaultStudent";
 import StudentInfo from "./components/studentInfo/StudentInfo";
 import { AdministrativeInfo, FamilyMember, Question, QuestionCategories } from "../../core/Models";
 import { setEnvironmentData } from "worker_threads";
@@ -81,8 +85,10 @@ const studentPrueba = {
 
 export default function Student(): React.ReactElement {
 	const [value, setValue] = React.useState(0);
+	const [student, setStudent] = React.useState(defaultStudent);
 	const [data, setData] = React.useState(studentPrueba);
 	const [editMode, setEditMode] = React.useState(true);
+	const [isFormUploadOpen, setIsFormUploadOpen] = React.useState(false);
 
 	const handleChange = (event: React.SyntheticEvent, newValue: number): void => {
 		setValue(newValue);
@@ -97,6 +103,9 @@ export default function Student(): React.ReactElement {
 					<Typography sx={{ alignSelf: "center", paddingLeft: "10px" }}>Nuevo alumno</Typography>
 				</div>
 				<div>
+					<Button title="Subir formulario de inscripción" onClick={(): void => setIsFormUploadOpen(true)}>
+						<UploadFileIcon />
+					</Button>
 					{!editMode ? <Button startIcon={<DeleteIcon />}>Deshacer cambios</Button> : ""}
 					<Button startIcon={editMode ? <EditIcon /> : <SendIcon />} onClick={(): void => setEditMode(!editMode)}>
 						{editMode ? "Editar" : "Enviar"}{" "}
@@ -129,6 +138,20 @@ export default function Student(): React.ReactElement {
 			<TabPanel value={value} index={3}>
 				{/*<FamilyForm student={} onChange={() => {}}></FamilyForm>*/}
 			</TabPanel>
+
+			<Dialog open={isFormUploadOpen} onClose={(): void => setIsFormUploadOpen(false)}>
+				<DialogTitle>Subir formulario de inscripción</DialogTitle>
+
+				<DialogContent>
+					<CreateStudent
+						studentProp={student}
+						onUpload={(newStudent): void => {
+							setStudent(newStudent);
+							setIsFormUploadOpen(false);
+						}}
+					/>
+				</DialogContent>
+			</Dialog>
 		</Card>
 	);
 }
