@@ -14,16 +14,11 @@ export async function processXLSXtoJSON<Type>(xlsxFile: File): Promise<Type[]> {
 	return XLSX.utils.sheet_to_json<Type>(workbook.Sheets[workbook.SheetNames[0]]);
 }
 
-export function downloadFile(fileName: string, file: Blob) {
-	const url = window.URL.createObjectURL(
-		new Blob([file]),
-	);
-	const link = document.createElement('a');
+export function downloadFile(fileName: string, file: Blob): void {
+	const url = window.URL.createObjectURL(new Blob([file]));
+	const link = document.createElement("a");
 	link.href = url;
-	link.setAttribute(
-		'download',
-		fileName,
-	);
+	link.setAttribute("download", fileName);
 
 	// Append to html link element page
 	document.body.appendChild(link);

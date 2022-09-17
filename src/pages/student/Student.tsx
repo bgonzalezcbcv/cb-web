@@ -14,12 +14,13 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
 import { TabPanel } from "./components/TabPanel";
 import CreateStudent from "./components/CreateStudent/CreateStudent";
+import AdministrativeInfo from "./components/AdministrativeInfo/AdministrativeInfo";
 
 import { defaultStudent } from "./DefaultStudent";
-import StudentInfo from "./components/studentInfo/StudentInfo";
-import { AdministrativeInfo, FamilyMember, Question, QuestionCategories } from "../../core/Models";
+import StudentInfo from "./components/StudentInfo/StudentInfo";
 import { setEnvironmentData } from "worker_threads";
-// import FamilyForm from "./components/family-info/FamilyForm";
+import FamilyForm from "./components/FamilyInfo/FamilyForm";
+// import FamilyForm from "./components/FamilyInfo/FamilyForm";
 
 const familyMemberPrueba = {
 	role: "string;",
@@ -133,7 +134,13 @@ export default function Student(): React.ReactElement {
 				</Tabs>
 			</Box>
 			<TabPanel value={value} index={0}>
-				<StudentInfo student={studentPrueba} onChange={setData} editable={editMode}></StudentInfo>
+				<StudentInfo student={defaultStudent} onChange={setData} editable={editMode}></StudentInfo>
+			</TabPanel>
+			<TabPanel value={value} index={1}>
+				<FamilyForm student={defaultStudent} onChange={setData} editable={editMode}></FamilyForm>
+			</TabPanel>
+			<TabPanel value={value} index={3}>
+				<AdministrativeInfo student={defaultStudent} onChange={setData} editable={editMode}></AdministrativeInfo>
 			</TabPanel>
 			<TabPanel value={value} index={3}>
 				{/*<FamilyForm student={} onChange={() => {}}></FamilyForm>*/}

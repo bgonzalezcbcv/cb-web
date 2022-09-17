@@ -1,12 +1,12 @@
-import {  DiscountExplanation, DiscountType, PaymentMethodOption, ScholarshipType, Student } from "../../core/Models";
+import { DiscountExplanation, DiscountType, PaymentMethodOption, ScholarshipType, Student } from "../../core/Models";
 
 export const defaultStudent: Student = {
-	id: "",
-	ci: "",
-	name: "",
-	surname: "",
-	schedule_start: "",
-	schedule_end: "",
+	id: "asdf",
+	ci: "asdf",
+	name: "asdf",
+	surname: "asda",
+	schedule_start: "asdf",
+	schedule_end: "asdf",
 	tuition: "",
 	reference_number: 0,
 	birthplace: "",
