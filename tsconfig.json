@@ -18,6 +18,6 @@
 		"jsx": "react-jsx",
 		"useDefineForClassFields": true
 	},
-	"include": ["src", "cypress"],
+	"include": ["src", "cypress", "src/assets"],
 	"exclude": [".vscode", "build", "node_modules", "public"]
 }
