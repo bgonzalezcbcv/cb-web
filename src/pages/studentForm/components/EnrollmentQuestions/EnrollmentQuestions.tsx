@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
 import _ from "lodash";
+import React, { useEffect, useState } from "react";
 
+import { Student } from "../../../../core/interfaces";
 import { Box, Divider, Grid, List, ListItem, TextField, Typography } from "@mui/material";
 import useDebounce from "../../../../hooks/useDebounce";
-import { Student } from "../../../../core/interfaces";
 
 export interface EnrollmentQuestionsProps {
 	studentData: Student;
