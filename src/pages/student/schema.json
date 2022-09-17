@@ -44,6 +44,12 @@
 		"status": {
 			"type": "string"
 		},
+		"group": {
+			"type": "string"
+		},
+		"subgroup": {
+			"type": "string"
+		},
 		"address": {
 			"type": "string"
 		},

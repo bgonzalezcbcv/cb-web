@@ -44,6 +44,10 @@ export enum PaymentMethodOption {
     Bidding = "licitacion",
 }
 
+export enum AgreementType { //TODO: Estos son agregados por el admin del sistema
+	None = "ninguno",
+}
+
 export enum DiscountType {
     Direction = "dirección",
     SocialAssistant = "asistente social",
@@ -110,7 +114,7 @@ export interface Student {
     email: string;
     family: FamilyMember[];
     question_categories: QuestionCategories[];
-    administrative_info: AdministrativeInfo;
+    administrative_info?: AdministrativeInfo;
 }
 
 export interface StudentCreationForm {
