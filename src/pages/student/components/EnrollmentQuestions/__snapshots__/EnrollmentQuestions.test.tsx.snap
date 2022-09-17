@@ -39,7 +39,6 @@ exports[`EnrollmentQuestions should render correctly 1`] = `
                     aria-invalid="false"
                     class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
                     id=":r0:"
-                    placeholder="Ingrese la respuesta"
                     style="height: 0px; overflow: hidden;"
                   >
                     answer 1a
@@ -95,7 +94,6 @@ exports[`EnrollmentQuestions should render correctly 1`] = `
                     aria-invalid="false"
                     class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
                     id=":r1:"
-                    placeholder="Ingrese la respuesta"
                     style="height: 0px; overflow: hidden;"
                   >
                     answer 2
@@ -151,7 +149,6 @@ exports[`EnrollmentQuestions should render correctly 1`] = `
                     aria-invalid="false"
                     class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
                     id=":r2:"
-                    placeholder="Ingrese la respuesta"
                     style="height: 0px; overflow: hidden;"
                   >
                     answer 3
@@ -221,7 +218,6 @@ exports[`EnrollmentQuestions should render correctly 1`] = `
                     aria-invalid="false"
                     class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
                     id=":r3:"
-                    placeholder="Ingrese la respuesta"
                     style="height: 0px; overflow: hidden;"
                   >
                     answer 12
@@ -277,7 +273,6 @@ exports[`EnrollmentQuestions should render correctly 1`] = `
                     aria-invalid="false"
                     class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
                     id=":r4:"
-                    placeholder="Ingrese la respuesta"
                     style="height: 0px; overflow: hidden;"
                   >
                     answer 22
@@ -333,7 +328,6 @@ exports[`EnrollmentQuestions should render correctly 1`] = `
                     aria-invalid="false"
                     class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
                     id=":r5:"
-                    placeholder="Ingrese la respuesta"
                     style="height: 0px; overflow: hidden;"
                   >
                     answer 32

@@ -1,9 +1,10 @@
 import React from "react";
 import { act, getByText, render } from "@testing-library/react";
-import { EnrollmentQuestions } from "./EnrollmentQuestions";
 import userEvent from "@testing-library/user-event";
-import { initialStudentData, expectedNewStudentData } from "./EnrollmentQuestions.fixture";
+
 import * as UseDebounce from "../../../../hooks/useDebounce";
+import { EnrollmentQuestions } from "./EnrollmentQuestions";
+import { initialStudentData, expectedNewStudentData } from "./EnrollmentQuestions.fixture";
 
 describe("EnrollmentQuestions", () => {
 	beforeEach(() => {
@@ -13,11 +14,9 @@ describe("EnrollmentQuestions", () => {
 	test("should render correctly", async () => {
 		const wrapper = render(
 			<EnrollmentQuestions //
-				studentData={initialStudentData}
+				student={initialStudentData}
 				editable
-				onChange={(changedData): void => {
-					console.log(changedData);
-				}}
+				onChange={jest.fn}
 			/>
 		);
 
@@ -37,13 +36,14 @@ describe("EnrollmentQuestions", () => {
 
 		const wrapper = render(
 			<EnrollmentQuestions //
-				studentData={initialStudentData}
+				student={initialStudentData}
 				editable
 				onChange={onChangeSpy}
 			/>
 		);
 
 		const answerTextField = getByText(wrapper.container, "answer 1a");
+
 		act(() => {
 			userEvent.type(answerTextField, "new");
 		});

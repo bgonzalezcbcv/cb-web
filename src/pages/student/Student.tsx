@@ -1,6 +1,8 @@
 /* eslint-disable */
 import * as React from "react";
 
+import { Student as StudentModel } from "../../core/Models";
+
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import Tabs, { tabsClasses } from "@mui/material/Tabs";
@@ -18,9 +20,8 @@ import AdministrativeInfo from "./components/AdministrativeInfo/AdministrativeIn
 
 import { defaultStudent } from "./DefaultStudent";
 import StudentInfo from "./components/StudentInfo/StudentInfo";
-import { setEnvironmentData } from "worker_threads";
 import FamilyForm from "./components/FamilyInfo/FamilyForm";
-// import FamilyForm from "./components/FamilyInfo/FamilyForm";
+import { EnrollmentQuestions } from "./components/EnrollmentQuestions/EnrollmentQuestions";
 
 const familyMemberPrueba = {
 	role: "string;",
@@ -86,8 +87,7 @@ const studentPrueba = {
 
 export default function Student(): React.ReactElement {
 	const [value, setValue] = React.useState(0);
-	const [student, setStudent] = React.useState(defaultStudent);
-	const [data, setData] = React.useState(studentPrueba);
+	const [student, setStudent] = React.useState<StudentModel>(defaultStudent);
 	const [editMode, setEditMode] = React.useState(true);
 	const [isFormUploadOpen, setIsFormUploadOpen] = React.useState(false);
 
@@ -134,13 +134,16 @@ export default function Student(): React.ReactElement {
 				</Tabs>
 			</Box>
 			<TabPanel value={value} index={0}>
-				<StudentInfo student={defaultStudent} onChange={setData} editable={editMode}></StudentInfo>
+				<StudentInfo student={student} onChange={setStudent} editable={editMode}></StudentInfo>
 			</TabPanel>
 			<TabPanel value={value} index={1}>
-				<FamilyForm student={defaultStudent} onChange={setData} editable={editMode}></FamilyForm>
+				<FamilyForm student={student} onChange={setStudent} editable={editMode}></FamilyForm>
+			</TabPanel>
+			<TabPanel value={value} index={2}>
+				<EnrollmentQuestions student={student} onChange={setStudent} editable={editMode} />
 			</TabPanel>
 			<TabPanel value={value} index={3}>
-				<AdministrativeInfo student={defaultStudent} onChange={setData} editable={editMode}></AdministrativeInfo>
+				<AdministrativeInfo student={student} onChange={setStudent} editable={editMode}></AdministrativeInfo>
 			</TabPanel>
 			<TabPanel value={value} index={3}>
 				{/*<FamilyForm student={} onChange={() => {}}></FamilyForm>*/}

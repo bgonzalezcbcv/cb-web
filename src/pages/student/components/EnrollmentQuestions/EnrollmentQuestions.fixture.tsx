@@ -1,4 +1,9 @@
-export const initialStudentData = {
+import { Student } from "../../../../core/Models";
+
+import { defaultStudent } from "../../DefaultStudent";
+
+export const initialStudentData: Student = {
+	...defaultStudent,
 	question_categories: [
 		{
 			category: "categoria 1",
@@ -44,7 +49,8 @@ export const initialStudentData = {
 	],
 };
 
-export const expectedNewStudentData = {
+export const expectedNewStudentData: Student = {
+	...defaultStudent,
 	question_categories: [
 		{
 			category: "categoria 1",
