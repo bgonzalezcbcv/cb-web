@@ -10,6 +10,8 @@ export class DataStore {
 
 	public teachers: Teacher[] = [];
 
+	public agreementType: string[] = ['Ninguno'];
+
 	private constructor() {
 		const savedStateJson = localStorage.getItem("store");
 
@@ -67,6 +69,12 @@ export class DataStore {
 	@action
 	public deleteTeacherByCi(ci: string): void {
 		this.teachers = this.teachers.filter((teacher) => teacher.ci !== ci);
+	}
+
+	@action
+	public addAgreementType(agreementType: string): void {
+		if (!this.agreementType.includes(agreementType))
+			this.agreementType = [...this.agreementType, agreementType];
 	}
 }
 

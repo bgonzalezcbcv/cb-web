@@ -1,11 +1,10 @@
 import React from "react";
-import {Link} from "react-router-dom";
 import * as Models from "../../../../../core/Models";
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material"
 import DownloadIcon from "@mui/icons-material/Download";
 
 export type DiscountHistoryProps = {
-    rows: Models.Discount[];
+    rows?: Models.Discount[];
 }
 
 export default function DiscountHistory(props: DiscountHistoryProps): React.ReactElement {
@@ -27,7 +26,7 @@ export default function DiscountHistory(props: DiscountHistoryProps): React.Reac
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row, index) => (
+                    {rows && rows.map((row, index) => (
                         <TableRow
                             key={index}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -37,9 +36,11 @@ export default function DiscountHistory(props: DiscountHistoryProps): React.Reac
                             <TableCell>{row.percentage + '%'}</TableCell>
                             <TableCell>{row.explanation}</TableCell>
                             <TableCell>{row.description}</TableCell>
-                            <TableCell>{<Link to={row.resolution_url} target="_blank" download><DownloadIcon style={{marginLeft: 25, color: 'black'}} /></Link>}</TableCell>
+                            {/*TODO: Add handle to download file*/}
+                            <TableCell>{<DownloadIcon style={{marginLeft: 25}} />}</TableCell>
                             <TableCell>{row.type}</TableCell>
-                            <TableCell>{<Link to={row.report_url} target="_blank" download><DownloadIcon style={{marginLeft: 25, color: 'black'}} /></Link>}</TableCell>
+                            {/*TODO: Add handle to download file*/}
+                            <TableCell>{<DownloadIcon style={{marginLeft: 25}} />}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

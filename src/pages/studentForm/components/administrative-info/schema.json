@@ -16,27 +16,28 @@
       "type": "string",
       "oneOf": [
         {
-          "const": "Licitación",
+          "const": "none",
+          "title": "Ninguna"
+        },
+        {
+          "const": "bidding",
           "title": "Licitación"
         },
         {
-          "const": "Bonificada",
+          "const": "subsidized",
           "title": "Bonificada"
         },
         {
-          "const": "Convenio",
+          "const": "agreement",
           "title": "Convenio"
         },
         {
-          "const": "Especial",
+          "const": "special",
           "title": "Especial"
         }
       ],
-      "title": "Tipo de escolaridad"
-    },
-    "agreementType": {
-      "type": "string",
-      "title": "Convenio"
+      "title": "Tipo de escolaridad",
+      "default": "none"
     }
   }
 }

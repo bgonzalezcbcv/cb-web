@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type*/
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {useCallback, useState} from "react";
 import {JsonForms} from "@jsonforms/react";
 import {JsonSchema7} from "@jsonforms/core";
 import {materialCells, materialRenderers} from "@jsonforms/material-renderers";
-import dayjs from "dayjs";
+import { createAjv } from '@jsonforms/core';
 import schema from "./schema.json";
 import uiSchema from "./ui.json";
+import {DataStore} from "../../../../core/DataStore";
 import * as Models from "../../../../core/Models";
 import {VisualComponent} from "../../../../core/interfaces";
 import FileUploader from "../../../../components/fileUploader/FileUploader";
@@ -16,46 +19,47 @@ import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import DownloadIcon from "@mui/icons-material/Download";
 
 import "./AdministrativeInfo.scss";
 
-const paymentMethodRows : Models.PaymentMethod[] = [
-    { year: 2022, method: Models.PaymentMethodOption.Bidding, yearly_payment_url: "" },
-    { year: 2021, method: Models.PaymentMethodOption.Cash, yearly_payment_url: "Document" },
-    { year: 2020, method: Models.PaymentMethodOption.Financing, yearly_payment_url: "" },
-];
-
-const discountRows: Models.Discount[] = [
-    { percentage: 10, starting_date: new Date('01/03/2022'), ending_date: new Date('10/12/2022'), type: Models.DiscountType.Direction, resolution_url: "Documento", explanation: Models.DiscountExplanation.Sibling, report_url: "Documento", description: "Descripción"},
-    { percentage: 10, starting_date: new Date('01/03/2022'), ending_date: new Date('10/12/2022'), type: Models.DiscountType.SocialAssistant, resolution_url: "Documento", explanation: Models.DiscountExplanation.Resolution, report_url: "Documento",  description: "Descripción"},
-    { percentage: 10, starting_date: new Date('01/03/2022'), ending_date: new Date('10/12/2022'), type: Models.DiscountType.SocialAssistant, resolution_url: "Documento", explanation: Models.DiscountExplanation.Sibling, report_url: "Documento", description: "Descripción"},
-];
-
-const initialData = {};
-
 export type AdministrativeInfoProps = {
     editable: boolean;
-    onChange?: () => void;
+    initialData?: Models.Student;
+    onChange: (data: Models.Student) => void;
 }
 
 export default function AdministrativeInfo(props: VisualComponent & AdministrativeInfoProps): React.ReactElement {
-    const {editable, height, width} = props;
+    const dataStore = DataStore.getInstance();
+
+    const {editable, initialData, height, width} = props;
+
+    const info = initialData?.administrative_info;
 
     const [data, setData] = useState(initialData);
-    const [enrollmentCommitment, setEnrollmentCommitment] = useState<File>();
-    const [resolutionDocument, setResolutionDocument] = useState<File>();
-    const [reportDocument, setReportDocument] = useState<File>();
-    const [discountIniDate, setDiscountIniDate] = useState<dayjs.Dayjs | null>(dayjs());
-    const [discountFinDate, setDiscountFinDate] = useState<dayjs.Dayjs | null>(dayjs());
+    const [enrollmentCommitment, setEnrollmentCommitment] = useState<File | undefined>();
+    const [agreementType, setAgreementType] = useState<string|undefined>(undefined);
+    const [comments, setComments] = useState<string>(info?.comments ?? "");
+
     const [discountModalOpen, setDiscountModalOpen] = useState(false);
     const [discountPercentage, setDiscountPercentage] = useState("");
     const [discountReason, setDiscountReason] = useState("");
     const [discountType, setDiscountType] = useState("");
+    const [discountIniDate, setDiscountIniDate] = useState<Date>(new Date());
+    const [discountFinDate, setDiscountFinDate] = useState<Date>(new Date());
+    const [resolutionDocument, setResolutionDocument] = useState<File>();
+    const [reportDocument, setReportDocument] = useState<File>();
 
     const [paymentMethodModalOpen, setPaymentMethodModalOpen] = React.useState(false);
     const [paymentMethod, setPaymentMethod] = useState("");
     const [paymentMethodYear, setPaymentMethodYear] = useState("");
     const [yearlyPaymentDocument, setYearlyPaymentDocument] = useState<File>();
+    const [discountDescription, setDiscountDescription] = useState("");
+
+    const [currentPaymentMethods, setCurrentPaymentMethods] = useState<Models.PaymentMethod[]>(initialData?.administrative_info.payment_methods ?? []);
+    const [currentDiscounts, setCurrentDiscounts] = useState<Models.Discount[]>(initialData?.administrative_info.discounts ?? []);
+
+    const handleDefaultsAjv = createAjv({useDefaults: true});
 
     const handlePaymentMethodModalOpen = useCallback(() => {
         setPaymentMethodModalOpen(true);
@@ -65,9 +69,16 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
         setPaymentMethodModalOpen(false);
     }, []);
 
-    //TODO: Define this callback
+    //TODO: Adjust this when file handling is defined
     const handleAddNewPaymentMethod = useCallback( () => {
-        return null;
+        const newPaymentMethod: Models.PaymentMethod = {
+            year: Number(paymentMethodYear),
+            method: paymentMethod as Models.PaymentMethodOption,
+            yearly_payment_url: yearlyPaymentDocument?.name ?? "",
+        }
+
+        if (initialData && initialData?.administrative_info.payment_methods.length > 0) setCurrentPaymentMethods([newPaymentMethod, ...initialData.administrative_info.payment_methods])
+        else setCurrentPaymentMethods([newPaymentMethod]);
     }, []);
 
     const handleDiscountModalOpen = useCallback(() => {
@@ -76,6 +87,23 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
 
     const handleDiscountModalClose = useCallback(() => {
         setDiscountModalOpen(false);
+    }, []);
+
+    //TODO: Adjust this when file handling is defined
+    const handleAddNewDiscount = useCallback(() => {
+        const newDiscount: Models.Discount = {
+            percentage: Number(discountPercentage),
+            starting_date: discountIniDate,
+            ending_date: discountFinDate,
+            type: discountType as Models.DiscountType,
+            resolution_url: resolutionDocument?.name ?? "",
+            explanation: discountReason as Models.DiscountExplanation,
+            report_url: reportDocument?.name ?? "",
+            description: discountDescription,
+        }
+
+        if (initialData && initialData?.administrative_info.discounts.length > 0) setCurrentDiscounts([newDiscount, ...initialData.administrative_info.discounts])
+        else setCurrentDiscounts([newDiscount]);
     }, []);
 
     return (
@@ -87,7 +115,6 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
                     height: height ?? "100%",
                 }}>
                 <CardContent className="form-container">
-                    {/*TODO: 'Convenio' has dynamic values - check how to do that*/}
                     <JsonForms
                         schema={schema as JsonSchema7}
                         uischema={uiSchema}
@@ -96,20 +123,34 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
                         cells={materialCells}
                         onChange={({data}): void => setData(data)}
                         readonly={!editable}
+                        ajv={handleDefaultsAjv}
                     />
 
+                    <FormControl variant="standard" sx={{width: '100%'}}>
+                        <InputLabel id="agreement-type-label">Convenio</InputLabel>
+
+                        <Select
+                            labelId="agreement-type"
+                            id="agreement-type"
+                            label="Convenio"
+                            value={agreementType}
+                            onChange={(event) => setAgreementType(event.target.value)}
+                        >
+                            {dataStore.agreementType && dataStore.agreementType?.map((value, index) => {return <MenuItem key={index} value={value}>{value}</MenuItem>})}
+                        </Select>
+                    </FormControl>
+
                     {editable ?
-                        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
                         <FileUploader label={"Compromiso de inscripción"} width={'100%'} uploadedFile={(file) => setEnrollmentCommitment(file)}/>
                         :
                         <div className="document-download-container">
                             <div className="document-download">Compromiso de inscripción</div>
-                            {/*TODO: Set correct document src*/}
-                            {/*<Link to={enrollmentCommitment} target="_blank" download><DownloadIcon style={{color: 'black'}} /></Link>*/}
+                            {/*TODO: Add handle to download file*/}
+                            <DownloadIcon />
                         </div>
                     }
 
-                    <TextField sx={{width: "100%", marginTop: 1}} label={"Comentarios"} multiline rows={4} variant="standard" disabled={!editable} />
+                    <TextField sx={{width: "100%", marginTop: 1}} label={"Comentarios"} value={comments} multiline rows={4} variant="standard" disabled={!editable} onChange={(event) => {setComments(event.target.value)}}/>
                 </CardContent>
 
                 <div className="payment-details-wrapper">
@@ -127,7 +168,6 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
                                         body={
                                             <div className="payment-method-modal-wrapper">
                                                 <div className="payment-method-modal-container">
-                                                    {/* eslint-disable-next-line @typescript-eslint/explicit-function-return-type */}
                                                     <TextField label="Año" variant="standard" sx={{width: 100}} value={paymentMethodYear} onChange={(event) => setPaymentMethodYear(event.target.value)} />
 
                                                     <FormControl variant="standard" sx={{width: 150}}>
@@ -138,7 +178,6 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
                                                             id="payment-method"
                                                             label="Forma"
                                                             value={paymentMethod}
-                                                            /* eslint-disable-next-line @typescript-eslint/explicit-function-return-type */
                                                             onChange={(event) => setPaymentMethod(event.target.value)}
                                                         >
                                                             <MenuItem value={'contado'}>Contado</MenuItem>
@@ -148,7 +187,6 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
                                                     </FormControl>
                                                 </div>
 
-                                                {/* eslint-disable-next-line @typescript-eslint/explicit-function-return-type */}
                                                 {paymentMethod === Models.PaymentMethodOption.Cash && <FileUploader label={"Pago anualidad firmado"} width={200} uploadedFile={(file) => setYearlyPaymentDocument(file)} />}
                                             </div>
                                         }
@@ -160,7 +198,7 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
 
                             <Divider/>
 
-                            <PaymentMethodHistory rows={paymentMethodRows} />
+                            <PaymentMethodHistory rows={initialData?.administrative_info.payment_methods} />
                         </CardContent>
                     </Card>
 
@@ -182,11 +220,9 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
                                                             label="Inicio"
                                                             value={discountIniDate}
                                                             inputFormat={"D/MM/YYYY"}
-                                                            /* eslint-disable-next-line @typescript-eslint/explicit-function-return-type */
                                                             onChange={(newValue) => {
-                                                                return setDiscountIniDate(newValue);
+                                                                return setDiscountIniDate(newValue ?? new Date());
                                                             }}
-                                                            /* eslint-disable-next-line @typescript-eslint/explicit-function-return-type */
                                                             renderInput={(params: JSX.IntrinsicAttributes & TextFieldProps) => <TextField {...params} variant={"standard"} />}
                                                         />
                                                     </LocalizationProvider>
@@ -196,11 +232,9 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
                                                             label="Fin"
                                                             value={discountFinDate}
                                                             inputFormat={"D/MM/YYYY"}
-                                                            /* eslint-disable-next-line @typescript-eslint/explicit-function-return-type */
                                                             onChange={(newValue) => {
-                                                                return setDiscountFinDate(newValue);
+                                                                return setDiscountFinDate(newValue ?? new Date());
                                                             }}
-                                                            /* eslint-disable-next-line @typescript-eslint/explicit-function-return-type */
                                                             renderInput={(params: JSX.IntrinsicAttributes & TextFieldProps) => <TextField {...params} variant={"standard"} />}
                                                         />
                                                     </LocalizationProvider>
@@ -213,7 +247,6 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
                                                         variant="standard"
                                                         sx={{width: 100}}
                                                         InputProps={{endAdornment: <InputAdornment position={'end'}>%</InputAdornment>}}
-                                                        /* eslint-disable-next-line @typescript-eslint/explicit-function-return-type */
                                                         onChange={(event) => setDiscountPercentage(event.target.value)}
                                                     />
 
@@ -225,7 +258,6 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
                                                             id="discount-reason"
                                                             label="Explicación del descuento"
                                                             value={discountReason}
-                                                            /* eslint-disable-next-line @typescript-eslint/explicit-function-return-type */
                                                             onChange={(event) => setDiscountReason(event.target.value)}
                                                         >
                                                             <MenuItem value={'hermano'}>Hermano</MenuItem>
@@ -233,11 +265,10 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
                                                         </Select>
                                                     </FormControl>
 
-                                                    <TextField label={"Descripción"} variant="standard" />
+                                                    <TextField label={"Descripción"} value={discountDescription} variant="standard" onChange={(event) => {setDiscountDescription(event.target.value)}} />
                                                 </div>
 
                                                 <div className="resolution-document">
-                                                    {/* eslint-disable-next-line @typescript-eslint/explicit-function-return-type */}
                                                     <FileUploader label={"Adjunto resolución"} width={200} uploadedFile={(file) => setResolutionDocument(file)}/>
                                                 </div>
 
@@ -250,7 +281,6 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
                                                             id="discount-type"
                                                             label="Tipo"
                                                             value={discountType}
-                                                            /* eslint-disable-next-line @typescript-eslint/explicit-function-return-type */
                                                             onChange={(event) => setDiscountType(event.target.value)}
                                                         >
                                                             <MenuItem value={'direccion'}>Dirección</MenuItem>
@@ -258,18 +288,19 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
                                                         </Select>
                                                     </FormControl>
 
-                                                    {/* eslint-disable-next-line @typescript-eslint/explicit-function-return-type */}
                                                     <FileUploader label={"Adjunto informe"} width={200} uploadedFile={(file) => setReportDocument(file)}/>
                                                 </div>
                                             </div>
-                                    } onClose={handleDiscountModalClose}
+                                        }
+                                        onClose={handleDiscountModalClose}
+                                        onAccept={handleAddNewDiscount}
                                     />
                                 </div>
                             </div>
 
                             <Divider/>
 
-                            <DiscountHistory rows={discountRows} />
+                            <DiscountHistory rows={initialData?.administrative_info.discounts} />
                         </CardContent>
                     </Card>
                 </div>

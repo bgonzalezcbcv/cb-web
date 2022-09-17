@@ -18,10 +18,6 @@
     {
       "type": "Control",
       "scope": "#/properties/scholarshipType"
-    },
-    {
-      "type": "Control",
-      "scope": "#/properties/agreementType"
     }
   ]
 }

@@ -31,6 +31,7 @@ export interface FamilyMember {
 }
 
 export enum ScholarshipType {
+    None = "ninguna",
     Bidding = "licitación",
     Subsidized = "bonificada",
     Agreement = "convenio",
@@ -71,8 +72,8 @@ interface PaymentMethod {
 }
 
 export interface AdministrativeInfo {
-    enrollment_date: Date;
-    starting_date: Date;
+    enrollment_date: Date | undefined;
+    starting_date: Date | undefined;
     registration_commitment_url: string;
     scholarship_type: ScholarshipType;
     agreement_type: string[];
