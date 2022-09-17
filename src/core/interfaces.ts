@@ -56,3 +56,18 @@ export interface SidebarSection {
 	sectionTitle: string;
 	items: SidebarItem[];
 }
+
+export interface Question {
+	id: string;
+	question: string;
+	answer: string;
+}
+
+export interface QuestionCategories {
+	category: string;
+	questions: Question[];
+}
+
+export interface Student {
+	question_categories: QuestionCategories[];
+}
