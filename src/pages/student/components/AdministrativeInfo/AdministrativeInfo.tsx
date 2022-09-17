@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React, { useCallback, useState, useEffect } from "react";
+import _ from "lodash";
 import { JsonForms } from "@jsonforms/react";
 import { JsonSchema7 } from "@jsonforms/core";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
@@ -35,11 +36,10 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
 
 	const info = student?.administrative_info;
 
-	const [data, setData] = useState(student);
+	// const [data, setData] = useState(student);
 
 	const [enrollmentCommitment, setEnrollmentCommitment] = useState<File | undefined>();
 	const [agreementType, setAgreementType] = useState<string | undefined>(undefined);
-	const [comments, setComments] = useState<string>(info?.comments ?? "");
 
 	const [discountModalOpen, setDiscountModalOpen] = useState(false);
 	const [discountPercentage, setDiscountPercentage] = useState("");
@@ -59,9 +59,6 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
 	const [currentPaymentMethods, setCurrentPaymentMethods] = useState<Models.PaymentMethod[]>(student?.administrative_info.payment_methods ?? []);
 	const [currentDiscounts, setCurrentDiscounts] = useState<Models.Discount[]>(student?.administrative_info.discounts ?? []);
 
-	useEffect(() => {
-		onChange();
-	}, []);
 	const handleDefaultsAjv = createAjv({ useDefaults: true });
 
 	const handlePaymentMethodModalOpen = useCallback(() => {
@@ -106,8 +103,14 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
 			description: discountDescription,
 		};
 
-		if (student && student?.administrative_info.discounts.length > 0) setCurrentDiscounts([newDiscount, ...student.administrative_info.discounts]);
-		else setCurrentDiscounts([newDiscount]);
+		if (student && student?.administrative_info.discounts.length > 0) {
+			const updatedStudent = {
+				...student,
+				administrative_info: { ...student.administrative_info, discount: [newDiscount, ...student.administrative_info.discounts] },
+			};
+			// setCurrentDiscounts([newDiscount, ...student.administrative_info.discounts]);
+			onChange(updatedStudent);
+		} else setCurrentDiscounts([newDiscount]);
 	}, []);
 
 	// @ts-ignore
@@ -123,7 +126,7 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
 					<JsonForms
 						schema={schema as JsonSchema7}
 						uischema={uiSchema}
-						data={data}
+						data={student}
 						renderers={materialRenderers}
 						cells={materialCells}
 						onChange={({ data }): void => {
@@ -166,13 +169,14 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
 					<TextField
 						sx={{ width: "100%", marginTop: 1 }}
 						label={"Comentarios"}
-						value={comments}
+						value={student.administrative_info.comments}
 						multiline
 						rows={4}
 						variant="standard"
 						disabled={!editable}
 						onChange={(event) => {
-							setComments(event.target.value);
+							const newStudent = { ...student, administrative_info: { ...student.administrative_info, comments: event.target.value } };
+							onChange(newStudent);
 						}}
 					/>
 				</CardContent>
@@ -300,7 +304,15 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
 															id="discount-reason"
 															label="Explicación del descuento"
 															value={discountReason}
-															onChange={(event) => setDiscountReason(event.target.value)}>
+															onChange={(event) => {
+																const newStudent = {
+																	...student,
+																	administrative_info: { ...student.administrative_info },
+																};
+																onChange(newStudent);
+
+																setDiscountReason(event.target.value);
+															}}>
 															<MenuItem value={"hermano"}>Hermano</MenuItem>
 															<MenuItem value={"resolucion"}>Resolución</MenuItem>
 														</Select>
