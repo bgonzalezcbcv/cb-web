@@ -1,26 +1,29 @@
 import _ from "lodash";
 import React, { useEffect, useState } from "react";
 
-import { Question, Student } from "../../../../core/interfaces";
+import { Question as QuestionModel, Student } from "../../../../core/Models";
 import { Box, Divider, Grid, List, ListItem, TextField, Typography } from "@mui/material";
 import useDebounce from "../../../../hooks/useDebounce";
 
 export interface EnrollmentQuestionsProps {
-	studentData: Student;
+	student: Student;
 	editable: boolean;
-	onChange: (newData: Student) => void;
+	onChange: (newStudent: Student) => void;
 }
-function renderQuestion(
-	onChangeQuestionCallback: (debouncedAnswerText: string) => void,
-	question: Question,
-	questionIndex: number,
-	editable: boolean
-): React.ReactElement {
+
+function Question(props: {
+	question: QuestionModel;
+	questionIndex: number;
+	editable: boolean;
+	onChangeQuestion: (debouncedAnswerText: string) => void;
+}): React.ReactElement {
+	const { question, questionIndex, editable, onChangeQuestion } = props;
+
 	const [answer, setAnswer] = useState(question.answer);
-	const debouncedAnswer = useDebounce<string>(answer, 500);
+	const debouncedAnswer = useDebounce<string>(answer, 50);
 
 	useEffect(() => {
-		onChangeQuestionCallback(debouncedAnswer);
+		onChangeQuestion(debouncedAnswer);
 	}, [debouncedAnswer]);
 
 	return (
@@ -35,16 +38,16 @@ function renderQuestion(
 						height: "100%",
 						alignContent: "center",
 					}}>
-					<Typography style={{ paddingRight: 20 }} gutterBottom>
+					<Typography variant="body1" style={{ paddingRight: 20 }} gutterBottom>
 						{question.question}
 					</Typography>
+
 					<TextField
 						multiline
 						minRows={4}
 						disabled={!editable}
 						maxRows={4}
 						fullWidth
-						placeholder="Ingrese la respuesta"
 						value={answer}
 						onChange={(event): void => {
 							setAnswer(event.target.value);
@@ -57,19 +60,19 @@ function renderQuestion(
 }
 
 export function EnrollmentQuestions(props: EnrollmentQuestionsProps): React.ReactElement {
-	const { studentData, editable, onChange } = props;
-	const studentQuestionCategories = studentData.question_categories;
+	const { student, editable, onChange } = props;
+	const { question_categories } = student;
 
-	const onChangeHandler = (changedQuestionCategoryIndex: number, changedQuestionIndex: number, newAnserValue: string): void => {
-		const newStudentData: Student = _.cloneDeep(studentData);
-		newStudentData.question_categories[changedQuestionCategoryIndex].questions[changedQuestionIndex].answer = newAnserValue;
+	const onChangeHandler = (changedQuestionCategoryIndex: number, changedQuestionIndex: number, newAnswerValue: string): void => {
+		const newStudentData: Student = _.cloneDeep(student);
+		newStudentData.question_categories[changedQuestionCategoryIndex].questions[changedQuestionIndex].answer = newAnswerValue;
 
 		onChange(newStudentData);
 	};
 
 	return (
 		<List>
-			{studentQuestionCategories.map((category, categoryIndex): React.ReactElement => {
+			{question_categories.map((category, categoryIndex): React.ReactElement => {
 				return (
 					<div key={"category" + categoryIndex}>
 						<Typography variant="h4" gutterBottom>
@@ -77,15 +80,20 @@ export function EnrollmentQuestions(props: EnrollmentQuestionsProps): React.Reac
 						</Typography>
 
 						<Grid container spacing={2} sx={{ justifyContent: "space-between" }}>
-							{category.questions.map((question, questionIndex): React.ReactElement => {
-								const onChangeQuestionHandler = (debouncedAnswer: string): void => {
-									onChangeHandler(categoryIndex, questionIndex, debouncedAnswer);
-								};
-								return renderQuestion(onChangeQuestionHandler, question, questionIndex, editable);
-							})}
+							{category.questions.map(
+								(question, questionIndex): React.ReactElement => (
+									<Question
+										key={`${category}-${categoryIndex}-question-${questionIndex}`}
+										question={question}
+										questionIndex={questionIndex}
+										editable={editable}
+										onChangeQuestion={(newAnswer): void => onChangeHandler(categoryIndex, questionIndex, newAnswer)}
+									/>
+								)
+							)}
 						</Grid>
 
-						{categoryIndex < studentQuestionCategories.length - 1 && <Divider />}
+						{categoryIndex < question_categories.length - 1 && <Divider />}
 					</div>
 				);
 			})}

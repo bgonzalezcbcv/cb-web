@@ -1,6 +1,8 @@
 /* eslint-disable */
 import * as React from "react";
 
+import { Student as StudentModel } from "../../core/Models";
+
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import Tabs, { tabsClasses } from "@mui/material/Tabs";
@@ -19,6 +21,7 @@ import { defaultStudent } from "./DefaultStudent";
 import StudentInfo from "./components/studentInfo/StudentInfo";
 import { AdministrativeInfo, FamilyMember, Question, QuestionCategories } from "../../core/Models";
 import { setEnvironmentData } from "worker_threads";
+import { EnrollmentQuestions } from "./components/EnrollmentQuestions/EnrollmentQuestions";
 // import FamilyForm from "./components/family-info/FamilyForm";
 
 const familyMemberPrueba = {
@@ -85,8 +88,7 @@ const studentPrueba = {
 
 export default function Student(): React.ReactElement {
 	const [value, setValue] = React.useState(0);
-	const [student, setStudent] = React.useState(defaultStudent);
-	const [data, setData] = React.useState(studentPrueba);
+	const [student, setStudent] = React.useState<StudentModel>(studentPrueba);
 	const [editMode, setEditMode] = React.useState(true);
 	const [isFormUploadOpen, setIsFormUploadOpen] = React.useState(false);
 
@@ -133,7 +135,10 @@ export default function Student(): React.ReactElement {
 				</Tabs>
 			</Box>
 			<TabPanel value={value} index={0}>
-				<StudentInfo student={studentPrueba} onChange={setData} editable={editMode}></StudentInfo>
+				<StudentInfo student={student} onChange={setStudent} editable={editMode}></StudentInfo>
+			</TabPanel>
+			<TabPanel value={value} index={2}>
+				<EnrollmentQuestions student={student} onChange={setStudent} editable={editMode} />
 			</TabPanel>
 			<TabPanel value={value} index={3}>
 				{/*<FamilyForm student={} onChange={() => {}}></FamilyForm>*/}
