@@ -54,13 +54,13 @@ export enum DiscountExplanation {
     Resolution = "resolución",
 }
 
-interface PaymentMethod {
+export interface PaymentMethod {
 	year: number;
 	method: PaymentMethodOption;
 	yearly_payment_url: string;
 }
 
- interface Discount {
+export interface Discount {
     percentage: number;
     starting_date: Date;
     ending_date: Date;
@@ -76,7 +76,7 @@ export interface AdministrativeInfo {
     starting_date: Date | undefined;
     registration_commitment_url: string;
     scholarship_type: ScholarshipType;
-    agreement_type: string[];
+    agreement_type: string;
     comments: string;
     payment_methods: PaymentMethod[];
     discounts: Discount[];

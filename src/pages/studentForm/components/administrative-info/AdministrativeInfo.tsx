@@ -136,7 +136,7 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
                             value={agreementType}
                             onChange={(event) => setAgreementType(event.target.value)}
                         >
-                            {dataStore.agreementType && dataStore.agreementType?.map((value, index) => {return <MenuItem key={index} value={value}>{value}</MenuItem>})}
+                            {dataStore.agreementTypes && dataStore.agreementTypes?.map((value, index) => {return <MenuItem key={index} value={value}>{value}</MenuItem>})}
                         </Select>
                     </FormControl>
 
