@@ -1,0 +1,299 @@
+{
+	"type": "object",
+	"properties": {
+		"id": {
+			"type": "string"
+		},
+		"ci": {
+			"type": "string"
+		},
+		"name": {
+			"type": "string"
+		},
+		"surname": {
+			"type": "string"
+		},
+		"schedule_start": {
+			"type": "string"
+		},
+		"schedule_end": {
+			"type": "string"
+		},
+		"tuition": {
+			"type": "string"
+		},
+		"reference_number": {
+			"type": "integer"
+		},
+		"birthplace": {
+			"type": "string"
+		},
+		"birthdate": {
+			"type": "string",
+			"format": "date"
+		},
+		"nationality": {
+			"type": "string"
+		},
+		"first_language": {
+			"type": "string"
+		},
+		"office": {
+			"type": "string"
+		},
+		"status": {
+			"type": "string"
+		},
+		"address": {
+			"type": "string"
+		},
+		"neighborhood": {
+			"type": "string"
+		},
+		"medical_assurance": {
+			"type": "string"
+		},
+		"emergency": {
+			"type": "string"
+		},
+		"phone_number": {
+			"type": "string"
+		},
+		"vaccine_expiration": {
+			"type": "string",
+			"format": "date"
+		},
+		"inscription_date": {
+			"type": "string",
+			"format": "date"
+		},
+		"starting_date": {
+			"type": "string",
+			"format": "date"
+		},
+		"contact": {
+			"type": "string"
+		},
+		"contact_phone": {
+			"type": "string"
+		},
+		"email": {
+			"type": "string"
+		},
+		"family": {
+			"type": "array",
+			"items": [
+				{
+					"type": "object",
+					"properties": {
+						"ci": {
+							"type": "string"
+						},
+						"role": {
+							"type": "string"
+						},
+						"full_name": {
+							"type": "string"
+						},
+						"birthdate": {
+							"type": "string",
+							"format": "date"
+						},
+						"birthplace": {
+							"type": "string"
+						},
+						"nationality": {
+							"type": "string"
+						},
+						"first_language": {
+							"type": "string"
+						},
+						"marital_status": {
+							"type": "string"
+						},
+						"cellphone": {
+							"type": "string"
+						},
+						"email": {
+							"type": "string"
+						},
+						"address": {
+							"type": "string"
+						},
+						"neighbourhood": {
+							"type": "string"
+						},
+						"education_level": {
+							"type": "string"
+						},
+						"occupation": {
+							"type": "string"
+						},
+						"workplace": {
+							"type": "string"
+						},
+						"workplace_address": {
+							"type": "string"
+						},
+						"workplace_neighbourhood": {
+							"type": "string"
+						},
+						"workplace_phone": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"ci",
+						"role",
+						"full_name",
+						"birthdate",
+						"birthplace",
+						"nationality",
+						"first_language",
+						"marital_status",
+						"cellphone",
+						"email",
+						"address",
+						"neighbourhood",
+						"education_level",
+						"occupation",
+						"workplace",
+						"workplace_address",
+						"workplace_neighbourhood",
+						"workplace_phone"
+					]
+				}
+			]
+		},
+		"question_categories": {
+			"type": "array",
+			"items": [
+				{
+					"type": "object",
+					"properties": {
+						"category": {
+							"type": "string"
+						},
+						"questions": {
+							"type": "array",
+							"items": [
+								{
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string"
+										},
+										"question": {
+											"type": "string"
+										},
+										"answer": {
+											"type": "string"
+										}
+									},
+									"required": ["id", "question", "answer"]
+								}
+							]
+						}
+					},
+					"required": ["category", "questions"]
+				}
+			]
+		},
+		"administrative_info": {
+			"type": "object",
+			"properties": {
+				"registration_commitment_url": {
+					"type": "string"
+				},
+				"scholarship_type": {
+					"type": "string"
+				},
+				"agreement_type": {
+					"type": "string"
+				},
+				"comments": {
+					"type": "string"
+				},
+				"payment_methods": {
+					"type": "array",
+					"items": [
+						{
+							"type": "object",
+							"properties": {
+								"method": {
+									"type": "string"
+								},
+								"option": {
+									"type": "string"
+								}
+							},
+							"required": ["method", "option"]
+						}
+					]
+				},
+				"discounts": {
+					"type": "array",
+					"items": [
+						{
+							"type": "object",
+							"properties": {
+								"starting_date": {
+									"type": "string",
+									"format": "date"
+								},
+								"ending_date": {
+									"type": "string",
+									"format": "date"
+								},
+								"explanation": {
+									"type": "string"
+								},
+								"percentage": {
+									"type": "integer"
+								},
+								"type": {
+									"type": "string"
+								},
+								"report_url": {
+									"type": "string"
+								}
+							},
+							"required": ["starting_date", "ending_date", "explanation", "percentage", "type", "report_url"]
+						}
+					]
+				}
+			},
+			"required": ["registration_commitment_url", "scholarship_type", "agreement_type", "comments", "payment_methods", "discounts"]
+		}
+	},
+	"required": [
+		"id",
+		"ci",
+		"name",
+		"surname",
+		"schedule_start",
+		"schedule_end",
+		"tuition",
+		"reference_number",
+		"birthplace",
+		"birthdate",
+		"nationality",
+		"first_language",
+		"office",
+		"status",
+		"address",
+		"neighborhood",
+		"medical_assurance",
+		"emergency",
+		"phone_number",
+		"vaccine_expiration",
+		"inscription_date",
+		"starting_date",
+		"contact",
+		"contact_phone",
+		"email",
+		"family",
+		"question_categories",
+		"administrative_info"
+	]
+}
