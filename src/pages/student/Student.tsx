@@ -1,8 +1,6 @@
 /* eslint-disable */
 import * as React from "react";
 
-import { Student as StudentModel } from "../../core/Models";
-
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import Tabs, { tabsClasses } from "@mui/material/Tabs";
@@ -20,74 +18,14 @@ import AdministrativeInfo from "./components/AdministrativeInfo/AdministrativeIn
 
 import { defaultStudent } from "./DefaultStudent";
 import StudentInfo from "./components/StudentInfo/StudentInfo";
+import { setEnvironmentData } from "worker_threads";
 import FamilyForm from "./components/FamilyInfo/FamilyForm";
-import { EnrollmentQuestions } from "./components/EnrollmentQuestions/EnrollmentQuestions";
-
-const familyMemberPrueba = {
-	role: "string;",
-	full_name: "string;",
-	birthdate: "string;",
-	birthplace: "string;",
-	nationality: "string;",
-	first_language: "string;",
-	ci: "string;",
-	marital_status: "string;",
-	cellphone: "string;",
-	email: "string;",
-	address: "string;",
-	neighbourhood: "string;",
-	education_level: "string;",
-	occupation: "string;",
-	workplace: "string;",
-	workplace_address: "string;",
-	workplace_neighbourhood: "string;",
-	workplace_phone: "string;",
-};
-
-const studentPrueba = {
-	id: "string;",
-	ci: "string;",
-	name: "string;",
-	surname: "string;",
-	schedule_start: "string;",
-	schedule_end: "string;",
-	tuition: "string;",
-	reference_number: 0,
-	birthplace: "string;",
-	birthdate: "string;",
-	nationality: "string;",
-	first_language: "string;",
-	office: "string;",
-	status: "string;",
-	address: "string;",
-	neighborhood: "string;",
-	medical_assurance: "string;",
-	emergency: "string;",
-	phone_number: "string;",
-	vaccine_expiration: "string;",
-	inscription_date: "string;",
-	starting_date: "string;",
-	contact: "string;",
-	contact_phone: "string;",
-	email: "string;",
-	family: [familyMemberPrueba],
-	question_categories: [
-		{
-			category: "string;",
-			questions: [
-				{
-					id: "string;",
-					question: "string;",
-					answer: "string;",
-				},
-			],
-		},
-	],
-};
+import { useEffect } from "react";
+// import FamilyForm from "./components/FamilyInfo/FamilyForm";
 
 export default function Student(): React.ReactElement {
 	const [value, setValue] = React.useState(0);
-	const [student, setStudent] = React.useState<StudentModel>(defaultStudent);
+	const [student, setStudent] = React.useState(defaultStudent);
 	const [editMode, setEditMode] = React.useState(true);
 	const [isFormUploadOpen, setIsFormUploadOpen] = React.useState(false);
 
@@ -138,9 +76,6 @@ export default function Student(): React.ReactElement {
 			</TabPanel>
 			<TabPanel value={value} index={1}>
 				<FamilyForm student={student} onChange={setStudent} editable={editMode}></FamilyForm>
-			</TabPanel>
-			<TabPanel value={value} index={2}>
-				<EnrollmentQuestions student={student} onChange={setStudent} editable={editMode} />
 			</TabPanel>
 			<TabPanel value={value} index={3}>
 				<AdministrativeInfo student={student} onChange={setStudent} editable={editMode}></AdministrativeInfo>
