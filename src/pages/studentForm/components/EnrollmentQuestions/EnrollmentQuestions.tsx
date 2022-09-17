@@ -35,7 +35,7 @@ function renderQuestion(
 						height: "100%",
 						alignContent: "center",
 					}}>
-					<Typography style={{ paddingRight: 20 }} gutterBottom variant="body2">
+					<Typography style={{ paddingRight: 20 }} gutterBottom>
 						{question.question}
 					</Typography>
 					<TextField
