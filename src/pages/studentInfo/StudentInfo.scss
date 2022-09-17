@@ -1,0 +1,23 @@
+.ButtonContainer {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+}
+
+.ButtonEditContainer {
+	float: right;
+}
+
+.ImageContainter {
+	margin-bottom: 1em;
+}
+
+.ImageSim {
+	background-color: cornflowerblue;
+	height: 150px;
+	width: 150px;
+	border-radius: 100%;
+	float: left;
+	margin-bottom: 1em;
+	margin-left: 1em;
+}
