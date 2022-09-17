@@ -89,6 +89,12 @@
   padding-top: 5px;
 }
 
+.resolution-document {
+  display: flex;
+  align-self: center;
+  padding-top: 8px;
+}
+
 .discount-type-container {
   display: flex;
   flex-direction: row;
@@ -109,6 +115,10 @@
   display: flex;
   justify-content: space-between;
   padding-top: 5px;
+}
+
+.discount-history {
+  height: 200px;
 }
 
 
