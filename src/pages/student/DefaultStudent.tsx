@@ -1,5 +1,4 @@
 import {
-	AgreementType,
 	DiscountExplanation,
 	DiscountType,
 	PaymentMethodOption,
@@ -72,7 +71,7 @@ const defaultStudent: Student = {
 		starting_date: new Date("1/3/2022"),
 		registration_commitment_url: "",
 		scholarship_type: ScholarshipType.Subsidized,
-		agreement_type: AgreementType.None,
+		agreement_type: "Ninguno",
 		comments: "",
 		payment_methods: [
 			{

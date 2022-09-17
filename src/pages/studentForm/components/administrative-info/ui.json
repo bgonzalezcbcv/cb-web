@@ -1,0 +1,23 @@
+{
+  "type": "VerticalLayout",
+  "elements": [
+    {
+      "type": "Control",
+      "scope": "#/properties/enrollmentDate",
+      "options": {
+        "dateFormat": "DD/MM/YYYY"
+      }
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/startDate",
+      "options": {
+        "dateFormat": "DD/MM/YYYY"
+      }
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/scholarshipType"
+    }
+  ]
+}
