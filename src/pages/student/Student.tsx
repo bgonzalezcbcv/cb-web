@@ -1,3 +1,4 @@
+/* eslint-disable */
 import * as React from "react";
 
 import Tab from "@mui/material/Tab";
@@ -11,10 +12,76 @@ import SendIcon from "@mui/icons-material/Send";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
 import { TabPanel } from "./components/TabPanel";
+import StudentInfo from "./components/studentInfo/StudentInfo";
+import { AdministrativeInfo, FamilyMember, Question, QuestionCategories } from "../../core/Models";
+import { setEnvironmentData } from "worker_threads";
 // import FamilyForm from "./components/family-info/FamilyForm";
+
+const familyMemberPrueba = {
+	role: "string;",
+	full_name: "string;",
+	birthdate: "string;",
+	birthplace: "string;",
+	nationality: "string;",
+	first_language: "string;",
+	ci: "string;",
+	marital_status: "string;",
+	cellphone: "string;",
+	email: "string;",
+	address: "string;",
+	neighbourhood: "string;",
+	education_level: "string;",
+	occupation: "string;",
+	workplace: "string;",
+	workplace_address: "string;",
+	workplace_neighbourhood: "string;",
+	workplace_phone: "string;",
+};
+
+const studentPrueba = {
+	id: "string;",
+	ci: "string;",
+	name: "string;",
+	surname: "string;",
+	schedule_start: "string;",
+	schedule_end: "string;",
+	tuition: "string;",
+	reference_number: 0,
+	birthplace: "string;",
+	birthdate: "string;",
+	nationality: "string;",
+	first_language: "string;",
+	office: "string;",
+	status: "string;",
+	address: "string;",
+	neighborhood: "string;",
+	medical_assurance: "string;",
+	emergency: "string;",
+	phone_number: "string;",
+	vaccine_expiration: "string;",
+	inscription_date: "string;",
+	starting_date: "string;",
+	contact: "string;",
+	contact_phone: "string;",
+	email: "string;",
+	family: [familyMemberPrueba],
+	question_categories: [
+		{
+			category: "string;",
+			questions: [
+				{
+					id: "string;",
+					question: "string;",
+					answer: "string;",
+				},
+			],
+		},
+	],
+};
 
 export default function Student(): React.ReactElement {
 	const [value, setValue] = React.useState(0);
+	const [data, setData] = React.useState(studentPrueba);
 	const [editMode, setEditMode] = React.useState(true);
 
 	const handleChange = (event: React.SyntheticEvent, newValue: number): void => {
@@ -56,6 +123,9 @@ export default function Student(): React.ReactElement {
 					<Tab label="Trayectoria" />
 				</Tabs>
 			</Box>
+			<TabPanel value={value} index={0}>
+				<StudentInfo student={studentPrueba} onChange={setData} editable={editMode}></StudentInfo>
+			</TabPanel>
 			<TabPanel value={value} index={3}>
 				{/*<FamilyForm student={} onChange={() => {}}></FamilyForm>*/}
 			</TabPanel>

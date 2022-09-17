@@ -44,7 +44,7 @@ export enum PaymentMethodOption {
 }
 
 export enum AgreementType { //TODO: Estos son agregados por el admin del sistema
-	None = 'ninguno'
+	None = "ninguno",
 }
 
 export enum DiscountType {
@@ -113,7 +113,7 @@ export interface Student {
 	email: string;
 	family: FamilyMember[];
 	question_categories: QuestionCategories[];
-	administrative_info: AdministrativeInfo;
+	administrative_info?: AdministrativeInfo;
 }
 
 export interface StudentCreationForm {
