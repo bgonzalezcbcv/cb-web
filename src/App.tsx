@@ -5,13 +5,12 @@ import { observer } from "mobx-react-lite";
 
 // Secondly we import our types, core elements, pages, components and lastly images.
 import { DataStore } from "./core/DataStore";
-import { getSidebarSectionsByUser } from "./core/userRoleHelper";
 import Login from "./pages/login/Login";
-import StudentForm from "./pages/studentForm/StudentForm";
+import { getSidebarSectionsByUser } from "./core/userRoleHelper";
 import Teachers from "./pages/teachers/Teachers";
-import CSVUploader from "./pages/teachers/components/csv-uploader/CSVUploader";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Navbar from "./components/Navbar/Navbar";
+import Student from "./pages/student/Student";
 
 // Lastly we import our stylesheets.
 import "./App.css";
@@ -33,9 +32,7 @@ function App(): React.ReactElement {
 							<Routes>
 								{loggedUser ? (
 									<>
-										<Route path="/teachers" element={<Teachers />} />
-										<Route path="/studentform" element={<StudentForm />} />
-										<Route path="/CSVUploader" element={<CSVUploader />} />
+										<Route path="/student" element={<Student />} />
 										<Route path="/login" element={<Login />} />
 										<Route path="*" element={<Teachers />} />
 									</>

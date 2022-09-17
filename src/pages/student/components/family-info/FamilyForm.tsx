@@ -4,7 +4,7 @@ import { JsonForms } from "@jsonforms/react";
 import { JsonSchema7, Translator, createAjv } from "@jsonforms/core";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
 import { Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
-import { FamilyMember, Student } from "../../core/Models";
+import { FamilyMember, Student } from "../../../../core/Models";
 
 import schema from "./schema.json";
 import ui from "./ui.json";

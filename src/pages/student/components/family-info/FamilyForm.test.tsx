@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import { act, fireEvent, render } from "@testing-library/react";
-import { Student } from "../../core/Models";
+import { Student } from "../../../../core/Models";
 
 import FamilyForm from "./FamilyForm";
 

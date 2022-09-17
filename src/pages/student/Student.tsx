@@ -10,9 +10,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import SendIcon from "@mui/icons-material/Send";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
-import StudentForm from "../studentForm/StudentForm";
-import Teachers from "../teachers/Teachers";
 import { TabPanel } from "./components/TabPanel";
+// import FamilyForm from "./components/family-info/FamilyForm";
 
 export default function Student(): React.ReactElement {
 	const [value, setValue] = React.useState(0);
@@ -57,20 +56,8 @@ export default function Student(): React.ReactElement {
 					<Tab label="Trayectoria" />
 				</Tabs>
 			</Box>
-			<TabPanel value={value} index={0}>
-				<StudentForm></StudentForm>
-			</TabPanel>
-			<TabPanel value={value} index={1}>
-				<Teachers></Teachers>
-			</TabPanel>
-			<TabPanel value={value} index={2}>
-				Item Three
-			</TabPanel>
 			<TabPanel value={value} index={3}>
-				Item four
-			</TabPanel>
-			<TabPanel value={value} index={4}>
-				Item Three
+				{/*<FamilyForm student={} onChange={() => {}}></FamilyForm>*/}
 			</TabPanel>
 		</Card>
 	);
