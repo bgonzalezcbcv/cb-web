@@ -59,7 +59,7 @@ function Question(props: {
 	);
 }
 
-export function EnrollmentQuestions(props: EnrollmentQuestionsProps): React.ReactElement {
+export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): React.ReactElement {
 	const { student, editable, onChange } = props;
 	const { question_categories } = student;
 

@@ -3,7 +3,7 @@ import { act, getByText, render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import * as UseDebounce from "../../../../hooks/useDebounce";
-import { EnrollmentQuestions } from "./EnrollmentQuestions";
+import EnrollmentQuestions from "./EnrollmentQuestions";
 import { initialStudentData, expectedNewStudentData } from "./EnrollmentQuestions.fixture";
 
 describe("EnrollmentQuestions", () => {

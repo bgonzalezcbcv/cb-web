@@ -1,25 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
+import { FamilyMember, Student } from "../../../../core/Models";
 import { JsonForms } from "@jsonforms/react";
 import { JsonSchema7, Translator, createAjv } from "@jsonforms/core";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
-import { Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
-import { FamilyMember, Student } from "../../../../core/Models";
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 
-import schema from "./schema.json";
+import schema from "../../schema.json";
 import ui from "./ui.json";
 
 import "./FamilyForm.scss";
 
 export type FamilyFormProps = {
 	student: Student;
-	onChange: (data: Student) => unknown;
 	editable: boolean;
+	onChange: (data: Student) => void;
 };
 
 export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 	const { student, onChange, editable } = props;
-
 	const family = student.family;
 
 	const [hasErrorsArray, setHasErrorsArray] = useState<boolean[]>(Array(family.length).fill(false));
@@ -27,6 +26,15 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 	const [familyIndex, setFamilyIndex] = useState(0);
 
 	const handleDefaultsAjv = createAjv({ useDefaults: true });
+
+	useEffect(
+		() =>
+			onChange({
+				...student,
+				family: familyMembers,
+			}),
+		[familyMembers]
+	);
 
 	const setFamilyIndexFromButton = (event: React.MouseEvent<HTMLElement>, newIndex: number): void => {
 		newIndex !== null && setFamilyIndex(newIndex);
@@ -42,13 +50,13 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 		setFamilyMembers(familyMembersCopy);
 	}
 
-	function canSave(): boolean {
-		let canSave = true;
-		hasErrorsArray.forEach((element) => {
-			canSave = canSave && element;
-		});
-		return canSave;
-	}
+	// function canSave(): boolean {
+	// 	let canSave = true;
+	// 	hasErrorsArray.forEach((element) => {
+	// 		canSave = canSave && element;
+	// 	});
+	// 	return canSave;
+	// }
 
 	const toggleButtons = familyMembers.map((step, index) => {
 		let text = "Familiar " + (index + 1).toString();
@@ -81,6 +89,7 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 					) : null}
 				</ToggleButtonGroup>
 			</div>
+
 			<JsonForms
 				i18n={{ translate: translator as Translator }}
 				schema={schema as JsonSchema7}
@@ -92,19 +101,20 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 				readonly={!editable}
 				ajv={handleDefaultsAjv}
 			/>
-			<div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end" }}>
-				{editable ? (
-					<Button
-						id="saveButton"
-						variant="contained"
-						disabled={!canSave()}
-						onClick={(): void => {
-							onChange({ ...student, family: familyMembers });
-						}}>
-						Guardar
-					</Button>
-				) : null}
-			</div>
+
+			{/*<div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end" }}>*/}
+			{/*	{editable ? (*/}
+			{/*		<Button*/}
+			{/*			id="saveButton"*/}
+			{/*			variant="contained"*/}
+			{/*			disabled={!canSave()}*/}
+			{/*			onClick={(): void => {*/}
+			{/*				onChange({ ...student, family: familyMembers });*/}
+			{/*			}}>*/}
+			{/*			Guardar*/}
+			{/*		</Button>*/}
+			{/*	) : null}*/}
+			{/*</div>*/}
 		</div>
 	);
 }

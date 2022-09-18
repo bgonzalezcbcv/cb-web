@@ -1,6 +1,8 @@
 /* eslint-disable */
 import * as React from "react";
 
+import { Student as StudentModel } from "../../core/Models";
+
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import Tabs, { tabsClasses } from "@mui/material/Tabs";
@@ -14,18 +16,79 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
 import { TabPanel } from "./components/TabPanel";
 import CreateStudent from "./components/CreateStudent/CreateStudent";
-import AdministrativeInfo from "./components/AdministrativeInfo/AdministrativeInfo";
 
 import { defaultStudent } from "./DefaultStudent";
+import { FamilyMember, Question, QuestionCategories } from "../../core/Models";
+import EnrollmentQuestions from "./components/EnrollmentQuestions/EnrollmentQuestions";
+import FamilyForm from "./components/FamilyForm/FamilyForm";
 import StudentInfo from "./components/StudentInfo/StudentInfo";
-import { setEnvironmentData } from "worker_threads";
-import FamilyForm from "./components/FamilyInfo/FamilyForm";
-import { useEffect } from "react";
-// import FamilyForm from "./components/FamilyInfo/FamilyForm";
+import AdministrativeInfo from "./components/AdministrativeInfo/AdministrativeInfo";
+
+const familyMemberPrueba = {
+	role: "string;",
+	full_name: "string;",
+	birthdate: "string;",
+	birthplace: "string;",
+	nationality: "string;",
+	first_language: "string;",
+	ci: "string;",
+	marital_status: "string;",
+	cellphone: "string;",
+	email: "string;",
+	address: "string;",
+	neighbourhood: "string;",
+	education_level: "string;",
+	occupation: "string;",
+	workplace: "string;",
+	workplace_address: "string;",
+	workplace_neighbourhood: "string;",
+	workplace_phone: "string;",
+};
+
+const studentPrueba = {
+	id: "string;",
+	ci: "string;",
+	name: "string;",
+	surname: "string;",
+	schedule_start: "string;",
+	schedule_end: "string;",
+	tuition: "string;",
+	reference_number: 0,
+	birthplace: "string;",
+	birthdate: "string;",
+	nationality: "string;",
+	first_language: "string;",
+	office: "string;",
+	status: "string;",
+	address: "string;",
+	neighborhood: "string;",
+	medical_assurance: "string;",
+	emergency: "string;",
+	phone_number: "string;",
+	vaccine_expiration: "string;",
+	inscription_date: "string;",
+	starting_date: "string;",
+	contact: "string;",
+	contact_phone: "string;",
+	email: "string;",
+	family: [familyMemberPrueba],
+	question_categories: [
+		{
+			category: "string;",
+			questions: [
+				{
+					id: "string;",
+					question: "string;",
+					answer: "string;",
+				},
+			],
+		},
+	],
+};
 
 export default function Student(): React.ReactElement {
 	const [value, setValue] = React.useState(0);
-	const [student, setStudent] = React.useState(defaultStudent);
+	const [student, setStudent] = React.useState<StudentModel>(defaultStudent);
 	const [editMode, setEditMode] = React.useState(true);
 	const [isFormUploadOpen, setIsFormUploadOpen] = React.useState(false);
 
@@ -71,17 +134,21 @@ export default function Student(): React.ReactElement {
 					<Tab label="Trayectoria" />
 				</Tabs>
 			</Box>
+
 			<TabPanel value={value} index={0}>
-				<StudentInfo student={student} onChange={setStudent} editable={editMode}></StudentInfo>
+				<StudentInfo student={student} onChange={setStudent} editable={editMode} />
 			</TabPanel>
+
 			<TabPanel value={value} index={1}>
-				<FamilyForm student={student} onChange={setStudent} editable={editMode}></FamilyForm>
+				<FamilyForm student={student} onChange={setStudent} editable={editMode} />
 			</TabPanel>
-			<TabPanel value={value} index={3}>
-				<AdministrativeInfo student={student} onChange={setStudent} editable={editMode}></AdministrativeInfo>
+
+			<TabPanel value={value} index={2}>
+				<EnrollmentQuestions student={student} onChange={setStudent} editable={editMode} />
 			</TabPanel>
+
 			<TabPanel value={value} index={3}>
-				{/*<FamilyForm student={} onChange={() => {}}></FamilyForm>*/}
+				<AdministrativeInfo student={student} onChange={setStudent} editable={editMode} />
 			</TabPanel>
 
 			<Dialog open={isFormUploadOpen} onClose={(): void => setIsFormUploadOpen(false)}>

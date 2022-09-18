@@ -1,0 +1,112 @@
+{
+	"type": "VerticalLayout",
+	"elements": [
+		{
+			"type": "HorizontalLayout",
+			"elements": [
+				{
+					"type": "Control",
+					"scope": "#/properties/family/items/0/properties/role"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/family/items/0/properties/full_name"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/family/items/0/properties/ci"
+				}
+			]
+		},
+		{
+			"type": "HorizontalLayout",
+			"elements": [
+				{
+					"type": "Control",
+					"scope": "#/properties/family/items/0/properties/birthdate",
+					"options": {
+						"format": "date",
+						"dateFormat": "DD/MM/YYYY",
+						"dateSaveFormat": "MM-DD-YYYY"
+					}
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/family/items/0/properties/marital_status"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/family/items/0/properties/cellphone"
+				}
+			]
+		},
+		{
+			"type": "HorizontalLayout",
+			"elements": [
+				{
+					"type": "Control",
+					"scope": "#/properties/family/items/0/properties/birthplace"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/family/items/0/properties/nationality"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/family/items/0/properties/first_language"
+				}
+			]
+		},
+		{
+			"type": "HorizontalLayout",
+			"elements": [
+				{
+					"type": "Control",
+					"scope": "#/properties/family/items/0/properties/email"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/family/items/0/properties/address"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/family/items/0/properties/neighbourhood"
+				}
+			]
+		},
+		{
+			"type": "HorizontalLayout",
+			"elements": [
+				{
+					"type": "Control",
+					"scope": "#/properties/family/items/0/properties/education_level"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/family/items/0/properties/occupation"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/family/items/0/properties/workplace"
+				}
+			]
+		},
+		{
+			"type": "HorizontalLayout",
+			"elements": [
+				{
+					"type": "Control",
+					"scope": "#/properties/family/items/0/properties/workplace_address"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/family/items/0/properties/workplace_neighbourhood"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/family/items/0/properties/workplace_phone"
+				}
+			]
+		}
+	]
+}

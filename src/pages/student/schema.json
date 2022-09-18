@@ -91,83 +91,134 @@
 			"items": [
 				{
 					"type": "object",
+					"title": "Editar responsable",
 					"properties": {
-						"ci": {
-							"type": "string"
-						},
 						"role": {
-							"type": "string"
+							"oneOf": [
+								{
+									"const": "mother",
+									"title": "Madre"
+								},
+								{
+									"const": "father",
+									"title": "Padre"
+								},
+								{
+									"const": "guardian",
+									"title": "Tutor"
+								}
+							],
+							"type": "string",
+							"title": "Tipo de responsable",
+							"default": "mother"
 						},
 						"full_name": {
-							"type": "string"
+							"type": "string",
+							"title": "Nombre completo"
 						},
 						"birthdate": {
 							"type": "string",
-							"format": "date"
+							"dateFormat": "DD/MM/YYYY",
+							"title": "Fecha de nacimiento"
 						},
 						"birthplace": {
-							"type": "string"
+							"type": "string",
+							"title": "País de nacimiento"
 						},
 						"nationality": {
-							"type": "string"
+							"type": "string",
+							"title": "Nacionalidad"
 						},
 						"first_language": {
-							"type": "string"
+							"type": "string",
+							"title": "Lengua materna"
+						},
+						"ci": {
+							"type": "integer",
+							"title": "Cedula de identidad",
+							"minimum": 0
 						},
 						"marital_status": {
-							"type": "string"
+							"oneOf": [
+								{
+									"const": "single",
+									"title": "Soltero/a"
+								},
+								{
+									"const": "married",
+									"title": "Casado/a"
+								},
+								{
+									"const": "widow",
+									"title": "Viudo/a"
+								}
+							],
+							"type": "string",
+							"title": "Estado civil",
+							"default": "single"
 						},
 						"cellphone": {
-							"type": "string"
+							"type": "string",
+							"title": "Teléfono celular",
+							"pattern": "\\d{9}"
 						},
 						"email": {
-							"type": "string"
+							"type": "string",
+							"title": "E-mail"
 						},
 						"address": {
-							"type": "string"
+							"type": "string",
+							"title": "Dirección"
 						},
 						"neighbourhood": {
-							"type": "string"
+							"type": "string",
+							"title": "Barrio de residencia"
 						},
 						"education_level": {
-							"type": "string"
+							"oneOf": [
+								{
+									"const": "none",
+									"title": "Ninguno"
+								},
+								{
+									"const": "school",
+									"title": "Primaria"
+								},
+								{
+									"const": "highSchool",
+									"title": "Secundaria"
+								},
+								{
+									"const": "tertiary",
+									"title": "Terciario"
+								}
+							],
+							"title": "Nivel educativo",
+							"default": "none"
 						},
 						"occupation": {
-							"type": "string"
+							"type": "string",
+							"title": "Trabajo-Ocupación"
 						},
 						"workplace": {
-							"type": "string"
+							"type": "string",
+							"title": "Empresa de trabajo"
 						},
 						"workplace_address": {
-							"type": "string"
+							"type": "string",
+							"title": "Dirección laboral"
 						},
 						"workplace_neighbourhood": {
-							"type": "string"
+							"type": "string",
+							"title": "Barrio laboral"
 						},
 						"workplace_phone": {
-							"type": "string"
+							"type": "number",
+							"title": "Teléfono laboral",
+							"pattern": "\\d{8,9}"
 						}
 					},
-					"required": [
-						"ci",
-						"role",
-						"full_name",
-						"birthdate",
-						"birthplace",
-						"nationality",
-						"first_language",
-						"marital_status",
-						"cellphone",
-						"email",
-						"address",
-						"neighbourhood",
-						"education_level",
-						"occupation",
-						"workplace",
-						"workplace_address",
-						"workplace_neighbourhood",
-						"workplace_phone"
-					]
+					"required": ["role", "ci"]
 				}
 			]
 		},
