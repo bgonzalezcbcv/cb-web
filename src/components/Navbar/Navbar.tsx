@@ -84,12 +84,12 @@ function Navbar(): React.ReactElement {
 	return (
 		<Box sx={{ flex: 1 }}>
 			<AppBar position="static">
-				<Toolbar sx={{ justifyContent: "flex-end", bgcolor: "gray" }}>
+				<Toolbar sx={{ justifyContent: "flex-end", bgcolor: "rgb(249,162,118)" }}>
 					{loggedUser ? (
 						<div className="logged-user-controls">
 							<Button onClick={handleNotificationsClick}>
-								<Badge badgeContent={3} color="secondary">
-									<NotificationsIcon className="notifications-icon" sx={{ color: "darkgray" }} />
+								<Badge badgeContent={3} color="primary">
+									<NotificationsIcon className="notifications-icon" sx={{ color: "black" }} />
 								</Badge>
 							</Button>
 

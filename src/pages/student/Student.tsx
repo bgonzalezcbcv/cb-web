@@ -49,6 +49,7 @@ export default function Student(): React.ReactElement {
 				display: "flex",
 				flexDirection: "column",
 				justifyContent: "space-between",
+				boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
 			}}>
 			<Box
 				sx={{

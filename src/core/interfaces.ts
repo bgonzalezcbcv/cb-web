@@ -23,7 +23,7 @@ export enum UserRoleName {
 
 export enum UserRoleColor {
 	Administrador = "red",
-	Administrativo = "blue",
+	Administrativo = "rgb(59 , 96 , 144)",
 	Adscripto = "cyan",
 	Director = "green",
 	Docente = "yellow",
