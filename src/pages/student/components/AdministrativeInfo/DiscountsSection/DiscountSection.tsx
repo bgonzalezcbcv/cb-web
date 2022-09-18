@@ -49,6 +49,11 @@ export default function DiscountSection(props: VisualComponent & AdministrativeI
 		setDiscountModalOpen(false);
 	}, []);
 
+	const translator = (id: string, defaultMessage: string | undefined): string => {
+		if (id.includes("error")) return "Este campo es requerido";
+		return defaultMessage ?? "";
+	};
+
 	//TODO: Adjust this when file handling is defined
 	const handleAddNewDiscount = useCallback((discountData: DiscountData) => {
 		const newDiscount: Models.Discount = {
@@ -84,6 +89,7 @@ export default function DiscountSection(props: VisualComponent & AdministrativeI
 							title={"Agregar un nuevo descuento"}
 							body={
 								<JsonForms
+									i18n={{ translate: translator as Translator }}
 									schema={schema as JsonSchema7}
 									uischema={ui}
 									data={{ administrative_info: { discounts: [discountData] } }}

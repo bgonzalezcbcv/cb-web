@@ -7,7 +7,7 @@ import { Student as StudentModel } from "../../core/Models";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import Tabs, { tabsClasses } from "@mui/material/Tabs";
-import { Button, Card, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material";
+import { Button, Card, Dialog, DialogActions, DialogContent, DialogTitle, Typography, Divider } from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 
 import EditIcon from "@mui/icons-material/Edit";
@@ -39,7 +39,17 @@ export default function Student(): React.ReactElement {
 	};
 
 	return (
-		<Card sx={{ width: "80%", height: "90%", padding: "10px", alignSelf: "flex-start", marginTop: "20px" }}>
+		<Card
+			sx={{
+				width: "80%",
+				height: "90%",
+				padding: "10px",
+				alignSelf: "flex-start",
+				marginTop: "20px",
+				display: "flex",
+				flexDirection: "column",
+				justifyContent: "space-between",
+			}}>
 			<Box
 				sx={{
 					borderBottom: 1,
@@ -51,7 +61,9 @@ export default function Student(): React.ReactElement {
 				}}>
 				<div style={{ display: "flex", flexDirection: "row", alignSelf: "center", justifySelf: "center" }}>
 					<PersonAddIcon></PersonAddIcon>
-					<Typography sx={{ alignSelf: "center", paddingLeft: "10px" }}>Nuevo alumno</Typography>
+					<Typography component={"span"} sx={{ alignSelf: "center", paddingLeft: "10px" }}>
+						Nuevo alumno
+					</Typography>
 				</div>
 				<div>
 					<Button title="Subir formulario de inscripción" onClick={(): void => setIsFormUploadOpen(true)}>
@@ -111,31 +123,33 @@ export default function Student(): React.ReactElement {
 					setIsFormUploadOpen(false);
 				}}
 			/>
+			<div>
+				<Divider sx={{ marginBottom: "10px" }}></Divider>
+				<Box
+					display="flex"
+					justifyContent="flex-end"
+					alignContent="flex-end"
+					alignSelf="flex-end"
+					onClick={() => {
+						const ajv = createAjv({ allErrors: true });
 
-			<Box
-				display="flex"
-				justifyContent="flex-end"
-				alignContent="flex-end"
-				alignSelf="flex-end"
-				onClick={() => {
-					const ajv = createAjv({ allErrors: true });
+						ajv.validate(studentSchema, student);
 
-					ajv.validate(studentSchema, student);
-
-					ajv.errors?.length! > 0 && setIsCreationDialogOpen(true);
-				}}>
-				<Button variant="outlined">Crear Alumno</Button>
-			</Box>
+						ajv.errors?.length! > 0 && setIsCreationDialogOpen(true);
+					}}>
+					<Button variant="outlined">Crear Alumno</Button>
+				</Box>
+			</div>
 
 			<Dialog open={isCreationDialogOpen} onClose={(): void => setIsCreationDialogOpen(false)}>
 				<DialogTitle>
-					<Typography variant="h5" fontWeight="bold">
+					<Typography component={"span"} variant="h5" fontWeight="bold">
 						Hay errores en los campos del alumno...
 					</Typography>
 				</DialogTitle>
 
 				<DialogContent>
-					<Typography>¿Está seguro de querer crear este alumno?</Typography>
+					<Typography component={"span"}>¿Está seguro de querer crear este alumno?</Typography>
 				</DialogContent>
 
 				<DialogActions sx={{ display: "flex", justifyContent: "space-around" }}>

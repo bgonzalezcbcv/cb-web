@@ -38,7 +38,7 @@ function Question(props: {
 						height: "100%",
 						alignContent: "center",
 					}}>
-					<Typography variant="body1" style={{ paddingRight: 20 }} gutterBottom>
+					<Typography component={"span"} variant="body1" style={{ paddingRight: 20 }} gutterBottom>
 						{question.question}
 					</Typography>
 
@@ -75,7 +75,7 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 			{question_categories.map((category, categoryIndex): React.ReactElement => {
 				return (
 					<div key={"category" + categoryIndex}>
-						<Typography variant="h4" gutterBottom>
+						<Typography component={"span"} variant="h4" gutterBottom>
 							{category.category}
 						</Typography>
 

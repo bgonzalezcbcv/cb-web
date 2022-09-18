@@ -52,6 +52,11 @@ export default function PaymentMethodSection(props: VisualComponent & PaymentMet
 		handlePaymentMethodModalClose();
 	}, []);
 
+	const translator = (id: string, defaultMessage: string | undefined): string => {
+		if (id.includes("error")) return "Este campo es requerido";
+		return defaultMessage ?? "";
+	};
+
 	// @ts-ignore
 	return (
 		<Card className="payment-method-container">
@@ -68,6 +73,7 @@ export default function PaymentMethodSection(props: VisualComponent & PaymentMet
 							body={
 								<div className="payment-method-modal-wrapper">
 									<JsonForms
+										i18n={{ translate: translator as Translator }}
 										schema={schema as JsonSchema7}
 										uischema={ui}
 										data={{ administrative_info: { payment_methods: [paymentMethodData] } }}

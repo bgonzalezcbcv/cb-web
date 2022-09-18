@@ -113,11 +113,13 @@ function CreateStudent(props: CreateStudentProps): JSX.Element {
 							accept={acceptedExtensions.join(",")}
 						/>
 
-						<Typography>{!fileOver ? "Tire el archivo excel del alumno aquí ó haga click." : "Tire el archivo."}</Typography>
+						<Typography component={"span"}>{!fileOver ? "Tire el archivo excel del alumno aquí ó haga click." : "Tire el archivo."}</Typography>
 					</CardContent>
 				</Card>
 
-				<Typography id="uploaded-file-name">{fileName !== "" ? `Archivo subido: ${fileName}` : ""}</Typography>
+				<Typography component={"span"} id="uploaded-file-name">
+					{fileName !== "" ? `Archivo subido: ${fileName}` : ""}
+				</Typography>
 
 				<LoadingButton id="create-student-button" variant="outlined" loading={loadingFile} disabled={!readyToNavigate} onClick={handleCreate}>
 					Crear Alumno
