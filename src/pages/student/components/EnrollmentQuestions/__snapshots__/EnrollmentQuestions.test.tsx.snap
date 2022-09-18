@@ -6,11 +6,11 @@ exports[`EnrollmentQuestions should render correctly 1`] = `
     class="MuiList-root MuiList-padding css-h4y409-MuiList-root"
   >
     <div>
-      <h4
+      <span
         class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom css-1vw6mcs-MuiTypography-root"
       >
         categoria 1
-      </h4>
+      </span>
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-1xu1mzw-MuiGrid-root"
       >
@@ -23,12 +23,12 @@ exports[`EnrollmentQuestions should render correctly 1`] = `
             <div
               class="MuiBox-root css-7n0sq1"
             >
-              <p
+              <span
                 class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom css-d3wcwz-MuiTypography-root"
                 style="padding-right: 20px;"
               >
                 question 1 pero es mucho muchomuchomuchomucho muchomuchomuchomuchomucho muchomuchomuchomuchomuchomuchomucho muchomuchomuchomuchomuchomuchomuchomuchomucho mas larga para romper todo
-              </p>
+              </span>
               <div
                 class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
               >
@@ -78,12 +78,12 @@ exports[`EnrollmentQuestions should render correctly 1`] = `
             <div
               class="MuiBox-root css-7n0sq1"
             >
-              <p
+              <span
                 class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom css-d3wcwz-MuiTypography-root"
                 style="padding-right: 20px;"
               >
                 question 2
-              </p>
+              </span>
               <div
                 class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
               >
@@ -133,12 +133,12 @@ exports[`EnrollmentQuestions should render correctly 1`] = `
             <div
               class="MuiBox-root css-7n0sq1"
             >
-              <p
+              <span
                 class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom css-d3wcwz-MuiTypography-root"
                 style="padding-right: 20px;"
               >
                 question 3
-              </p>
+              </span>
               <div
                 class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
               >
@@ -185,11 +185,11 @@ exports[`EnrollmentQuestions should render correctly 1`] = `
       />
     </div>
     <div>
-      <h4
+      <span
         class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom css-1vw6mcs-MuiTypography-root"
       >
         categoria 2
-      </h4>
+      </span>
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-1xu1mzw-MuiGrid-root"
       >
@@ -202,12 +202,12 @@ exports[`EnrollmentQuestions should render correctly 1`] = `
             <div
               class="MuiBox-root css-7n0sq1"
             >
-              <p
+              <span
                 class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom css-d3wcwz-MuiTypography-root"
                 style="padding-right: 20px;"
               >
                 question 12
-              </p>
+              </span>
               <div
                 class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
               >
@@ -257,12 +257,12 @@ exports[`EnrollmentQuestions should render correctly 1`] = `
             <div
               class="MuiBox-root css-7n0sq1"
             >
-              <p
+              <span
                 class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom css-d3wcwz-MuiTypography-root"
                 style="padding-right: 20px;"
               >
                 question 22
-              </p>
+              </span>
               <div
                 class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
               >
@@ -312,12 +312,12 @@ exports[`EnrollmentQuestions should render correctly 1`] = `
             <div
               class="MuiBox-root css-7n0sq1"
             >
-              <p
+              <span
                 class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom css-d3wcwz-MuiTypography-root"
                 style="padding-right: 20px;"
               >
                 question 32
-              </p>
+              </span>
               <div
                 class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
               >
