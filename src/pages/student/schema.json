@@ -96,15 +96,15 @@
 						"role": {
 							"oneOf": [
 								{
-									"const": "mother",
+									"const": "Madre",
 									"title": "Madre"
 								},
 								{
-									"const": "father",
+									"const": "Padre",
 									"title": "Padre"
 								},
 								{
-									"const": "guardian",
+									"const": "Tutor",
 									"title": "Tutor"
 								}
 							],
@@ -118,7 +118,6 @@
 						},
 						"birthdate": {
 							"type": "string",
-							"dateFormat": "DD/MM/YYYY",
 							"title": "Fecha de nacimiento"
 						},
 						"birthplace": {
@@ -134,22 +133,22 @@
 							"title": "Lengua materna"
 						},
 						"ci": {
-							"type": "integer",
+							"type": "string",
 							"title": "Cedula de identidad",
-							"minimum": 0
+							"minLength": 1
 						},
 						"marital_status": {
 							"oneOf": [
 								{
-									"const": "single",
+									"const": "Soltero",
 									"title": "Soltero/a"
 								},
 								{
-									"const": "married",
+									"const": "Casado",
 									"title": "Casado/a"
 								},
 								{
-									"const": "widow",
+									"const": "Viudo",
 									"title": "Viudo/a"
 								}
 							],
@@ -177,20 +176,32 @@
 						"education_level": {
 							"oneOf": [
 								{
-									"const": "none",
+									"const": "Ninguno",
 									"title": "Ninguno"
 								},
 								{
-									"const": "school",
-									"title": "Primaria"
+									"const": "Primaria incompleta",
+									"title": "Primaria incompleta"
 								},
 								{
-									"const": "highSchool",
-									"title": "Secundaria"
+									"const": "Secundaria incompleta",
+									"title": "Secundaria incompleta"
 								},
 								{
-									"const": "tertiary",
-									"title": "Terciario"
+									"const": "Terciario incompleta",
+									"title": "Terciario incompleta"
+								},
+								{
+									"const": "Primaria completa",
+									"title": "Primaria completa"
+								},
+								{
+									"const": "Secundaria completa",
+									"title": "Secundaria completa"
+								},
+								{
+									"const": "Terciario completa",
+									"title": "Terciario completa"
 								}
 							],
 							"title": "Nivel educativo",
@@ -213,7 +224,7 @@
 							"title": "Barrio laboral"
 						},
 						"workplace_phone": {
-							"type": "number",
+							"type": "string",
 							"title": "Teléfono laboral",
 							"pattern": "\\d{8,9}"
 						}

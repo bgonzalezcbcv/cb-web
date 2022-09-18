@@ -6,15 +6,15 @@
 			"elements": [
 				{
 					"type": "Control",
-					"scope": "#/properties/family/items/0/properties/role"
+					"scope": "properties/role"
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/family/items/0/properties/full_name"
+					"scope": "properties/full_name"
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/family/items/0/properties/ci"
+					"scope": "properties/ci"
 				}
 			]
 		},
@@ -23,20 +23,20 @@
 			"elements": [
 				{
 					"type": "Control",
-					"scope": "#/properties/family/items/0/properties/birthdate",
+					"scope": "properties/birthdate",
 					"options": {
 						"format": "date",
 						"dateFormat": "DD/MM/YYYY",
-						"dateSaveFormat": "MM-DD-YYYY"
+						"dateSaveFormat": "DD/MM/YYYY"
 					}
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/family/items/0/properties/marital_status"
+					"scope": "properties/marital_status"
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/family/items/0/properties/cellphone"
+					"scope": "properties/cellphone"
 				}
 			]
 		},
@@ -45,15 +45,15 @@
 			"elements": [
 				{
 					"type": "Control",
-					"scope": "#/properties/family/items/0/properties/birthplace"
+					"scope": "properties/birthplace"
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/family/items/0/properties/nationality"
+					"scope": "properties/nationality"
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/family/items/0/properties/first_language"
+					"scope": "properties/first_language"
 				}
 			]
 		},
@@ -62,15 +62,15 @@
 			"elements": [
 				{
 					"type": "Control",
-					"scope": "#/properties/family/items/0/properties/email"
+					"scope": "properties/email"
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/family/items/0/properties/address"
+					"scope": "properties/address"
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/family/items/0/properties/neighbourhood"
+					"scope": "properties/neighbourhood"
 				}
 			]
 		},
@@ -79,15 +79,15 @@
 			"elements": [
 				{
 					"type": "Control",
-					"scope": "#/properties/family/items/0/properties/education_level"
+					"scope": "properties/education_level"
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/family/items/0/properties/occupation"
+					"scope": "properties/occupation"
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/family/items/0/properties/workplace"
+					"scope": "properties/workplace"
 				}
 			]
 		},
@@ -96,15 +96,15 @@
 			"elements": [
 				{
 					"type": "Control",
-					"scope": "#/properties/family/items/0/properties/workplace_address"
+					"scope": "properties/workplace_address"
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/family/items/0/properties/workplace_neighbourhood"
+					"scope": "properties/workplace_neighbourhood"
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/family/items/0/properties/workplace_phone"
+					"scope": "properties/workplace_phone"
 				}
 			]
 		}

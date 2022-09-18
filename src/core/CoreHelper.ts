@@ -29,3 +29,8 @@ export function downloadFile(fileName: string, file: Blob): void {
 	// Clean up and remove the link
 	link.parentNode?.removeChild(link);
 }
+
+//1/2/1998 -> 01/02/1998
+export function addLeadingZeroToDate(date: string): string {
+	return date.replaceAll(/\b(\d)(?=\/)/gm, "0$1");
+}

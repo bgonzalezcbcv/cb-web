@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 
 import { FamilyMember, Student } from "../../../../core/Models";
 import { JsonForms } from "@jsonforms/react";
-import { JsonSchema7, Translator, createAjv } from "@jsonforms/core";
-import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
-import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { JsonSchema7, Translator } from "@jsonforms/core";
+import { materialRenderers } from "@jsonforms/material-renderers";
+import { Box, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { defaultStudent } from "../../DefaultStudent";
 
 import schema from "../../schema.json";
 import ui from "./ui.json";
@@ -19,102 +20,73 @@ export type FamilyFormProps = {
 
 export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 	const { student, onChange, editable } = props;
-	const family = student.family;
+	const { family } = student;
 
-	const [hasErrorsArray, setHasErrorsArray] = useState<boolean[]>(Array(family.length).fill(false));
-	const [familyMembers, setFamilyMembers] = useState<FamilyMember[]>(family);
 	const [familyIndex, setFamilyIndex] = useState(0);
-
-	const handleDefaultsAjv = createAjv({ useDefaults: true });
-
-	useEffect(
-		() =>
-			onChange({
-				...student,
-				family: familyMembers,
-			}),
-		[familyMembers]
-	);
 
 	const setFamilyIndexFromButton = (event: React.MouseEvent<HTMLElement>, newIndex: number): void => {
 		newIndex !== null && setFamilyIndex(newIndex);
 	};
 
-	function setCurrentData(dataFamilyMember: FamilyMember, errors: unknown[] | undefined): void {
-		const canSaveArrayCopy = hasErrorsArray.slice();
-		canSaveArrayCopy[familyIndex] = !errors || errors.length == 0;
-		setHasErrorsArray(canSaveArrayCopy);
-
-		const familyMembersCopy = familyMembers.slice();
+	function setCurrentData(dataFamilyMember: FamilyMember): void {
+		const familyMembersCopy = family.slice();
 		familyMembersCopy[familyIndex] = dataFamilyMember;
-		setFamilyMembers(familyMembersCopy);
+		onChange({
+			...student,
+			family: familyMembersCopy,
+		});
 	}
 
-	// function canSave(): boolean {
-	// 	let canSave = true;
-	// 	hasErrorsArray.forEach((element) => {
-	// 		canSave = canSave && element;
-	// 	});
-	// 	return canSave;
-	// }
+	function addFamilyMemberHandler(): void {
+		onChange({
+			...student,
+			family: [...student.family, defaultStudent.family[0]],
+		});
+	}
 
-	const toggleButtons = familyMembers.map((step, index) => {
-		let text = "Familiar " + (index + 1).toString();
-		if (step && step.full_name) text = step.full_name;
-		return (
-			<ToggleButton id={"family" + index.toString()} key={index} value={index}>
-				{text}
-			</ToggleButton>
-		);
-	});
+	const toggleButtons = useCallback(
+		(): React.ReactElement[] =>
+			family.map((step, index) => {
+				let text = "Familiar " + (index + 1).toString();
+				if (step && step.full_name) text = step.full_name;
+				return (
+					<ToggleButton id={"family" + index.toString()} key={index} value={index}>
+						{text}
+					</ToggleButton>
+				);
+			}),
+		[student]
+	);
 
 	const translator = (id: string, defaultMessage: string | undefined): string => {
-		if (id.includes("ci.error")) return "Se deben ingresar solo los números, sin puntos ni guiones y no puede quedar vacía";
+		if (id.includes("ci.error")) return "El campo de CI no puede estar vacío.";
 		return defaultMessage ?? "";
 	};
 
 	return (
-		<div>
-			<div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end" }}>
+		<Box display="flex" flexDirection="column" width="100%" height="100%">
+			<Box display="flex" flexDirection="row" justifyContent="flex-end" marginBottom="12px">
 				<ToggleButtonGroup value={familyIndex} exclusive onChange={setFamilyIndexFromButton}>
-					{toggleButtons}
+					{toggleButtons()}
 
-					{familyMembers.length <= 1 && editable ? (
-						<ToggleButton
-							id="addFamilyMember"
-							value={familyMembers.length}
-							onClick={(): void => setFamilyMembers([...familyMembers, {} as FamilyMember])}>
+					{family.length <= 1 && editable ? (
+						<ToggleButton id="addFamilyMember" value={family.length} onClick={addFamilyMemberHandler}>
 							+
 						</ToggleButton>
 					) : null}
 				</ToggleButtonGroup>
-			</div>
+			</Box>
 
 			<JsonForms
 				i18n={{ translate: translator as Translator }}
-				schema={schema as JsonSchema7}
+				schema={schema.properties.family.items[0] as JsonSchema7}
 				uischema={ui}
-				data={familyMembers[familyIndex]}
+				data={family[familyIndex]}
 				renderers={materialRenderers}
-				cells={materialCells}
-				onChange={({ data, errors }): void => setCurrentData(data, errors)}
+				onChange={({ data }): void => setCurrentData(data)}
+				validationMode="ValidateAndShow"
 				readonly={!editable}
-				ajv={handleDefaultsAjv}
 			/>
-
-			{/*<div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end" }}>*/}
-			{/*	{editable ? (*/}
-			{/*		<Button*/}
-			{/*			id="saveButton"*/}
-			{/*			variant="contained"*/}
-			{/*			disabled={!canSave()}*/}
-			{/*			onClick={(): void => {*/}
-			{/*				onChange({ ...student, family: familyMembers });*/}
-			{/*			}}>*/}
-			{/*			Guardar*/}
-			{/*		</Button>*/}
-			{/*	) : null}*/}
-			{/*</div>*/}
-		</div>
+		</Box>
 	);
 }

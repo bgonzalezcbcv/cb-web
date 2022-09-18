@@ -1,13 +1,15 @@
+import _ from "lodash";
+
 import { Student, StudentCreationForm } from "./Models";
+import { addLeadingZeroToDate } from "./CoreHelper";
 
 export function parseFormToStudent(form: StudentCreationForm, student: Student): Student | null {
 	try {
-		return {
-			...student,
+		const formStudent = {
 			email: form.Email,
 			name: form["Nombres:"],
 			surname: form["Apellidos:"],
-			birthdate: form["Fecha de nacimiento:"],
+			birthdate: addLeadingZeroToDate(form["Fecha de nacimiento:"]),
 			birthplace: form["Lugar de nacimiento:"],
 			nationality: form["Nacionalidad:"],
 			ci: form["Cédula de Identidad:"],
@@ -19,11 +21,10 @@ export function parseFormToStudent(form: StudentCreationForm, student: Student):
 			emergency: form["Emergencia médica:"],
 			vaccine_expiration: form["Fecha de vencimiento de vacunas:"],
 			family: [
-				...student.family,
 				{
 					role: form["Datos correspondientes a:"],
 					full_name: form["Apellidos, nombre:"],
-					birthdate: form["Fecha de nacimiento:2"],
+					birthdate: addLeadingZeroToDate(form["Fecha de nacimiento:2"]),
 					birthplace: form["País de nacimiento:"],
 					nationality: form["Nacionalidad:2"],
 					first_language: form["Lengua materna:2"],
@@ -43,8 +44,8 @@ export function parseFormToStudent(form: StudentCreationForm, student: Student):
 				{
 					role: form["Datos correspondientes a:2"],
 					full_name: form["Apellidos, nombre:2"],
-					birthdate: form["Fecha de nacimiento:3"],
-					birthplace: form["Fecha de nacimiento:3"],
+					birthdate: addLeadingZeroToDate(form["Fecha de nacimiento:3"]),
+					birthplace: form["País de nacimiento:2"],
 					nationality: form["Nacionalidad:3"],
 					first_language: form["Lengua materna:3"],
 					ci: form["Cédula de identidad:3"],
@@ -62,7 +63,6 @@ export function parseFormToStudent(form: StudentCreationForm, student: Student):
 				},
 			],
 			question_categories: [
-				...student.question_categories,
 				{
 					category: "new",
 					questions: [
@@ -256,6 +256,10 @@ export function parseFormToStudent(form: StudentCreationForm, student: Student):
 				},
 			],
 		};
+
+		return _.mergeWith(student, formStudent, (obj, src) => {
+			if (_.isArray(obj)) return src;
+		});
 	} catch (error) {
 		console.log(error);
 		return null;
