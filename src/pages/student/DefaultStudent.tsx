@@ -48,18 +48,7 @@ export const defaultStudent: Student = {
 			workplace_phone: "",
 		},
 	],
-	question_categories: [
-		{
-			category: "",
-			questions: [
-				{
-					id: "a",
-					question: "",
-					answer: "",
-				},
-			],
-		},
-	],
+	question_categories: [],
 	administrative_info: {
 		enrollment_date: new Date("1/2/2022"),
 		starting_date: new Date("1/3/2022"),

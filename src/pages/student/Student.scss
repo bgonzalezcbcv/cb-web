@@ -1,0 +1,9 @@
+.panel-item {
+	display: grid;
+	place-content: flex-start center;
+
+	height: 600px !important;
+	overflow: auto;
+
+	margin: 10px 0;
+}

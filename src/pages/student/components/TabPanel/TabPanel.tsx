@@ -7,20 +7,16 @@ interface TabPanelProps {
 	children?: React.ReactNode;
 	index: number;
 	value: number;
+	className?: string;
 }
 
-export function TabPanel(props: TabPanelProps):React.ReactElement {
-	const { children, value, index, ...other } = props;
+export default function TabPanel(props: TabPanelProps): React.ReactElement {
+	const { children, value, index, className, ...other } = props;
 
 	return (
-		<div
-			role="tabpanel"
-			hidden={value !== index}
-			id={`simple-tabpanel-${index}`}
-			{...other}
-		>
+		<div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} {...other}>
 			{value === index && (
-				<Box sx={{ p: 3 }}>
+				<Box sx={{ p: 3 }} className={className}>
 					<Typography>{children}</Typography>
 				</Box>
 			)}

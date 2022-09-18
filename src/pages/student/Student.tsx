@@ -15,79 +15,17 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import SendIcon from "@mui/icons-material/Send";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
-import { TabPanel } from "./components/TabPanel";
-import CreateStudent from "./components/CreateStudent/CreateStudent";
-
-import { defaultStudent } from "./DefaultStudent";
-import { FamilyMember, Question, QuestionCategories } from "../../core/Models";
+import TabPanel from "./components/TabPanel/TabPanel";
 import EnrollmentQuestions from "./components/EnrollmentQuestions/EnrollmentQuestions";
 import FamilyForm from "./components/FamilyForm/FamilyForm";
 import StudentInfo from "./components/StudentInfo/StudentInfo";
 import AdministrativeInfo from "./components/AdministrativeInfo/AdministrativeInfo";
+import FormUploadDialog from "./components/FormUploadDialog/FormUploadDialog";
+import { defaultStudent } from "./DefaultStudent";
 
 import studentSchema from "./schema.json";
 
-const familyMemberPrueba = {
-	role: "string;",
-	full_name: "string;",
-	birthdate: "string;",
-	birthplace: "string;",
-	nationality: "string;",
-	first_language: "string;",
-	ci: "string;",
-	marital_status: "string;",
-	cellphone: "string;",
-	email: "string;",
-	address: "string;",
-	neighbourhood: "string;",
-	education_level: "string;",
-	occupation: "string;",
-	workplace: "string;",
-	workplace_address: "string;",
-	workplace_neighbourhood: "string;",
-	workplace_phone: "string;",
-};
-
-const studentPrueba = {
-	id: "string;",
-	ci: "string;",
-	name: "string;",
-	surname: "string;",
-	schedule_start: "string;",
-	schedule_end: "string;",
-	tuition: "string;",
-	reference_number: 0,
-	birthplace: "string;",
-	birthdate: "string;",
-	nationality: "string;",
-	first_language: "string;",
-	office: "string;",
-	status: "string;",
-	address: "string;",
-	neighborhood: "string;",
-	medical_assurance: "string;",
-	emergency: "string;",
-	phone_number: "string;",
-	vaccine_expiration: "string;",
-	inscription_date: "string;",
-	starting_date: "string;",
-	contact: "string;",
-	contact_phone: "string;",
-	email: "string;",
-	family: [familyMemberPrueba],
-	question_categories: [
-		{
-			category: "string;",
-			questions: [
-				{
-					id: "string;",
-					question: "string;",
-					answer: "string;",
-				},
-			],
-		},
-	],
-};
+import "./Student.scss";
 
 export default function Student(): React.ReactElement {
 	const [value, setValue] = React.useState(0);
@@ -101,9 +39,16 @@ export default function Student(): React.ReactElement {
 	};
 
 	return (
-		<Card sx={{ width: "80%", maxHeight: "90%", padding: "10px", alignSelf: "flex-start", marginTop: "5%" }}>
+		<Card sx={{ width: "80%", height: "90%", padding: "10px", alignSelf: "flex-start", marginTop: "20px" }}>
 			<Box
-				sx={{ borderBottom: 1, borderColor: "divider", display: "flex", flexDirection: "row", justifyContent: "space-between", paddingBottom: "10px" }}>
+				sx={{
+					borderBottom: 1,
+					borderColor: "divider",
+					display: "flex",
+					flexDirection: "row",
+					justifyContent: "space-between",
+					paddingBottom: "10px",
+				}}>
 				<div style={{ display: "flex", flexDirection: "row", alignSelf: "center", justifySelf: "center" }}>
 					<PersonAddIcon></PersonAddIcon>
 					<Typography sx={{ alignSelf: "center", paddingLeft: "10px" }}>Nuevo alumno</Typography>
@@ -139,35 +84,33 @@ export default function Student(): React.ReactElement {
 				</Tabs>
 			</Box>
 
-			<TabPanel value={value} index={0}>
+			<TabPanel className="panel-item" value={value} index={0}>
 				<StudentInfo student={student} onChange={setStudent} editable={editMode} />
 			</TabPanel>
 
-			<TabPanel value={value} index={1}>
+			<TabPanel className="panel-item" value={value} index={1}>
 				<FamilyForm student={student} onChange={setStudent} editable={editMode} />
 			</TabPanel>
 
-			<TabPanel value={value} index={2}>
+			<TabPanel className="panel-item" value={value} index={2}>
 				<EnrollmentQuestions student={student} onChange={setStudent} editable={editMode} />
 			</TabPanel>
 
-			<TabPanel value={value} index={3}>
+			<TabPanel className="panel-item" value={value} index={3}>
 				<AdministrativeInfo student={student} onChange={setStudent} editable={editMode} />
 			</TabPanel>
 
-			<Dialog open={isFormUploadOpen} onClose={(): void => setIsFormUploadOpen(false)}>
-				<DialogTitle>Subir formulario de inscripción</DialogTitle>
+			<TabPanel className="panel-item" value={value} index={4}></TabPanel>
 
-				<DialogContent>
-					<CreateStudent
-						studentProp={student}
-						onUpload={(newStudent): void => {
-							setStudent(newStudent);
-							setIsFormUploadOpen(false);
-						}}
-					/>
-				</DialogContent>
-			</Dialog>
+			<FormUploadDialog
+				open={isFormUploadOpen}
+				onClose={(): void => setIsFormUploadOpen(false)}
+				studentProp={student}
+				onUpload={(newStudent): void => {
+					setStudent(newStudent);
+					setIsFormUploadOpen(false);
+				}}
+			/>
 
 			<Box
 				display="flex"
