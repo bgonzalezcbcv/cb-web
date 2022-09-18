@@ -1,12 +1,13 @@
 /* eslint-disable */
 import * as React from "react";
+import { createAjv } from "@jsonforms/core";
 
 import { Student as StudentModel } from "../../core/Models";
 
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import Tabs, { tabsClasses } from "@mui/material/Tabs";
-import { Button, Card, Dialog, DialogContent, DialogTitle, Typography } from "@mui/material";
+import { Button, Card, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 
 import EditIcon from "@mui/icons-material/Edit";
@@ -23,6 +24,8 @@ import EnrollmentQuestions from "./components/EnrollmentQuestions/EnrollmentQues
 import FamilyForm from "./components/FamilyForm/FamilyForm";
 import StudentInfo from "./components/StudentInfo/StudentInfo";
 import AdministrativeInfo from "./components/AdministrativeInfo/AdministrativeInfo";
+
+import studentSchema from "./schema.json";
 
 const familyMemberPrueba = {
 	role: "string;",
@@ -91,13 +94,14 @@ export default function Student(): React.ReactElement {
 	const [student, setStudent] = React.useState<StudentModel>(defaultStudent);
 	const [editMode, setEditMode] = React.useState(true);
 	const [isFormUploadOpen, setIsFormUploadOpen] = React.useState(false);
+	const [isCreationDialogOpen, setIsCreationDialogOpen] = React.useState(false);
 
 	const handleChange = (event: React.SyntheticEvent, newValue: number): void => {
 		setValue(newValue);
 	};
 
 	return (
-		<Card sx={{ width: "80%", height: "90%", padding: "10px" }}>
+		<Card sx={{ width: "80%", maxHeight: "90%", padding: "10px", alignSelf: "flex-start", marginTop: "5%" }}>
 			<Box
 				sx={{ borderBottom: 1, borderColor: "divider", display: "flex", flexDirection: "row", justifyContent: "space-between", paddingBottom: "10px" }}>
 				<div style={{ display: "flex", flexDirection: "row", alignSelf: "center", justifySelf: "center" }}>
@@ -163,6 +167,41 @@ export default function Student(): React.ReactElement {
 						}}
 					/>
 				</DialogContent>
+			</Dialog>
+
+			<Box
+				display="flex"
+				justifyContent="flex-end"
+				alignContent="flex-end"
+				alignSelf="flex-end"
+				onClick={() => {
+					const ajv = createAjv({ allErrors: true });
+
+					ajv.validate(studentSchema, student);
+
+					ajv.errors?.length! > 0 && setIsCreationDialogOpen(true);
+				}}>
+				<Button variant="outlined">Crear Alumno</Button>
+			</Box>
+
+			<Dialog open={isCreationDialogOpen} onClose={(): void => setIsCreationDialogOpen(false)}>
+				<DialogTitle>
+					<Typography variant="h5" fontWeight="bold">
+						Hay errores en los campos del alumno...
+					</Typography>
+				</DialogTitle>
+
+				<DialogContent>
+					<Typography>¿Está seguro de querer crear este alumno?</Typography>
+				</DialogContent>
+
+				<DialogActions sx={{ display: "flex", justifyContent: "space-around" }}>
+					<Button variant="outlined" onClick={() => setIsCreationDialogOpen(false)}>
+						No
+					</Button>
+
+					<Button variant="outlined">Si</Button>
+				</DialogActions>
 			</Dialog>
 		</Card>
 	);
