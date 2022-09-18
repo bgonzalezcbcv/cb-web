@@ -12,7 +12,8 @@ import Teachers from "./pages/teachers/Teachers";
 import CSVUploader from "./pages/teachers/components/csv-uploader/CSVUploader";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Navbar from "./components/Navbar/Navbar";
-
+import StudentInfo from "./pages/studentInfo/StudentInfo";
+import { Student } from "./core/Models";
 // Lastly we import our stylesheets.
 import "./App.css";
 
@@ -37,6 +38,18 @@ function App(): React.ReactElement {
 										<Route path="/studentform" element={<StudentForm />} />
 										<Route path="/CSVUploader" element={<CSVUploader />} />
 										<Route path="/login" element={<Login />} />
+										<Route
+											path="/studentInfo"
+											element={
+												<StudentInfo
+													student={{} as Student}
+													onChange={function (): void {
+														throw new Error("Function not implemented.");
+													}}
+													editable={false}
+												/>
+											}
+										/>
 										<Route path="*" element={<Teachers />} />
 									</>
 								) : (

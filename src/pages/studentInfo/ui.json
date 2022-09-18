@@ -1,0 +1,103 @@
+{
+	"type": "VerticalLayout",
+	"elements": [
+		{
+			"type": "HorizontalLayout",
+			"elements": [
+				{
+					"type": "Control",
+					"scope": "#/properties/nombres"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/apellidos"
+				}
+			]
+		},
+		{
+			"type": "HorizontalLayout",
+			"elements": [
+				{
+					"type": "Control",
+					"scope": "#/properties/ci"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/estado"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/matricula"
+				}
+			]
+		},
+		{
+			"type": "HorizontalLayout",
+			"elements": [
+				{
+					"type": "Control",
+					"scope": "#/properties/clase"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/subgrupo"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/nroReferencia"
+				}
+			]
+		},
+		{
+			"type": "HorizontalLayout",
+			"elements": [
+				{
+					"type": "Control",
+					"scope": "#/properties/lugarNacimiento"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/fechaNacimiento"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/nacionalidad"
+				}
+			]
+		},
+		{
+			"type": "HorizontalLayout",
+			"elements": [
+				{
+					"type": "Control",
+					"scope": "#/properties/lenguaMaterna"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/barrio"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/direccion"
+				}
+			]
+		},
+		{
+			"type": "HorizontalLayout",
+			"elements": [
+				{
+					"type": "Control",
+					"scope": "#/properties/coberturaMedica"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/emergencia"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/vacunas"
+				}
+			]
+		}
+	]
+}

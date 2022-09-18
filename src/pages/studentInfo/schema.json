@@ -1,0 +1,65 @@
+{
+	"type": "object",
+	"properties": {
+		"nombres": {
+			"type": "string",
+			"minLength": 1
+		},
+		"apellidos": {
+			"type": "string",
+			"minLength": 1
+		},
+		"ci": {
+			"type": "string",
+			"minLength": 1
+		},
+		"estado": {
+			"type": "string",
+			"enum": ["Activo", "Inactivo", "Pendiente"]
+		},
+		"clase": {
+			"type": "string",
+			"minLength": 0
+		},
+		"subgrupo": {
+			"type": "string",
+			"minLength": 0
+		},
+		"matricula": {
+			"type": "number"
+		},
+		"nroReferencia": {
+			"type": "number"
+		},
+		"lugarNacimiento": {
+			"type": "string"
+		},
+		"fechaNacimiento": {
+			"type": "string",
+			"format": "date"
+		},
+		"nacionalidad": {
+			"type": "string"
+		},
+		"lenguaMaterna": {
+			"type": "string"
+		},
+		"direccion": {
+			"type": "string"
+		},
+		"barrio": {
+			"type": "string"
+		},
+		"coberturaMedica": {
+			"type": "string"
+		},
+		"emergencia": {
+			"type": "string"
+		},
+		"vacunas": {
+			"type": "string",
+			"format": "date"
+		}
+	},
+	"required": ["names"]
+}
