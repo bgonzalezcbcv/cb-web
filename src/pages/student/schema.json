@@ -278,13 +278,34 @@
 							"type": "object",
 							"properties": {
 								"method": {
+									"oneOf": [
+										{
+											"const": "contado",
+											"title": "Contado"
+										},
+										{
+											"const": "financiacion",
+											"title": "Financiación"
+										},
+										{
+											"const": "licitacion",
+											"title": "Licitación"
+										}
+									],
+									"title": "Método de pago",
 									"type": "string"
 								},
-								"option": {
+								"year": {
+									"title": "Año",
+									"type": "integer",
+									"pattern": "\\d{4}"
+								},
+								"yearly_payment_url": {
+									"title": "Pago anualidad firmado",
 									"type": "string"
 								}
 							},
-							"required": ["method", "option"]
+							"required": ["method", "year"]
 						}
 					]
 				},

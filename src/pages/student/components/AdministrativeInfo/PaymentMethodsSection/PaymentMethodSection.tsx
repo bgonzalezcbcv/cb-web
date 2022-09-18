@@ -2,12 +2,17 @@
 import React, { useCallback, useState } from "react";
 import * as Models from "../../../../../core/Models";
 import { VisualComponent } from "../../../../../core/interfaces";
-import FileUploader from "../../../../../components/fileUploader/FileUploader";
 import Modal from "../../../../../components/modal/Modal";
 import PaymentMethodHistory from "../historyTables/PaymentMethodHistory";
-import { Card, CardContent, Divider, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Card, CardContent, Divider } from "@mui/material";
+import { JsonForms } from "@jsonforms/react";
+import { JsonSchema7, Translator, createAjv } from "@jsonforms/core";
+import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
 
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+
+import schema from "../../../schema.json";
+import ui from "./ui.json";
 
 import "./PaymentMethodSection.scss";
 
@@ -21,9 +26,7 @@ export default function PaymentMethodSection(props: VisualComponent & PaymentMet
 	const { editable, student, onChange } = props;
 
 	const [paymentMethodModalOpen, setPaymentMethodModalOpen] = React.useState(false);
-	const [paymentMethod, setPaymentMethod] = useState("");
-	const [paymentMethodYear, setPaymentMethodYear] = useState("");
-	const [yearlyPaymentDocument, setYearlyPaymentDocument] = useState<File>();
+	const [paymentMethodData, setPaymentMethodData] = useState<Models.PaymentMethod>({} as Models.PaymentMethod);
 
 	const handlePaymentMethodModalOpen = useCallback(() => {
 		setPaymentMethodModalOpen(true);
@@ -34,11 +37,11 @@ export default function PaymentMethodSection(props: VisualComponent & PaymentMet
 	}, []);
 
 	//TODO: Adjust this when file handling is defined
-	const handleAddNewPaymentMethod = useCallback(() => {
+	const handleAddNewPaymentMethod = useCallback((paymentData: Models.PaymentMethod) => {
 		const newPaymentMethod: Models.PaymentMethod = {
-			year: Number(paymentMethodYear),
-			method: paymentMethod as Models.PaymentMethodOption,
-			yearly_payment_url: yearlyPaymentDocument?.name ?? "",
+			year: paymentData.year,
+			method: paymentData.method as Models.PaymentMethodOption,
+			yearly_payment_url: paymentData.yearly_payment_url,
 		};
 
 		const updatedStudent = {
@@ -46,6 +49,7 @@ export default function PaymentMethodSection(props: VisualComponent & PaymentMet
 			administrative_info: { ...student.administrative_info, payment_methods: [newPaymentMethod, ...student.administrative_info.payment_methods] },
 		};
 		onChange(updatedStudent);
+		handlePaymentMethodModalClose();
 	}, []);
 
 	// @ts-ignore
@@ -63,40 +67,30 @@ export default function PaymentMethodSection(props: VisualComponent & PaymentMet
 							title={"Agregar una nueva forma de pago"}
 							body={
 								<div className="payment-method-modal-wrapper">
-									<div className="payment-method-modal-container">
-										<TextField
-											label="Año"
-											variant="standard"
-											sx={{ width: 100 }}
-											value={paymentMethodYear}
-											onChange={(event) => {
-												setPaymentMethodYear(event.target.value);
-											}}
-										/>
-
-										<FormControl variant="standard" sx={{ width: 150 }}>
-											<InputLabel id="payment-method-label">Forma</InputLabel>
-
-											<Select
-												labelId="payment-method"
-												id="payment-method"
-												label="Forma"
-												value={paymentMethod}
-												onChange={(event) => setPaymentMethod(event.target.value)}>
-												<MenuItem value={"contado"}>Contado</MenuItem>
-												<MenuItem value={"financiacion"}>Financiación</MenuItem>
-												<MenuItem value={"licitacion"}>Licitación</MenuItem>
-											</Select>
-										</FormControl>
-									</div>
-
-									{paymentMethod === Models.PaymentMethodOption.Cash && (
-										<FileUploader label={"Pago anualidad firmado"} width={200} uploadedFile={(file) => setYearlyPaymentDocument(file)} />
-									)}
+									<JsonForms
+										schema={schema as JsonSchema7}
+										uischema={ui}
+										data={{ administrative_info: { payment_methods: [paymentMethodData] } }}
+										renderers={materialRenderers}
+										cells={materialCells}
+										onChange={({ data, errors }): void => {
+											if (
+												data &&
+												data.administrative_info &&
+												data.administrative_info.payment_methods &&
+												data.administrative_info.payment_methods.length > 0
+											) {
+												const info = data.administrative_info.payment_methods[0];
+												setPaymentMethodData(info);
+											}
+										}}
+									/>
 								</div>
 							}
 							onClose={handlePaymentMethodModalClose}
-							onAccept={handleAddNewPaymentMethod}
+							onAccept={() => {
+								handleAddNewPaymentMethod(paymentMethodData);
+							}}
 						/>
 					</div>
 				</div>
