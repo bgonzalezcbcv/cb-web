@@ -295,23 +295,49 @@
 							"type": "object",
 							"properties": {
 								"starting_date": {
-									"type": "string",
-									"format": "date"
-								},
-								"ending_date": {
-									"type": "string",
-									"format": "date"
-								},
-								"explanation": {
+									"title": "Comienzo",
 									"type": "string"
 								},
+								"ending_date": {
+									"title": "Fin",
+									"type": "string"
+								},
+								"explanation": {
+									"oneOf": [
+										{
+											"const": "hermano",
+											"title": "Hermano"
+										},
+										{
+											"const": "resolución",
+											"title": "Resolución"
+										}
+									],
+									"title": "Explicación",
+									"type": "string",
+									"default": "Sibling"
+								},
 								"percentage": {
+									"title": "%",
 									"type": "integer"
 								},
 								"type": {
-									"type": "string"
+									"oneOf": [
+										{
+											"const": "dirección",
+											"title": "Dirección"
+										},
+										{
+											"const": "asistente social",
+											"title": "Asistente Social"
+										}
+									],
+									"title": "Tipo",
+									"type": "string",
+									"default": "Direction"
 								},
 								"report_url": {
+									"title": "Reporte",
 									"type": "string"
 								}
 							},

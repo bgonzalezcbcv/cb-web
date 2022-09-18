@@ -1,0 +1,49 @@
+{
+	"type": "VerticalLayout",
+	"elements": [
+		{
+			"type": "HorizontalLayout",
+			"elements": [
+				{
+					"type": "Control",
+					"scope": "#/properties/administrative_info/properties/discounts/items/0/properties/starting_date",
+					"options": {
+						"format": "date",
+						"dateFormat": "DD/MM/YYYY",
+						"dateSaveFormat": "MM-DD-YYYY"
+					}
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/administrative_info/properties/discounts/items/0/properties/ending_date",
+					"options": {
+						"format": "date",
+						"dateFormat": "DD/MM/YYYY",
+						"dateSaveFormat": "MM-DD-YYYY"
+					}
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/administrative_info/properties/discounts/items/0/properties/explanation"
+				}
+			]
+		},
+		{
+			"type": "HorizontalLayout",
+			"elements": [
+				{
+					"type": "Control",
+					"scope": "#/properties/administrative_info/properties/discounts/items/0/properties/percentage"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/administrative_info/properties/discounts/items/0/properties/type"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/administrative_info/properties/discounts/items/0/properties/report_url"
+				}
+			]
+		}
+	]
+}
