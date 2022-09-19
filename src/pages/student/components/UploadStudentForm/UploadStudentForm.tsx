@@ -8,16 +8,16 @@ import { LoadingButton } from "@mui/lab";
 import BLAlert from "../../../../components/BLAlert";
 import usePreventDragEventsDefaults from "../../../../hooks/usePreventDragEventsDefaults";
 
-import "./CreateStudent.scss";
+import "./UploadStudentForm.scss";
 
 const acceptedExtensions = [".xlsx", ".csv", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"];
 
-interface CreateStudentProps {
+interface UploadStudentFormProps {
 	studentProp: Student;
 	onUpload: (newStudent: Student) => void;
 }
 
-function CreateStudent(props: CreateStudentProps): JSX.Element {
+function UploadStudentForm(props: UploadStudentFormProps): JSX.Element {
 	const { studentProp, onUpload } = props;
 
 	const [readyToNavigate, setReadyToNavigate] = useState(false);
@@ -89,7 +89,7 @@ function CreateStudent(props: CreateStudentProps): JSX.Element {
 	}
 
 	return (
-		<Grid className="create-student" container alignContent="center" justifyContent="center" width="500px" height="200px">
+		<Grid className="upload-student-form" container alignContent="center" justifyContent="center" width="500px" height="200px">
 			<Box sx={{ display: "flex", textAlign: "center" }} flexDirection="column" justifyContent="space-evenly" width="100%" height="100%">
 				<Card
 					id="file-drop-zone"
@@ -133,4 +133,4 @@ function CreateStudent(props: CreateStudentProps): JSX.Element {
 	);
 }
 
-export default CreateStudent;
+export default UploadStudentForm;

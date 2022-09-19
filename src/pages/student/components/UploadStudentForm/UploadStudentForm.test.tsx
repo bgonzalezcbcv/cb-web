@@ -4,11 +4,11 @@ import { act, fireEvent, queryByText, render, waitForElementToBeRemoved } from "
 
 import * as Parsers from "../../../../core/Parsers";
 import * as CoreHelper from "../../../../core/CoreHelper";
-import CreateStudent from "./CreateStudent";
+import UploadStudentForm from "./UploadStudentForm";
 import userEvent from "@testing-library/user-event";
 import { defaultStudent } from "../../DefaultStudent";
 
-describe("CreateStudent", () => {
+describe("UploadStudentForm", () => {
 	const dropZoneRef = "#file-drop-zone";
 	const uploadedFileNameRef = "#uploaded-file-name";
 	const fileInputRef = "#file-input";
@@ -21,7 +21,7 @@ describe("CreateStudent", () => {
 	});
 
 	test("Should not load file with incorrect extension when dropped", async () => {
-		const wrapper = render(<CreateStudent studentProp={defaultStudent} onUpload={console.log} />, { wrapper: BrowserRouter });
+		const wrapper = render(<UploadStudentForm studentProp={defaultStudent} onUpload={console.log} />, { wrapper: BrowserRouter });
 
 		const testingFile = new File(["testing data"], "data.png", { type: "png" });
 
@@ -40,7 +40,7 @@ describe("CreateStudent", () => {
 	});
 
 	test("Should not load file with incorrect extension when clicked", async () => {
-		const wrapper = render(<CreateStudent studentProp={defaultStudent} onUpload={console.log} />, { wrapper: BrowserRouter });
+		const wrapper = render(<UploadStudentForm studentProp={defaultStudent} onUpload={console.log} />, { wrapper: BrowserRouter });
 
 		const testingFile = new File(["testing data"], "photo.png", { type: "png" });
 
@@ -59,7 +59,7 @@ describe("CreateStudent", () => {
 	});
 
 	test("Should show error on empty file and hide it after 3 seconds", async () => {
-		const wrapper = render(<CreateStudent studentProp={defaultStudent} onUpload={console.log} />, { wrapper: BrowserRouter });
+		const wrapper = render(<UploadStudentForm studentProp={defaultStudent} onUpload={console.log} />, { wrapper: BrowserRouter });
 
 		const fileInput = wrapper.container.querySelector(fileInputRef);
 		if (fileInput === null) return;
@@ -83,7 +83,7 @@ describe("CreateStudent", () => {
 	test("Should show error on parse error", async () => {
 		jest.spyOn(Parsers, "parseFormToStudent").mockReturnValue(null);
 
-		const wrapper = render(<CreateStudent studentProp={defaultStudent} onUpload={console.log} />, { wrapper: BrowserRouter });
+		const wrapper = render(<UploadStudentForm studentProp={defaultStudent} onUpload={console.log} />, { wrapper: BrowserRouter });
 
 		const testingFile = new File(["testing data"], "data.xlsx", { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
 
@@ -101,7 +101,7 @@ describe("CreateStudent", () => {
 	test("Should load file with correct extension when dropped", async () => {
 		jest.spyOn(Parsers, "parseFormToStudent").mockReturnValue(defaultStudent);
 
-		const wrapper = render(<CreateStudent studentProp={defaultStudent} onUpload={console.log} />, { wrapper: BrowserRouter });
+		const wrapper = render(<UploadStudentForm studentProp={defaultStudent} onUpload={console.log} />, { wrapper: BrowserRouter });
 
 		const testingFile = new File(["testing data"], "data.xlsx", { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
 
@@ -119,7 +119,7 @@ describe("CreateStudent", () => {
 	test("Should load file with correct extension when clicked", async () => {
 		jest.spyOn(Parsers, "parseFormToStudent").mockReturnValue(defaultStudent);
 
-		const wrapper = render(<CreateStudent studentProp={defaultStudent} onUpload={console.log} />, { wrapper: BrowserRouter });
+		const wrapper = render(<UploadStudentForm studentProp={defaultStudent} onUpload={console.log} />, { wrapper: BrowserRouter });
 
 		const testingFile = new File(["testing data"], "data.xlsx", { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
 
@@ -135,7 +135,7 @@ describe("CreateStudent", () => {
 	});
 
 	test("Should show 'Tire el archivo.' on drag enter and 'Tire el archivo excel del alumno aquí ó haga click.' on drag exit", async () => {
-		const wrapper = render(<CreateStudent studentProp={defaultStudent} onUpload={console.log} />, { wrapper: BrowserRouter });
+		const wrapper = render(<UploadStudentForm studentProp={defaultStudent} onUpload={console.log} />, { wrapper: BrowserRouter });
 
 		const dropZone = wrapper.container.querySelector(dropZoneRef);
 
@@ -159,7 +159,7 @@ describe("CreateStudent", () => {
 
 		const onUploadCallback = jest.fn();
 
-		const wrapper = render(<CreateStudent studentProp={defaultStudent} onUpload={onUploadCallback} />, { wrapper: BrowserRouter });
+		const wrapper = render(<UploadStudentForm studentProp={defaultStudent} onUpload={onUploadCallback} />, { wrapper: BrowserRouter });
 
 		const testingFile = new File(["testing data"], "data.xlsx", { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
 
