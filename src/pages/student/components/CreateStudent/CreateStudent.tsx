@@ -113,7 +113,9 @@ function CreateStudent(props: CreateStudentProps): JSX.Element {
 							accept={acceptedExtensions.join(",")}
 						/>
 
-						<Typography component={"span"}>{!fileOver ? "Tire el archivo excel del alumno aquí ó haga click." : "Tire el archivo."}</Typography>
+						<Typography component={"span"}>
+							{!fileOver ? "Arrastre el archivo Excel del alumno aquí o haga click." : "Suelte el archivo."}
+						</Typography>
 					</CardContent>
 				</Card>
 

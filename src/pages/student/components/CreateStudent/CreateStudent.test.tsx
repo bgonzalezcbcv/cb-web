@@ -145,13 +145,13 @@ describe("CreateStudent", () => {
 			fireEvent.dragEnter(dropZone);
 		});
 
-		expect(dropZone.textContent).toEqual("Tire el archivo.");
+		expect(dropZone.textContent).toEqual("Suelte el archivo.");
 
 		await act(() => {
 			fireEvent.dragExit(dropZone);
 		});
 
-		expect(dropZone.textContent).toEqual("Tire el archivo excel del alumno aquí ó haga click.");
+		expect(dropZone.textContent).toEqual("Arrastre el archivo Excel del alumno aquí o haga click.");
 	});
 
 	test("Should call callback on 'Crear Alumno'", async () => {
