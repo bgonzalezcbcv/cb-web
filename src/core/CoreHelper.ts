@@ -34,3 +34,15 @@ export function downloadFile(fileName: string, file: Blob): void {
 export function addLeadingZeroToDate(date: string): string {
 	return date.replaceAll(/\b(\d)(?=\/)/gm, "0$1");
 }
+
+export const basicTranslator =
+	(errors: { id: string; errorMessage: string }[], defaultErrorMessage = "Campo invalido.") =>
+	(id: string, defaultMessage: string | undefined): string => {
+		for (let i = 0; i < errors.length; i++) {
+			if (id.includes(errors[i].id + ".error")) return errors[i].errorMessage;
+		}
+
+		if (id.includes("error")) return defaultErrorMessage;
+
+		return defaultMessage ?? "";
+	};

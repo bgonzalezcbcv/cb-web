@@ -11,11 +11,11 @@
 		},
 		"name": {
 			"type": "string",
-			"title": "Nombre"
+			"title": "Nombres"
 		},
 		"surname": {
 			"type": "string",
-			"title": "Apellido"
+			"title": "Apellidos"
 		},
 		"schedule_start": {
 			"type": "string",
@@ -48,7 +48,7 @@
 		},
 		"first_language": {
 			"type": "string",
-			"title": "Leguna materna"
+			"title": "Lengua materna"
 		},
 		"office": {
 			"type": "string",
@@ -69,7 +69,6 @@
 		"address": {
 			"type": "string",
 			"title": "Dirección"
-
 		},
 		"neighborhood": {
 			"type": "string",
@@ -89,7 +88,8 @@
 		},
 		"vaccine_expiration": {
 			"type": "string",
-			"format": "date"
+			"format": "date",
+			"title": "Vencimiento de vacunas"
 		},
 		"inscription_date": {
 			"type": "string",
@@ -161,23 +161,9 @@
 							"minimum": 1
 						},
 						"marital_status": {
-							"oneOf": [
-								{
-									"const": "Soltero",
-									"title": "Soltero/a"
-								},
-								{
-									"const": "Casado",
-									"title": "Casado/a"
-								},
-								{
-									"const": "Viudo",
-									"title": "Viudo/a"
-								}
-							],
 							"type": "string",
 							"title": "Estado civil",
-							"default": "single"
+							"default": "Soltero/a"
 						},
 						"cellphone": {
 							"type": "string",
@@ -186,7 +172,8 @@
 						},
 						"email": {
 							"type": "string",
-							"title": "E-mail"
+							"title": "E-mail",
+							"format": "email"
 						},
 						"address": {
 							"type": "string",
@@ -405,7 +392,6 @@
 		}
 	},
 	"required": [
-		"id",
 		"ci",
 		"name",
 		"surname",

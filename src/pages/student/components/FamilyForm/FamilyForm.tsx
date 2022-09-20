@@ -11,6 +11,7 @@ import schema from "../../schema.json";
 import ui from "./ui.json";
 
 import "./FamilyForm.scss";
+import { basicTranslator } from "../../../../core/CoreHelper";
 
 export type FamilyFormProps = {
 	student: Student;
@@ -58,10 +59,20 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 		[student]
 	);
 
-	const translator = (id: string, defaultMessage: string | undefined): string => {
-		if (id.includes("ci.error")) return "El campo de CI no puede estar vacío.";
-		return defaultMessage ?? "";
-	};
+	const translator = basicTranslator([
+		{
+			id: "ci",
+			errorMessage: "El campo de CI no puede estar vacío.",
+		},
+		{
+			id: "email",
+			errorMessage: "Email incorrecto.",
+		},
+		{
+			id: "phone",
+			errorMessage: "Teléfono tiene que ser un numero con largo mayor a 0.",
+		},
+	]);
 
 	return (
 		<Box display="flex" flexDirection="column" width="100%" height="100%">
