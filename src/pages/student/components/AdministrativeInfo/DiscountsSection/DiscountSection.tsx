@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useCallback, useState } from "react";
 
 import * as Models from "../../../../../core/Models";
@@ -7,7 +6,7 @@ import Modal from "../../../../../components/modal/Modal";
 import DiscountHistory from ".././historyTables/DiscountHistory";
 import { Card, CardContent, Divider } from "@mui/material";
 import { JsonForms } from "@jsonforms/react";
-import { JsonSchema7, Translator, createAjv } from "@jsonforms/core";
+import { JsonSchema7, Translator } from "@jsonforms/core";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
 
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -95,7 +94,7 @@ export default function DiscountSection(props: VisualComponent & AdministrativeI
 									data={{ administrative_info: { discounts: [discountData] } }}
 									renderers={materialRenderers}
 									cells={materialCells}
-									onChange={({ data, errors }): void => {
+									onChange={({ data }): void => {
 										if (
 											data &&
 											data.administrative_info &&
@@ -109,7 +108,7 @@ export default function DiscountSection(props: VisualComponent & AdministrativeI
 								/>
 							}
 							onClose={handleDiscountModalClose}
-							onAccept={() => {
+							onAccept={(): void => {
 								handleAddNewDiscount(discountData);
 							}}
 						/>

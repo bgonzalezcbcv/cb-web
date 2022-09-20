@@ -1,6 +1,5 @@
 /* eslint-disable */
-import React, { useCallback, useState, useEffect } from "react";
-import _ from "lodash";
+import React, { useState } from "react";
 import { JsonForms } from "@jsonforms/react";
 import { JsonSchema7 } from "@jsonforms/core";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";

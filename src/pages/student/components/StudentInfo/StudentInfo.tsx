@@ -1,13 +1,9 @@
-/* eslint-disable */
-
-import React, { useState } from "react";
+import React from "react";
 
 import { JsonForms } from "@jsonforms/react";
-import { JsonSchema7, Translator, ValidationMode } from "@jsonforms/core";
+import { Translator } from "@jsonforms/core";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
 import { Student } from "../../../../core/Models";
-
-import { Button } from "@mui/material";
 
 import "./StudentInfo.scss";
 
@@ -29,17 +25,19 @@ export default function StudentInfo(props: StudentInfoProps): React.ReactElement
 	};
 
 	return (
-		<JsonForms
-			i18n={{ translate: translator as Translator }}
-			schema={schema}
-			data={student}
-			renderers={materialRenderers}
-			onChange={({ data, errors }): void => {
-				onChange(data);
-			}}
-			uischema={uischema}
-			readonly={!editable}
-			cells={materialCells}
-		/>
+		<div style={{ paddingTop: "30px" }}>
+			<JsonForms
+				i18n={{ translate: translator as Translator }}
+				schema={schema}
+				data={student}
+				renderers={materialRenderers}
+				onChange={({ data }): void => {
+					onChange(data);
+				}}
+				uischema={uischema}
+				readonly={!editable}
+				cells={materialCells}
+			/>
+		</div>
 	);
 }

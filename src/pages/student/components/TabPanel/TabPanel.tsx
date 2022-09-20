@@ -16,7 +16,7 @@ export default function TabPanel(props: TabPanelProps): React.ReactElement {
 	return (
 		<div style={{ height: "100vh", overflow: "scroll" }} role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} {...other}>
 			{value === index && (
-				<Box sx={{ p: 3 }} className={className}>
+				<Box sx={{ p: 3, height: "100%" }} className={className}>
 					<Typography component={"span"}>{children}</Typography>
 				</Box>
 			)}
