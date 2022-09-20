@@ -5,63 +5,91 @@
 			"type": "string"
 		},
 		"ci": {
-			"type": "string"
+			"type": "string",
+			"title": "CI",
+			"pattern": "\\d{8}"
 		},
 		"name": {
-			"type": "string"
+			"type": "string",
+			"title": "Nombres"
 		},
 		"surname": {
-			"type": "string"
+			"type": "string",
+			"title": "Apellidos"
 		},
 		"schedule_start": {
-			"type": "string"
+			"type": "string",
+			"title": "Hora inicio"
 		},
 		"schedule_end": {
-			"type": "string"
+			"type": "string",
+			"title": "Hora final"
 		},
 		"tuition": {
-			"type": "string"
+			"type": "string",
+			"title": "Matrícula"
 		},
 		"reference_number": {
-			"type": "integer"
+			"type": "integer",
+			"title": "Número de referencia"
 		},
 		"birthplace": {
-			"type": "string"
+			"type": "string",
+			"title": "Lugar de nacimiento"
 		},
 		"birthdate": {
 			"type": "string",
-			"format": "date"
+			"format": "date",
+			"title": "Fecha de nacimiento"
 		},
 		"nationality": {
-			"type": "string"
+			"type": "string",
+			"title": "Nacionalidad"
 		},
 		"first_language": {
-			"type": "string"
+			"type": "string",
+			"title": "Lengua materna"
 		},
 		"office": {
-			"type": "string"
+			"type": "string",
+			"title": "Oficina"
 		},
 		"status": {
-			"type": "string"
+			"type": "string",
+			"title": "Estado"
+		},
+		"group": {
+			"type": "string",
+			"title": "Grupo"
+		},
+		"subgroup": {
+			"type": "string",
+			"title": "Sub Grupo"
 		},
 		"address": {
-			"type": "string"
+			"type": "string",
+			"title": "Dirección"
 		},
 		"neighborhood": {
-			"type": "string"
+			"type": "string",
+			"title": "Barrio"
 		},
 		"medical_assurance": {
-			"type": "string"
+			"type": "string",
+			"title": "Cobertura médica"
 		},
 		"emergency": {
-			"type": "string"
+			"type": "string",
+			"title": "Emergencia"
 		},
 		"phone_number": {
-			"type": "string"
+			"type": "string",
+			"title": "Número de teléfono"
 		},
 		"vaccine_expiration": {
 			"type": "string",
-			"format": "date"
+			"format": "date",
+			"title": "Vencimiento de vacunas"
 		},
 		"inscription_date": {
 			"type": "string",
@@ -85,83 +113,133 @@
 			"items": [
 				{
 					"type": "object",
+					"title": "Editar responsable",
 					"properties": {
-						"ci": {
-							"type": "string"
-						},
 						"role": {
-							"type": "string"
+							"oneOf": [
+								{
+									"const": "Madre",
+									"title": "Madre"
+								},
+								{
+									"const": "Padre",
+									"title": "Padre"
+								},
+								{
+									"const": "Tutor",
+									"title": "Tutor"
+								}
+							],
+							"type": "string",
+							"title": "Tipo de responsable",
+							"default": "mother"
 						},
 						"full_name": {
-							"type": "string"
+							"type": "string",
+							"title": "Nombre completo"
 						},
 						"birthdate": {
 							"type": "string",
-							"format": "date"
+							"title": "Fecha de nacimiento"
 						},
 						"birthplace": {
-							"type": "string"
+							"type": "string",
+							"title": "País de nacimiento"
 						},
 						"nationality": {
-							"type": "string"
+							"type": "string",
+							"title": "Nacionalidad"
 						},
 						"first_language": {
-							"type": "string"
+							"type": "string",
+							"title": "Lengua materna"
+						},
+						"ci": {
+							"type": "string",
+							"title": "Cedula de identidad",
+							"pattern": "\\d{8}",
+							"minimum": 1
 						},
 						"marital_status": {
-							"type": "string"
+							"type": "string",
+							"title": "Estado civil",
+							"default": "Soltero/a"
 						},
 						"cellphone": {
-							"type": "string"
+							"type": "string",
+							"title": "Teléfono celular",
+							"pattern": "\\d{9}"
 						},
 						"email": {
-							"type": "string"
+							"type": "string",
+							"title": "E-mail",
+							"format": "email"
 						},
 						"address": {
-							"type": "string"
+							"type": "string",
+							"title": "Dirección"
 						},
 						"neighbourhood": {
-							"type": "string"
+							"type": "string",
+							"title": "Barrio de residencia"
 						},
 						"education_level": {
-							"type": "string"
+							"oneOf": [
+								{
+									"const": "Ninguno",
+									"title": "Ninguno"
+								},
+								{
+									"const": "Primaria incompleta",
+									"title": "Primaria incompleta"
+								},
+								{
+									"const": "Secundaria incompleta",
+									"title": "Secundaria incompleta"
+								},
+								{
+									"const": "Terciario incompleta",
+									"title": "Terciario incompleta"
+								},
+								{
+									"const": "Primaria completa",
+									"title": "Primaria completa"
+								},
+								{
+									"const": "Secundaria completa",
+									"title": "Secundaria completa"
+								},
+								{
+									"const": "Terciario completa",
+									"title": "Terciario completa"
+								}
+							],
+							"title": "Nivel educativo",
+							"default": "none"
 						},
 						"occupation": {
-							"type": "string"
+							"type": "string",
+							"title": "Trabajo-Ocupación"
 						},
 						"workplace": {
-							"type": "string"
+							"type": "string",
+							"title": "Empresa de trabajo"
 						},
 						"workplace_address": {
-							"type": "string"
+							"type": "string",
+							"title": "Dirección laboral"
 						},
 						"workplace_neighbourhood": {
-							"type": "string"
+							"type": "string",
+							"title": "Barrio laboral"
 						},
 						"workplace_phone": {
-							"type": "string"
+							"type": "string",
+							"title": "Teléfono laboral",
+							"pattern": "\\d{8,9}"
 						}
 					},
-					"required": [
-						"ci",
-						"role",
-						"full_name",
-						"birthdate",
-						"birthplace",
-						"nationality",
-						"first_language",
-						"marital_status",
-						"cellphone",
-						"email",
-						"address",
-						"neighbourhood",
-						"education_level",
-						"occupation",
-						"workplace",
-						"workplace_address",
-						"workplace_neighbourhood",
-						"workplace_phone"
-					]
+					"required": ["role", "ci"]
 				}
 			]
 		},
@@ -221,13 +299,34 @@
 							"type": "object",
 							"properties": {
 								"method": {
+									"oneOf": [
+										{
+											"const": "contado",
+											"title": "Contado"
+										},
+										{
+											"const": "financiacion",
+											"title": "Financiación"
+										},
+										{
+											"const": "licitacion",
+											"title": "Licitación"
+										}
+									],
+									"title": "Método de pago",
 									"type": "string"
 								},
-								"option": {
+								"year": {
+									"title": "Año",
+									"type": "integer",
+									"pattern": "\\d{4}"
+								},
+								"yearly_payment_url": {
+									"title": "Pago anualidad firmado",
 									"type": "string"
 								}
 							},
-							"required": ["method", "option"]
+							"required": ["method", "year"]
 						}
 					]
 				},
@@ -238,25 +337,59 @@
 							"type": "object",
 							"properties": {
 								"starting_date": {
-									"type": "string",
-									"format": "date"
-								},
-								"ending_date": {
-									"type": "string",
-									"format": "date"
-								},
-								"explanation": {
+									"title": "Comienzo",
 									"type": "string"
 								},
+								"ending_date": {
+									"title": "Fin",
+									"type": "string"
+								},
+								"explanation": {
+									"oneOf": [
+										{
+											"const": "hermano",
+											"title": "Hermano"
+										},
+										{
+											"const": "resolución",
+											"title": "Resolución"
+										}
+									],
+									"title": "Explicación",
+									"type": "string",
+									"default": "Sibling"
+								},
 								"percentage": {
+									"title": "%",
 									"type": "integer"
 								},
 								"type": {
-									"type": "string"
+									"oneOf": [
+										{
+											"const": "dirección",
+											"title": "Dirección"
+										},
+										{
+											"const": "asistente social",
+											"title": "Asistente Social"
+										}
+									],
+									"title": "Tipo",
+									"type": "string",
+									"default": "Direction"
 								},
 								"report_url": {
+									"title": "Informe administrativo",
 									"type": "string"
-								}
+								},
+								"description": {
+								  "title": "Descripción",
+								  "type": "string"
+								},
+							  "resolution_url": {
+								"title": "Resolución",
+								"type": "string"
+							  }
 							},
 							"required": ["starting_date", "ending_date", "explanation", "percentage", "type", "report_url"]
 						}
@@ -267,7 +400,6 @@
 		}
 	},
 	"required": [
-		"id",
 		"ci",
 		"name",
 		"surname",

@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "familyMember": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string"
+        },
+        "full_name": {
+          "type": "string"
+        },
+        "birthdate": {
+          "type": "string"
+        },
+        "birthplace": {
+          "type": "string"
+        },
+        "nationality": {
+          "type": "string"
+        },
+        "first_language": {
+          "type": "string"
+        },
+        "ci": {
+          "type": "string"
+        },
+        "marital_status": {
+          "type": "string"
+        },
+
+        "cellphone": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+
+        "neighbourhood": {
+          "type": "string"
+        },
+        "education_level": {
+          "type": "string"
+        },
+        "occupation": {
+          "type": "string"
+        },
+        "workplace": {
+          "type": "string"
+        },
+        "workplace_address": {
+          "type": "string"
+        },
+        "workplace_neighbourhood": {
+          "type": "string"
+        },
+        "workplace_phone": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "role",
+        "full_name",
+        "birthdate",
+        "birthplace",
+        "nationality",
+        "first_language",
+        "ci",
+        "marital_status",
+        "cellphone",
+        "email",
+        "address",
+        "neighbourhood",
+        "education_level",
+        "occupation",
+        "workplace",
+        "workplace_address",
+        "workplace_neighbourhood",
+        "workplace_phone"
+      ]
+    }
+  },
+  "required": [
+    "familyMember"
+  ]
+}

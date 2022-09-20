@@ -1,18 +1,12 @@
-import {
-	DiscountExplanation,
-	DiscountType,
-	PaymentMethodOption,
-	ScholarshipType,
-	Student
-} from "../../core/Models";
+import { DiscountExplanation, DiscountType, PaymentMethodOption, ScholarshipType, Student } from "../../core/Models";
 
-const defaultStudent: Student = {
-	id: "",
-	ci: "",
-	name: "",
-	surname: "",
-	schedule_start: "",
-	schedule_end: "",
+export const defaultStudent: Student = {
+	id: "asdf",
+	ci: "asdf",
+	name: "asdf",
+	surname: "asda",
+	schedule_start: "asdf",
+	schedule_end: "asdf",
 	tuition: "",
 	reference_number: 0,
 	birthplace: "",
@@ -56,12 +50,37 @@ const defaultStudent: Student = {
 	],
 	question_categories: [
 		{
-			category: "",
+			category: "Categoria",
 			questions: [
 				{
-					id: "a",
-					question: "",
-					answer: "",
+					id: "1",
+					question: "Pregunta",
+					answer: "Respuesta",
+				},
+				{
+					id: "1",
+					question: "Pregunta",
+					answer: "Respuesta",
+				},
+				{
+					id: "1",
+					question: "Pregunta",
+					answer: "Respuesta",
+				},
+				{
+					id: "1",
+					question: "Pregunta",
+					answer: "Respuesta",
+				},
+				{
+					id: "1",
+					question: "Pregunta",
+					answer: "Respuesta",
+				},
+				{
+					id: "1",
+					question: "Pregunta",
+					answer: "Respuesta",
 				},
 			],
 		},
@@ -77,7 +96,7 @@ const defaultStudent: Student = {
 			{
 				year: 2022,
 				method: PaymentMethodOption.Cash,
-				yearly_payment_url: ""
+				yearly_payment_url: "",
 			},
 		],
 		discounts: [

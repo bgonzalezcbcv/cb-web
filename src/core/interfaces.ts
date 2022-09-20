@@ -23,7 +23,7 @@ export enum UserRoleName {
 
 export enum UserRoleColor {
 	Administrador = "red",
-	Administrativo = "blue",
+	Administrativo = "rgb(59 , 96 , 144)",
 	Adscripto = "cyan",
 	Director = "green",
 	Docente = "yellow",
@@ -55,19 +55,4 @@ export interface SidebarItem {
 export interface SidebarSection {
 	sectionTitle: string;
 	items: SidebarItem[];
-}
-
-export interface Question {
-	id: string;
-	question: string;
-	answer: string;
-}
-
-export interface QuestionCategories {
-	category: string;
-	questions: Question[];
-}
-
-export interface Student {
-	question_categories: QuestionCategories[];
 }

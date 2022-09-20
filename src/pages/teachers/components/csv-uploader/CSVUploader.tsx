@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import * as XLSX from "xlsx";
 
 import { VisualComponent } from "../../../../core/interfaces";
 import { Card, Grid } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import usePreventDragEventsDefaults from "../../../../hooks/usePreventDragEventsDefaults";
 
 interface Alumno {
 	ci: string;
@@ -19,25 +20,7 @@ function CSVUploader(props: VisualComponent): React.ReactElement {
 
 	const fileInputRef = useRef(null);
 
-	useEffect(() => {
-		window.addEventListener(
-			"dragover",
-			function (e) {
-				e = e || event;
-				e.preventDefault();
-			},
-			false
-		);
-
-		window.addEventListener(
-			"drop",
-			function (e) {
-				e = e || event;
-				e.preventDefault();
-			},
-			false
-		);
-	});
+	usePreventDragEventsDefaults();
 
 	const columns: GridColDef[] = [
 		{ field: "ci", headerName: "CI", width: 150 },
@@ -53,7 +36,6 @@ function CSVUploader(props: VisualComponent): React.ReactElement {
 		const rowsJson = XLSX.utils.sheet_to_json<Alumno>(workbook.Sheets[workbook.SheetNames[0]]);
 
 		setRows(rowsJson);
-
 	}
 
 	function handleOnClickUpload(event: React.ChangeEvent<HTMLInputElement>): void {

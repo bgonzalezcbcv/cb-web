@@ -26,8 +26,6 @@ export default function CreateTeacher(props: VisualComponent): React.ReactElemen
 	function handleOnSubmit(): void {
 		setValidationMode("ValidateAndShow");
 
-		console.log(data, errors);
-
 		if (errors.length > 0) return;
 
 		dataStore.addTeacher(data as Teacher);
