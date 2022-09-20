@@ -66,6 +66,7 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
 							id="agreement-type"
 							label="Convenio"
 							value={agreementType}
+							disabled={!editable}
 							onChange={(event) => setAgreementType(event.target.value)}>
 							{dataStore.agreementTypes &&
 								dataStore.agreementTypes?.map((value, index) => {

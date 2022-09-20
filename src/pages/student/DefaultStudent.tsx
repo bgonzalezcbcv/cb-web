@@ -48,7 +48,43 @@ export const defaultStudent: Student = {
 			workplace_phone: "",
 		},
 	],
-	question_categories: [],
+	question_categories: [
+		{
+			category: "Categoria",
+			questions: [
+				{
+					id: "1",
+					question: "Pregunta",
+					answer: "Respuesta",
+				},
+				{
+					id: "1",
+					question: "Pregunta",
+					answer: "Respuesta",
+				},
+				{
+					id: "1",
+					question: "Pregunta",
+					answer: "Respuesta",
+				},
+				{
+					id: "1",
+					question: "Pregunta",
+					answer: "Respuesta",
+				},
+				{
+					id: "1",
+					question: "Pregunta",
+					answer: "Respuesta",
+				},
+				{
+					id: "1",
+					question: "Pregunta",
+					answer: "Respuesta",
+				},
+			],
+		},
+	],
 	administrative_info: {
 		enrollment_date: new Date("1/2/2022"),
 		starting_date: new Date("1/3/2022"),

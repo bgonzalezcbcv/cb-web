@@ -38,7 +38,7 @@ export default function StudentInfo(props: StudentInfoProps): React.ReactElement
 				onChange(data);
 			}}
 			uischema={uischema}
-			readonly={editable}
+			readonly={!editable}
 			cells={materialCells}
 		/>
 	);

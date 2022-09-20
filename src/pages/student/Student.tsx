@@ -10,8 +10,8 @@ import { Button, Card, Typography } from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 
 import EditIcon from "@mui/icons-material/Edit";
+import EditOffIcon from "@mui/icons-material/EditOff";
 import DeleteIcon from "@mui/icons-material/Delete";
-import SendIcon from "@mui/icons-material/Send";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
 import TabPanel from "./components/TabPanel/TabPanel";
@@ -25,10 +25,15 @@ import { defaultStudent } from "./DefaultStudent";
 
 import "./Student.scss";
 
-export default function Student(): React.ReactElement {
+interface StudentProps {
+	mode: "CREATE" | "VIEW";
+}
+export default function Student(props: StudentProps): React.ReactElement {
+	const { mode } = props;
+
 	const [value, setValue] = React.useState(0);
 	const [student, setStudent] = React.useState<StudentModel>(defaultStudent);
-	const [editMode, setEditMode] = React.useState(true);
+	const [editMode, setEditMode] = React.useState(false);
 	const [isFormUploadOpen, setIsFormUploadOpen] = React.useState(false);
 
 	const handleChange = (event: React.SyntheticEvent, newValue: number): void => {
@@ -39,7 +44,7 @@ export default function Student(): React.ReactElement {
 		<Card
 			sx={{
 				width: "80%",
-				height: "90%",
+				height: "80vh",
 				padding: "10px",
 				alignSelf: "flex-start",
 				marginTop: "20px",
@@ -67,11 +72,11 @@ export default function Student(): React.ReactElement {
 					<Button title="Subir formulario de inscripción" onClick={(): void => setIsFormUploadOpen(true)}>
 						<UploadFileIcon />
 					</Button>
-					{!editMode ? <Button startIcon={<DeleteIcon />}>Deshacer cambios</Button> : ""}
-					<Button startIcon={editMode ? <EditIcon /> : <SendIcon />} onClick={(): void => setEditMode(!editMode)}>
-						{editMode ? "Editar" : "Enviar"}{" "}
+					{/*{!editMode ? <Button startIcon={<DeleteIcon />}>Deshacer cambios</Button> : ""}*/}
+					<Button startIcon={editMode ? <EditOffIcon /> : <EditIcon />} onClick={(): void => setEditMode(!editMode)}>
+						{"Editar"}{" "}
 					</Button>
-					<Button startIcon={<DeleteIcon />}>Bajar</Button>
+					{mode !== "CREATE" ? <Button startIcon={<DeleteIcon />}>Bajar</Button> : ""}
 				</div>
 			</Box>
 

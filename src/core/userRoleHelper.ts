@@ -49,42 +49,42 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 				{
 					sectionTitle: "Alumnos",
 					items: [
-						{
-							title: "Activos",
-							navigationRoute: "/teachers",
-						},
-						{
-							title: "Pendientes",
-							navigationRoute: "/teachers",
-						},
-						{
-							title: "Inactivos",
-							navigationRoute: "/teachers",
-						},
+						// {
+						// 	title: "Activos",
+						// 	navigationRoute: "/teachers",
+						// },
+						// {
+						// 	title: "Pendientes",
+						// 	navigationRoute: "/teachers",
+						// },
+						// {
+						// 	title: "Inactivos",
+						// 	navigationRoute: "/teachers",
+						// },
 						{
 							title: "Dar de alta",
-							navigationRoute: "/teachers",
+							navigationRoute: "/student",
 						},
 					],
 				},
-				{
-					sectionTitle: "Grupos",
-					items: [
-						{
-							title: "Ver Todos",
-							navigationRoute: "/teachers",
-						},
-					],
-				},
-				{
-					sectionTitle: "Docentes",
-					items: [
-						{
-							title: "Ver Todos",
-							navigationRoute: "/teachers",
-						},
-					],
-				},
+				// {
+				// 	sectionTitle: "Grupos",
+				// 	items: [
+				// 		{
+				// 			title: "Ver Todos",
+				// 			navigationRoute: "/teachers",
+				// 		},
+				// 	],
+				// },
+				// {
+				// 	sectionTitle: "Docentes",
+				// 	items: [
+				// 		{
+				// 			title: "Ver Todos",
+				// 			navigationRoute: "/teachers",
+				// 		},
+				// 	],
+				// },
 			];
 		case UserRole.Adscripto:
 			return [

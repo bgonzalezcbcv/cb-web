@@ -7,7 +7,6 @@ import { observer } from "mobx-react-lite";
 import { DataStore } from "./core/DataStore";
 import Login from "./pages/login/Login";
 import { getSidebarSectionsByUser } from "./core/userRoleHelper";
-import Teachers from "./pages/teachers/Teachers";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Navbar from "./components/Navbar/Navbar";
 import Student from "./pages/student/Student";
@@ -32,9 +31,9 @@ function App(): React.ReactElement {
 							<Routes>
 								{loggedUser ? (
 									<>
-										<Route path="/student" element={<Student />} />
+										<Route path="/student" element={<Student mode={"CREATE"} />} />
 										<Route path="/login" element={<Login />} />
-										<Route path="*" element={<Teachers />} />
+										<Route path="*" element={<Navigate to="/student" />} />
 									</>
 								) : (
 									<>

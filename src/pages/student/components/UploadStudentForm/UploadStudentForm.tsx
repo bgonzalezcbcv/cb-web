@@ -124,7 +124,7 @@ function UploadStudentForm(props: UploadStudentFormProps): JSX.Element {
 				</Typography>
 
 				<LoadingButton id="create-student-button" variant="outlined" loading={loadingFile} disabled={!readyToNavigate} onClick={handleCreate}>
-					Crear Alumno
+					Cargar datos
 				</LoadingButton>
 			</Box>
 
