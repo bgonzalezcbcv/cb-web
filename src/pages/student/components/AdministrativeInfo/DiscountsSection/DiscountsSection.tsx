@@ -14,7 +14,7 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import schema from "../../../schema.json";
 import ui from "./ui.json";
 
-import "./DiscountSection.scss";
+import "./DiscountsSection.scss";
 
 export type AdministrativeInfoProps = {
 	editable: boolean;
@@ -33,7 +33,7 @@ type DiscountData = {
 	description: string;
 };
 
-export default function DiscountSection(props: VisualComponent & AdministrativeInfoProps): React.ReactElement {
+export default function DiscountsSection(props: VisualComponent & AdministrativeInfoProps): React.ReactElement {
 	const { editable, student, onChange } = props;
 
 	const [discountModalOpen, setDiscountModalOpen] = useState(false);
@@ -95,12 +95,7 @@ export default function DiscountSection(props: VisualComponent & AdministrativeI
 									renderers={materialRenderers}
 									cells={materialCells}
 									onChange={({ data }): void => {
-										if (
-											data &&
-											data.administrative_info &&
-											data.administrative_info.discounts &&
-											data.administrative_info.discounts.length > 0
-										) {
+										if (data?.administrative_info?.discounts && data.administrative_info.discounts.length > 0) {
 											const info = data.administrative_info.discounts[0];
 											setDiscountData(info);
 										}

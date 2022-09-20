@@ -379,9 +379,17 @@
 									"default": "Direction"
 								},
 								"report_url": {
-									"title": "Reporte",
+									"title": "Informe administrativo",
 									"type": "string"
-								}
+								},
+								"description": {
+								  "title": "Descripción",
+								  "type": "string"
+								},
+							  "resolution_url": {
+								"title": "Resolución",
+								"type": "string"
+							  }
 							},
 							"required": ["starting_date", "ending_date", "explanation", "percentage", "type", "report_url"]
 						}

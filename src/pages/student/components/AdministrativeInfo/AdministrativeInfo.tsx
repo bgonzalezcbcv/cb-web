@@ -10,13 +10,13 @@ import { DataStore } from "../../../../core/DataStore";
 import * as Models from "../../../../core/Models";
 import { VisualComponent } from "../../../../core/interfaces";
 import FileUploader from "../../../../components/fileUploader/FileUploader";
-import { Card, CardContent, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 
 import DownloadIcon from "@mui/icons-material/Download";
 
 import "./AdministrativeInfo.scss";
 
-import DiscountSection from "./DiscountsSection/DiscountSection";
+import DiscountsSection from "./DiscountsSection/DiscountsSection";
 import PaymentMethodSection from "./PaymentMethodsSection/PaymentMethodSection";
 
 export type AdministrativeInfoProps = {
@@ -36,79 +36,73 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
 	const handleDefaultsAjv = createAjv({ useDefaults: true });
 
 	return (
-		<div>
-			<Card
-				className="administrative-info"
-				sx={{
-					width: width ?? "100%",
-					height: height ?? "100%",
-				}}>
-				<CardContent className="form-container">
-					<JsonForms
-						schema={schema as JsonSchema7}
-						uischema={uiSchema}
-						data={student}
-						renderers={materialRenderers}
-						cells={materialCells}
-						onChange={({ data }): void => {
-							onChange(data);
-						}}
-						readonly={!editable}
-						ajv={handleDefaultsAjv}
-					/>
+		<div className="administrative-info" style={{ width: width ?? "100%", height: height ?? "100%" }}>
+			<div className="form-container">
+				<JsonForms
+					schema={schema as JsonSchema7}
+					uischema={uiSchema}
+					data={student}
+					renderers={materialRenderers}
+					cells={materialCells}
+					onChange={({ data }): void => {
+						onChange(data);
+					}}
+					readonly={!editable}
+					ajv={handleDefaultsAjv}
+				/>
 
-					<FormControl variant="standard" sx={{ width: "100%" }}>
-						<InputLabel id="agreement-type-label">Convenio</InputLabel>
+				<FormControl variant="standard" sx={{ width: "100%" }}>
+					<InputLabel id="agreement-type-label">Convenio</InputLabel>
 
-						<Select
-							labelId="agreement-type"
-							id="agreement-type"
-							label="Convenio"
-							value={agreementType}
-							disabled={!editable}
-							onChange={(event) => setAgreementType(event.target.value)}>
-							{dataStore.agreementTypes &&
-								dataStore.agreementTypes?.map((value, index) => {
-									return (
-										<MenuItem key={index} value={value}>
-											{value}
-										</MenuItem>
-									);
-								})}
-						</Select>
-					</FormControl>
+					<Select
+						labelId="agreement-type"
+						id="agreement-type"
+						label="Convenio"
+						value={agreementType}
+						disabled={!editable} onChange={(event) => setAgreementType(event.target.value)}>
+						{dataStore.agreementTypes &&
+							dataStore.agreementTypes?.map((value, index) => {
+								return (
+									<MenuItem key={index} value={value}>
+										{value}
+									</MenuItem>
+								);
+							})}
+					</Select>
+				</FormControl>
 
-					{editable ? (
+				{editable ? (
+					<div className="file-uploader-container">
 						<FileUploader label={"Compromiso de inscripción"} width={"100%"} uploadedFile={(file) => setEnrollmentCommitment(file)} />
-					) : (
-						<div className="document-download-container">
-							<div className="document-download">Compromiso de inscripción</div>
-							{/*TODO: Add handle to download file*/}
-							<DownloadIcon />
-						</div>
-					)}
+					</div>
+				) : (
+					<div className="document-download-container">
+						<div className="document-download">Compromiso de inscripción</div>
+						{/*TODO: Add handle to download file*/}
+						<DownloadIcon />
+					</div>
+				)}
 
-					<TextField
-						sx={{ width: "100%", marginTop: 1 }}
-						label={"Comentarios"}
-						value={student.administrative_info.comments}
-						multiline
-						rows={4}
-						variant="standard"
-						disabled={!editable}
-						onChange={(event) => {
-							const newStudent = { ...student, administrative_info: { ...student.administrative_info, comments: event.target.value } };
-							onChange(newStudent);
-						}}
-					/>
-				</CardContent>
+				<TextField
+					className="comments"
+					label={"Comentarios"}
+					value={student.administrative_info.comments}
+					multiline
+					rows={4}
+					variant="standard"
+					disabled={!editable}
+					onChange={(event) => {
+						const newStudent = { ...student, administrative_info: { ...student.administrative_info, comments: event.target.value } };
+						onChange(newStudent);
+					}}
+				/>
+			</div>
 
-				<div className={"payment-details-wrapper"}>
-					<DiscountSection editable={editable} student={student} onChange={onChange}></DiscountSection>
+			<div className={"payment-details-wrapper"}>
+				<DiscountsSection editable={editable} student={student} onChange={onChange} />
 
-					<PaymentMethodSection editable={editable} student={student} onChange={onChange}></PaymentMethodSection>
-				</div>
-			</Card>
+				<PaymentMethodSection editable={editable} student={student} onChange={onChange} />
+			</div>
 		</div>
 	);
 }

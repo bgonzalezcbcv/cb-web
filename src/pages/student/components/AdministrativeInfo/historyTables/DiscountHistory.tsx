@@ -11,12 +11,12 @@ export default function DiscountHistory(props: DiscountHistoryProps): React.Reac
     const {rows} = props;
 
     return (
-        <TableContainer className="discount-history">
+        <TableContainer style={{height: 240}}>
             <Table sx={{ width: '100%'}} stickyHeader>
                 <TableHead>
                     <TableRow>
-                        <TableCell sx={{fontWeight: 600}}>Fecha inicio</TableCell>
-                        <TableCell sx={{fontWeight: 600}}>Fecha fin</TableCell>
+                        <TableCell sx={{fontWeight: 600}}>Comienzo</TableCell>
+                        <TableCell sx={{fontWeight: 600}}>Fin</TableCell>
                         <TableCell sx={{fontWeight: 600}}>Porcentaje</TableCell>
                         <TableCell sx={{fontWeight: 600}}>Explicación</TableCell>
                         <TableCell sx={{fontWeight: 600}}>Descripción</TableCell>
@@ -27,10 +27,7 @@ export default function DiscountHistory(props: DiscountHistoryProps): React.Reac
                 </TableHead>
                 <TableBody>
                     {rows && rows.map((row, index) => (
-                        <TableRow
-                            key={index}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                        >
+                        <TableRow key={index}>
                             <TableCell>{row.starting_date.toLocaleDateString('es')}</TableCell>
                             <TableCell>{row.ending_date.toLocaleDateString('es')}</TableCell>
                             <TableCell>{row.percentage + '%'}</TableCell>

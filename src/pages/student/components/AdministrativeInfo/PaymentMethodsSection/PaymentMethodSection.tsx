@@ -6,7 +6,7 @@ import Modal from "../../../../../components/modal/Modal";
 import PaymentMethodHistory from "../historyTables/PaymentMethodHistory";
 import { Card, CardContent, Divider } from "@mui/material";
 import { JsonForms } from "@jsonforms/react";
-import { JsonSchema7, Translator, createAjv } from "@jsonforms/core";
+import { JsonSchema7, Translator } from "@jsonforms/core";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
 
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -80,12 +80,7 @@ export default function PaymentMethodSection(props: VisualComponent & PaymentMet
 										renderers={materialRenderers}
 										cells={materialCells}
 										onChange={({ data, errors }): void => {
-											if (
-												data &&
-												data.administrative_info &&
-												data.administrative_info.payment_methods &&
-												data.administrative_info.payment_methods.length > 0
-											) {
+											if (data?.administrative_info?.payment_methods && data.administrative_info.payment_methods.length > 0) {
 												const info = data.administrative_info.payment_methods[0];
 												setPaymentMethodData(info);
 											}

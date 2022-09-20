@@ -10,7 +10,7 @@ export type ModalProps = {
     cancelText?: string;
     acceptText?: string;
     onClose: () => void;
-    onAccept?: () => void; //TODO: check if this needs to be mandatory
+    onAccept: () => void;
 }
 
 export default function Modal(props: ModalProps): React.ReactElement {
@@ -29,7 +29,7 @@ export default function Modal(props: ModalProps): React.ReactElement {
 
     const handleModalAccept = useCallback(() => {
         setIsOpen(false);
-        onAccept && onAccept();
+        onAccept();
     }, [onAccept]);
 
     return (

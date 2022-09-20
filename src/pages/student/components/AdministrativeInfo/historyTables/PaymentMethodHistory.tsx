@@ -16,16 +16,13 @@ export default function PaymentMethodHistory(props: PaymentMethodHistoryProps): 
                 <TableHead>
                     <TableRow>
                         <TableCell sx={{fontWeight: 600}}>Año</TableCell>
-                        <TableCell sx={{fontWeight: 600}}>Forma</TableCell>
+                        <TableCell sx={{fontWeight: 600}}>Forma de pago</TableCell>
                         <TableCell sx={{fontWeight: 600}}>Documento</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows && rows.map((row) => (
-                        <TableRow
-                            key={row.year}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                        >
+                    {rows && rows.map((row, index) => (
+                        <TableRow key={index}>
                             <TableCell component="th" scope="row">
                                 {row.year}
                             </TableCell>
