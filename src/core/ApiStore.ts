@@ -1,21 +1,28 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios from "axios";
 
 import { Student } from "./Models";
 
-const axiosConfigs: AxiosRequestConfig<unknown> = {
+const baseConfig = {
 	baseURL: process.env["REACT_APP_API_URL"],
-	headers: {
-		"Access-Control-Allow-Origin": "*",
-	},
 };
-
-const axiosInstance = axios.create(axiosConfigs);
 
 export async function createStudent(studentToCreate: Student): Promise<boolean> {
 	try {
-		await axiosInstance.post("/api/students", { student: studentToCreate });
+		const config = {
+			...baseConfig,
+			method: "post",
+			url: "/api/students/",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			data: JSON.stringify({
+				student: studentToCreate,
+			}),
+		};
 
-		return true;
+		const response = await axios(config);
+
+		return response.status === 201;
 	} catch (e) {
 		return false;
 	}

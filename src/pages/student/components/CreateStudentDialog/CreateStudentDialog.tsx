@@ -5,8 +5,10 @@ import { Student } from "../../../../core/Models";
 import * as API from "../../../../core/ApiStore";
 
 import { Button, Box, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Typography, Alert } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 
 import studentSchema from "../../schema.json";
+import { useCallback } from "react";
 
 interface CreateStudentDialogProps {
 	student: Student;
@@ -18,13 +20,13 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 	const [isOpen, setIsOpen] = React.useState(false);
 	const [studentCreationState, setStudentCreationState] = React.useState<"idle" | "inProcess" | "success" | "fail">("idle");
 
-	const handleStudentCreation = async (): Promise<void> => {
+	const handleStudentCreation = useCallback(async (): Promise<void> => {
 		setStudentCreationState("inProcess");
 
 		const successfulCreation = await API.createStudent(student);
 
 		successfulCreation ? setStudentCreationState("success") : setStudentCreationState("fail");
-	};
+	}, [student]);
 
 	const dismiss = (): void => {
 		setIsOpen(false);
@@ -68,12 +70,22 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 				</DialogContent>
 
 				<DialogActions sx={{ display: "flex", justifyContent: "space-around" }}>
-					<Button variant="outlined" onClick={dismiss}>
+					<LoadingButton variant="outlined" onClick={dismiss} loading={studentCreationState === "inProcess"}>
 						Cancelar
-					</Button>
+					</LoadingButton>
 
-					<Button variant="outlined" onClick={handleStudentCreation}>
+					<LoadingButton variant="outlined" onClick={handleStudentCreation} loading={studentCreationState === "inProcess"}>
 						{studentCreationState === "fail" ? "Reintentar" : "Aceptar"}
+					</LoadingButton>
+				</DialogActions>
+			</Dialog>
+
+			<Dialog open={studentCreationState === "success"} onClose={dismiss}>
+				<DialogTitle>¡Estudiante creado correctamente!</DialogTitle>
+
+				<DialogActions>
+					<Button variant="outlined" onClick={dismiss}>
+						Aceptar
 					</Button>
 				</DialogActions>
 			</Dialog>
