@@ -1,0 +1,74 @@
+{
+	"title": "testingData",
+	"description": "Auto generated JSON schema based on the 'testingData' file",
+	"type": "object",
+	"properties": {
+		"a": {
+			"type": "object",
+			"properties": {
+				"title": {
+					"type": "string"
+				},
+				"message": {
+					"type": "string"
+				}
+			}
+		},
+		"b": {
+			"type": "object",
+			"properties": {
+				"title": {
+					"type": "string"
+				},
+				"message": {
+					"type": "string"
+				}
+			}
+		},
+		"c": {
+			"type": "object",
+			"properties": {
+				"a": {
+					"type": "object",
+					"properties": {
+						"title": {
+							"type": "string"
+						},
+						"message": {
+							"type": "string"
+						}
+					}
+				},
+				"b": {
+					"type": "object",
+					"properties": {
+						"title": {
+							"type": "string"
+						},
+						"message": {
+							"type": "string"
+						}
+					}
+				},
+				"d": {
+					"type": "array",
+					"items": {
+						"properties": {
+							"a": {
+								"type": "object",
+								"properties": {
+									"title": {
+										"type": "string"
+									},
+									"message": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

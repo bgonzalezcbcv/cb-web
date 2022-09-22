@@ -10,6 +10,7 @@ import "./StudentInfo.scss";
 
 import uischema from "./ui.json";
 import schema from "../../schema.json";
+import { ajv as studentAjv } from "../../../../core/AJVHelper";
 
 export type StudentInfoProps = {
 	student: Student;

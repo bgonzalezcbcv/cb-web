@@ -6,7 +6,7 @@
 			"elements": [
 				{
 					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/discounts/items/0/properties/starting_date",
+					"scope": "#/properties/administrative_info/properties/discounts/items/properties/starting_date",
 					"options": {
 						"format": "date",
 						"dateFormat": "DD/MM/YYYY",
@@ -15,7 +15,7 @@
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/discounts/items/0/properties/ending_date",
+					"scope": "#/properties/administrative_info/properties/discounts/items/properties/ending_date",
 					"options": {
 						"format": "date",
 						"dateFormat": "DD/MM/YYYY",
@@ -24,7 +24,7 @@
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/discounts/items/0/properties/percentage"
+					"scope": "#/properties/administrative_info/properties/discounts/items/properties/percentage"
 				}
 			]
 		},
@@ -33,15 +33,15 @@
 			"elements": [
 				{
 					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/discounts/items/0/properties/explanation"
+					"scope": "#/properties/administrative_info/properties/discounts/items/properties/explanation"
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/discounts/items/0/properties/description"
+					"scope": "#/properties/administrative_info/properties/discounts/items/properties/description"
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/discounts/items/0/properties/resolution_url"
+					"scope": "#/properties/administrative_info/properties/discounts/items/properties/resolution_url"
 				}
 			]
 		},
@@ -50,11 +50,11 @@
 			"elements": [
 				{
 					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/discounts/items/0/properties/type"
+					"scope": "#/properties/administrative_info/properties/discounts/items/properties/type"
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/discounts/items/0/properties/report_url"
+					"scope": "#/properties/administrative_info/properties/discounts/items/properties/report_url"
 				}
 			]
 		}

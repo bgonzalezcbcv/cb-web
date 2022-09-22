@@ -1,4 +1,6 @@
+import _ from "lodash";
 import * as XLSX from "xlsx";
+import { JsonSchema7 } from "@jsonforms/core";
 
 /**
  * @param xlsxFile Excel file with .xlsx format.
@@ -46,3 +48,11 @@ export const basicTranslator =
 
 		return defaultMessage ?? "";
 	};
+
+export function pathToSchemaPath(path: string): string {
+	return "properties." + path.replaceAll(".", ".properties.").replaceAll(/\[(\d*)\]/gm, ".items[$1]");
+}
+
+export function getTitleFromSchema(path: string, schema: JsonSchema7): string | undefined {
+	return _.get(schema, pathToSchemaPath(path) + ".title") as string | undefined;
+}
