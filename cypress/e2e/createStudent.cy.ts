@@ -36,7 +36,7 @@ describe("createStudent", () => {
 				method: "POST", // Route all POST requests
 				url: "/api/students", // that have a URL that matches '/students'
 			},
-			{ statusCode: 422, body: {} } // and force the response to have correct status
+			{ statusCode: 422, body: {} } // and force the response to have incorrect status
 		);
 
 		cy.get(createStudentButtonID).click();
