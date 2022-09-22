@@ -18,6 +18,7 @@ describe("studentsBasicInfo",() => {
     const medicalAssuranceFieldID = "#\\#\\/properties\\/medical_assurance2-input";
     const emergencyFieldID = "#\\#\\/properties\\/emergency2-input";
     const vaccineExpirationInputID = "#\\#\\/properties\\/vaccine_expiration2-input";
+    const createButtonID = ".MuiBox-root > .MuiButtonBase-root"
 
     beforeEach(() => {
         cy.login();
@@ -38,7 +39,7 @@ describe("studentsBasicInfo",() => {
         cy.get(SubGroupFieldID).type("A");
         cy.get(referenceNumberFieldID).type("42");
         cy.get(placeOfBirthFieldID).type("Asociacion Española");
-        cy.get(dateOfBirthInputID).type("01/01/2000");
+        cy.get(dateOfBirthInputID).type("2000-09-01");
         cy.get(nationalityFieldID).type("Uruguayo");
         cy.get(firstLanguageFieldID).type("Español");
         cy.get(neighborhoodFieldID).type("Cordon");
@@ -46,7 +47,10 @@ describe("studentsBasicInfo",() => {
         cy.get(medicalAssuranceFieldID).type("Si tiene es la A23BVJ");
         cy.get(emergencyFieldID).type("Cooperativa ABC123XYZ");
         cy.get(vaccineExpirationInputID).type("03/03/2019");
-        cy.get(editButtonID).click();
+        cy.fillStudentFamilyInfo();
+        cy.get(createButtonID).click();
+
+        cy.get("body").should("not.include.text","Hay errores en los campos del alumno")
 
     });
 });

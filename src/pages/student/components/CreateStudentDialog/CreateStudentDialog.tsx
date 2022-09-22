@@ -47,7 +47,7 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 						const ajv = createAjv({ allErrors: true });
 
 						ajv.validate(studentSchema, student);
-
+						console.table(ajv.errors)
 						ajv.errors && setIsOpen(ajv.errors.length > 0);
 					}}>
 					<Button variant="outlined">Crear Alumno</Button>
