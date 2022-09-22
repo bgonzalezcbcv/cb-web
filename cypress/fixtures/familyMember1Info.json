@@ -1,0 +1,20 @@
+{
+	"role": "Madre",
+	"fullName": "Josefina Perez Perez",
+	"ci": "23456789",
+	"birthDate": "1959-4-25",
+	"birthplace": "Uruguay",
+	"nationality": "Uruguaya",
+	"firstLanguage": "Español",
+	"maritalStatus": "Casada",
+	"cellphone": "099099990",
+	"email": "jPerez@adinet.com",
+	"address": "Calle Falsa 1234",
+	"neighborhood": "Cerro",
+	"educationLevel": "Secundaria completa",
+	"occupation": "Dueña de local",
+	"workplace": "Kiosko",
+	"workplaceAddress": "Maroñas 1414",
+	"workplaceNeighbourhood": "Maroñas",
+	"workplacePhone": "25105020"
+}
