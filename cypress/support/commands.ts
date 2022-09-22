@@ -111,10 +111,6 @@ Cypress.Commands.add("fillStudentFamilyInfo", () => {
 		cy.get(workplaceNeighborhoodFieldID).clear().type(familyMember.workplaceNeighbourhood);
 		cy.get(workPhoneFieldID).clear().type(familyMember.workplacePhone);
 	});
-
-	const complementaryInfoButtonID = ".MuiTabs-flexContainer > :nth-child(3)";
-	const administrativeInfoButtonID = ".MuiTabs-flexContainer > :nth-child(4)";
-	const trayectoryButtonID = ".MuiTabs-flexContainer > :nth-child(5)";
 });
 //
 //
