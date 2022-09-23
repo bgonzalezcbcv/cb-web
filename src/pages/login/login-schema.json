@@ -1,0 +1,20 @@
+{
+	"type": "object",
+	"properties": {
+		"email": {
+			"type": "string",
+			"title": "Correo electrónico",
+			"format": "email",
+			"minLength": 6,
+			"maxLength": 127
+		},
+		"password": {
+			"type": "string",
+			"title": "Constraseña",
+			"format": "password",
+			"minLength": 6,
+			"maxLength": 127
+		}
+	},
+	"required": ["email", "password"]
+}

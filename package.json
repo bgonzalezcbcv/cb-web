@@ -3,13 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/react": "11.10.0",
-    "@emotion/styled": "11.10.0",
-    "@mui/icons-material": "5.8.4",
-    "@mui/material": "5.10.1",
+    "@emotion/react": "11.10.4",
+    "@emotion/styled": "11.10.4",
+    "@jsonforms/core": "3.0.0-alpha.3",
+    "@jsonforms/material-renderers": "3.0.0-alpha.3",
+    "@jsonforms/react": "3.0.0-alpha.3",
+    "@mui/icons-material": "5.2.0",
+    "@mui/lab": "5.0.0-alpha.58",
+    "@mui/material": "5.10.4",
+    "@mui/styles": "5.2.3",
     "@mui/x-data-grid": "5.15.3",
-    "@rjsf/core": "4.2.3",
-    "@rjsf/material-ui": "4.2.3",
+    "@mui/x-date-pickers": "5.0.1",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "13.3.0",
     "@testing-library/user-event": "13.5.0",
@@ -17,22 +21,30 @@
     "@types/node": "16.11.51",
     "@types/react": "18.0.17",
     "@types/react-dom": "18.0.6",
+    "ajv-errors": "3.0.0",
+    "axios": "0.27.2",
     "dayjs": "1.11.5",
     "lodash": "4.17.21",
     "mobx": "6.6.1",
     "mobx-react-lite": "3.4.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-router-dom": "6.3.0",
     "react-scripts": "5.0.1",
     "sass": "1.54.5",
     "typescript": "4.7.4",
-    "web-vitals": "2.1.4"
+    "web-vitals": "2.1.4",
+    "xlsx": "0.18.5"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test:coverage": "npm test -- --env=jsdom --coverage",
+    "eject": "react-scripts eject",
+    "cypress-e2e": "npx cypress open --e2e",
+    "cypress-e2e-firefox": "npx cypress open --e2e --browser firefox",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -53,6 +65,14 @@
     ]
   },
   "devDependencies": {
-    "@types/lodash": "4.14.184"
+    "@types/lodash": "4.14.184",
+    "@typescript-eslint/eslint-plugin": "5.34.0",
+    "@typescript-eslint/parser": "5.34.0",
+    "cypress": "10.7.0",
+    "eslint": "8.22.0",
+    "eslint-plugin-react": "7.30.1",
+    "husky": "8.0.1",
+    "prettier": "2.7.1",
+    "pretty-quick": "3.1.3"
   }
 }

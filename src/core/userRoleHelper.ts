@@ -1,0 +1,241 @@
+import { User, UserRole, SidebarSection, UserRoleColor, UserRoleName } from "./interfaces";
+
+export function getColorByUserRole(userRole?: UserRole): string {
+	if (!userRole) return "black";
+
+	return UserRoleColor[UserRole[userRole] as keyof typeof UserRoleColor];
+}
+
+export function getUserRoleName(userRole?: UserRole): string {
+	if (!userRole) return "???";
+
+	return UserRoleName[UserRole[userRole] as keyof typeof UserRoleName];
+}
+
+export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
+	switch (user?.role) {
+		case UserRole.Administrador:
+			return [
+				{
+					sectionTitle: "Grupos",
+					items: [
+						{
+							title: "Crear grupo",
+							navigationRoute: "/teachers",
+						},
+						{
+							title: "Asignar director",
+							navigationRoute: "/teachers",
+						},
+					],
+				},
+				{
+					sectionTitle: "Usuarios",
+					items: [
+						{
+							title: "Crear",
+							navigationRoute: "/teachers",
+						},
+						{
+							title: "Ver todos",
+							navigationRoute: "/teachers",
+						},
+					],
+				},
+			];
+
+		case UserRole.Administrativo:
+			return [
+				{
+					sectionTitle: "Alumnos",
+					items: [
+						// {
+						// 	title: "Activos",
+						// 	navigationRoute: "/teachers",
+						// },
+						// {
+						// 	title: "Pendientes",
+						// 	navigationRoute: "/teachers",
+						// },
+						// {
+						// 	title: "Inactivos",
+						// 	navigationRoute: "/teachers",
+						// },
+						{
+							title: "Dar de alta",
+							navigationRoute: "/student",
+						},
+					],
+				},
+				// {
+				// 	sectionTitle: "Grupos",
+				// 	items: [
+				// 		{
+				// 			title: "Ver Todos",
+				// 			navigationRoute: "/teachers",
+				// 		},
+				// 	],
+				// },
+				// {
+				// 	sectionTitle: "Docentes",
+				// 	items: [
+				// 		{
+				// 			title: "Ver Todos",
+				// 			navigationRoute: "/teachers",
+				// 		},
+				// 	],
+				// },
+			];
+		case UserRole.Adscripto:
+			return [
+				{
+					sectionTitle: "Alumnos",
+					items: [
+						{
+							title: "Mis alumnos",
+							navigationRoute: "/teachers",
+						},
+						{
+							title: "Pendientes",
+							navigationRoute: "/teachers",
+						},
+					],
+				},
+				{
+					sectionTitle: "Grupos",
+					items: [
+						{
+							title: "Ver Mis Grupos",
+							navigationRoute: "/teachers",
+						},
+					],
+				},
+				{
+					sectionTitle: "Docentes",
+					items: [
+						{
+							title: "Ver Docentes",
+							navigationRoute: "/teachers",
+						},
+					],
+				},
+				{
+					sectionTitle: "Perfil",
+					items: [
+						{
+							title: "Ver perfiles",
+							navigationRoute: "/teachers",
+						},
+					],
+				},
+			];
+		case UserRole.Director:
+			return [
+				{
+					sectionTitle: "Alumnos",
+					items: [
+						{
+							title: "Mis alumnos",
+							navigationRoute: "/teachers",
+						},
+						{
+							title: "Pendientes",
+							navigationRoute: "/teachers",
+						},
+					],
+				},
+				{
+					sectionTitle: "Grupos",
+					items: [
+						{
+							title: "Ver Todos",
+							navigationRoute: "/teachers",
+						},
+					],
+				},
+				{
+					sectionTitle: "Docentes",
+					items: [
+						{
+							title: "Ver Todos",
+							navigationRoute: "/teachers",
+						},
+					],
+				},
+				{
+					sectionTitle: "Perfil",
+					items: [
+						{
+							title: "Ver Todos",
+							navigationRoute: "/teachers",
+						},
+					],
+				},
+			];
+		case UserRole.Docente:
+			return [
+				{
+					sectionTitle: "Alumnos",
+					items: [
+						{
+							title: "Ver Todos",
+							navigationRoute: "/teachers",
+						},
+					],
+				},
+				{
+					sectionTitle: "Grupos",
+					items: [],
+				},
+				{
+					sectionTitle: "Perfil",
+					items: [
+						{
+							title: "Ver Todos",
+							navigationRoute: "/teachers",
+						},
+					],
+				},
+			];
+		case UserRole.Recepcion:
+			return [
+				{
+					sectionTitle: "Alumnos",
+					items: [
+						{
+							title: "Activos",
+							navigationRoute: "/teachers",
+						},
+						{
+							title: "Pendientes",
+							navigationRoute: "/teachers",
+						},
+						{
+							title: "Inactivos",
+							navigationRoute: "/teachers",
+						},
+					],
+				},
+				{
+					sectionTitle: "Grupos",
+					items: [
+						{
+							title: "Ver Todos",
+							navigationRoute: "/teachers",
+						},
+					],
+				},
+				{
+					sectionTitle: "Docentes",
+					items: [
+						{
+							title: "Ver Todos",
+							navigationRoute: "/teachers",
+						},
+					],
+				},
+			];
+		default:
+			return [];
+	}
+}

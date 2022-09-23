@@ -38,5 +38,4 @@ yarn-error.log*
 .Trashes
 Thumbs.db
 Desktop.ini
-package-lock.json
 /src/**/*.d.ts

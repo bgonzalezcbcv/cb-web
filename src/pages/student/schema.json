@@ -1,0 +1,423 @@
+{
+	"type": "object",
+	"properties": {
+		"id": {
+			"type": "string"
+		},
+		"ci": {
+			"type": "string",
+			"title": "CI",
+			"pattern": "\\d{8}"
+		},
+		"name": {
+			"type": "string",
+			"title": "Nombres"
+		},
+		"surname": {
+			"type": "string",
+			"title": "Apellidos"
+		},
+		"schedule_start": {
+			"type": "string",
+			"title": "Hora inicio"
+		},
+		"schedule_end": {
+			"type": "string",
+			"title": "Hora final"
+		},
+		"tuition": {
+			"type": "string",
+			"title": "Matrícula"
+		},
+		"reference_number": {
+			"type": "integer",
+			"title": "Número de referencia"
+		},
+		"birthplace": {
+			"type": "string",
+			"title": "Lugar de nacimiento"
+		},
+		"birthdate": {
+			"type": "string",
+			"format": "date",
+			"title": "Fecha de nacimiento"
+		},
+		"nationality": {
+			"type": "string",
+			"title": "Nacionalidad"
+		},
+		"first_language": {
+			"type": "string",
+			"title": "Lengua materna"
+		},
+		"office": {
+			"type": "string",
+			"title": "Oficina"
+		},
+		"status": {
+			"type": "string",
+			"title": "Estado"
+		},
+		"group": {
+			"type": "string",
+			"title": "Grupo"
+		},
+		"subgroup": {
+			"type": "string",
+			"title": "Sub Grupo"
+		},
+		"address": {
+			"type": "string",
+			"title": "Dirección"
+		},
+		"neighborhood": {
+			"type": "string",
+			"title": "Barrio"
+		},
+		"medical_assurance": {
+			"type": "string",
+			"title": "Cobertura médica"
+		},
+		"emergency": {
+			"type": "string",
+			"title": "Emergencia"
+		},
+		"phone_number": {
+			"type": "string",
+			"title": "Número de teléfono"
+		},
+		"vaccine_expiration": {
+			"type": "string",
+			"format": "date",
+			"title": "Vencimiento de vacunas"
+		},
+		"inscription_date": {
+			"type": "string",
+			"format": "date"
+		},
+		"starting_date": {
+			"type": "string",
+			"format": "date"
+		},
+		"contact": {
+			"type": "string"
+		},
+		"contact_phone": {
+			"type": "string"
+		},
+		"email": {
+			"type": "string"
+		},
+		"family": {
+			"type": "array",
+			"items": [
+				{
+					"type": "object",
+					"title": "Editar responsable",
+					"properties": {
+						"role": {
+							"oneOf": [
+								{
+									"const": "Madre",
+									"title": "Madre"
+								},
+								{
+									"const": "Padre",
+									"title": "Padre"
+								},
+								{
+									"const": "Tutor",
+									"title": "Tutor"
+								}
+							],
+							"type": "string",
+							"title": "Tipo de responsable",
+							"default": "mother"
+						},
+						"full_name": {
+							"type": "string",
+							"title": "Nombre completo"
+						},
+						"birthdate": {
+							"type": "string",
+							"title": "Fecha de nacimiento"
+						},
+						"birthplace": {
+							"type": "string",
+							"title": "País de nacimiento"
+						},
+						"nationality": {
+							"type": "string",
+							"title": "Nacionalidad"
+						},
+						"first_language": {
+							"type": "string",
+							"title": "Lengua materna"
+						},
+						"ci": {
+							"type": "string",
+							"title": "Cedula de identidad",
+							"pattern": "\\d{8}",
+							"minimum": 1
+						},
+						"marital_status": {
+							"type": "string",
+							"title": "Estado civil",
+							"default": "Soltero/a"
+						},
+						"cellphone": {
+							"type": "string",
+							"title": "Teléfono celular",
+							"pattern": "\\d{9}"
+						},
+						"email": {
+							"type": "string",
+							"title": "E-mail",
+							"format": "email"
+						},
+						"address": {
+							"type": "string",
+							"title": "Dirección"
+						},
+						"neighbourhood": {
+							"type": "string",
+							"title": "Barrio de residencia"
+						},
+						"education_level": {
+							"oneOf": [
+								{
+									"const": "Ninguno",
+									"title": "Ninguno"
+								},
+								{
+									"const": "Primaria incompleta",
+									"title": "Primaria incompleta"
+								},
+								{
+									"const": "Secundaria incompleta",
+									"title": "Secundaria incompleta"
+								},
+								{
+									"const": "Terciario incompleta",
+									"title": "Terciario incompleta"
+								},
+								{
+									"const": "Primaria completa",
+									"title": "Primaria completa"
+								},
+								{
+									"const": "Secundaria completa",
+									"title": "Secundaria completa"
+								},
+								{
+									"const": "Terciario completa",
+									"title": "Terciario completa"
+								}
+							],
+							"title": "Nivel educativo",
+							"default": "none"
+						},
+						"occupation": {
+							"type": "string",
+							"title": "Trabajo-Ocupación"
+						},
+						"workplace": {
+							"type": "string",
+							"title": "Empresa de trabajo"
+						},
+						"workplace_address": {
+							"type": "string",
+							"title": "Dirección laboral"
+						},
+						"workplace_neighbourhood": {
+							"type": "string",
+							"title": "Barrio laboral"
+						},
+						"workplace_phone": {
+							"type": "string",
+							"title": "Teléfono laboral",
+							"pattern": "\\d{8,9}"
+						}
+					},
+					"required": ["role", "ci"]
+				}
+			]
+		},
+		"question_categories": {
+			"type": "array",
+			"items": [
+				{
+					"type": "object",
+					"properties": {
+						"category": {
+							"type": "string"
+						},
+						"questions": {
+							"type": "array",
+							"items": [
+								{
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string"
+										},
+										"question": {
+											"type": "string"
+										},
+										"answer": {
+											"type": "string"
+										}
+									},
+									"required": ["id", "question", "answer"]
+								}
+							]
+						}
+					},
+					"required": ["category", "questions"]
+				}
+			]
+		},
+		"administrative_info": {
+			"type": "object",
+			"properties": {
+				"registration_commitment_url": {
+					"type": "string"
+				},
+				"scholarship_type": {
+					"type": "string"
+				},
+				"agreement_type": {
+					"type": "string"
+				},
+				"comments": {
+					"type": "string"
+				},
+				"payment_methods": {
+					"type": "array",
+					"items": [
+						{
+							"type": "object",
+							"properties": {
+								"method": {
+									"oneOf": [
+										{
+											"const": "contado",
+											"title": "Contado"
+										},
+										{
+											"const": "financiacion",
+											"title": "Financiación"
+										},
+										{
+											"const": "licitacion",
+											"title": "Licitación"
+										}
+									],
+									"title": "Método de pago",
+									"type": "string"
+								},
+								"year": {
+									"title": "Año",
+									"type": "integer",
+									"pattern": "\\d{4}"
+								},
+								"yearly_payment_url": {
+									"title": "Pago anualidad firmado",
+									"type": "string"
+								}
+							},
+							"required": ["method", "year"]
+						}
+					]
+				},
+				"discounts": {
+					"type": "array",
+					"items": [
+						{
+							"type": "object",
+							"properties": {
+								"starting_date": {
+									"title": "Comienzo",
+									"type": "string"
+								},
+								"ending_date": {
+									"title": "Fin",
+									"type": "string"
+								},
+								"explanation": {
+									"oneOf": [
+										{
+											"const": "hermano",
+											"title": "Hermano"
+										},
+										{
+											"const": "resolución",
+											"title": "Resolución"
+										}
+									],
+									"title": "Explicación",
+									"type": "string",
+									"default": "Sibling"
+								},
+								"percentage": {
+									"title": "%",
+									"type": "integer"
+								},
+								"type": {
+									"oneOf": [
+										{
+											"const": "dirección",
+											"title": "Dirección"
+										},
+										{
+											"const": "asistente social",
+											"title": "Asistente Social"
+										}
+									],
+									"title": "Tipo",
+									"type": "string",
+									"default": "Direction"
+								},
+								"report_url": {
+									"title": "Reporte",
+									"type": "string"
+								}
+							},
+							"required": ["starting_date", "ending_date", "explanation", "percentage", "type", "report_url"]
+						}
+					]
+				}
+			},
+			"required": ["registration_commitment_url", "scholarship_type", "agreement_type", "comments", "payment_methods", "discounts"]
+		}
+	},
+	"required": [
+		"ci",
+		"name",
+		"surname",
+		"schedule_start",
+		"schedule_end",
+		"tuition",
+		"reference_number",
+		"birthplace",
+		"birthdate",
+		"nationality",
+		"first_language",
+		"office",
+		"status",
+		"address",
+		"neighborhood",
+		"medical_assurance",
+		"emergency",
+		"phone_number",
+		"vaccine_expiration",
+		"inscription_date",
+		"starting_date",
+		"contact",
+		"contact_phone",
+		"email",
+		"family",
+		"question_categories",
+		"administrative_info"
+	]
+}

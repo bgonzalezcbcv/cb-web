@@ -1,13 +1,43 @@
 #root {
-  height: auto;
-  min-height: 100vh;
+	height: auto;
+	min-height: 100vh;
 }
 
-.App {
-  display: grid;
-  place-items: center;
-  text-align: center;
 
-  height: auto;
-    min-height: 100vh;
+.App {
+	display: flex;
+	flex: 1;
+	text-align: center;
+	min-height: 100vh;
+}
+
+.sidebar {
+	display: flex;
+	flex: 1;
+	margin-right: 50px;
+}
+
+.navbar {
+	display: flex;
+	flex-direction: row;
+	width: "100%";
+}
+
+.content {
+	display: flex;
+	flex: 1;
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	flex: 1;
+}
+
+.page-container {
+	display: flex;
+	flex: 1;
+	justify-content: center;
+	align-items: center;
 }

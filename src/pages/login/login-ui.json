@@ -1,0 +1,16 @@
+{
+	"type": "VerticalLayout",
+	"elements": [
+		{
+			"type": "Control",
+			"scope": "#/properties/email"
+		},
+		{
+			"type": "Control",
+			"scope": "#/properties/password",
+			"options": {
+				"format": "password"
+			}
+		}
+	]
+}

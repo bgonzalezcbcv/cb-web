@@ -1,0 +1,95 @@
+{
+  "type": "object",
+  "properties": {
+    "inscription_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "starting_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "registration_commitment_url": {
+      "type": "string"
+    },
+    "scholarship_type": {
+      "type": "string"
+    },
+    "agreement_type": {
+      "type": "object"
+    },
+    "comments": {
+      "type": "string"
+    },
+    "payment_methods": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "method": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "method"
+          ]
+        }
+      ]
+    },
+    "discounts": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "percentage": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "starting_date": {
+              "type": "string",
+              "format": "date"
+            },
+            "ending_date": {
+              "type": "string",
+              "format": "date"
+            },
+            "type": {
+              "type": "string"
+            },
+            "explanation": {
+              "type": "string"
+            },
+            "report_url": {
+              "type": "string"
+            },
+            "administrative_report_url": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "percentage",
+            "starting_date",
+            "ending_date",
+            "type",
+            "explanation",
+            "report_url",
+            "administrative_report_url"
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "inscription_date",
+    "starting_date",
+    "registration_commitment_url",
+    "scholarship_type",
+    "agreement_type",
+    "comments",
+    "payment_methods",
+    "discounts"
+  ]
+}

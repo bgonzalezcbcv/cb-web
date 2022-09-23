@@ -1,0 +1,26 @@
+.sidebar-container {
+	display: flex;
+	flex-shrink: 0;
+	width: 240px;
+}
+.section-item {
+	text-align: center;
+	background-color: rgb(247,225, 216);
+}
+
+.section-container {
+	margin-top: 0px !important;
+	margin-bottom: 0px !important;
+}
+
+.section-title {
+	text-align: center;
+	justify-content: center;
+	font-size: large;
+	//border-bottom: 2px solid rgb(117, 117, 117);
+}
+
+.logo {
+	padding: 40px 20px 30px 20px;
+	//filter: invert(85%) sepia(12%) saturate(2800%) hue-rotate(310deg) brightness(100%) contrast(96%);
+}

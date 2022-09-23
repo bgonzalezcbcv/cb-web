@@ -1,13 +1,12 @@
 import React from "react";
-import { Box } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { VisualComponent } from "../../../../core/interfaces";
-import { DataStore } from "../../../../core/DataStore";
 import { observer } from "mobx-react-lite";
 
-interface ShowTeachersProps extends VisualComponent {}
+import { VisualComponent } from "../../../../core/interfaces";
+import { DataStore } from "../../../../core/DataStore";
+import { Box } from "@mui/material";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
-function ShowTeachers(props: ShowTeachersProps) {
+function ShowTeachers(props: VisualComponent): React.ReactElement {
 	const { width, height } = props;
 
 	const dataStore = DataStore.getInstance();
@@ -38,17 +37,6 @@ function ShowTeachers(props: ShowTeachersProps) {
 			width: 150,
 			editable: false,
 		},
-	];
-
-	const rows = [
-		{ id: 1, ci: "5.168.111-7", lastName: "Snow", firstName: "Jon" },
-		{
-			id: 2,
-			ci: "5.222.111-7",
-			lastName: "Lannister",
-			firstName: "Cersei",
-		},
-		{ id: 3, ci: "5.333.111-7", lastName: "Lannister", firstName: "Jaime" },
 	];
 
 	return (

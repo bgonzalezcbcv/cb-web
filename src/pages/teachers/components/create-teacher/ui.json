@@ -1,5 +1,26 @@
 {
-    "ci": {
-        "ui:autofocus": true
-    }
+	"type": "VerticalLayout",
+	"elements": [
+		{
+			"type": "Control",
+			"scope": "#/properties/ci"
+		},
+		{
+			"type": "HorizontalLayout",
+			"elements": [
+				{
+					"type": "Control",
+					"scope": "#/properties/firstName"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/lastName"
+				}
+			]
+		},
+		{
+			"type": "Control",
+			"scope": "#/properties/subjects"
+		}
+	]
 }
