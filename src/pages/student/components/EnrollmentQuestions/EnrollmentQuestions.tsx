@@ -2,8 +2,10 @@ import _ from "lodash";
 import React, { useEffect, useState } from "react";
 
 import { Question as QuestionModel, Student } from "../../../../core/Models";
-import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Grid, List, ListItem, TextField, Typography } from "@mui/material";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Accordion, AccordionDetails, AccordionSummary, Button, Container, Divider, Grid, List, ListItem, TextField, Typography } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
+import ExpandLessRoundedIcon from "@mui/icons-material/ExpandLessRounded";
 import useDebounce from "../../../../hooks/useDebounce";
 
 export interface EnrollmentQuestionsProps {
@@ -28,7 +30,7 @@ function Question(props: {
 	}, [debouncedAnswer]);
 
 	return (
-		<Grid item sm={12} lg={6} xl={4} key={"question" + question.id + questionIndex}>
+		<Grid item sm={12} lg={12} xl={4} key={"question" + question.id + questionIndex}>
 			<ListItem>
 				<Accordion
 					sx={{
@@ -37,16 +39,15 @@ function Question(props: {
 						display: "flex",
 						flex: 1,
 						height: "100%",
+						width: "100%",
 						alignContent: "center",
-				}}>
-					<AccordionSummary
-						expandIcon={<ExpandMoreIcon />}
-					>
+					}}>
+					<AccordionSummary expandIcon={<ExpandMoreIcon />}>
 						<Typography style={{ paddingRight: 20 }} gutterBottom>
 							{question.question}
 						</Typography>
 					</AccordionSummary>
-					
+
 					<AccordionDetails>
 						<TextField
 							multiline
@@ -70,6 +71,7 @@ function Question(props: {
 export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): React.ReactElement {
 	const { student, editable, onChange } = props;
 	const { question_categories } = student;
+	const [expandMode, setExpandMode] = React.useState(true);
 
 	const onChangeHandler = (changedQuestionCategoryIndex: number, changedQuestionIndex: number, newAnswerValue: string): void => {
 		const newStudentData: Student = _.cloneDeep(student);
@@ -83,9 +85,17 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 			{question_categories.map((category, categoryIndex): React.ReactElement => {
 				return (
 					<div key={"category" + categoryIndex}>
-						<Divider textAlign="left">
+						{/* <CardContent> */}
+						<Divider textAlign="left" variant="middle" sx={{ paddingTop: "20px" }}>
 							<Typography> {category.category} </Typography>
 						</Divider>
+
+						<Button
+							variant="text"
+							startIcon={expandMode ? <ExpandMoreRoundedIcon /> : <ExpandLessRoundedIcon />}
+							onClick={() => setExpandMode(!expandMode)}>
+							{expandMode ? "Expandir" : "Colapsar"}
+						</Button>
 
 						<Grid container spacing={2} sx={{ justifyContent: "space-between" }}>
 							{category.questions.map(
@@ -100,6 +110,7 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 								)
 							)}
 						</Grid>
+						{/* </CardContent> */}
 					</div>
 				);
 			})}
