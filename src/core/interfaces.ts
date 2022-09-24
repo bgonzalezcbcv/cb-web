@@ -57,3 +57,10 @@ export interface SidebarSection {
 	sectionTitle: string;
 	items: SidebarItem[];
 }
+
+export enum CreationState {
+	idle = "idle",
+	inProcess = "inProcess",
+	success = "success",
+	fail = "fail",
+}

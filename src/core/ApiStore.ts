@@ -1,6 +1,6 @@
 import axios, { Axios } from "axios";
 
-import { Student } from "./Models";
+import {Student, User} from "./Models";
 import { User, UserRole } from "./interfaces";
 
 import { DataStore } from "./DataStore";
@@ -98,7 +98,24 @@ export async function createStudent(studentToCreate: Student): Promise<boolean> 
 	}
 }
 
-// // eslint-disable-next-line
-// export async function login(user: string, pass: string): Promise<{ success: boolean; data?: User; err: string }> {
-// 	return { success: true, data: { email: "pepe@gmail.com", name: "Pepe Bolsilludo", role: UserRole.Administrador, token: "Bolsilludo" }, err: "" };
-// }
+export async function createUser(userToCreate: User): Promise<boolean> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "post",
+			url: "/api/users",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			data: JSON.stringify({
+				user: userToCreate,
+			}),
+		};
+
+		const response = await axios(config);
+
+		return response.status === 201;
+	} catch (e) {
+		return false;
+	}
+}

@@ -34,7 +34,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					items: [
 						{
 							title: "Crear",
-							navigationRoute: "/teachers",
+							navigationRoute: "/createuser",
 						},
 						{
 							title: "Ver todos",

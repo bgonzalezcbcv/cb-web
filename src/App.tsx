@@ -5,6 +5,7 @@ import _ from "lodash";
 // Secondly we import our types, core elements, pages, components and lastly images.
 import { DataStore } from "./core/DataStore";
 import { getSidebarSectionsByUser } from "./core/userRoleHelper";
+import CreateUser from "./pages/user/CreateUser";
 import Student from "./pages/student/Student";
 import Login from "./pages/login/Login";
 import Navbar from "./components/Navbar/Navbar";
@@ -38,6 +39,8 @@ function App(): React.ReactElement {
 										{loggedUser ? (
 											<>
 												<Route path="/student" element={<Student mode={"CREATE"} />} />
+												<Route path="/login" element={<Login />} />
+												<Route path="/createuser" element={<CreateUser />} />
 												<Route path="*" element={<Navigate to="/student" />} />
 											</>
 										) : (
