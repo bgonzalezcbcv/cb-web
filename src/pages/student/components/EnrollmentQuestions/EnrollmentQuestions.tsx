@@ -2,7 +2,8 @@ import _ from "lodash";
 import React, { useEffect, useState } from "react";
 
 import { Question as QuestionModel, Student } from "../../../../core/Models";
-import { Box, Divider, Grid, List, ListItem, TextField, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Grid, List, ListItem, TextField, Typography } from "@mui/material";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import useDebounce from "../../../../hooks/useDebounce";
 
 export interface EnrollmentQuestionsProps {
@@ -27,9 +28,9 @@ function Question(props: {
 	}, [debouncedAnswer]);
 
 	return (
-		<Grid item sm={12} lg={6} xl={4} key={"question" + question.id + questionIndex} sx={{ width: "100%" }}>
-			<ListItem sx={{ flex: 1, height: "100%" }}>
-				<Box
+		<Grid item sm={12} lg={6} xl={4} key={"question" + question.id + questionIndex}>
+			<ListItem>
+				<Accordion
 					sx={{
 						flexDirection: "column",
 						justifyContent: "space-between",
@@ -37,23 +38,30 @@ function Question(props: {
 						flex: 1,
 						height: "100%",
 						alignContent: "center",
-					}}>
-					<Typography component={"span"} variant="body1" style={{ paddingRight: 20 }} gutterBottom>
-						{question.question}
-					</Typography>
-
-					<TextField
-						multiline
-						minRows={4}
-						disabled={!editable}
-						maxRows={4}
-						fullWidth
-						value={answer}
-						onChange={(event): void => {
-							setAnswer(event.target.value);
-						}}
-					/>
-				</Box>
+				}}>
+					<AccordionSummary
+						expandIcon={<ExpandMoreIcon />}
+					>
+						<Typography style={{ paddingRight: 20 }} gutterBottom>
+							{question.question}
+						</Typography>
+					</AccordionSummary>
+					
+					<AccordionDetails>
+						<TextField
+							multiline
+							minRows={4}
+							disabled={!editable}
+							maxRows={4}
+							fullWidth
+							value={answer}
+							variant="standard"
+							onChange={(event): void => {
+								setAnswer(event.target.value);
+							}}
+						/>
+					</AccordionDetails>
+				</Accordion>
 			</ListItem>
 		</Grid>
 	);
@@ -75,9 +83,9 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 			{question_categories.map((category, categoryIndex): React.ReactElement => {
 				return (
 					<div key={"category" + categoryIndex}>
-						<Typography component={"span"} variant="h4" gutterBottom>
-							{category.category}
-						</Typography>
+						<Divider textAlign="left">
+							<Typography> {category.category} </Typography>
+						</Divider>
 
 						<Grid container spacing={2} sx={{ justifyContent: "space-between" }}>
 							{category.questions.map(
@@ -92,8 +100,6 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 								)
 							)}
 						</Grid>
-
-						{categoryIndex < question_categories.length - 1 && <Divider />}
 					</div>
 				);
 			})}
