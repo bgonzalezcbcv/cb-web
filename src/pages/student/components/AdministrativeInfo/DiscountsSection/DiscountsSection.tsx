@@ -52,6 +52,9 @@ export default function DiscountsSection(props: VisualComponent & Administrative
 	}, []);
 
 	const translator = (id: string, defaultMessage: string | undefined): string => {
+		if (id.includes("percentage") && id.includes("error") && discountData.percentage) {
+			return "El valor debe estar entre 0 y 100";
+		}
 		if (id.includes("error")) return "Este campo es requerido";
 		return defaultMessage ?? "";
 	};
