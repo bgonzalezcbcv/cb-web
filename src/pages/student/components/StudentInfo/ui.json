@@ -1,103 +1,108 @@
 {
-  "type":"VerticalLayout",
-  "elements":[
-    {
-      "type":"HorizontalLayout",
-      "elements":[
-        {
-          "type":"Control",
-          "scope":"#/properties/name"
-        },
-        {
-          "type":"Control",
-          "scope":"#/properties/surname"
-        }
-      ]
-    },
-    {
-      "type":"HorizontalLayout",
-      "elements":[
-        {
-          "type":"Control",
-          "scope":"#/properties/ci"
-        },
-        {
-          "type":"Control",
-          "scope":"#/properties/status"
-        },
-        {
-          "type":"Control",
-          "scope":"#/properties/tuition"
-        }
-      ]
-    },
-    {
-      "type":"HorizontalLayout",
-      "elements":[
-        {
-          "type":"Control",
-          "scope":"#/properties/group"
-        },
-        {
-          "type":"Control",
-          "scope":"#/properties/subgroup"
-        },
-        {
-          "type":"Control",
-          "scope":"#/properties/reference_number"
-        }
-      ]
-    },
-    {
-      "type":"HorizontalLayout",
-      "elements":[
-        {
-          "type":"Control",
-          "scope":"#/properties/birthplace"
-        },
-        {
-          "type":"Control",
-          "scope":"#/properties/birthdate"
-        },
-        {
-          "type":"Control",
-          "scope":"#/properties/nationality"
-        }
-      ]
-    },
-    {
-      "type":"HorizontalLayout",
-      "elements":[
-        {
-          "type":"Control",
-          "scope":"#/properties/first_language"
-        },
-        {
-          "type":"Control",
-          "scope":"#/properties/neighborhood"
-        },
-        {
-          "type":"Control",
-          "scope":"#/properties/address"
-        }
-      ]
-    },
-    {
-      "type":"HorizontalLayout",
-      "elements":[
-        {
-          "type":"Control",
-          "scope":"#/properties/medical_assurance"
-        },
-        {
-          "type":"Control",
-          "scope":"#/properties/emergency"
-        },
-        {
-          "type":"Control",
-          "scope":"#/properties/vaccine_expiration"
-        }
-      ]
-    }
-  ]
+	"type": "VerticalLayout",
+	"elements": [
+		{
+			"type": "HorizontalLayout",
+			"elements": [
+				{
+					"type": "Control",
+					"scope": "#/properties/name"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/surname"
+				}
+			]
+		},
+		{
+			"type": "HorizontalLayout",
+			"elements": [
+				{
+					"type": "Control",
+					"scope": "#/properties/ci"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/status"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/tuition"
+				}
+			]
+		},
+		{
+			"type": "HorizontalLayout",
+			"elements": [
+				{
+					"type": "Control",
+					"scope": "#/properties/group"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/subgroup"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/reference_number"
+				}
+			]
+		},
+		{
+			"type": "HorizontalLayout",
+			"elements": [
+				{
+					"type": "Control",
+					"scope": "#/properties/birthplace"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/birthdate",
+					"options": {
+						"format": "date",
+						"dateFormat": "DD/MM/YYYY",
+						"dateSaveFormat": "DD/MM/YYYY"
+					}
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/nationality"
+				}
+			]
+		},
+		{
+			"type": "HorizontalLayout",
+			"elements": [
+				{
+					"type": "Control",
+					"scope": "#/properties/first_language"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/neighborhood"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/address"
+				}
+			]
+		},
+		{
+			"type": "HorizontalLayout",
+			"elements": [
+				{
+					"type": "Control",
+					"scope": "#/properties/medical_assurance"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/emergency"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/vaccine_expiration"
+				}
+			]
+		}
+	]
 }
