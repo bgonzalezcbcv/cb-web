@@ -1,7 +1,4 @@
-.loginBody {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+body {
 	background-image: linear-gradient(135deg, #042551, #093a6c, #3b6090, #7aac9d, #f7e1d8, #f9a276, #f88645);
 	background-size: 500%;
 	animation: fanimado 10s infinite;
@@ -30,22 +27,20 @@
 }
 
 .loginButton {
+	color: white !important;
 	background: linear-gradient(to right, rgb(255, 195, 113), rgb(255, 95, 109));
 	transition: all 0.3s cubic-bezier(0.47, 1.64, 0.41, 0.8) 0s !important;
-
 	margin-top: 20% !important;
 	margin-bottom: 20% !important;
-
 	text-shadow: 1px 1px 1px black !important;
 	font-weight: bold !important;
-	color: white !important;
 }
 
 .loginButton:hover {
 	transform: scale(1.1);
 }
 
-.loginLogo {
+.logo {
 	color: white !important;
 	width: 70px;
 	height: 70px;
