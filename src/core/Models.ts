@@ -31,7 +31,6 @@ export interface FamilyMember {
 }
 
 export enum ScholarshipType {
-	None = "ninguna",
 	Bidding = "licitación",
 	Subsidized = "bonificada",
 	Agreement = "convenio",

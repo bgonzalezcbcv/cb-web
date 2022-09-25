@@ -100,7 +100,12 @@
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/vaccine_expiration"
+					"scope": "#/properties/vaccine_expiration",
+					"options": {
+						"format": "date",
+						"dateFormat": "DD/MM/YYYY",
+						"dateSaveFormat": "DD/MM/YYYY"
+					}
 				}
 			]
 		}

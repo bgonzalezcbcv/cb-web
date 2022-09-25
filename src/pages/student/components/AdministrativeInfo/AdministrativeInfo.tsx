@@ -4,7 +4,7 @@ import { JsonForms } from "@jsonforms/react";
 import { JsonSchema7 } from "@jsonforms/core";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
 import { createAjv } from "@jsonforms/core";
-import schema from "./schema.json";
+import schema from "../../schema.json";
 import uiSchema from "./ui.json";
 import { DataStore } from "../../../../core/DataStore";
 import * as Models from "../../../../core/Models";
@@ -46,30 +46,37 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
 					cells={materialCells}
 					onChange={({ data }): void => {
 						onChange(data);
+						console.log(Models.ScholarshipType.Bidding.valueOf());
+						console.log(data);
+						console.log(student.administrative_info.scholarship_type);
 					}}
 					readonly={!editable}
 					ajv={handleDefaultsAjv}
 				/>
 
-				<FormControl variant="standard" sx={{ width: "100%" }}>
-					<InputLabel id="agreement-type-label">Convenio</InputLabel>
+				{student.administrative_info.scholarship_type == Models.ScholarshipType.Agreement ||
+				student.administrative_info.scholarship_type == Models.ScholarshipType.Bidding.valueOf() ? (
+					<FormControl variant="standard" sx={{ width: "100%" }}>
+						<InputLabel id="agreement-type-label">Convenio</InputLabel>
 
-					<Select
-						labelId="agreement-type"
-						id="agreement-type"
-						label="Convenio"
-						value={agreementType}
-						disabled={!editable} onChange={(event) => setAgreementType(event.target.value)}>
-						{dataStore.agreementTypes &&
-							dataStore.agreementTypes?.map((value, index) => {
-								return (
-									<MenuItem key={index} value={value}>
-										{value}
-									</MenuItem>
-								);
-							})}
-					</Select>
-				</FormControl>
+						<Select
+							labelId="agreement-type"
+							id="agreement-type"
+							label="Convenio"
+							value={agreementType}
+							disabled={!editable}
+							onChange={(event) => setAgreementType(event.target.value)}>
+							{dataStore.agreementTypes &&
+								dataStore.agreementTypes?.map((value, index) => {
+									return (
+										<MenuItem key={index} value={value}>
+											{value}
+										</MenuItem>
+									);
+								})}
+						</Select>
+					</FormControl>
+				) : null}
 
 				{editable ? (
 					<div className="file-uploader-container">

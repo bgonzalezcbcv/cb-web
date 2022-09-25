@@ -7,7 +7,7 @@
 		"ci": {
 			"type": "string",
 			"title": "CI",
-			"pattern": "\\d{8}"
+			"pattern": "^((\\d+)|([a-zA-Z]+))+$"
 		},
 		"name": {
 			"type": "string",
@@ -157,8 +157,7 @@
 						"ci": {
 							"type": "string",
 							"title": "Cedula de identidad",
-							"pattern": "\\d{8}",
-							"minimum": 1
+							"pattern": "^((\\d+)|([a-zA-Z]+))+$"
 						},
 						"marital_status": {
 							"type": "string",
@@ -283,8 +282,38 @@
 				"registration_commitment_url": {
 					"type": "string"
 				},
+				"enrollment_date": {
+					"type": "string",
+					"format": "date",
+					"title": "Fecha de inscripción"
+				},
+				"starting_date": {
+					"type": "string",
+					"format": "date",
+					"title": "Fecha de comienzo"
+				},
 				"scholarship_type": {
-					"type": "string"
+					"type": "string",
+					"oneOf": [
+						{
+							"const": "licitación",
+							"title": "Licitación"
+						},
+						{
+							"const": "bonificada",
+							"title": "Bonificada"
+						},
+						{
+							"const": "convenio",
+							"title": "Convenio"
+						},
+						{
+							"const": "especial",
+							"title": "Especial"
+						}
+					],
+					"title": "Tipo de escolaridad",
+					"default": "none"
 				},
 				"agreement_type": {
 					"type": "string"
@@ -383,13 +412,13 @@
 									"type": "string"
 								},
 								"description": {
-								  "title": "Descripción",
-								  "type": "string"
+									"title": "Descripción",
+									"type": "string"
 								},
-							  "resolution_url": {
-								"title": "Resolución",
-								"type": "string"
-							  }
+								"resolution_url": {
+									"title": "Resolución",
+									"type": "string"
+								}
 							},
 							"required": ["starting_date", "ending_date", "explanation", "percentage", "type", "report_url"]
 						}

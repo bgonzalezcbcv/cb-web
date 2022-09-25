@@ -16,19 +16,19 @@
 			"type": "string",
 			"oneOf": [
 				{
-					"const": "bidding",
+					"const": "licitación",
 					"title": "Licitación"
 				},
 				{
-					"const": "subsidized",
+					"const": "bonificada",
 					"title": "Bonificada"
 				},
 				{
-					"const": "agreement",
+					"const": "convenio",
 					"title": "Convenio"
 				},
 				{
-					"const": "special",
+					"const": "especial",
 					"title": "Especial"
 				}
 			],

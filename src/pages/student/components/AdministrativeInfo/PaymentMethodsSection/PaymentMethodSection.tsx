@@ -34,6 +34,7 @@ export default function PaymentMethodSection(props: VisualComponent & PaymentMet
 
 	const handlePaymentMethodModalClose = useCallback(() => {
 		setPaymentMethodModalOpen(false);
+		setPaymentMethodData({} as Models.PaymentMethod);
 	}, []);
 
 	//TODO: Adjust this when file handling is defined

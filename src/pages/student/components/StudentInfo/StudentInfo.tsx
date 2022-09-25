@@ -20,7 +20,7 @@ export default function StudentInfo(props: StudentInfoProps): React.ReactElement
 	const { editable, student, onChange } = props;
 
 	const translator = (id: string, defaultMessage: string | undefined): string => {
-		if (id.includes("ci.error")) return "Se deben ingresar solo los números, sin puntos ni guiones y no puede quedar vacía";
+		if (id.includes("ci.error")) return "Ingresar solo números o letras, sin puntos ni guiones y no puede quedar vacía";
 		return defaultMessage ?? "";
 	};
 
