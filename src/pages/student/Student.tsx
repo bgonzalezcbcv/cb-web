@@ -91,11 +91,11 @@ export default function Student(props: StudentProps): React.ReactElement {
 							"&.Mui-disabled": { opacity: 0.3 },
 						},
 					}}>
-					<Tab label="Informacion basica" />
-					<Tab label="Informacion familiar" />
-					<Tab label="Informacion complementaria" />
-					<Tab label="Informacion Administrativa" />
-					<Tab label="Trayectoria" />
+					<Tab label="Informacion basica" data-cy="basicInfoTab" />
+					<Tab label="Informacion familiar" data-cy="familyInfoTab" />
+					<Tab label="Informacion complementaria" data-cy="complementaryInfoTab" />
+					<Tab label="Informacion Administrativa" data-cy="administrativeInfoTab" />
+					<Tab label="Trayectoria" data-cy="trajectoryTab" />
 				</Tabs>
 			</Box>
 

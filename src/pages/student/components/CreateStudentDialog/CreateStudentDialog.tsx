@@ -50,7 +50,9 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 
 						ajv.errors && setIsOpen(ajv.errors.length > 0);
 					}}>
-					<Button variant="outlined">Crear Alumno</Button>
+					<Button variant="outlined" data-cy="createStudentButton">
+						Crear Alumno
+					</Button>
 				</Box>
 			</div>
 
@@ -63,7 +65,9 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 
 				<DialogContent>
 					{studentCreationState === "fail" ? (
-						<Alert severity="error">No se pudo crear el alumno. Inténtelo de nuevo o corrija los errores.</Alert>
+						<Alert severity="error" data-cy="errorAlertTitle">
+							No se pudo crear el alumno. Inténtelo de nuevo o corrija los errores.
+						</Alert>
 					) : (
 						<Typography component={"span"}>¿Está seguro de querer crear este alumno?</Typography>
 					)}
@@ -74,14 +78,18 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 						Cancelar
 					</LoadingButton>
 
-					<LoadingButton variant="outlined" onClick={handleStudentCreation} loading={studentCreationState === "inProcess"}>
+					<LoadingButton
+						variant="outlined"
+						onClick={handleStudentCreation}
+						loading={studentCreationState === "inProcess"}
+						data-cy="confirmCreateStudent">
 						{studentCreationState === "fail" ? "Reintentar" : "Aceptar"}
 					</LoadingButton>
 				</DialogActions>
 			</Dialog>
 
 			<Dialog open={studentCreationState === "success"} onClose={dismiss}>
-				<DialogTitle>¡Estudiante creado correctamente!</DialogTitle>
+				<DialogTitle data-cy="successAlertTitle">¡Estudiante creado correctamente!</DialogTitle>
 
 				<DialogActions>
 					<Button variant="outlined" onClick={dismiss}>
