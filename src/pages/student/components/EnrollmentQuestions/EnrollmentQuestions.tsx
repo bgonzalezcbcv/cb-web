@@ -1,28 +1,31 @@
 import _ from "lodash";
 import React, { useEffect, useState } from "react";
 
-import { Question as QuestionModel, Student } from "../../../../core/Models";
 import {
 	Accordion,
 	AccordionDetails,
 	AccordionSummary,
 	Box,
 	Button,
-	Container,
 	Divider,
 	FormControl,
 	Grid,
+	IconButton,
 	InputLabel,
 	List,
 	ListItem,
 	MenuItem,
 	Select,
+	SelectChangeEvent,
 	TextField,
 	Typography,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import ExpandLessRoundedIcon from "@mui/icons-material/ExpandLessRounded";
+import ClearIcon from "@mui/icons-material/Clear";
+
+import { Question as QuestionModel, Student } from "../../../../core/Models";
 import useDebounce from "../../../../hooks/useDebounce";
 
 export interface EnrollmentQuestionsProps {
@@ -53,7 +56,7 @@ function Question(props: {
 	}, [debouncedAnswer]);
 
 	return (
-		<Grid item sm={12} lg={12} xl={4} key={"question" + question.id + questionIndex}>
+		<Box key={"question" + question.id + questionIndex}>
 			<ListItem>
 				<Accordion
 					expanded={expandMode}
@@ -89,7 +92,7 @@ function Question(props: {
 					</AccordionDetails>
 				</Accordion>
 			</ListItem>
-		</Grid>
+		</Box>
 	);
 }
 
@@ -107,18 +110,16 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 		onChange(newStudentData);
 	};
 
-	console.log(question_categories.map((q) => q.category));
+	const handleCategoryChange = (event: SelectChangeEvent): void => {
+		setCategoryFilter(event.target.value as string);
+	};
 
 	return (
 		<Box display="flex" flexDirection="column" width="100%" height="100%">
 			<FormControl variant="standard" sx={{ m: 1, width: "35%" }}>
 				<InputLabel id="category-filter">Filtrar Categoría</InputLabel>
-				<Select
-					labelId="category-filter"
-					id="select-category-filter"
-					value={categoryFilter}
-					// onChange={setCategoryFilter()}
-					label="Filtrar Categoría">
+				<Select labelId="category-filter" id="select-category-filter" value={categoryFilter} onChange={handleCategoryChange} label="Filtrar Categoría">
+					<MenuItem value={250}>kjasdlfkajsdf</MenuItem>
 					{question_categories.map((category, categoryIndex) => {
 						return (
 							<MenuItem key={"category-filter-" + categoryIndex} value={categoryIndex}>
@@ -129,23 +130,24 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 				</Select>
 			</FormControl>
 			<List>
-				{question_categories.map((category, categoryIndex): React.ReactElement => {
-					return (
-						<Box display="flex" flexDirection="column" width="100%" height="100%" key={"category" + categoryIndex}>
-							<Divider textAlign="left" sx={{ paddingTop: "20px" }}>
-								<Typography> {category.category} </Typography>
-							</Divider>
+				{question_categories
+					.filter((q) => categoryFilter == "" || q.category == categoryFilter)
+					.map((category, categoryIndex): React.ReactElement => {
+						return (
+							<Box display="flex" flexDirection="column" width="100%" height="100%" key={"category" + categoryIndex}>
+								<Divider textAlign="left" sx={{ paddingTop: "20px" }}>
+									<Typography> {category.category} </Typography>
+								</Divider>
 
-							<Box display="flex" flexDirection="row" justifyContent="flex-end">
-								<Button
-									variant="text"
-									startIcon={expandMode ? <ExpandLessRoundedIcon /> : <ExpandMoreRoundedIcon />}
-									onClick={() => setExpandMode(!expandMode)}>
-									{expandMode ? "Colapsar" : "Expandir"}
-								</Button>
-							</Box>
+								<Box display="flex" flexDirection="row" justifyContent="flex-end">
+									<Button
+										variant="text"
+										startIcon={expandMode ? <ExpandLessRoundedIcon /> : <ExpandMoreRoundedIcon />}
+										onClick={() => setExpandMode(!expandMode)}>
+										{expandMode ? "Colapsar" : "Expandir"}
+									</Button>
+								</Box>
 
-							<Grid container spacing={2} sx={{ justifyContent: "space-between" }}>
 								{category.questions.map(
 									(question, questionIndex): React.ReactElement => (
 										<Question
@@ -158,10 +160,9 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 										/>
 									)
 								)}
-							</Grid>
-						</Box>
-					);
-				})}
+							</Box>
+						);
+					})}
 			</List>
 		</Box>
 	);
