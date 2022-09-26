@@ -60,7 +60,6 @@ function Question(props: {
 			<ListItem>
 				<Accordion
 					expanded={expandMode}
-					onClick={() => setExpandMode(!expandMode)}
 					sx={{
 						flexDirection: "column",
 						justifyContent: "space-between",
@@ -70,7 +69,7 @@ function Question(props: {
 						width: "100%",
 						alignContent: "center",
 					}}>
-					<AccordionSummary expandIcon={<ExpandMoreIcon />}>
+					<AccordionSummary expandIcon={<ExpandMoreIcon />} onClick={() => setExpandMode(!expandMode)}>
 						<Typography style={{ paddingRight: 20 }} gutterBottom>
 							{question.question}
 						</Typography>
