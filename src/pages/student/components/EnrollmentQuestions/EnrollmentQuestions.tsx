@@ -78,7 +78,7 @@ function Question(props: {
 					<AccordionDetails>
 						<TextField
 							multiline
-							minRows={4}
+							minRows={1}
 							disabled={!editable}
 							maxRows={4}
 							fullWidth
@@ -114,6 +114,7 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 	};
 
 	return (
+		// display="flex" flexDirection="column" width="100%" height="100%"
 		<Box display="flex" flexDirection="column" width="100%" height="100%">
 			<FormControl variant="standard" sx={{ m: 1, width: "35%" }}>
 				<InputLabel id="category-filter">Filtrar Categoría</InputLabel>
@@ -133,7 +134,7 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 					.filter((q) => categoryFilter == "" || q.category == categoryFilter)
 					.map((category, categoryIndex): React.ReactElement => {
 						return (
-							<Box display="flex" flexDirection="column" width="100%" height="100%" key={"category" + categoryIndex}>
+							<div key={"category" + categoryIndex}>
 								<Divider textAlign="left" sx={{ paddingTop: "20px" }}>
 									<Typography> {category.category} </Typography>
 								</Divider>
@@ -159,7 +160,7 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 										/>
 									)
 								)}
-							</Box>
+							</div>
 						);
 					})}
 			</List>
