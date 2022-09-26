@@ -38,18 +38,12 @@ function Question(props: {
 	question: QuestionModel;
 	questionIndex: number;
 	editable: boolean;
-	expanded: boolean;
 	onChangeQuestion: (debouncedAnswerText: string) => void;
 }): React.ReactElement {
-	const { question, questionIndex, editable, onChangeQuestion, expanded } = props;
+	const { question, questionIndex, editable, onChangeQuestion } = props;
 
 	const [answer, setAnswer] = useState(question.answer);
-	const [expandMode, setExpandMode] = React.useState(expanded);
 	const debouncedAnswer = useDebounce<string>(answer, 50);
-
-	useEffect(() => {
-		setExpandMode(expanded);
-	}, [expanded]);
 
 	useEffect(() => {
 		onChangeQuestion(debouncedAnswer);
@@ -58,38 +52,32 @@ function Question(props: {
 	return (
 		<Box key={"question" + question.id + questionIndex}>
 			<ListItem>
-				<Accordion
-					expanded={expandMode}
+				<Box
 					sx={{
 						flexDirection: "column",
 						justifyContent: "space-between",
 						display: "flex",
 						flex: 1,
 						height: "100%",
-						width: "100%",
 						alignContent: "center",
 					}}>
-					<AccordionSummary expandIcon={<ExpandMoreIcon />} onClick={() => setExpandMode(!expandMode)}>
-						<Typography style={{ paddingRight: 20 }} gutterBottom>
-							{question.question}
-						</Typography>
-					</AccordionSummary>
+					<Typography style={{ paddingRight: 20 }} gutterBottom>
+						{question.question}
+					</Typography>
 
-					<AccordionDetails>
-						<TextField
-							multiline
-							minRows={1}
-							disabled={!editable}
-							maxRows={4}
-							fullWidth
-							value={answer}
-							variant="standard"
-							onChange={(event): void => {
-								setAnswer(event.target.value);
-							}}
-						/>
-					</AccordionDetails>
-				</Accordion>
+					<TextField
+						multiline
+						minRows={1}
+						disabled={!editable}
+						maxRows={4}
+						fullWidth
+						value={answer}
+						variant="standard"
+						onChange={(event): void => {
+							setAnswer(event.target.value);
+						}}
+					/>
+				</Box>
 			</ListItem>
 		</Box>
 	);
@@ -99,7 +87,6 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 	const { student, editable, onChange } = props;
 	const { question_categories } = student;
 
-	const [categoryFilter, setCategoryFilter] = React.useState("");
 	const [expandMode, setExpandMode] = React.useState(true);
 
 	const onChangeHandler = (changedQuestionCategoryIndex: number, changedQuestionIndex: number, newAnswerValue: string): void => {
@@ -109,45 +96,35 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 		onChange(newStudentData);
 	};
 
-	const handleCategoryChange = (event: SelectChangeEvent): void => {
-		setCategoryFilter(event.target.value as string);
-	};
-
 	return (
-		// display="flex" flexDirection="column" width="100%" height="100%"
-		<Box display="flex" flexDirection="column" width="100%" height="100%">
-			<FormControl variant="standard" sx={{ m: 1, width: "35%" }}>
-				<InputLabel id="category-filter">Filtrar Categoría</InputLabel>
-				<Select labelId="category-filter" id="select-category-filter" value={categoryFilter} onChange={handleCategoryChange} label="Filtrar Categoría">
-					<MenuItem value={250}>kjasdlfkajsdf</MenuItem>
-					{question_categories.map((category, categoryIndex) => {
-						return (
-							<MenuItem key={"category-filter-" + categoryIndex} value={categoryIndex}>
+		<List>
+			<Box display="flex" flexDirection="row" justifyContent="flex-end">
+				<Button
+					variant="text"
+					startIcon={expandMode ? <ExpandLessRoundedIcon /> : <ExpandMoreRoundedIcon />}
+					onClick={() => setExpandMode(!expandMode)}>
+					{expandMode ? "Colapsar" : "Expandir"}
+				</Button>
+			</Box>
+			{question_categories.map((category, categoryIndex): React.ReactElement => {
+				return (
+					<div key={"category" + categoryIndex}>
+						<Accordion
+							expanded={expandMode}
+							sx={{
+								flexDirection: "column",
+								justifyContent: "space-between",
+								display: "flex",
+								flex: 1,
+								height: "100%",
+								width: "100%",
+								alignContent: "center",
+							}}>
+							<AccordionSummary expandIcon={<ExpandMoreIcon />} onClick={() => handleOnExpandClick}>
 								<Typography> {category.category} </Typography>
-							</MenuItem>
-						);
-					})}
-				</Select>
-			</FormControl>
-			<List>
-				{question_categories
-					.filter((q) => categoryFilter == "" || q.category == categoryFilter)
-					.map((category, categoryIndex): React.ReactElement => {
-						return (
-							<div key={"category" + categoryIndex}>
-								<Divider textAlign="left" sx={{ paddingTop: "20px" }}>
-									<Typography> {category.category} </Typography>
-								</Divider>
+							</AccordionSummary>
 
-								<Box display="flex" flexDirection="row" justifyContent="flex-end">
-									<Button
-										variant="text"
-										startIcon={expandMode ? <ExpandLessRoundedIcon /> : <ExpandMoreRoundedIcon />}
-										onClick={() => setExpandMode(!expandMode)}>
-										{expandMode ? "Colapsar" : "Expandir"}
-									</Button>
-								</Box>
-
+							<AccordionDetails>
 								{category.questions.map(
 									(question, questionIndex): React.ReactElement => (
 										<Question
@@ -155,15 +132,15 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 											question={question}
 											questionIndex={questionIndex}
 											editable={editable}
-											expanded={expandMode}
 											onChangeQuestion={(newAnswer): void => onChangeHandler(categoryIndex, questionIndex, newAnswer)}
 										/>
 									)
 								)}
-							</div>
-						);
-					})}
-			</List>
-		</Box>
+							</AccordionDetails>
+						</Accordion>
+					</div>
+				);
+			})}
+		</List>
 	);
 }
