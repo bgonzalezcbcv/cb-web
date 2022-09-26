@@ -312,12 +312,10 @@
 				},
 				"enrollment_date": {
 					"type": "string",
-					"format": "date",
 					"title": "Fecha de inscripción"
 				},
 				"starting_date": {
 					"type": "string",
-					"format": "date",
 					"title": "Fecha de comienzo"
 				},
 				"scholarship_type": {

@@ -4,13 +4,13 @@ import { JsonForms } from "@jsonforms/react";
 import { JsonSchema7 } from "@jsonforms/core";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
 import { createAjv } from "@jsonforms/core";
-import schema from "../../schema.json";
-import uiSchema from "./ui.json";
 import { DataStore } from "../../../../core/DataStore";
 import * as Models from "../../../../core/Models";
 import { VisualComponent } from "../../../../core/interfaces";
 import FileUploader from "../../../../components/fileUploader/FileUploader";
 import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import schema from "../../schema.json";
+import uiSchema from "./ui.json";
 
 import DownloadIcon from "@mui/icons-material/Download";
 
