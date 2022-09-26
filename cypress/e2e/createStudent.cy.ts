@@ -1,11 +1,11 @@
 /* eslint-disable max-statements */
 describe("createStudent", () => {
-	const createStudentButtonID = ".MuiBox-root > .MuiButtonBase-root";
-	const confirmCreateStudentButtonID = ".MuiDialogActions-root > :nth-child(2)";
-	const successAlertTextID = ":nth-child(4) > .MuiDialog-container";
-	const errorAlertTextID = ".MuiDialogContent-root";
+	const createStudentButtonID = '[data-cy="createStudentButton"]';
+	const confirmCreateStudentButtonID = '[data-cy="confirmCreateStudent"]';
+	const successAlertTextID = '[data-cy="successAlertTitle"]';
+	const errorAlertTextID = '[data-cy="errorAlertTitle"]';
 	const uploadExcelButtonID = '[data-testid="UploadFileIcon"]';
-	const uploaderDragZoneButtonID = ".MuiCardContent-root";
+	const uploaderDragZoneButtonID = '[data-cy="ExcelUploaderZone"]';
 	const uploaderConfirmButtonID = "#create-student-button";
 
 	beforeEach(() => {
@@ -85,7 +85,7 @@ describe("createStudent", () => {
 	});
 
 	it("updates the family info values correctly from Excel upload", () => {
-		const familyInfoButtonID = ".MuiTabs-flexContainer > :nth-child(2)";
+		const familyInfoButtonID = '[data-cy="familyInfoTab"]';
 		const secondFamilyMemberButtonID = "#family1";
 
 		const roleInputID = "#properties\\/role2-input";
