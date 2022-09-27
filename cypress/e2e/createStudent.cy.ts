@@ -30,7 +30,7 @@ describe("createStudent", () => {
 		cy.get(successAlertTextID).should("include.text", "Estudiante creado correctamente");
 	});
 
-	it("shows error message on creation of preexisting student", () => {
+	it("shows error message on error when creating student", () => {
 		cy.intercept(
 			{
 				method: "POST", // Route all POST requests
