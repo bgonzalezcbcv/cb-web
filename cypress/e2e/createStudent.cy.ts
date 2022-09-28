@@ -62,7 +62,6 @@ describe("createStudent", () => {
 				url: "/api/students", // that have a URL that matches '/students'
 			},
 			(request) => {
-				console.log("body", request);
 				expect(request.body).to.deep.equal(correctRequestBody);
 			}
 		);
@@ -87,7 +86,6 @@ describe("createStudent", () => {
 				url: "/api/students", // that have a URL that matches '/students'
 			},
 			(request) => {
-				console.log("body2", request);
 				expect(request.body).to.deep.equal(correctRequestBody);
 			}
 		);
