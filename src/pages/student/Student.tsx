@@ -73,7 +73,7 @@ export default function Student(props: StudentProps): React.ReactElement {
 						<UploadFileIcon />
 					</Button>
 					{/*{!editMode ? <Button startIcon={<DeleteIcon />}>Deshacer cambios</Button> : ""}*/}
-					<Button startIcon={editMode ? <EditOffIcon /> : <EditIcon />} onClick={(): void => setEditMode(!editMode)}>
+					<Button data-cy="studentEditInfoButton" startIcon={editMode ? <EditOffIcon /> : <EditIcon />} onClick={(): void => setEditMode(!editMode)}>
 						{"Editar"}{" "}
 					</Button>
 					{mode !== "CREATE" ? <Button startIcon={<DeleteIcon />}>Bajar</Button> : ""}

@@ -44,6 +44,58 @@ describe("createStudent", () => {
 		cy.get(errorAlertTextID).should("include.text", "No se pudo crear el alumno. Inténtelo de nuevo o corrija los errores");
 	});
 
+	it("sends correct info to API after Excel upload", () => {
+		cy.get(uploadExcelButtonID).click();
+		cy.get(uploaderDragZoneButtonID).selectFile("./cypress/testFiles/formAnswer.xlsx", {
+			action: "drag-drop",
+		});
+		cy.get(uploaderConfirmButtonID).click();
+
+		let correctRequestBody = {};
+		cy.fixture("correctAPIRequestBodyNoModification").then((json) => {
+			correctRequestBody = json;
+		});
+
+		cy.intercept(
+			{
+				method: "POST", // Route all POST requests
+				url: "/api/students", // that have a URL that matches '/students'
+			},
+			(request) => {
+				console.log("body", request);
+				expect(request.body).to.deep.equal(correctRequestBody);
+			}
+		);
+
+		cy.get(createStudentButtonID).click();
+		cy.get(confirmCreateStudentButtonID).click();
+	});
+
+	it("sends correct info to API after modification", () => {
+		cy.get('[data-cy="studentEditInfoButton"]').click();
+		cy.fillStudentBasicInfo();
+		cy.fillStudentFamilyInfo();
+
+		let correctRequestBody = {};
+		cy.fixture("correctAPIRequestBodyWithModification").then((json) => {
+			correctRequestBody = json;
+		});
+
+		cy.intercept(
+			{
+				method: "POST", // Route all POST requests
+				url: "/api/students", // that have a URL that matches '/students'
+			},
+			(request) => {
+				console.log("body2", request);
+				expect(request.body).to.deep.equal(correctRequestBody);
+			}
+		);
+
+		cy.get(createStudentButtonID).click();
+		cy.get(confirmCreateStudentButtonID).click();
+	});
+
 	it("updates the basic info values correctly from Excel upload", () => {
 		const nameFieldID = "#\\#\\/properties\\/name2-input";
 		const surnameFieldID = "#\\#\\/properties\\/surname2-input";
