@@ -5,7 +5,6 @@ import { observer } from "mobx-react-lite";
 import { JsonForms } from "@jsonforms/react";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
 import { Alert, Button, Card, CardContent, Grid } from "@mui/material";
-//import { VisualComponent } from "../../core/interfaces";
 import { DataStore } from "../../core/DataStore";
 import { useIsMounted } from "../../hooks/useIsMounted";
 
@@ -17,11 +16,9 @@ import { ValidationMode } from "@jsonforms/core";
 // @ts-ignore
 import logo from "../../assets/Vertical.svg";
 
-import "./Login.scss";
+import styles from "./Login.module.scss";
 
 function Login(): JSX.Element {
-	//const { width, height } = props;
-
 	const [data, setData] = useState({});
 	const [errors, setErrors] = useState<unknown[]>([]);
 	const [validationMode, setValidationMode] = useState<ValidationMode>("ValidateAndHide");
@@ -54,11 +51,11 @@ function Login(): JSX.Element {
 	return (
 		<Grid alignContent="center" justifyContent="center">
 			<Grid>
-				<Card className="contenedor">
-					<CardContent className="contenedor">
-						<div className="formHeader">
-							<img className="logo" src={logo} alt="logo" />
-							<h1 className="title">Bienvenido</h1>
+				<Card className={styles.contenedor}>
+					<CardContent className={styles.contenedor}>
+						<div className={styles.formHeader}>
+							<img className={styles.logo} src={logo} alt="logo" />
+							<h1 className={styles.title}>Bienvenido</h1>
 						</div>
 						<JsonForms
 							schema={schema}
@@ -73,7 +70,7 @@ function Login(): JSX.Element {
 							validationMode={validationMode}
 						/>
 
-						<Button className="loginButton" onClick={onSubmit}>
+						<Button className={styles.loginButton} onClick={onSubmit}>
 							Iniciar Sesión
 						</Button>
 
