@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 
@@ -23,20 +23,18 @@ function Login(): JSX.Element {
 	const [loginInfo, setLoginInfo] = useState<{ email: string; password: string }>({ email: "", password: "" });
 	const [errors, setErrors] = useState<unknown[]>([]);
 	const [validationMode, setValidationMode] = useState<ValidationMode>("ValidateAndHide");
-	const [errorAlert, setErrorAlert] = useState<string | undefined>(undefined);
-
-	const [errMsg, setErrMsg] = useState("");
+	const [errMsg, setErrMsg] = useState<string | undefined>(undefined);
 
 	const navigate = useNavigate();
 
-	const handleSubmit = async () => {
+	const handleSubmit = async (): Promise<void> => {
 		setValidationMode("ValidateAndShow");
 		if (errors.length > 0) return;
 
 		const { success, data, err } = await login(loginInfo.email, loginInfo.password);
 
-		if (success) {
-			const { email, token, displayName, role } = data!;
+		if (success && data) {
+			const { email, token, displayName, role } = data;
 
 			dataStore.logIn(email, token, displayName, role);
 
@@ -73,9 +71,9 @@ function Login(): JSX.Element {
 									Iniciar Sesión
 								</Button>
 
-								{errorAlert ? (
-									<Alert severity="error" onClose={(): void => setErrorAlert(undefined)}>
-										{errorAlert}
+								{errMsg ? (
+									<Alert severity="error" variant="outlined" onClose={(): void => setErrMsg(undefined)}>
+										{errMsg}
 									</Alert>
 								) : null}
 							</CardContent>

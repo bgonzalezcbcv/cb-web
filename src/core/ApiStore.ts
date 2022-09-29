@@ -66,6 +66,7 @@ export async function createStudent(studentToCreate: Student): Promise<boolean> 
 // 	}
 // }
 
+// eslint-disable-next-line
 export async function login(user: string, pass: string): Promise<{ success: boolean; data?: User; err: string }> {
 	return { success: true, data: { email: "pepe@gmail.com", displayName: "Pepe Bolsilludo", role: UserRole.Administrador, token: "Bolsilludo" }, err: "" };
 }
