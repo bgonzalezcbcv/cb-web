@@ -9,7 +9,7 @@
 			"title": "CI",
 			"pattern": "^((\\d+)|([a-zA-Z]+))+$",
 			"errorMessage": {
-				"pattern": "Se deben ingresar solo los números, sin puntos ni guiones y no puede quedar vacía"
+				"pattern": "Se deben ingresar solo números y letras, sin puntos ni guiones y no puede quedar vacía"
 			}
 		},
 		"name": {
@@ -175,7 +175,7 @@
 							"pattern": "^((\\d+)|([a-zA-Z]+))+$",
 							"minimum": 1,
 							"errorMessage": {
-								"pattern": "Se deben ingresar solo los números, sin puntos ni guiones y no puede quedar vacía"
+								"pattern": "Se deben ingresar solo números y letras, sin puntos ni guiones y no puede quedar vacía"
 							}
 						},
 						"marital_status": {
@@ -196,7 +196,7 @@
 							"title": "E-mail",
 							"format": "email",
 							"errorMessage": {
-								"format": "Tiene que ser E-mail válido."
+								"format": "Tiene que ser e-mail válido."
 							}
 						},
 						"address": {

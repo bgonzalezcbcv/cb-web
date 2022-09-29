@@ -46,9 +46,6 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
 					cells={materialCells}
 					onChange={({ data }): void => {
 						onChange(data);
-						console.log(Models.ScholarshipType.Bidding.valueOf());
-						console.log(data);
-						console.log(student.administrative_info.scholarship_type);
 					}}
 					readonly={!editable}
 					ajv={handleDefaultsAjv}
@@ -67,7 +64,7 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
 							disabled={!editable}
 							onChange={(event) => setAgreementType(event.target.value)}>
 							{dataStore.agreementTypes &&
-								dataStore.agreementTypes?.map((value, index) => {
+								dataStore.agreementTypes.map((value, index) => {
 									return (
 										<MenuItem key={index} value={value}>
 											{value}

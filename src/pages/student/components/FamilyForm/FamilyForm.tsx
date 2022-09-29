@@ -74,7 +74,6 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 			</Box>
 
 			<JsonForms
-				// i18n={{ translate: translator as Translator }}
 				ajv={studentAjv}
 				schema={schema.properties.family.items[0] as JsonSchema7}
 				uischema={ui}
