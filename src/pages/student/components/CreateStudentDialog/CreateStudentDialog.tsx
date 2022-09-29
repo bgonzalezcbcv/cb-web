@@ -56,7 +56,7 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 				</Box>
 			</div>
 
-			<Dialog open={isOpen} onClose={dismiss}>
+			<Dialog open={isOpen} onClose={dismiss} data-cy="errorAlertDialog">
 				<DialogTitle>
 					<Typography component={"span"} variant="h5" fontWeight="bold">
 						Hay errores en los campos del alumno...

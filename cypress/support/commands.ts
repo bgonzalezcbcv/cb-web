@@ -112,6 +112,19 @@ Cypress.Commands.add("fillStudentFamilyInfo", () => {
 		cy.get(workPhoneFieldID).clear().type(familyMember.workplacePhone);
 	});
 });
+
+Cypress.Commands.add("testInput", (inputID: string, errorLabelID: string, incorrectInput: string, correctInput: string, errorMessage?: string) => {
+	const input = cy.get(inputID);
+	const errorLabel = cy.get(errorLabelID);
+
+	input.clear().type(incorrectInput);
+
+	assert(errorLabel.contains(errorMessage ?? ""));
+
+	input.clear().type(correctInput);
+	assert(errorLabel.contains(errorMessage ?? ""));
+});
+
 //
 //
 // -- This is a child command --
@@ -131,6 +144,7 @@ declare global {
 			login(email?: string, password?: string): Chainable<void>;
 			fillStudentBasicInfo(): Chainable<void>;
 			fillStudentFamilyInfo(): Chainable<void>;
+			testInput(inputID: string, errorLabelID: string, incorrectInput: string, correctInput: string, errorMessage?: string): Chainable<void>;
 			/* drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
 			dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
 			visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element> */
