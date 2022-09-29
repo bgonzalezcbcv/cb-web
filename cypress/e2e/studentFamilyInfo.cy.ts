@@ -18,8 +18,9 @@ describe("studentFamilyInfo", () => {
 	const CIInputID = "#properties\\/ci2-input";
 	const CIID = "#properties\\/ci2";
 
-	//const dateOfBirthInputID = "#properties\\/birthdate2-input";
-	//const dateOfBirthID = "#properties\\/birthdate2";
+	const dateOfBirthInputID = "#properties\\/birthdate2-input";
+	//TODO: encontrar una manera mejor de conseguir este campo
+	const dateOfBirthID = ":nth-child(2) > .MuiGrid-container > :nth-child(1) > .MuiFormControl-root";
 
 	const cellphoneInputID = "#properties\\/cellphone2-input";
 	const cellphoneID = "#properties\\/cellphone2";
@@ -36,7 +37,7 @@ describe("studentFamilyInfo", () => {
 
 		//check first family member
 		cy.testInput(CIInputID, CIID, "a", "50137758", "El campo de CI no puede estar vacío.");
-		//cy.testInput(dateOfBirthInputID, dateOfBirthID, 'incorrecto', '10/5/1990', '')
+		cy.testInput(dateOfBirthInputID, dateOfBirthID, "incorrecto", "10/5/1990", "");
 		cy.testInput(cellphoneInputID, cellphoneID, "error", "099099990", "Teléfono tiene que ser un número con largo mayor a 0");
 		cy.testInput(emailInputID, emailID, "error", "correcto@gmail.com", "Email incorrecto");
 		cy.testInput(workPhoneInputID, workPhoneID, "error", "24080808", "Teléfono tiene que ser un número con largo mayor a 0");
@@ -45,7 +46,7 @@ describe("studentFamilyInfo", () => {
 		cy.get("#addFamilyMember").click();
 
 		cy.testInput(CIInputID, CIID, "a", "50137758", "El campo de CI no puede estar vacío.");
-		//cy.testInput(dateOfBirthInputID, dateOfBirthID, 'incorrecto', '10/5/1990', '')
+		cy.testInput(dateOfBirthInputID, dateOfBirthID, "incorrecto", "10/5/1990", "");
 		cy.testInput(cellphoneInputID, cellphoneID, "error", "099099990", "Teléfono tiene que ser un número con largo mayor a 0");
 		cy.testInput(emailInputID, emailID, "error", "correcto@gmail.com", "Email incorrecto");
 		cy.testInput(workPhoneInputID, workPhoneID, "error", "24080808", "Teléfono tiene que ser un número con largo mayor a 0");

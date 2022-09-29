@@ -119,10 +119,10 @@ Cypress.Commands.add("testInput", (inputID: string, errorLabelID: string, incorr
 
 	input.clear().type(incorrectInput);
 
-	assert(errorLabel.contains(errorMessage ?? ""));
+	if (errorMessage) assert(errorLabel.contains(errorMessage));
 
 	input.clear().type(correctInput);
-	assert(errorLabel.contains(errorMessage ?? ""));
+	if (errorMessage) assert(errorLabel.contains(errorMessage));
 });
 
 //
