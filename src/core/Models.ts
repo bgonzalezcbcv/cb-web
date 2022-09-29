@@ -9,6 +9,11 @@ export interface QuestionCategories {
 	questions: Question[];
 }
 
+export interface Cycle {
+	id: number;
+	name: string;
+}
+
 export interface FamilyMember {
 	role: string;
 	full_name: string;
@@ -115,6 +120,7 @@ export interface Student {
 	family: FamilyMember[];
 	question_categories: QuestionCategories[];
 	administrative_info: AdministrativeInfo;
+	cycle: Cycle;
 }
 
 export interface StudentCreationForm {

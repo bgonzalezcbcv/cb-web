@@ -87,8 +87,6 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 	const { student, editable, onChange } = props;
 	const { question_categories } = student;
 
-	const [expandMode, setExpandMode] = React.useState(true);
-
 	const onChangeHandler = (changedQuestionCategoryIndex: number, changedQuestionIndex: number, newAnswerValue: string): void => {
 		const newStudentData: Student = _.cloneDeep(student);
 		newStudentData.question_categories[changedQuestionCategoryIndex].questions[changedQuestionIndex].answer = newAnswerValue;
@@ -98,19 +96,10 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 
 	return (
 		<List>
-			<Box display="flex" flexDirection="row" justifyContent="flex-end">
-				<Button
-					variant="text"
-					startIcon={expandMode ? <ExpandLessRoundedIcon /> : <ExpandMoreRoundedIcon />}
-					onClick={() => setExpandMode(!expandMode)}>
-					{expandMode ? "Colapsar" : "Expandir"}
-				</Button>
-			</Box>
 			{question_categories.map((category, categoryIndex): React.ReactElement => {
 				return (
 					<div key={"category" + categoryIndex}>
 						<Accordion
-							expanded={expandMode}
 							sx={{
 								flexDirection: "column",
 								justifyContent: "space-between",
@@ -120,7 +109,7 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 								width: "100%",
 								alignContent: "center",
 							}}>
-							<AccordionSummary expandIcon={<ExpandMoreIcon />} onClick={() => handleOnExpandClick}>
+							<AccordionSummary expandIcon={<ExpandMoreIcon />}>
 								<Typography> {category.category} </Typography>
 							</AccordionSummary>
 

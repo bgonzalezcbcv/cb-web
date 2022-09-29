@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { Student } from "./Models";
+import { Cycle, Student } from "./Models";
 
 const baseConfig = {
 	baseURL: process.env["REACT_APP_API_URL"],
@@ -27,3 +27,31 @@ export async function createStudent(studentToCreate: Student): Promise<boolean> 
 		return false;
 	}
 }
+
+export async function getCycles(): Promise<{ success: boolean; cycles: Cycle[] }> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: "api/cicles",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		};
+
+		const response = await axios(config);
+
+		const result = {
+			success: response.status === 200,
+			cycles: response.data,
+		};
+
+		return result;
+	} catch (e) {
+		return { success: false, cycles: [] };
+	}
+}
+
+// export async function setStudentCycle(): Promise<{ success: boolean, student: Student }> {
+
+// }
