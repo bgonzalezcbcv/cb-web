@@ -10,7 +10,7 @@ export class DataStore {
 
 	public teachers: Teacher[] = [];
 
-	public agreementTypes: string[] = ['Ninguno'];
+	public agreementTypes: string[] = ["Ninguno"];
 
 	private constructor() {
 		const savedStateJson = localStorage.getItem("store");
@@ -45,12 +45,12 @@ export class DataStore {
 
 	// todo: need to implement this function.
 	@action
-	public logIn(): boolean {
+	public logIn(email: string, token: any, displayName: string, role: UserRole): boolean {
 		this.loggedUser = {
-			email: "testingEmail@xmail.test",
-			token: "notAToken",
-			displayName: "Juan Prueba",
-			role: UserRole.Administrativo,
+			email: email,
+			token: token,
+			displayName: displayName,
+			role: role,
 		};
 
 		return true;
@@ -73,8 +73,7 @@ export class DataStore {
 
 	@action
 	public addAgreementType(agreementType: string): void {
-		if (!this.agreementTypes.includes(agreementType))
-			this.agreementTypes = [...this.agreementTypes, agreementType];
+		if (!this.agreementTypes.includes(agreementType)) this.agreementTypes = [...this.agreementTypes, agreementType];
 	}
 }
 
