@@ -38,7 +38,6 @@ describe("studentFamilyInfo", () => {
 
 	const addressErrorID = "#properties\\/address2 > .MuiFormHelperText-root.Mui-error";
 	const neighborhoodErrorID = "#properties\\/neighbourhood2 > .MuiFormHelperText-root.Mui-error";
-	const educationLevelInputID = "#properties\\/education_level2 > .MuiFormHelperText-root.Mui-error";
 	const occupationErrorID = "#properties\\/occupation2 > .MuiFormHelperText-root.Mui-error";
 	const workplaceErrorID = "#properties\\/workplace2 > .MuiFormHelperText-root.Mui-error";
 	const workplaceAddressErrorID = "#properties\\/workplace_address2 > .MuiFormHelperText-root.Mui-error";
@@ -60,7 +59,6 @@ describe("studentFamilyInfo", () => {
 		cy.get(emailErrorID).should("not.exist");
 		cy.get(addressErrorID).should("not.exist");
 		cy.get(neighborhoodErrorID).should("not.exist");
-		cy.get(educationLevelInputID).should("not.exist");
 		cy.get(occupationErrorID).should("not.exist");
 		cy.get(workplaceErrorID).should("not.exist");
 		cy.get(workplaceAddressErrorID).should("not.exist");
