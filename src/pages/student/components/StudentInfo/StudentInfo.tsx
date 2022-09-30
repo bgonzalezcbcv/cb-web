@@ -4,11 +4,12 @@ import { JsonForms } from "@jsonforms/react";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
 import { Student } from "../../../../core/Models";
 
+import { studentAjv } from "../../StudentErrors";
+
 import "./StudentInfo.scss";
 
 import uischema from "./ui.json";
 import schema from "../../schema.json";
-import { studentAjv } from "../../StudentErrors";
 
 export type StudentInfoProps = {
 	student: Student;
