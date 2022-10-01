@@ -1,4 +1,4 @@
-import _ from "lodash";
+import _, { indexOf } from "lodash";
 import React, { useEffect, useState } from "react";
 
 import {
@@ -6,26 +6,18 @@ import {
 	AccordionDetails,
 	AccordionSummary,
 	Box,
-	Button,
-	Divider,
 	FormControl,
-	Grid,
-	IconButton,
 	InputLabel,
 	List,
 	ListItem,
 	MenuItem,
 	Select,
-	SelectChangeEvent,
 	TextField,
 	Typography,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
-import ExpandLessRoundedIcon from "@mui/icons-material/ExpandLessRounded";
-import ClearIcon from "@mui/icons-material/Clear";
 
-import { Question as QuestionModel, Student } from "../../../../core/Models";
+import { Question as QuestionModel, Student, Cicle } from "../../../../core/Models";
 import useDebounce from "../../../../hooks/useDebounce";
 
 export interface EnrollmentQuestionsProps {
@@ -87,6 +79,10 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 	const { student, editable, onChange } = props;
 	const { question_categories } = student;
 
+	const studentCicles = Object.keys(Cicle) as Array<keyof typeof Cicle>;
+	const indexOfCicle = Object.values(Cicle).indexOf(student.cicle);
+	const validCicles = studentCicles.splice(0, indexOfCicle + 1);
+
 	const onChangeHandler = (changedQuestionCategoryIndex: number, changedQuestionIndex: number, newAnswerValue: string): void => {
 		const newStudentData: Student = _.cloneDeep(student);
 		newStudentData.question_categories[changedQuestionCategoryIndex].questions[changedQuestionIndex].answer = newAnswerValue;
@@ -96,13 +92,17 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 
 	return (
 		<Box>
-			<Box width={"50%"}>
+			<Box width={"25%"}>
 				<FormControl variant="standard" fullWidth>
 					<InputLabel>Seleccionar Ciclo</InputLabel>
 					<Select>
-						<MenuItem value={1}>Ciclo1</MenuItem>
-						<MenuItem value={2}>Ciclo2</MenuItem>
-						<MenuItem value={3}>Ciclo3</MenuItem>
+						{validCicles.map((key: keyof typeof Cicle) => {
+							return (
+								<MenuItem key={key} value={key}>
+									{Cicle[key]}
+								</MenuItem>
+							);
+						})}
 					</Select>
 				</FormControl>
 			</Box>
