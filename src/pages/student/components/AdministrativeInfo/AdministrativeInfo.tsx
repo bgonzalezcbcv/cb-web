@@ -4,13 +4,13 @@ import { JsonForms } from "@jsonforms/react";
 import { JsonSchema7 } from "@jsonforms/core";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
 import { createAjv } from "@jsonforms/core";
-import schema from "./schema.json";
-import uiSchema from "./ui.json";
 import { DataStore } from "../../../../core/DataStore";
 import * as Models from "../../../../core/Models";
 import { VisualComponent } from "../../../../core/interfaces";
 import FileUploader from "../../../../components/fileUploader/FileUploader";
-import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, TextField, Container } from "@mui/material";
+import schema from "../../schema.json";
+import uiSchema from "./ui.json";
 
 import DownloadIcon from "@mui/icons-material/Download";
 
@@ -36,8 +36,8 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
 	const handleDefaultsAjv = createAjv({ useDefaults: true });
 
 	return (
-		<div className="administrative-info" style={{ width: width ?? "100%", height: height ?? "100%" }}>
-			<div className="form-container">
+		<Container className="administrative-info" sx={{ display: "flex" }}>
+			<Container className="form-container">
 				<JsonForms
 					schema={schema as JsonSchema7}
 					uischema={uiSchema}
@@ -51,25 +51,29 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
 					ajv={handleDefaultsAjv}
 				/>
 
-				<FormControl variant="standard" sx={{ width: "100%" }}>
-					<InputLabel id="agreement-type-label">Convenio</InputLabel>
+				{student.administrative_info.scholarship_type == Models.ScholarshipType.Agreement ||
+				student.administrative_info.scholarship_type == Models.ScholarshipType.Bidding.valueOf() ? (
+					<FormControl variant="standard" sx={{ width: "100%" }}>
+						<InputLabel id="agreement-type-label">Convenio</InputLabel>
 
-					<Select
-						labelId="agreement-type"
-						id="agreement-type"
-						label="Convenio"
-						value={agreementType}
-						disabled={!editable} onChange={(event) => setAgreementType(event.target.value)}>
-						{dataStore.agreementTypes &&
-							dataStore.agreementTypes?.map((value, index) => {
-								return (
-									<MenuItem key={index} value={value}>
-										{value}
-									</MenuItem>
-								);
-							})}
-					</Select>
-				</FormControl>
+						<Select
+							labelId="agreement-type"
+							id="agreement-type"
+							label="Convenio"
+							value={agreementType}
+							disabled={!editable}
+							onChange={(event) => setAgreementType(event.target.value)}>
+							{dataStore.agreementTypes &&
+								dataStore.agreementTypes.map((value, index) => {
+									return (
+										<MenuItem key={index} value={value}>
+											{value}
+										</MenuItem>
+									);
+								})}
+						</Select>
+					</FormControl>
+				) : null}
 
 				{editable ? (
 					<div className="file-uploader-container">
@@ -96,13 +100,13 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
 						onChange(newStudent);
 					}}
 				/>
-			</div>
+			</Container>
 
-			<div className={"payment-details-wrapper"}>
+			<Container className={"payment-details-wrapper"}>
 				<DiscountsSection editable={editable} student={student} onChange={onChange} />
 
 				<PaymentMethodSection editable={editable} student={student} onChange={onChange} />
-			</div>
-		</div>
+			</Container>
+		</Container>
 	);
 }
