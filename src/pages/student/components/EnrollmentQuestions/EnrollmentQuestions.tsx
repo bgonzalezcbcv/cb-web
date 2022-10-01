@@ -95,41 +95,53 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 	};
 
 	return (
-		<List>
-			{question_categories.map((category, categoryIndex): React.ReactElement => {
-				return (
-					<div key={"category" + categoryIndex}>
-						<Accordion
-							sx={{
-								flexDirection: "column",
-								justifyContent: "space-between",
-								display: "flex",
-								flex: 1,
-								height: "100%",
-								width: "100%",
-								alignContent: "center",
-							}}>
-							<AccordionSummary expandIcon={<ExpandMoreIcon />}>
-								<Typography> {category.category} </Typography>
-							</AccordionSummary>
+		<Box>
+			<Box width={"50%"}>
+				<FormControl variant="standard" fullWidth>
+					<InputLabel>Seleccionar Ciclo</InputLabel>
+					<Select>
+						<MenuItem value={1}>Ciclo1</MenuItem>
+						<MenuItem value={2}>Ciclo2</MenuItem>
+						<MenuItem value={3}>Ciclo3</MenuItem>
+					</Select>
+				</FormControl>
+			</Box>
+			<List>
+				{question_categories.map((category, categoryIndex): React.ReactElement => {
+					return (
+						<div key={"category" + categoryIndex}>
+							<Accordion
+								sx={{
+									flexDirection: "column",
+									justifyContent: "space-between",
+									display: "flex",
+									flex: 1,
+									height: "100%",
+									width: "100%",
+									alignContent: "center",
+								}}>
+								<AccordionSummary expandIcon={<ExpandMoreIcon />}>
+									<Typography> {category.category} </Typography>
+								</AccordionSummary>
 
-							<AccordionDetails>
-								{category.questions.map(
-									(question, questionIndex): React.ReactElement => (
-										<Question
-											key={`${category}-${categoryIndex}-question-${questionIndex}`}
-											question={question}
-											questionIndex={questionIndex}
-											editable={editable}
-											onChangeQuestion={(newAnswer): void => onChangeHandler(categoryIndex, questionIndex, newAnswer)}
-										/>
-									)
-								)}
-							</AccordionDetails>
-						</Accordion>
-					</div>
-				);
-			})}
-		</List>
+								<AccordionDetails>
+									{category.questions.map(
+										(question, questionIndex): React.ReactElement => (
+											<Question
+												key={`${category}-${categoryIndex}-question-${questionIndex}`}
+												question={question}
+												questionIndex={questionIndex}
+												editable={editable}
+												onChangeQuestion={(newAnswer): void => onChangeHandler(categoryIndex, questionIndex, newAnswer)}
+											/>
+										)
+									)}
+								</AccordionDetails>
+							</Accordion>
+						</div>
+					);
+				})}
+			</List>
+		</Box>
 	);
 }

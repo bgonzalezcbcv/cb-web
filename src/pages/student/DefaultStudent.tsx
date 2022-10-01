@@ -1,4 +1,4 @@
-import { DiscountExplanation, DiscountType, PaymentMethodOption, ScholarshipType, Student } from "../../core/Models";
+import { DiscountExplanation, DiscountType, PaymentMethodOption, ScholarshipType, Student, Cicle } from "../../core/Models";
 
 export const defaultStudent: Student = {
 	id: "asdf",
@@ -26,6 +26,7 @@ export const defaultStudent: Student = {
 	contact: "",
 	contact_phone: "",
 	email: "",
+	cicle: Cicle.None,
 	family: [
 		{
 			ci: "",
