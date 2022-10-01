@@ -45,11 +45,11 @@ export class DataStore {
 
 	// todo: need to implement this function.
 	@action
-	public logIn(email: string, token: string, displayName: string, role: UserRole): boolean {
+	public logIn(email: string, token: string, name: string, role: UserRole): boolean {
 		this.loggedUser = {
 			email: email,
 			token: token,
-			displayName: displayName,
+			name: name,
 			role: role,
 		};
 
