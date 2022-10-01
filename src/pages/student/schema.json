@@ -7,7 +7,10 @@
 		"ci": {
 			"type": "string",
 			"title": "CI",
-			"pattern": "\\d{8}"
+			"pattern": "^((\\d+)|([a-zA-Z]+))+$",
+			"errorMessage": {
+				"pattern": "Se deben ingresar solo números y letras, sin puntos ni guiones y no puede quedar vacía"
+			}
 		},
 		"name": {
 			"type": "string",
@@ -40,7 +43,10 @@
 		"birthdate": {
 			"type": "string",
 			"format": "date",
-			"title": "Fecha de nacimiento"
+			"title": "Fecha de nacimiento",
+			"errorMessage": {
+				"format": "Tiene que ser una fecha válida."
+			}
 		},
 		"nationality": {
 			"type": "string",
@@ -89,15 +95,24 @@
 		"vaccine_expiration": {
 			"type": "string",
 			"format": "date",
-			"title": "Vencimiento de vacunas"
+			"title": "Vencimiento de vacunas",
+			"errorMessage": {
+				"format": "Tiene que ser una fecha válida."
+			}
 		},
 		"inscription_date": {
 			"type": "string",
-			"format": "date"
+			"format": "date",
+			"errorMessage": {
+				"format": "Tiene que ser una fecha válida."
+			}
 		},
 		"starting_date": {
 			"type": "string",
-			"format": "date"
+			"format": "date",
+			"errorMessage": {
+				"format": "Tiene que ser una fecha válida."
+			}
 		},
 		"contact": {
 			"type": "string"
@@ -157,8 +172,11 @@
 						"ci": {
 							"type": "string",
 							"title": "Cedula de identidad",
-							"pattern": "\\d{8}",
-							"minimum": 1
+							"pattern": "^((\\d+)|([a-zA-Z]+))+$",
+							"minimum": 1,
+							"errorMessage": {
+								"pattern": "Se deben ingresar solo números y letras, sin puntos ni guiones y no puede quedar vacía"
+							}
 						},
 						"marital_status": {
 							"type": "string",
@@ -168,12 +186,18 @@
 						"cellphone": {
 							"type": "string",
 							"title": "Teléfono celular",
-							"pattern": "\\d{9}"
+							"pattern": "\\d{9}",
+							"errorMessage": {
+								"pattern": "Tiene que ser un número de 9 dígitos."
+							}
 						},
 						"email": {
 							"type": "string",
 							"title": "E-mail",
-							"format": "email"
+							"format": "email",
+							"errorMessage": {
+								"format": "Tiene que ser e-mail válido."
+							}
 						},
 						"address": {
 							"type": "string",
@@ -236,7 +260,10 @@
 						"workplace_phone": {
 							"type": "string",
 							"title": "Teléfono laboral",
-							"pattern": "\\d{8,9}"
+							"pattern": "\\d{8,9}",
+							"errorMessage": {
+								"pattern": "Tiene que ser un número de entre 8 a 9 dígitos."
+							}
 						}
 					},
 					"required": ["role", "ci"]
@@ -283,8 +310,36 @@
 				"registration_commitment_url": {
 					"type": "string"
 				},
+				"enrollment_date": {
+					"type": "string",
+					"title": "Fecha de inscripción"
+				},
+				"starting_date": {
+					"type": "string",
+					"title": "Fecha de comienzo"
+				},
 				"scholarship_type": {
-					"type": "string"
+					"type": "string",
+					"oneOf": [
+						{
+							"const": "licitación",
+							"title": "Licitación"
+						},
+						{
+							"const": "bonificada",
+							"title": "Bonificada"
+						},
+						{
+							"const": "convenio",
+							"title": "Convenio"
+						},
+						{
+							"const": "especial",
+							"title": "Especial"
+						}
+					],
+					"title": "Tipo de escolaridad",
+					"default": "none"
 				},
 				"agreement_type": {
 					"type": "string"
@@ -383,13 +438,13 @@
 									"type": "string"
 								},
 								"description": {
-								  "title": "Descripción",
-								  "type": "string"
+									"title": "Descripción",
+									"type": "string"
 								},
-							  "resolution_url": {
-								"title": "Resolución",
-								"type": "string"
-							  }
+								"resolution_url": {
+									"title": "Resolución",
+									"type": "string"
+								}
 							},
 							"required": ["starting_date", "ending_date", "explanation", "percentage", "type", "report_url"]
 						}

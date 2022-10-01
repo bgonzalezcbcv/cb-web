@@ -46,6 +46,7 @@ export default function DiscountsSection(props: VisualComponent & Administrative
 
 	const handleDiscountModalClose = useCallback(() => {
 		setDiscountModalOpen(false);
+		setDiscountData({} as DiscountData);
 	}, []);
 
 	const translator = (id: string, defaultMessage: string | undefined): string => {
