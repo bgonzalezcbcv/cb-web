@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 
 import * as Models from "../../../../../core/Models";
 import { VisualComponent } from "../../../../../core/interfaces";
+import { ajv as studentAjv } from "../../../../../core/AJVHelper";
 import Modal from "../../../../../components/modal/Modal";
 import DiscountHistory from ".././historyTables/DiscountHistory";
 import { Card, CardContent, Divider } from "@mui/material";
@@ -90,6 +91,7 @@ export default function DiscountsSection(props: VisualComponent & Administrative
 							body={
 								<JsonForms
 									i18n={{ translate: translator as Translator }}
+									ajv={studentAjv}
 									schema={schema as JsonSchema7}
 									uischema={ui}
 									data={{ administrative_info: { discounts: [discountData] } }}

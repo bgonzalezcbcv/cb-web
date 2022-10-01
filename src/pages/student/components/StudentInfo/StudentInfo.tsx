@@ -4,13 +4,12 @@ import { JsonForms } from "@jsonforms/react";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
 import { Student } from "../../../../core/Models";
 
-import { studentAjv } from "../../StudentErrors";
-
-import "./StudentInfo.scss";
+import { ajv as studentAjv } from "../../../../core/AJVHelper";
 
 import uischema from "./ui.json";
 import schema from "../../schema.json";
-import { ajv as studentAjv } from "../../../../core/AJVHelper";
+
+import "./StudentInfo.scss";
 
 export type StudentInfoProps = {
 	student: Student;
@@ -26,12 +25,12 @@ export default function StudentInfo(props: StudentInfoProps): React.ReactElement
 			<JsonForms
 				ajv={studentAjv}
 				schema={schema}
+				uischema={uischema}
 				data={student}
 				renderers={materialRenderers}
 				onChange={({ data }): void => {
 					onChange(data);
 				}}
-				uischema={uischema}
 				readonly={!editable}
 				cells={materialCells}
 			/>

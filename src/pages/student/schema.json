@@ -178,7 +178,6 @@
 						"type": "string",
 						"title": "Cédula de identidad",
 						"pattern": "^((\\d+)|([a-zA-Z]+))+$",
-						"minimum": 1,
 						"errorMessage": {
 							"pattern": "Se deben ingresar solo los números, sin puntos ni guiones y no puede quedar vacía"
 						}
@@ -379,8 +378,7 @@
 							},
 							"year": {
 								"title": "Año",
-								"type": "integer",
-								"pattern": "\\d{4}"
+								"type": "integer"
 							},
 							"yearly_payment_url": {
 								"title": "Pago anualidad firmado",
@@ -400,6 +398,7 @@
 							"starting_date": {
 								"title": "Comienzo",
 								"type": "string",
+								"format": "date",
 								"errorMessage": "Debe ser una fecha de inicio correcta."
 							},
 							"ending_date": {
