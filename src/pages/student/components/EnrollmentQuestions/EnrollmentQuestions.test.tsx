@@ -87,16 +87,16 @@ describe("EnrollmentQuestions", () => {
 		);
 
 		const categoryAccordion = getByText(wrapper.container, "categoria 1");
-
 		const answerTextField = getByText(wrapper.container, "answer 1a");
+		const sendAnswers = getByText(wrapper.container, "Enviar Respuestas");
 
 		act(() => {
 			userEvent.click(categoryAccordion);
 			userEvent.type(answerTextField, "new");
+			userEvent.click(sendAnswers);
 		});
 
 		expect(answerTextField.textContent).toBe("answer 1anew");
-
 		expect(onChangeSpy).toHaveBeenCalledWith(expectedNewStudentData);
 	});
 });

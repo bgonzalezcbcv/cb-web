@@ -42,6 +42,7 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 
 	const isViewMode = viewMode == "VIEW";
 
+	// student.question_categories
 	const [question_categories, setQuestionCategories] = useState(student.question_categories);
 	const [selectedCicle, setSelectedCicle] = useState(isViewMode ? "" : "None");
 	const [error, setError] = useState<string | null>(null);
@@ -58,16 +59,14 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 	};
 
 	useEffect(() => {
-		if (!viewMode) {
-			getCicleQuestions(selectedCicle).then((result) => {
-				if (result == null) {
-					setError("Error al cargar el archivo.");
-					return;
-				} else {
-					setQuestionCategories(result);
-				}
-			});
-		}
+		getCicleQuestions(selectedCicle).then((result) => {
+			if (result == null) {
+				setError("Error al cargar el archivo.");
+				return;
+			} else {
+				setQuestionCategories(result);
+			}
+		});
 	}, [setError, setQuestionCategories]);
 
 	useEffect(() => {
@@ -82,7 +81,7 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 			const questions = await getCicleQuestions(cicle);
 
 			if (questions == null) {
-				setError("Error al cargar el archivo.");
+				setError("Error al cargar preguntas.");
 				return;
 			} else {
 				setQuestionCategories(questions);
@@ -97,6 +96,11 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 			answers.concat(category.questions);
 		}
 		const sendAnswersResponse = await API.postAnswersEnrollmentQuestions(student.id, indexOfCicle, answers);
+
+		if (!sendAnswersResponse) {
+			setError("Error al enviar las respuestas.");
+			return;
+		}
 	}, [question_categories]);
 
 	return (
@@ -157,7 +161,7 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 												key={`${category}-${categoryIndex}-question-${questionIndex}`}
 												question={question}
 												questionIndex={questionIndex}
-												editable={editable && selectedCicle === student.cicle}
+												editable={editable}
 												onChangeQuestion={(newAnswer): void => onChangeHandler(categoryIndex, questionIndex, newAnswer)}
 											/>
 										)
