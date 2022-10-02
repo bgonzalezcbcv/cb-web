@@ -5,7 +5,7 @@ import { VisualComponent } from "../../../../../core/interfaces";
 import { ajv as studentAjv } from "../../../../../core/AJVHelper";
 import Modal from "../../../../../components/modal/Modal";
 import DiscountHistory from ".././historyTables/DiscountHistory";
-import { Card, CardContent, Divider } from "@mui/material";
+import { Card, CardContent, Divider, IconButton, Box, Typography } from "@mui/material";
 import { JsonForms } from "@jsonforms/react";
 import { JsonSchema7, Translator } from "@jsonforms/core";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
@@ -77,13 +77,17 @@ export default function DiscountsSection(props: VisualComponent & Administrative
 	}, []);
 
 	return (
-		<Card className="discount-wrapper">
+		<Card color={"primary"} className="discount-wrapper">
 			<CardContent className="payment-content">
-				<div className="payment-header">
-					<h4>Descuentos</h4>
+				<Box className="payment-header">
+					<Typography variant={"subtitle1"}>Descuentos</Typography>
 
-					<div>
-						{editable && <AddCircleOutlineIcon onClick={handleDiscountModalOpen} />}
+					<Box>
+						{editable && (
+							<IconButton color="secondary" onClick={handleDiscountModalOpen}>
+								<AddCircleOutlineIcon />
+							</IconButton>
+						)}
 
 						<Modal
 							show={discountModalOpen}
@@ -110,8 +114,8 @@ export default function DiscountsSection(props: VisualComponent & Administrative
 								handleAddNewDiscount(discountData);
 							}}
 						/>
-					</div>
-				</div>
+					</Box>
+				</Box>
 
 				<Divider />
 

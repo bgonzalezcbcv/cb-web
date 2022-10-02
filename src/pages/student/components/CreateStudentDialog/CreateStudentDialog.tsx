@@ -59,7 +59,9 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 				<Divider sx={{ marginBottom: "10px" }}></Divider>
 
 				<Box display="flex" justifyContent="flex-end" alignContent="flex-end" alignSelf="flex-end" onClick={onCreateClickHandler}>
-					<Button variant="outlined">Crear Alumno</Button>
+					<Button color={"secondary"} variant="outlined">
+						Crear Alumno
+					</Button>
 				</Box>
 			</Box>
 
@@ -84,11 +86,11 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 					</DialogContent>
 
 					<DialogActions sx={{ display: "flex", justifyContent: "space-around" }}>
-						<LoadingButton variant="outlined" onClick={dismiss} loading={studentCreationState === "inProcess"}>
+						<LoadingButton color={"error"} variant="outlined" onClick={dismiss} loading={studentCreationState === "inProcess"}>
 							Cancelar
 						</LoadingButton>
 
-						<LoadingButton variant="outlined" onClick={handleStudentCreation} loading={studentCreationState === "inProcess"}>
+						<LoadingButton color={"success"} variant="outlined" onClick={handleStudentCreation} loading={studentCreationState === "inProcess"}>
 							{studentCreationState === "fail" ? "Reintentar" : "Aceptar"}
 						</LoadingButton>
 					</DialogActions>

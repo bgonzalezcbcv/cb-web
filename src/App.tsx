@@ -1,15 +1,18 @@
 // First we import the named libraries: React, lodash, react-router-dom, etc.
 import React from "react";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { observer } from "mobx-react-lite";
 
 // Secondly we import our types, core elements, pages, components and lastly images.
 import { DataStore } from "./core/DataStore";
-import Login from "./pages/login/Login";
 import { getSidebarSectionsByUser } from "./core/userRoleHelper";
-import Sidebar from "./components/Sidebar/Sidebar";
-import Navbar from "./components/Navbar/Navbar";
 import Student from "./pages/student/Student";
+import Login from "./pages/login/Login";
+import Navbar from "./components/Navbar/Navbar";
+import Sidebar from "./components/Sidebar/Sidebar";
+import { Box } from "@mui/material";
+import { theme } from "./core/theme";
+import { ThemeProvider } from "@mui/material/styles";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { observer } from "mobx-react-lite";
 
 // Lastly we import our stylesheets.
 import "./App.css";
@@ -20,33 +23,37 @@ function App(): React.ReactElement {
 	const sidebarSections = getSidebarSectionsByUser(loggedUser);
 
 	return (
-		<div className="App">
+		<Box className="App">
 			<BrowserRouter>
-				<div className="container">
-					<div className="navbar">{loggedUser && <Navbar />}</div>
-					<div className="content">
-						{loggedUser?.role && <Sidebar sections={sidebarSections} />}
+				<Box className="container">
+					<ThemeProvider theme={theme}>
+						<Box className="content" style={{ display: "flex", width: "100%" }}>
+							{loggedUser?.role && <Sidebar sections={sidebarSections} />}
+							<Box style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+								<Box className="navbar">{loggedUser && <Navbar />}</Box>
 
-						<div className="page-container">
-							<Routes>
-								{loggedUser ? (
-									<>
-										<Route path="/student" element={<Student mode={"CREATE"} />} />
-										<Route path="/login" element={<Login />} />
-										<Route path="*" element={<Navigate to="/student" />} />
-									</>
-								) : (
-									<>
-										<Route path="/login" element={<Login />} />
-										<Route path="*" element={<Navigate to="/login" />} />
-									</>
-								)}
-							</Routes>
-						</div>
-					</div>
-				</div>
+								<Box color={"primary"} className="page-container" sx={{ bgcolor: "primary.light", margin: "0" }}>
+									<Routes>
+										{loggedUser ? (
+											<>
+												<Route path="/student" element={<Student mode={"CREATE"} />} />
+												<Route path="/login" element={<Login />} />
+												<Route path="*" element={<Navigate to="/student" />} />
+											</>
+										) : (
+											<>
+												<Route path="/login" element={<Login />} />
+												<Route path="*" element={<Navigate to="/login" />} />
+											</>
+										)}
+									</Routes>
+								</Box>
+							</Box>
+						</Box>
+					</ThemeProvider>
+				</Box>
 			</BrowserRouter>
-		</div>
+		</Box>
 	);
 }
 
