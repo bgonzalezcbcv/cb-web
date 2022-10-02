@@ -70,7 +70,7 @@ function Navbar(): React.ReactElement {
 					</div>
 				</div>
 
-				<MenuItem onClick={handleLogout} sx={{ justifyContent: "center" }}>
+				<MenuItem color={"secondary"} onClick={handleLogout} sx={{ justifyContent: "center" }}>
 					Cerrar Sesión
 				</MenuItem>
 			</div>
@@ -84,12 +84,12 @@ function Navbar(): React.ReactElement {
 	return (
 		<Box sx={{ flex: 1 }}>
 			<AppBar position="static">
-				<Toolbar sx={{ justifyContent: "flex-end", bgcolor: "rgb(249,162,118)" }}>
+				<Toolbar sx={{ justifyContent: "flex-end", bgcolor: "primary" }}>
 					{loggedUser ? (
 						<div className="logged-user-controls">
 							<Button onClick={handleNotificationsClick}>
-								<Badge badgeContent={3} color="primary">
-									<NotificationsIcon className="notifications-icon" sx={{ color: "black" }} />
+								<Badge badgeContent={3} color="secondary">
+									<NotificationsIcon className="notifications-icon" sx={{ color: "white" }} />
 								</Badge>
 							</Button>
 

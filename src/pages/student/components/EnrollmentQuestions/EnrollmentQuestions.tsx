@@ -58,14 +58,16 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 	};
 
 	useEffect(() => {
-		getCicleQuestions(selectedCicle).then((result) => {
-			if (result == null) {
-				setError("Error al cargar el archivo.");
-				return;
-			} else {
-				setQuestionCategories(result);
-			}
-		});
+		if (!viewMode) {
+			getCicleQuestions(selectedCicle).then((result) => {
+				if (result == null) {
+					setError("Error al cargar el archivo.");
+					return;
+				} else {
+					setQuestionCategories(result);
+				}
+			});
+		}
 	}, [setError, setQuestionCategories]);
 
 	useEffect(() => {

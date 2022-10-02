@@ -1,8 +1,9 @@
 import React, { useCallback, useState } from "react";
 
 import { FamilyMember, Student } from "../../../../core/Models";
+import { ajv as studentAjv } from "../../../../core/AJVHelper";
 import { JsonForms } from "@jsonforms/react";
-import { JsonSchema7, Translator } from "@jsonforms/core";
+import { JsonSchema7 } from "@jsonforms/core";
 import { materialRenderers } from "@jsonforms/material-renderers";
 import { Box, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { defaultStudent } from "../../DefaultStudent";
@@ -11,7 +12,6 @@ import schema from "../../schema.json";
 import ui from "./ui.json";
 
 import "./FamilyForm.scss";
-import { basicTranslator } from "../../../../core/CoreHelper";
 
 export type FamilyFormProps = {
 	student: Student;
@@ -59,21 +59,6 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 		[student]
 	);
 
-	const translator = basicTranslator([
-		{
-			id: "ci",
-			errorMessage: "El campo de CI no puede estar vacío.",
-		},
-		{
-			id: "email",
-			errorMessage: "Email incorrecto.",
-		},
-		{
-			id: "phone",
-			errorMessage: "Teléfono tiene que ser un numero con largo mayor a 0.",
-		},
-	]);
-
 	return (
 		<Box display="flex" flexDirection="column" width="100%" height="100%">
 			<Box display="flex" flexDirection="row" justifyContent="flex-end" marginBottom="12px">
@@ -89,8 +74,8 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 			</Box>
 
 			<JsonForms
-				i18n={{ translate: translator as Translator }}
-				schema={schema.properties.family.items[0] as JsonSchema7}
+				ajv={studentAjv}
+				schema={schema.properties.family.items as JsonSchema7}
 				uischema={ui}
 				data={family[familyIndex]}
 				renderers={materialRenderers}

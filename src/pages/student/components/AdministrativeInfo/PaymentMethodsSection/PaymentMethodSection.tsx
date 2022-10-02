@@ -4,7 +4,7 @@ import * as Models from "../../../../../core/Models";
 import { VisualComponent } from "../../../../../core/interfaces";
 import Modal from "../../../../../components/modal/Modal";
 import PaymentMethodHistory from "../historyTables/PaymentMethodHistory";
-import { Card, CardContent, Divider } from "@mui/material";
+import { Box, Card, CardContent, Divider, IconButton, Typography } from "@mui/material";
 import { JsonForms } from "@jsonforms/react";
 import { JsonSchema7, Translator } from "@jsonforms/core";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
@@ -34,6 +34,7 @@ export default function PaymentMethodSection(props: VisualComponent & PaymentMet
 
 	const handlePaymentMethodModalClose = useCallback(() => {
 		setPaymentMethodModalOpen(false);
+		setPaymentMethodData({} as Models.PaymentMethod);
 	}, []);
 
 	//TODO: Adjust this when file handling is defined
@@ -61,17 +62,21 @@ export default function PaymentMethodSection(props: VisualComponent & PaymentMet
 	return (
 		<Card className="payment-method-container">
 			<CardContent className="payment-content">
-				<div className="payment-header">
-					<h4>Formas de pago</h4>
+				<Box className="payment-header">
+					<Typography variant={"subtitle1"}>Formas de pago</Typography>
 
-					<div>
-						{editable && <AddCircleOutlineIcon onClick={handlePaymentMethodModalOpen} />}
+					<Box>
+						{editable && (
+							<IconButton color="secondary" onClick={handlePaymentMethodModalOpen}>
+								<AddCircleOutlineIcon />
+							</IconButton>
+						)}
 
 						<Modal
 							show={paymentMethodModalOpen}
 							title={"Agregar una nueva forma de pago"}
 							body={
-								<div className="payment-method-modal-wrapper">
+								<Box className="payment-method-modal-wrapper">
 									<JsonForms
 										i18n={{ translate: translator as Translator }}
 										schema={schema as JsonSchema7}
@@ -86,15 +91,15 @@ export default function PaymentMethodSection(props: VisualComponent & PaymentMet
 											}
 										}}
 									/>
-								</div>
+								</Box>
 							}
 							onClose={handlePaymentMethodModalClose}
 							onAccept={() => {
 								handleAddNewPaymentMethod(paymentMethodData);
 							}}
 						/>
-					</div>
-				</div>
+					</Box>
+				</Box>
 
 				<Divider />
 

@@ -87,8 +87,8 @@ export const defaultStudent: Student = {
 		},
 	],
 	administrative_info: {
-		enrollment_date: new Date("1/2/2022"),
-		starting_date: new Date("1/3/2022"),
+		enrollment_date: "01/02/2022",
+		starting_date: "01/03/2022",
 		registration_commitment_url: "",
 		scholarship_type: ScholarshipType.Subsidized,
 		agreement_type: "Ninguno",

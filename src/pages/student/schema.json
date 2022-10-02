@@ -7,7 +7,10 @@
 		"ci": {
 			"type": "string",
 			"title": "CI",
-			"pattern": "\\d{8}"
+			"pattern": "^((\\d+)|([a-zA-Z]+))+$",
+			"errorMessage": {
+				"pattern": "Se deben ingresar solo números y letras, sin puntos ni guiones y no puede quedar vacía"
+			}
 		},
 		"name": {
 			"type": "string",
@@ -40,7 +43,10 @@
 		"birthdate": {
 			"type": "string",
 			"format": "date",
-			"title": "Fecha de nacimiento"
+			"title": "Fecha de nacimiento",
+			"errorMessage": {
+				"format": "Tiene que ser una fecha válida."
+			}
 		},
 		"nationality": {
 			"type": "string",
@@ -89,311 +95,369 @@
 		"vaccine_expiration": {
 			"type": "string",
 			"format": "date",
-			"title": "Vencimiento de vacunas"
+			"title": "Vencimiento de vacunas",
+			"errorMessage": {
+				"format": "Tiene que ser una fecha válida."
+			}
 		},
 		"inscription_date": {
 			"type": "string",
-			"format": "date"
+			"format": "date",
+			"title": "Fecha de inscripción",
+			"errorMessage": {
+				"format": "Tiene que ser una fecha válida."
+			}
 		},
 		"starting_date": {
 			"type": "string",
-			"format": "date"
+			"format": "date",
+			"title": "Fecha de inicio",
+			"errorMessage": {
+				"format": "Tiene que ser una fecha válida."
+			}
 		},
 		"contact": {
-			"type": "string"
+			"type": "string",
+			"title": "Contacto"
 		},
 		"contact_phone": {
-			"type": "string"
+			"type": "string",
+			"title": "Teléfono de contacto"
 		},
 		"email": {
-			"type": "string"
+			"type": "string",
+			"title": "Email"
 		},
 		"family": {
 			"type": "array",
-			"items": [
-				{
-					"type": "object",
-					"title": "Editar responsable",
-					"properties": {
-						"role": {
-							"oneOf": [
-								{
-									"const": "Madre",
-									"title": "Madre"
-								},
-								{
-									"const": "Padre",
-									"title": "Padre"
-								},
-								{
-									"const": "Tutor",
-									"title": "Tutor"
-								}
-							],
-							"type": "string",
-							"title": "Tipo de responsable",
-							"default": "mother"
-						},
-						"full_name": {
-							"type": "string",
-							"title": "Nombre completo"
-						},
-						"birthdate": {
-							"type": "string",
-							"title": "Fecha de nacimiento"
-						},
-						"birthplace": {
-							"type": "string",
-							"title": "País de nacimiento"
-						},
-						"nationality": {
-							"type": "string",
-							"title": "Nacionalidad"
-						},
-						"first_language": {
-							"type": "string",
-							"title": "Lengua materna"
-						},
-						"ci": {
-							"type": "string",
-							"title": "Cedula de identidad",
-							"pattern": "\\d{8}",
-							"minimum": 1
-						},
-						"marital_status": {
-							"type": "string",
-							"title": "Estado civil",
-							"default": "Soltero/a"
-						},
-						"cellphone": {
-							"type": "string",
-							"title": "Teléfono celular",
-							"pattern": "\\d{9}"
-						},
-						"email": {
-							"type": "string",
-							"title": "E-mail",
-							"format": "email"
-						},
-						"address": {
-							"type": "string",
-							"title": "Dirección"
-						},
-						"neighbourhood": {
-							"type": "string",
-							"title": "Barrio de residencia"
-						},
-						"education_level": {
-							"oneOf": [
-								{
-									"const": "Ninguno",
-									"title": "Ninguno"
-								},
-								{
-									"const": "Primaria incompleta",
-									"title": "Primaria incompleta"
-								},
-								{
-									"const": "Secundaria incompleta",
-									"title": "Secundaria incompleta"
-								},
-								{
-									"const": "Terciario incompleta",
-									"title": "Terciario incompleta"
-								},
-								{
-									"const": "Primaria completa",
-									"title": "Primaria completa"
-								},
-								{
-									"const": "Secundaria completa",
-									"title": "Secundaria completa"
-								},
-								{
-									"const": "Terciario completa",
-									"title": "Terciario completa"
-								}
-							],
-							"title": "Nivel educativo",
-							"default": "none"
-						},
-						"occupation": {
-							"type": "string",
-							"title": "Trabajo-Ocupación"
-						},
-						"workplace": {
-							"type": "string",
-							"title": "Empresa de trabajo"
-						},
-						"workplace_address": {
-							"type": "string",
-							"title": "Dirección laboral"
-						},
-						"workplace_neighbourhood": {
-							"type": "string",
-							"title": "Barrio laboral"
-						},
-						"workplace_phone": {
-							"type": "string",
-							"title": "Teléfono laboral",
-							"pattern": "\\d{8,9}"
+			"title": "Información familiar",
+			"items": {
+				"type": "object",
+				"properties": {
+					"role": {
+						"oneOf": [
+							{
+								"const": "Madre",
+								"title": "Madre"
+							},
+							{
+								"const": "Padre",
+								"title": "Padre"
+							},
+							{
+								"const": "Tutor",
+								"title": "Tutor"
+							}
+						],
+						"type": "string",
+						"title": "Tipo de responsable",
+						"default": "mother",
+						"errorMessage": "Tiene que ser algunos de los roles disponibles."
+					},
+					"full_name": {
+						"type": "string",
+						"title": "Nombre completo"
+					},
+					"birthdate": {
+						"type": "string",
+						"title": "Fecha de nacimiento"
+					},
+					"birthplace": {
+						"type": "string",
+						"title": "País de nacimiento"
+					},
+					"nationality": {
+						"type": "string",
+						"title": "Nacionalidad"
+					},
+					"first_language": {
+						"type": "string",
+						"title": "Lengua materna"
+					},
+					"ci": {
+						"type": "string",
+						"title": "Cédula de identidad",
+						"pattern": "^((\\d+)|([a-zA-Z]+))+$",
+						"errorMessage": {
+							"pattern": "Se deben ingresar solo los números, sin puntos ni guiones y no puede quedar vacía"
 						}
 					},
-					"required": ["role", "ci"]
-				}
-			]
+					"marital_status": {
+						"type": "string",
+						"title": "Estado civil",
+						"default": "Soltero/a"
+					},
+					"cellphone": {
+						"type": "string",
+						"title": "Teléfono celular",
+						"pattern": "\\d{9}",
+						"errorMessage": {
+							"pattern": "Tiene que ser un número de 9 dígitos."
+						}
+					},
+					"email": {
+						"type": "string",
+						"title": "E-mail",
+						"format": "email",
+						"errorMessage": {
+							"format": "Tiene que ser E-mail válido."
+						}
+					},
+					"address": {
+						"type": "string",
+						"title": "Dirección"
+					},
+					"neighbourhood": {
+						"type": "string",
+						"title": "Barrio de residencia"
+					},
+					"education_level": {
+						"oneOf": [
+							{
+								"const": "Ninguno",
+								"title": "Ninguno"
+							},
+							{
+								"const": "Primaria incompleta",
+								"title": "Primaria incompleta"
+							},
+							{
+								"const": "Secundaria incompleta",
+								"title": "Secundaria incompleta"
+							},
+							{
+								"const": "Terciario incompleta",
+								"title": "Terciario incompleta"
+							},
+							{
+								"const": "Primaria completa",
+								"title": "Primaria completa"
+							},
+							{
+								"const": "Secundaria completa",
+								"title": "Secundaria completa"
+							},
+							{
+								"const": "Terciario completa",
+								"title": "Terciario completa"
+							}
+						],
+						"title": "Nivel educativo",
+						"default": "none",
+						"errorMessage": "Tiene que ser alguno de los niveles educativos disponibles."
+					},
+					"occupation": {
+						"type": "string",
+						"title": "Trabajo-Ocupación"
+					},
+					"workplace": {
+						"type": "string",
+						"title": "Empresa de trabajo"
+					},
+					"workplace_address": {
+						"type": "string",
+						"title": "Dirección laboral"
+					},
+					"workplace_neighbourhood": {
+						"type": "string",
+						"title": "Barrio laboral"
+					},
+					"workplace_phone": {
+						"type": "string",
+						"title": "Teléfono laboral",
+						"pattern": "\\d{8,9}",
+						"errorMessage": {
+							"pattern": "Tiene que ser un número de entre 8 a 9 dígitos."
+						}
+					}
+				},
+				"required": ["role", "ci"]
+			},
+			"minItems": 1,
+			"maxItems": 2
 		},
 		"question_categories": {
 			"type": "array",
-			"items": [
-				{
-					"type": "object",
-					"properties": {
-						"category": {
-							"type": "string"
-						},
-						"questions": {
-							"type": "array",
-							"items": [
-								{
-									"type": "object",
-									"properties": {
-										"id": {
-											"type": "string"
-										},
-										"question": {
-											"type": "string"
-										},
-										"answer": {
-											"type": "string"
-										}
-									},
-									"required": ["id", "question", "answer"]
-								}
-							]
-						}
+			"items": {
+				"type": "object",
+				"properties": {
+					"category": {
+						"type": "string"
 					},
-					"required": ["category", "questions"]
-				}
-			]
+					"questions": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								},
+								"question": {
+									"type": "string"
+								},
+								"answer": {
+									"type": "string"
+								}
+							},
+							"required": ["id", "question", "answer"]
+						}
+					}
+				},
+				"required": ["category", "questions"]
+			},
+			"minItems": 0
 		},
 		"administrative_info": {
 			"type": "object",
+			"title": "Información administrativa",
 			"properties": {
 				"registration_commitment_url": {
 					"type": "string"
 				},
+				"enrollment_date": {
+					"type": "string",
+					"title": "Fecha de inscripción"
+				},
+				"starting_date": {
+					"type": "string",
+					"title": "Fecha de comienzo"
+				},
 				"scholarship_type": {
-					"type": "string"
+					"type": "string",
+					"oneOf": [
+						{
+							"const": "licitación",
+							"title": "Licitación"
+						},
+						{
+							"const": "bonificada",
+							"title": "Bonificada"
+						},
+						{
+							"const": "convenio",
+							"title": "Convenio"
+						},
+						{
+							"const": "especial",
+							"title": "Especial"
+						}
+					],
+					"title": "Tipo de escolaridad",
+					"default": "none"
 				},
 				"agreement_type": {
-					"type": "string"
+					"type": "string",
+					"title": "Acuerdo"
 				},
 				"comments": {
 					"type": "string"
 				},
 				"payment_methods": {
 					"type": "array",
-					"items": [
-						{
-							"type": "object",
-							"properties": {
-								"method": {
-									"oneOf": [
-										{
-											"const": "contado",
-											"title": "Contado"
-										},
-										{
-											"const": "financiacion",
-											"title": "Financiación"
-										},
-										{
-											"const": "licitacion",
-											"title": "Licitación"
-										}
-									],
-									"title": "Método de pago",
-									"type": "string"
-								},
-								"year": {
-									"title": "Año",
-									"type": "integer",
-									"pattern": "\\d{4}"
-								},
-								"yearly_payment_url": {
-									"title": "Pago anualidad firmado",
-									"type": "string"
-								}
+					"items": {
+						"type": "object",
+						"properties": {
+							"method": {
+								"oneOf": [
+									{
+										"const": "contado",
+										"title": "Contado"
+									},
+									{
+										"const": "financiacion",
+										"title": "Financiación"
+									},
+									{
+										"const": "licitacion",
+										"title": "Licitación"
+									}
+								],
+								"title": "Método de pago",
+								"type": "string",
+								"errorMessage": "Tiene que ser alguno de los métodos de pagos disponibles."
 							},
-							"required": ["method", "year"]
-						}
-					]
+							"year": {
+								"title": "Año",
+								"type": "integer"
+							},
+							"yearly_payment_url": {
+								"title": "Pago anualidad firmado",
+								"type": "string"
+							}
+						},
+						"required": ["method", "year"]
+					},
+					"minItems": 0
 				},
 				"discounts": {
 					"type": "array",
-					"items": [
-						{
-							"type": "object",
-							"properties": {
-								"starting_date": {
-									"title": "Comienzo",
-									"type": "string"
-								},
-								"ending_date": {
-									"title": "Fin",
-									"type": "string"
-								},
-								"explanation": {
-									"oneOf": [
-										{
-											"const": "hermano",
-											"title": "Hermano"
-										},
-										{
-											"const": "resolución",
-											"title": "Resolución"
-										}
-									],
-									"title": "Explicación",
-									"type": "string",
-									"default": "Sibling"
-								},
-								"percentage": {
-									"title": "%",
-									"type": "integer"
-								},
-								"type": {
-									"oneOf": [
-										{
-											"const": "dirección",
-											"title": "Dirección"
-										},
-										{
-											"const": "asistente social",
-											"title": "Asistente Social"
-										}
-									],
-									"title": "Tipo",
-									"type": "string",
-									"default": "Direction"
-								},
-								"report_url": {
-									"title": "Informe administrativo",
-									"type": "string"
-								},
-								"description": {
-								  "title": "Descripción",
-								  "type": "string"
-								},
-							  "resolution_url": {
+					"title": "Descuentos",
+					"items": {
+						"type": "object",
+						"properties": {
+							"starting_date": {
+								"title": "Comienzo",
+								"type": "string",
+								"format": "date",
+								"errorMessage": "Debe ser una fecha de inicio correcta."
+							},
+							"ending_date": {
+								"title": "Fin",
+								"type": "string",
+								"errorMessage": "Debe ser una fecha de finalización correcta."
+							},
+							"explanation": {
+								"oneOf": [
+									{
+										"const": "hermano",
+										"title": "Hermano"
+									},
+									{
+										"const": "resolución",
+										"title": "Resolución"
+									}
+								],
+								"title": "Explicación",
+								"type": "string",
+								"default": "Sibling",
+								"errorMessage": "Tiene que ser una explicación de las disponibles."
+							},
+							"percentage": {
+								"title": "%",
+								"type": "integer"
+							},
+							"type": {
+								"oneOf": [
+									{
+										"const": "dirección",
+										"title": "Dirección"
+									},
+									{
+										"const": "asistente social",
+										"title": "Asistente Social"
+									}
+								],
+								"title": "Tipo",
+								"type": "string",
+								"default": "Direction",
+								"errorMessage": "Tiene que ser alguno de los tipos disponibles."
+							},
+							"report_url": {
+								"title": "Informe administrativo",
+								"type": "string"
+							},
+							"description": {
+								"title": "Descripción",
+								"type": "string"
+							},
+							"resolution_url": {
 								"title": "Resolución",
 								"type": "string"
-							  }
-							},
-							"required": ["starting_date", "ending_date", "explanation", "percentage", "type", "report_url"]
-						}
-					]
+							}
+						},
+						"required": ["starting_date", "ending_date", "explanation", "percentage", "type", "report_url"]
+					},
+					"minItems": 0
 				}
 			},
 			"required": ["registration_commitment_url", "scholarship_type", "agreement_type", "comments", "payment_methods", "discounts"]

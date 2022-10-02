@@ -8,6 +8,8 @@
     "@jsonforms/core": "3.0.0-alpha.3",
     "@jsonforms/material-renderers": "3.0.0-alpha.3",
     "@jsonforms/react": "3.0.0-alpha.3",
+    "@material-ui/styles": "4.11.5",
+    "@material-ui/system": "4.12.2",
     "@mui/icons-material": "5.2.0",
     "@mui/lab": "5.0.0-alpha.58",
     "@mui/material": "5.10.4",
