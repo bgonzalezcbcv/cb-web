@@ -28,7 +28,7 @@ Cypress.Commands.add("login", (email = "aa@a.a", password = "password") => {
 });
 
 Cypress.Commands.add("fillStudentBasicInfo", () => {
-	const basicInfoButtonID = ".MuiTabs-flexContainer > :nth-child(1)";
+	const basicInfoButtonID = '[data-cy="basicInfoTab"]';
 
 	const nameFieldID = "#\\#\\/properties\\/name2-input";
 	const surnameFieldID = "#\\#\\/properties\\/surname2-input";
@@ -68,7 +68,7 @@ Cypress.Commands.add("fillStudentBasicInfo", () => {
 });
 
 Cypress.Commands.add("fillStudentFamilyInfo", () => {
-	const familyInfoButtonID = ".MuiTabs-flexContainer > :nth-child(2)";
+	const familyInfoButtonID = '[data-cy="familyInfoTab"]';
 
 	const roleInputID = "#properties\\/role2-input";
 	const fullNameFieldID = "#properties\\/full_name2-input";
@@ -111,10 +111,6 @@ Cypress.Commands.add("fillStudentFamilyInfo", () => {
 		cy.get(workplaceNeighborhoodFieldID).clear().type(familyMember.workplaceNeighbourhood);
 		cy.get(workPhoneFieldID).clear().type(familyMember.workplacePhone);
 	});
-
-	const complementaryInfoButtonID = ".MuiTabs-flexContainer > :nth-child(3)";
-	const administrativeInfoButtonID = ".MuiTabs-flexContainer > :nth-child(4)";
-	const trayectoryButtonID = ".MuiTabs-flexContainer > :nth-child(5)";
 });
 //
 //

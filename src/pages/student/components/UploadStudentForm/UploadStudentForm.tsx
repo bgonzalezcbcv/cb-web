@@ -103,7 +103,7 @@ function UploadStudentForm(props: UploadStudentFormProps): JSX.Element {
 					onDragExit={(): void => setFileOver(false)}
 					style={{ width: "100%" }} //
 				>
-					<CardContent className={`file-drop-zone ${fileOver ? "file-drop-zone--file-over" : ""}`}>
+					<CardContent className={`file-drop-zone ${fileOver ? "file-drop-zone--file-over" : ""}`} data-cy="ExcelUploaderZone">
 						<input
 							id="file-input"
 							type="file"
