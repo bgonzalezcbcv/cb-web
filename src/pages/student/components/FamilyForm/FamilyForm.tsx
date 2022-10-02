@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from "react";
 
 import { FamilyMember, Student } from "../../../../core/Models";
+import { ajv as studentAjv } from "../../../../core/AJVHelper";
 import { JsonForms } from "@jsonforms/react";
 import { JsonSchema7 } from "@jsonforms/core";
 import { materialRenderers } from "@jsonforms/material-renderers";
@@ -11,7 +12,6 @@ import schema from "../../schema.json";
 import ui from "./ui.json";
 
 import "./FamilyForm.scss";
-import { studentAjv } from "../../StudentErrors";
 
 export type FamilyFormProps = {
 	student: Student;
@@ -75,7 +75,7 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 
 			<JsonForms
 				ajv={studentAjv}
-				schema={schema.properties.family.items[0] as JsonSchema7}
+				schema={schema.properties.family.items as JsonSchema7}
 				uischema={ui}
 				data={family[familyIndex]}
 				renderers={materialRenderers}
