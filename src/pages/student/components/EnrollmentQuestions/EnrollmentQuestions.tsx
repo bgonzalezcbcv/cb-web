@@ -1,23 +1,26 @@
 import _, { indexOf } from "lodash";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import {
 	Accordion,
 	AccordionDetails,
 	AccordionSummary,
 	Box,
+	Button,
 	FormControl,
 	InputLabel,
 	List,
 	ListItem,
 	MenuItem,
 	Select,
+	SelectChangeEvent,
 	TextField,
 	Typography,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import { Question as QuestionModel, Student, Cicle } from "../../../../core/Models";
+import * as API from "../../../../core/ApiStore";
+import { Question as QuestionModel, Student, Cicle, QuestionCategories } from "../../../../core/Models";
 import useDebounce from "../../../../hooks/useDebounce";
 
 export interface EnrollmentQuestionsProps {
@@ -77,7 +80,8 @@ function Question(props: {
 
 export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): React.ReactElement {
 	const { student, editable, onChange } = props;
-	const { question_categories } = student;
+	const [question_categories, setQuestionCategories] = useState(Array<QuestionCategories>);
+	const [selectedCicle, setSelectedCicle] = useState("");
 
 	const studentCicles = Object.keys(Cicle) as Array<keyof typeof Cicle>;
 	const indexOfCicle = Object.values(Cicle).indexOf(student.cicle);
@@ -90,21 +94,60 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 		onChange(newStudentData);
 	};
 
+	const handleCicleChange = useCallback(
+		async (event: SelectChangeEvent): Promise<void> => {
+			const cicle = event.target.value;
+			setSelectedCicle(cicle);
+			const cicleKey = Object.values(Cicle).indexOf(cicle as Cicle);
+
+			const questionData = await API.getCicleQuestions(cicleKey);
+
+			setQuestionCategories(questionData.questionCategories);
+		},
+		[question_categories]
+	);
+
+	const sendAnswers = useCallback(async (): Promise<void> => {
+		const answers: QuestionModel[] = [];
+		for (const category of question_categories) {
+			answers.concat(category.questions);
+		}
+
+		const sendAnswersResponse = await API.postAnswersEnrollmentQuestions(student.id, indexOfCicle, answers);
+	}, [question_categories]);
+
 	return (
 		<Box>
-			<Box width={"25%"}>
-				<FormControl variant="standard" fullWidth>
-					<InputLabel>Seleccionar Ciclo</InputLabel>
-					<Select>
-						{validCicles.map((key: keyof typeof Cicle) => {
-							return (
-								<MenuItem key={key} value={key}>
-									{Cicle[key]}
-								</MenuItem>
-							);
-						})}
-					</Select>
-				</FormControl>
+			<Box display="flex">
+				<Box
+					sx={{
+						display: "flex",
+						justifyContent: "flex-start",
+						width: "50%",
+					}}>
+					<FormControl variant="standard" sx={{ width: "50%" }}>
+						<InputLabel>Seleccionar Ciclo</InputLabel>
+						<Select value={selectedCicle} onChange={handleCicleChange}>
+							{validCicles.map((key: keyof typeof Cicle) => {
+								return (
+									<MenuItem key={key} value={key}>
+										{Cicle[key]}
+									</MenuItem>
+								);
+							})}
+						</Select>
+					</FormControl>
+				</Box>
+				<Box
+					sx={{
+						display: "flex",
+						justifyContent: "flex-end",
+						width: "50%",
+					}}>
+					<Button variant="outlined" onClick={() => sendAnswers}>
+						Enviar Respuestas
+					</Button>
+				</Box>
 			</Box>
 			<List>
 				{question_categories.map((category, categoryIndex): React.ReactElement => {
@@ -131,7 +174,7 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 												key={`${category}-${categoryIndex}-question-${questionIndex}`}
 												question={question}
 												questionIndex={questionIndex}
-												editable={editable}
+												editable={editable && selectedCicle === student.cicle}
 												onChangeQuestion={(newAnswer): void => onChangeHandler(categoryIndex, questionIndex, newAnswer)}
 											/>
 										)

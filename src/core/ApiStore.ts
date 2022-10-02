@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { Cicle, Student } from "./Models";
+import { Cicle, Question, QuestionCategories, Student } from "./Models";
 
 const baseConfig = {
 	baseURL: process.env["REACT_APP_API_URL"],
@@ -49,5 +49,53 @@ export async function getCicles(): Promise<{ success: boolean; cicles: Cicle[] }
 		return result;
 	} catch (e) {
 		return { success: false, cicles: [] };
+	}
+}
+
+export async function getCicleQuestions(cicleId: number): Promise<{ success: boolean; questionCategories: QuestionCategories[] }> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: `api/cicles/${cicleId}/questions`,
+			headers: {
+				"Content-Type": "application/json",
+			},
+		};
+
+		const response = await axios(config);
+
+		const result = {
+			success: response.status === 200,
+			questionCategories: response.data.questionCategories,
+		};
+
+		return result;
+	} catch (e) {
+		return { success: false, questionCategories: [] };
+	}
+}
+
+export async function postAnswersEnrollmentQuestions(studentID: string, cicleID: number, answers: Question[]): Promise<boolean> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "post",
+			url: "/api/answers",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			data: JSON.stringify({
+				studentID: studentID,
+				cicleID: cicleID,
+				answers: answers,
+			}),
+		};
+
+		const response = await axios(config);
+
+		return response.status === 201;
+	} catch (e) {
+		return false;
 	}
 }
