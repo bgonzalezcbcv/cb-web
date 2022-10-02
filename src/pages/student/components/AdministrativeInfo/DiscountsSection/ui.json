@@ -6,7 +6,7 @@
 			"elements": [
 				{
 					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/discounts/items/properties/starting_date",
+					"scope": "#/properties/starting_date",
 					"options": {
 						"format": "date",
 						"dateFormat": "DD/MM/YYYY",
@@ -15,7 +15,7 @@
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/discounts/items/properties/ending_date",
+					"scope": "#/properties/ending_date",
 					"options": {
 						"format": "date",
 						"dateFormat": "DD/MM/YYYY",
@@ -24,7 +24,7 @@
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/discounts/items/properties/percentage"
+					"scope": "#/properties/percentage"
 				}
 			]
 		},
@@ -33,15 +33,15 @@
 			"elements": [
 				{
 					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/discounts/items/properties/explanation"
+					"scope": "#/properties/explanation"
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/discounts/items/properties/description"
+					"scope": "#/properties/description"
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/discounts/items/properties/resolution_url"
+					"scope": "#/properties/resolution_url"
 				}
 			]
 		},
@@ -50,11 +50,11 @@
 			"elements": [
 				{
 					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/discounts/items/properties/type"
+					"scope": "#/properties/type"
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/discounts/items/properties/report_url"
+					"scope": "#/properties/report_url"
 				}
 			]
 		}

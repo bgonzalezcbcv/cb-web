@@ -13,10 +13,11 @@ export type ModalProps = {
 	acceptText?: string;
 	onClose: () => void;
 	onAccept: () => void;
+	acceptEnabled?: boolean;
 };
 
 export default function Modal(props: ModalProps): React.ReactElement {
-	const { acceptText, body, cancelText, show, title, onClose, onAccept } = props;
+	const { acceptText, body, cancelText, show, title, onClose, onAccept, acceptEnabled } = props;
 
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -50,7 +51,8 @@ export default function Modal(props: ModalProps): React.ReactElement {
 					<Button variant="outlined" color={"secondary"} sx={{ marginRight: 2 }} onClick={handleModalClose}>
 						{cancelText ?? "Cancelar"}
 					</Button>
-					<Button variant="contained" color={"secondary"} onClick={handleModalAccept}>
+
+					<Button variant="contained" color={"secondary"} onClick={handleModalAccept} disabled={!acceptEnabled}>
 						{acceptText ?? "Aceptar"}
 					</Button>
 				</div>

@@ -2,17 +2,16 @@ import React, { useCallback, useState } from "react";
 
 import * as Models from "../../../../../core/Models";
 import { VisualComponent } from "../../../../../core/interfaces";
-import { ajv as studentAjv } from "../../../../../core/AJVHelper";
 import Modal from "../../../../../components/modal/Modal";
 import DiscountHistory from ".././historyTables/DiscountHistory";
-import { Card, CardContent, Divider, IconButton, Box, Typography } from "@mui/material";
+import { Card, CardContent, Divider, IconButton, Box, Typography, Alert } from "@mui/material";
 import { JsonForms } from "@jsonforms/react";
 import { JsonSchema7, Translator } from "@jsonforms/core";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
 
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
-import schema from "../../../schema.json";
+import schema from "./schema.json";
 import ui from "./ui.json";
 
 import "./DiscountsSection.scss";
@@ -40,6 +39,8 @@ export default function DiscountsSection(props: VisualComponent & Administrative
 	const [discountModalOpen, setDiscountModalOpen] = useState(false);
 
 	const [discountData, setDiscountData] = useState<DiscountData>({} as DiscountData);
+	const [hasFormErrors, setHasFormErrors] = useState<boolean>(false);
+	const [hasDateErrors, setHasDateErrors] = useState<boolean>(false);
 
 	const handleDiscountModalOpen = useCallback(() => {
 		setDiscountModalOpen(true);
@@ -93,26 +94,33 @@ export default function DiscountsSection(props: VisualComponent & Administrative
 							show={discountModalOpen}
 							title={"Agregar un nuevo descuento"}
 							body={
-								<JsonForms
-									i18n={{ translate: translator as Translator }}
-									ajv={studentAjv}
-									schema={schema as JsonSchema7}
-									uischema={ui}
-									data={{ administrative_info: { discounts: [discountData] } }}
-									renderers={materialRenderers}
-									cells={materialCells}
-									onChange={({ data }): void => {
-										if (data?.administrative_info?.discounts && data.administrative_info.discounts.length > 0) {
-											const info = data.administrative_info.discounts[0];
-											setDiscountData(info);
-										}
-									}}
-								/>
+								<div>
+									<JsonForms
+										i18n={{ translate: translator as Translator }}
+										schema={schema as JsonSchema7}
+										uischema={ui}
+										data={{ administrative_info: { discounts: [discountData] } }}
+										renderers={materialRenderers}
+										cells={materialCells}
+										onChange={({ data, errors }): void => {
+											if (data?.administrative_info?.discounts && data.administrative_info.discounts.length > 0) {
+												const info = data.administrative_info.discounts[0];
+												setDiscountData(info);
+												const startDate = new Date(data.starting_date);
+												const endDate = new Date(data.ending_date);
+												setHasDateErrors(data.starting_date && data.ending_date && startDate > endDate);
+												setHasFormErrors(errors?.length != 0);
+											}
+										}}
+									/>
+									{hasDateErrors ? <Alert severity="error">La fecha de fin debe ser posterior a la fecha de inicio</Alert> : null}
+								</div>
 							}
 							onClose={handleDiscountModalClose}
 							onAccept={(): void => {
 								handleAddNewDiscount(discountData);
 							}}
+							acceptEnabled={!hasFormErrors && !hasDateErrors}
 						/>
 					</Box>
 				</Box>

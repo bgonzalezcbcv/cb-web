@@ -1,0 +1,61 @@
+{
+	"type": "object",
+	"title": "Descuento",
+	"properties": {
+		"starting_date": {
+			"title": "Comienzo",
+			"type": "string"
+		},
+		"ending_date": {
+			"title": "Fin",
+			"type": "string"
+		},
+		"explanation": {
+			"oneOf": [
+				{
+					"const": "hermano",
+					"title": "Hermano"
+				},
+				{
+					"const": "resolución",
+					"title": "Resolución"
+				}
+			],
+			"title": "Explicación",
+			"type": "string",
+			"default": "Sibling"
+		},
+		"percentage": {
+			"title": "%",
+			"type": "integer"
+		},
+		"type": {
+			"oneOf": [
+				{
+					"const": "dirección",
+					"title": "Dirección"
+				},
+				{
+					"const": "asistente social",
+					"title": "Asistente Social"
+				}
+			],
+			"title": "Tipo",
+			"type": "string",
+			"default": "Direction"
+		},
+		"report_url": {
+			"title": "Informe administrativo",
+			"type": "string"
+		},
+		"description": {
+			"title": "Descripción",
+			"type": "string"
+		},
+		"resolution_url": {
+			"title": "Resolución",
+			"type": "string"
+		}
+	},
+	"required": ["starting_date", "ending_date", "explanation", "percentage", "type", "report_url"]
+}
