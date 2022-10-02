@@ -131,7 +131,7 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 						justifyContent: "flex-end",
 						width: "50%",
 					}}>
-					<Button sx={{ display: isViewMode ? "" : "none" }} variant="outlined" onClick={() => sendAnswers}>
+					<Button sx={{ display: isViewMode ? "" : "none" }} variant="outlined" onClick={(): unknown => sendAnswers}>
 						Enviar Respuestas
 					</Button>
 				</Box>
