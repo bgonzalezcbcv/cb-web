@@ -18,6 +18,7 @@ Object {
         >
           <button
             class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeMedium MuiButton-outlinedSizeMedium css-wnpvqa-MuiButtonBase-root-MuiButton-root"
+            data-cy="createStudentButton"
             tabindex="0"
             type="button"
           >
@@ -42,6 +43,7 @@ Object {
       >
         <button
           class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeMedium MuiButton-outlinedSizeMedium css-wnpvqa-MuiButtonBase-root-MuiButton-root"
+          data-cy="createStudentButton"
           tabindex="0"
           type="button"
         >
@@ -123,6 +125,7 @@ Object {
         >
           <button
             class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeMedium MuiButton-outlinedSizeMedium css-wnpvqa-MuiButtonBase-root-MuiButton-root"
+            data-cy="createStudentButton"
             tabindex="0"
             type="button"
           >
@@ -147,6 +150,7 @@ Object {
       >
         <button
           class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeMedium MuiButton-outlinedSizeMedium css-wnpvqa-MuiButtonBase-root-MuiButton-root"
+          data-cy="createStudentButton"
           tabindex="0"
           type="button"
         >
@@ -232,6 +236,7 @@ Object {
         >
           <button
             class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeMedium MuiButton-outlinedSizeMedium css-wnpvqa-MuiButtonBase-root-MuiButton-root"
+            data-cy="createStudentButton"
             tabindex="0"
             type="button"
           >
@@ -245,6 +250,7 @@ Object {
     </div>
     <div
       class="MuiDialog-root MuiModal-root css-zw3mfo-MuiModal-root-MuiDialog-root"
+      data-cy="errorAlertDialog"
       role="presentation"
     >
       <div
@@ -308,6 +314,7 @@ Object {
             </button>
             <button
               class="MuiButtonBase-root MuiButton-root MuiLoadingButton-root MuiButton-outlined MuiButton-outlinedSuccess MuiButton-sizeMedium MuiButton-outlinedSizeMedium css-bi5g9h-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root"
+              data-cy="confirmCreateStudent"
               tabindex="0"
               type="button"
             >
@@ -339,6 +346,7 @@ Object {
       >
         <button
           class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeMedium MuiButton-outlinedSizeMedium css-wnpvqa-MuiButtonBase-root-MuiButton-root"
+          data-cy="createStudentButton"
           tabindex="0"
           type="button"
         >

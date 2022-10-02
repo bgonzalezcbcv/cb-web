@@ -167,7 +167,7 @@ describe("createStudent", () => {
 		//check first family member
 		cy.get(roleInputID).should("have.text", "Padre");
 		cy.get(fullNameFieldID).should("have.value", "Uno");
-		cy.get(CIFieldID).should("have.value", "1234567-8");
+		cy.get(CIFieldID).should("have.value", "12345678");
 		cy.get(dateOfBirthInputID).should("have.value", "01/01/1990");
 		cy.get(maritalStatusFieldID).should("have.value", "Casado");
 		cy.get(cellphoneFieldID).should("have.value", "099111222");
@@ -188,7 +188,7 @@ describe("createStudent", () => {
 		cy.get(secondFamilyMemberButtonID).click();
 		cy.get(roleInputID).should("have.text", "Madre");
 		cy.get(fullNameFieldID).should("have.value", "Dos");
-		cy.get(CIFieldID).should("have.value", "1234567-8");
+		cy.get(CIFieldID).should("have.value", "12345678");
 		cy.get(dateOfBirthInputID).should("have.value", "01/01/1990");
 		cy.get(maritalStatusFieldID).should("have.value", "Casado");
 		cy.get(cellphoneFieldID).should("have.value", "099111222");

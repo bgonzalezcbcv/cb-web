@@ -59,14 +59,14 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 				<Divider sx={{ marginBottom: "10px" }}></Divider>
 
 				<Box display="flex" justifyContent="flex-end" alignContent="flex-end" alignSelf="flex-end" onClick={onCreateClickHandler}>
-					<Button color={"secondary"} variant="outlined">
+					<Button color={"secondary"} variant="outlined" data-cy="createStudentButton">
 						Crear Alumno
 					</Button>
 				</Box>
 			</Box>
 
 			{isOpen ? (
-				<Dialog open={isOpen} onClose={dismiss}>
+				<Dialog open={isOpen} onClose={dismiss} data-cy="errorAlertDialog">
 					<DialogTitle>
 						<Typography component={"span"} variant="h5" fontWeight="bold">
 							Hay errores en los campos del alumno...
@@ -75,7 +75,9 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 
 					<DialogContent>
 						{studentCreationState === "fail" ? (
-							<Alert severity="error">No se pudo crear el alumno. Inténtelo de nuevo o corrija los errores.</Alert>
+							<Alert severity="error" data-cy="errorAlertTitle">
+								No se pudo crear el alumno. Inténtelo de nuevo o corrija los errores.
+							</Alert>
 						) : (
 							<Typography component={"span"}>¿Está seguro de querer crear este alumno?</Typography>
 						)}
@@ -90,7 +92,12 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 							Cancelar
 						</LoadingButton>
 
-						<LoadingButton color={"success"} variant="outlined" onClick={handleStudentCreation} loading={studentCreationState === "inProcess"}>
+						<LoadingButton
+							color={"success"}
+							variant="outlined"
+							onClick={handleStudentCreation}
+							loading={studentCreationState === "inProcess"}
+							data-cy="confirmCreateStudent">
 							{studentCreationState === "fail" ? "Reintentar" : "Aceptar"}
 						</LoadingButton>
 					</DialogActions>
@@ -99,7 +106,7 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 
 			{studentCreationState === "success" ? (
 				<Dialog open={studentCreationState === "success"} onClose={dismiss}>
-					<DialogTitle>¡Estudiante creado correctamente!</DialogTitle>
+					<DialogTitle data-cy="successAlertTitle">¡Estudiante creado correctamente!</DialogTitle>
 
 					<DialogActions>
 						<Button variant="outlined" onClick={dismiss}>
