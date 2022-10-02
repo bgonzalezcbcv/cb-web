@@ -46,7 +46,7 @@ function UploadStudentForm(props: UploadStudentFormProps): JSX.Element {
 		if (acceptedExtensions.includes(file.type)) {
 			const processedForm = await processXLSXtoJSON<StudentCreationForm>(file);
 
-			const parsedForm = parseFormToStudent(processedForm[0], student);
+			const parsedForm = await parseFormToStudent(processedForm[0], student);
 
 			if (!parsedForm) {
 				setError("El formato del excel subido no es correcto");

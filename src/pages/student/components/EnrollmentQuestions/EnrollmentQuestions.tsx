@@ -1,4 +1,4 @@
-import _, { indexOf } from "lodash";
+import _ from "lodash";
 import React, { useCallback, useEffect, useState } from "react";
 
 import {
@@ -10,30 +10,41 @@ import {
 	FormControl,
 	InputLabel,
 	List,
-	ListItem,
 	MenuItem,
 	Select,
 	SelectChangeEvent,
-	TextField,
 	Typography,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import * as API from "../../../../core/ApiStore";
 import { Question as QuestionModel, Student, Cicle, QuestionCategories } from "../../../../core/Models";
-import useDebounce from "../../../../hooks/useDebounce";
 import Question from "./components/Question";
 
 export interface EnrollmentQuestionsProps {
 	student: Student;
 	editable: boolean;
 	onChange: (newStudent: Student) => void;
+	viewMode: string;
+}
+
+async function getCicleQuestions(cicle: string): Promise<QuestionCategories[] | null> {
+	const cicleKey = Object.values(Cicle).indexOf(cicle as Cicle);
+	const questionData = await API.getCicleQuestions(cicleKey);
+
+	if (!questionData.success) return null;
+
+	return questionData.questionCategories;
 }
 
 export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): React.ReactElement {
-	const { student, editable, onChange } = props;
-	const [question_categories, setQuestionCategories] = useState(Array<QuestionCategories>);
-	const [selectedCicle, setSelectedCicle] = useState("");
+	const { student, editable, onChange, viewMode } = props;
+
+	const isViewMode = viewMode == "VIEW";
+
+	const [question_categories, setQuestionCategories] = useState(student.question_categories);
+	const [selectedCicle, setSelectedCicle] = useState(isViewMode ? "" : "None");
+	const [error, setError] = useState<string | null>(null);
 
 	const studentCicles = Object.keys(Cicle) as Array<keyof typeof Cicle>;
 	const indexOfCicle = Object.values(Cicle).indexOf(student.cicle);
@@ -46,15 +57,34 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 		onChange(newStudentData);
 	};
 
+	useEffect(() => {
+		getCicleQuestions(selectedCicle).then((result) => {
+			if (result == null) {
+				setError("Error al cargar el archivo.");
+				return;
+			} else {
+				setQuestionCategories(result);
+			}
+		});
+	}, [setError, setQuestionCategories]);
+
+	useEffect(() => {
+		if (error) window.setTimeout(() => setError(null), 3000);
+	}, [error]);
+
 	const handleCicleChange = useCallback(
 		async (event: SelectChangeEvent): Promise<void> => {
 			const cicle = event.target.value;
 			setSelectedCicle(cicle);
-			const cicleKey = Object.values(Cicle).indexOf(cicle as Cicle);
 
-			const questionData = await API.getCicleQuestions(cicleKey);
+			const questions = await getCicleQuestions(cicle);
 
-			setQuestionCategories(questionData.questionCategories);
+			if (questions == null) {
+				setError("Error al cargar el archivo.");
+				return;
+			} else {
+				setQuestionCategories(questions);
+			}
 		},
 		[question_categories]
 	);
@@ -64,7 +94,6 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 		for (const category of question_categories) {
 			answers.concat(category.questions);
 		}
-
 		const sendAnswersResponse = await API.postAnswersEnrollmentQuestions(student.id, indexOfCicle, answers);
 	}, [question_categories]);
 
@@ -96,7 +125,7 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 						justifyContent: "flex-end",
 						width: "50%",
 					}}>
-					<Button variant="outlined" onClick={() => sendAnswers}>
+					<Button sx={{ display: isViewMode ? "" : "none" }} variant="outlined" onClick={() => sendAnswers}>
 						Enviar Respuestas
 					</Button>
 				</Box>

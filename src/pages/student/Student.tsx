@@ -108,7 +108,7 @@ export default function Student(props: StudentProps): React.ReactElement {
 			</TabPanel>
 
 			<TabPanel className="panel-item" value={value} index={2}>
-				<EnrollmentQuestions student={student} onChange={setStudent} editable={editMode} />
+				<EnrollmentQuestions student={student} onChange={setStudent} editable={editMode} viewMode={mode} />
 			</TabPanel>
 
 			<TabPanel className="panel-item" value={value} index={3}>

@@ -17,6 +17,7 @@ describe("EnrollmentQuestions", () => {
 				student={initialStudentData}
 				editable
 				onChange={jest.fn}
+				viewMode={"VIEW"}
 			/>
 		);
 
@@ -39,6 +40,7 @@ describe("EnrollmentQuestions", () => {
 				student={initialStudentData}
 				editable
 				onChange={onChangeSpy}
+				viewMode={"VIEW"}
 			/>
 		);
 
