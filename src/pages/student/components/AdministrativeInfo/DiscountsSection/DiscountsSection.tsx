@@ -4,7 +4,7 @@ import * as Models from "../../../../../core/Models";
 import { VisualComponent } from "../../../../../core/interfaces";
 import Modal from "../../../../../components/modal/Modal";
 import DiscountHistory from ".././historyTables/DiscountHistory";
-import { Card, CardContent, Divider, IconButton, Box, Typography, Alert } from "@mui/material";
+import { Card, CardContent, Divider, IconButton, Box, Typography, Alert, Container } from "@mui/material";
 import { JsonForms } from "@jsonforms/react";
 import { JsonSchema7, Translator } from "@jsonforms/core";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
@@ -93,35 +93,30 @@ export default function DiscountsSection(props: VisualComponent & Administrative
 						<Modal
 							show={discountModalOpen}
 							title={"Agregar un nuevo descuento"}
-							body={
-								<div>
-									<JsonForms
-										i18n={{ translate: translator as Translator }}
-										schema={schema as JsonSchema7}
-										uischema={ui}
-										data={{ administrative_info: { discounts: [discountData] } }}
-										renderers={materialRenderers}
-										cells={materialCells}
-										onChange={({ data, errors }): void => {
-											if (data?.administrative_info?.discounts && data.administrative_info.discounts.length > 0) {
-												const info = data.administrative_info.discounts[0];
-												setDiscountData(info);
-												const startDate = new Date(data.starting_date);
-												const endDate = new Date(data.ending_date);
-												setHasDateErrors(data.starting_date && data.ending_date && startDate > endDate);
-												setHasFormErrors(errors?.length != 0);
-											}
-										}}
-									/>
-									{hasDateErrors ? <Alert severity="error">La fecha de fin debe ser posterior a la fecha de inicio</Alert> : null}
-								</div>
-							}
 							onClose={handleDiscountModalClose}
 							onAccept={(): void => {
 								handleAddNewDiscount(discountData);
 							}}
-							acceptEnabled={!hasFormErrors && !hasDateErrors}
-						/>
+							acceptEnabled={!hasFormErrors && !hasDateErrors}>
+							<Container>
+								<JsonForms
+									i18n={{ translate: translator as Translator }}
+									schema={schema as JsonSchema7}
+									uischema={ui}
+									data={discountData}
+									renderers={materialRenderers}
+									cells={materialCells}
+									onChange={({ data, errors }): void => {
+										setDiscountData(data);
+										const startDate = new Date(data.starting_date);
+										const endDate = new Date(data.ending_date);
+										setHasDateErrors(data.starting_date && data.ending_date && startDate > endDate);
+										setHasFormErrors(errors?.length != 0);
+									}}
+								/>
+								{hasDateErrors ? <Alert severity="error">La fecha de fin debe ser posterior a la fecha de inicio</Alert> : null}
+							</Container>
+						</Modal>
 					</Box>
 				</Box>
 

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 
-import { Box, Button, IconButton, Modal as MUIModal, Typography } from "@mui/material";
+import { Box, Button, IconButton, Typography, Dialog, Container } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 import "./Modal.scss";
@@ -8,7 +8,7 @@ import "./Modal.scss";
 export type ModalProps = {
 	show: boolean;
 	title: string;
-	body: React.ReactElement;
+	children: React.ReactElement;
 	cancelText?: string;
 	acceptText?: string;
 	onClose: () => void;
@@ -17,7 +17,7 @@ export type ModalProps = {
 };
 
 export default function Modal(props: ModalProps): React.ReactElement {
-	const { acceptText, body, cancelText, show, title, onClose, onAccept, acceptEnabled } = props;
+	const { acceptText, children, cancelText, show, title, onClose, onAccept, acceptEnabled } = props;
 
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -35,28 +35,28 @@ export default function Modal(props: ModalProps): React.ReactElement {
 		onAccept();
 	}, [onAccept]);
 
+	if (!isOpen) return <></>;
 	return (
-		<MUIModal open={isOpen} onClose={handleModalClose}>
+		<Dialog open={isOpen} onClose={handleModalClose} id="MUIModal">
 			<Box className="modal">
 				<IconButton>
 					<CloseIcon onClick={handleModalClose} />
 				</IconButton>
-
-				<div className="wrapper">
+				<Container className="wrapper">
 					<Typography variant={"h6"}>{title}</Typography>
-					{body}
-				</div>
+					{children}
+				</Container>
 
-				<div className="button-container">
-					<Button variant="outlined" color={"secondary"} sx={{ marginRight: 2 }} onClick={handleModalClose}>
+				<Container className="button-container">
+					<Button variant="outlined" sx={{ marginRight: 2 }} onClick={handleModalClose} id="modalCancel">
 						{cancelText ?? "Cancelar"}
 					</Button>
 
-					<Button variant="contained" color={"secondary"} onClick={handleModalAccept} disabled={!acceptEnabled}>
+					<Button variant="contained" onClick={handleModalAccept} disabled={!acceptEnabled} id="modalAccept">
 						{acceptText ?? "Aceptar"}
 					</Button>
-				</div>
+				</Container>
 			</Box>
-		</MUIModal>
+		</Dialog>
 	);
 }
