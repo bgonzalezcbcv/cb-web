@@ -4,7 +4,7 @@
 	"surname": "Apellido",
 	"tuition": "Matrícula",
 	"referenceNumber": 0,
-	"birthDate": "1999-9-11",
+	"birthDate": "11/9/1999",
 	"birthplace": "Uruguay",
 	"nationality": "Uruguayo",
 	"firstLanguage": "Español",
@@ -13,5 +13,5 @@
 	"neighborhood": "Cerro",
 	"medicalAssurance": "Española",
 	"emergency": "SEMM",
-	"expirationDate": "2023-5-2"
+	"expirationDate": "2/5/2023"
 }
