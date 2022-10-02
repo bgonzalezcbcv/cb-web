@@ -11,7 +11,7 @@ import { materialCells, materialRenderers } from "@jsonforms/material-renderers"
 
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
-import schema from "./schema.json";
+import schema from "../../../schema.json";
 import ui from "./ui.json";
 
 import "./DiscountsSection.scss";
@@ -104,7 +104,7 @@ export default function DiscountsSection(props: VisualComponent & Administrative
 							<Container>
 								<JsonForms
 									i18n={{ translate: translator as Translator }}
-									schema={schema as JsonSchema7}
+									schema={schema.properties.administrative_info.properties.discounts.items[0] as JsonSchema7}
 									uischema={ui}
 									data={discountData}
 									renderers={materialRenderers}
