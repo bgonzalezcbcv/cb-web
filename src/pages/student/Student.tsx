@@ -21,7 +21,7 @@ export default function Student(props: StudentProps): React.ReactElement {
 	const [student, setStudent] = React.useState<StudentModel>(defaultStudent);
 	const [isEditable, setIsEditable] = React.useState(false);
 
-	const tabLabels = ["Informacion basica", "Informacion familiar", "Informacion complementaria", "Informacion Administrativa"];
+	const tabLabels = ["Básica", "Familiar", "Complementaria", "Administrativa"];
 
 	const panels = [
 		<StudentInfo student={student} onChange={setStudent} editable={isEditable} />,
