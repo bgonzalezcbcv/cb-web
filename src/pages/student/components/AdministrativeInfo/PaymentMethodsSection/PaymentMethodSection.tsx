@@ -84,7 +84,7 @@ export default function PaymentMethodSection(props: VisualComponent & PaymentMet
 							<Container className="payment-method-modal-wrapper">
 								<JsonForms
 									i18n={{ translate: translator as Translator }}
-									schema={schema.properties.administrative_info.properties.payment_methods.items[0] as JsonSchema7}
+									schema={schema.properties.administrative_info.properties.payment_methods.items as JsonSchema7}
 									uischema={ui}
 									data={paymentMethodData}
 									renderers={materialRenderers}
