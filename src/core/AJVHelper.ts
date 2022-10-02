@@ -47,8 +47,6 @@ export function getParsedErrors(ajvValidator = ajv): Record<string, unknown> {
 		};
 	});
 
-	console.log(parsedErrors);
-
 	let errorObject = {};
 
 	parsedErrors?.forEach((error) => {
