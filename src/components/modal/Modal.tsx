@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 
 import { Box, Button, IconButton, Typography, Dialog, Container } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -19,20 +19,11 @@ export type ModalProps = {
 export default function Modal(props: ModalProps): React.ReactElement {
 	const { acceptText, children, cancelText, show, title, onClose, onAccept, acceptEnabled } = props;
 
-	const handleModalClose = useCallback(() => {
-		onClose();
-	}, [onClose]);
-
-	const handleModalAccept = useCallback(() => {
-		onAccept();
-	}, [onAccept]);
-
-	if (!show) return <></>;
-	return (
-		<Dialog open={show} onClose={handleModalClose} id="MUIModal">
+	return show ? (
+		<Dialog open={show} onClose={onClose}>
 			<Box className="modal">
 				<IconButton>
-					<CloseIcon onClick={handleModalClose} />
+					<CloseIcon onClick={onClose} />
 				</IconButton>
 				<Container className="wrapper">
 					<Typography variant={"h6"}>{title}</Typography>
@@ -40,15 +31,17 @@ export default function Modal(props: ModalProps): React.ReactElement {
 				</Container>
 
 				<Container className="button-container" sx={{ display: "flex" }}>
-					<Button variant="outlined" sx={{ marginRight: 2 }} onClick={handleModalClose} id="modalCancel">
+					<Button variant="outlined" sx={{ marginRight: 2 }} onClick={onClose}>
 						{cancelText ?? "Cancelar"}
 					</Button>
 
-					<Button variant="contained" onClick={handleModalAccept} disabled={!acceptEnabled} id="modalAccept">
+					<Button variant="contained" onClick={onAccept} disabled={!acceptEnabled}>
 						{acceptText ?? "Aceptar"}
 					</Button>
 				</Container>
 			</Box>
 		</Dialog>
+	) : (
+		<></>
 	);
 }
