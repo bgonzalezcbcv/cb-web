@@ -15,36 +15,36 @@ describe("studentFamilyInfo", () => {
 
 	const roleInputID = "#properties\\/role2-input";
 
-	const fullNameErrorID = "#properties\\/full_name2 > .MuiFormHelperText-root.Mui-error";
+	const fullNameErrorID = "#properties\\/full_name2 > :nth-child(3)";
 
 	const CIInputID = "#properties\\/ci2-input";
-	const CIErrorID = "#properties\\/ci2 > .MuiFormHelperText-root.Mui-error";
+	const CIErrorID = "#properties\\/ci2 > :nth-child(3)";
 
 	const dateOfBirthInputID = "#properties\\/birthdate2-input";
 	//TODO: encontrar una manera mejor de conseguir este campo
 	const dateOfBirthID = ":nth-child(2) > .MuiGrid-container > :nth-child(1) > .MuiFormControl-root";
 
-	const maritalStatusErrorID = "#properties\\/marital_status2 > .MuiFormHelperText-root.Mui-error";
+	const maritalStatusErrorID = "#properties\\/marital_status2 > :nth-child(3)";
 
 	const cellphoneInputID = "#properties\\/cellphone2-input";
-	const cellphoneErrorID = "#properties\\/cellphone2 > .MuiFormHelperText-root.Mui-error";
+	const cellphoneErrorID = "#properties\\/cellphone2 > :nth-child(3)";
 
-	const placeOfBirthErrorID = "#properties\\/birthplace2 > .MuiFormHelperText-root.Mui-error";
-	const nationalityErrorID = "#properties\\/nationality2 > .MuiFormHelperText-root.Mui-error";
-	const firstLanguageErrorID = "#properties\\/first_language2 > .MuiFormHelperText-root.Mui-error";
+	const placeOfBirthErrorID = "#properties\\/birthplace2 > :nth-child(3)";
+	const nationalityErrorID = "#properties\\/nationality2 > :nth-child(3)";
+	const firstLanguageErrorID = "#properties\\/first_language2 > :nth-child(3)";
 
 	const emailInputID = "#properties\\/email2-input";
-	const emailErrorID = "#properties\\/email2 > .MuiFormHelperText-root.Mui-error";
+	const emailErrorID = "#properties\\/email2 > :nth-child(3)";
 
-	const addressErrorID = "#properties\\/address2 > .MuiFormHelperText-root.Mui-error";
-	const neighborhoodErrorID = "#properties\\/neighbourhood2 > .MuiFormHelperText-root.Mui-error";
-	const occupationErrorID = "#properties\\/occupation2 > .MuiFormHelperText-root.Mui-error";
-	const workplaceErrorID = "#properties\\/workplace2 > .MuiFormHelperText-root.Mui-error";
-	const workplaceAddressErrorID = "#properties\\/workplace_address2 > .MuiFormHelperText-root.Mui-error";
-	const workplaceNeighborhoodErrorID = "#properties\\/workplace_neighbourhood2 > .MuiFormHelperText-root.Mui-error";
+	const addressErrorID = "#properties\\/address2 > :nth-child(3)";
+	const neighborhoodErrorID = "#properties\\/neighbourhood2 > :nth-child(3)";
+	const occupationErrorID = "#properties\\/occupation2 > :nth-child(3)";
+	const workplaceErrorID = "#properties\\/workplace2 > :nth-child(3)";
+	const workplaceAddressErrorID = "#properties\\/workplace_address2 > :nth-child(3)";
+	const workplaceNeighborhoodErrorID = "#properties\\/workplace_neighbourhood2 > :nth-child(3)";
 
 	const workPhoneInputID = "#properties\\/workplace_phone2-input";
-	const workPhoneErrorID = "#properties\\/workplace_phone2 > .MuiFormHelperText-root.Mui-error";
+	const workPhoneErrorID = "#properties\\/workplace_phone2 > :nth-child(3)";
 
 	it("does not show error messages before inputting info on any field", () => {
 		cy.get(familyInfoButtonID).click();
@@ -71,20 +71,21 @@ describe("studentFamilyInfo", () => {
 		cy.get(studentEditInfoButton).click();
 
 		//check first family member
-		cy.testInput(CIInputID, CIErrorID, "a", "50137758", "El campo de CI no puede estar vacío.");
+		cy.testInput(CIInputID, CIErrorID, "", "50137758", "Se deben ingresar solo los números, sin puntos ni guiones y no puede quedar vacía");
 		cy.testInput(dateOfBirthInputID, dateOfBirthID, "incorrecto", "10/5/1990", "");
-		cy.testInput(cellphoneInputID, cellphoneErrorID, "error", "099099990", "Teléfono tiene que ser un número con largo mayor a 0");
-		cy.testInput(emailInputID, emailErrorID, "error", "correcto@gmail.com", "Email incorrecto");
-		cy.testInput(workPhoneInputID, workPhoneErrorID, "error", "24080808", "Teléfono tiene que ser un número con largo mayor a 0");
+		cy.testInput(cellphoneInputID, cellphoneErrorID, "error", "099099990", "Tiene que ser un número de 9 dígitos.");
+		cy.testInput(emailInputID, emailErrorID, "error", "correcto@gmail.com", "Tiene que ser E-mail válido.");
+		cy.testInput(workPhoneInputID, workPhoneErrorID, "error", "24080808", "Tiene que ser un número de entre 8 a 9 dígitos.");
 
 		//check second family member
 		cy.get("#addFamilyMember").click();
+		cy.wait(200);
 
-		cy.testInput(CIInputID, CIErrorID, "a", "50137758", "El campo de CI no puede estar vacío.");
+		cy.testInput(CIInputID, CIErrorID, "a", "50137758", "Se deben ingresar solo los números, sin puntos ni guiones y no puede quedar vacía");
 		cy.testInput(dateOfBirthInputID, dateOfBirthID, "incorrecto", "10/5/1990", "");
-		cy.testInput(cellphoneInputID, cellphoneErrorID, "error", "099099990", "Teléfono tiene que ser un número con largo mayor a 0");
-		cy.testInput(emailInputID, emailErrorID, "error", "correcto@gmail.com", "Email incorrecto");
-		cy.testInput(workPhoneInputID, workPhoneErrorID, "error", "24080808", "Teléfono tiene que ser un número con largo mayor a 0");
+		cy.testInput(cellphoneInputID, cellphoneErrorID, "error", "099099990", "Tiene que ser un número de 9 dígitos.");
+		cy.testInput(emailInputID, emailErrorID, "error", "correcto@gmail.com", "Tiene que ser E-mail válido.");
+		cy.testInput(workPhoneInputID, workPhoneErrorID, "error", "24080808", "Tiene que ser un número de entre 8 a 9 dígitos.");
 	});
 
 	it("allows to create a student when all the required fields in the family info are complete", () => {

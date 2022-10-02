@@ -117,12 +117,19 @@ Cypress.Commands.add("testInput", (inputID: string, errorLabelID: string, incorr
 	const input = cy.get(inputID);
 	const errorLabel = cy.get(errorLabelID);
 
-	input.clear().type(incorrectInput);
+	input.clear();
 
-	if (errorMessage) assert(errorLabel.contains(errorMessage));
+	if (incorrectInput) {
+		input.type(incorrectInput);
+	}
+
+	if (errorMessage) {
+		cy.get(errorLabelID).should("have.text", errorMessage);
+	}
 
 	input.clear().type(correctInput);
 	if (errorMessage) assert(errorLabel.contains(errorMessage));
+	cy.wait(100);
 });
 
 //
