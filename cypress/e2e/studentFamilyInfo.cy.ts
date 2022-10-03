@@ -54,21 +54,21 @@ describe("studentFamilyInfo", () => {
 		cy.get(CIInputID);
 		cy.get(cellphoneInputID);
 
-		cy.get(fullNameErrorID).should("not.exist");
-		cy.get(CIErrorID).should("not.exist");
-		cy.get(maritalStatusErrorID).should("not.exist");
-		cy.get(cellphoneErrorID).should("not.exist");
-		cy.get(placeOfBirthErrorID).should("not.exist");
-		cy.get(nationalityErrorID).should("not.exist");
-		cy.get(firstLanguageErrorID).should("not.exist");
-		cy.get(emailErrorID).should("not.exist");
-		cy.get(addressErrorID).should("not.exist");
-		cy.get(neighborhoodErrorID).should("not.exist");
-		cy.get(occupationErrorID).should("not.exist");
-		cy.get(workplaceErrorID).should("not.exist");
-		cy.get(workplaceAddressErrorID).should("not.exist");
-		cy.get(workplaceNeighborhoodErrorID).should("not.exist");
-		cy.get(workPhoneErrorID).should("not.exist");
+		cy.get(fullNameErrorID).should("not.be.visible");
+		cy.get(CIErrorID).should("not.be.visible");
+		cy.get(maritalStatusErrorID).should("not.be.visible");
+		cy.get(cellphoneErrorID).should("not.be.visible");
+		cy.get(placeOfBirthErrorID).should("not.be.visible");
+		cy.get(nationalityErrorID).should("not.be.visible");
+		cy.get(firstLanguageErrorID).should("not.be.visible");
+		cy.get(emailErrorID).should("not.be.visible");
+		cy.get(addressErrorID).should("not.be.visible");
+		cy.get(neighborhoodErrorID).should("not.be.visible");
+		cy.get(occupationErrorID).should("not.be.visible");
+		cy.get(workplaceErrorID).should("not.be.visible");
+		cy.get(workplaceAddressErrorID).should("not.be.visible");
+		cy.get(workplaceNeighborhoodErrorID).should("not.be.visible");
+		cy.get(workPhoneErrorID).should("not.be.visible");
 	});
 
 	it("shows error message on fields that have restrictions with an incorrect input", () => {
@@ -124,7 +124,7 @@ describe("studentFamilyInfo", () => {
 
 		cy.get(createStudentButtonID).click();
 
-		cy.get(errorAlertDialogID).should("not.exist");
+		cy.get(errorAlertDialogID).should("not.be.visible");
 	});
 });
 

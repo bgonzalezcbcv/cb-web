@@ -67,20 +67,20 @@ describe("studentsBasicInfo",() => {
     it("does not show error messages before inputting info on any field", () => {
 		cy.get(basicInfoButtonID).click();
 
-		cy.get(nameFieldErrorID).should("not.exist");
-		cy.get(surnameFieldErrorID).should("not.exist");
-		cy.get(CIFieldErrorID).should("not.exist");
-		cy.get(statusFieldErrorID).should("not.exist");
-		cy.get(tuitionFieldErrorID).should("not.exist");
-		cy.get(GroupFieldErrorID).should("not.exist");
-		cy.get(SubGroupFieldErrorID).should("not.exist");
-		cy.get(placeOfBirthFieldErrorID).should("not.exist");
-		cy.get(nationalityFieldErrorID).should("not.exist");
-		cy.get(firstLanguageFieldErrorID).should("not.exist");
-		cy.get(neighborhoodFieldErrorID).should("not.exist");
-		cy.get(addressFieldErrorID).should("not.exist");
-		cy.get(medicalAssuranceFieldErrorID).should("not.exist");
-		cy.get(emergencyFieldErrorID).should("not.exist");
+		cy.get(nameFieldErrorID).should("not.be.visible");
+		cy.get(surnameFieldErrorID).should("not.be.visible");
+		cy.get(CIFieldErrorID).should("not.be.visible");
+		cy.get(statusFieldErrorID).should("not.be.visible");
+		cy.get(tuitionFieldErrorID).should("not.be.visible");
+		cy.get(GroupFieldErrorID).should("not.be.visible");
+		cy.get(SubGroupFieldErrorID).should("not.be.visible");
+		cy.get(placeOfBirthFieldErrorID).should("not.be.visible");
+		cy.get(nationalityFieldErrorID).should("not.be.visible");
+		cy.get(firstLanguageFieldErrorID).should("not.be.visible");
+		cy.get(neighborhoodFieldErrorID).should("not.be.visible");
+		cy.get(addressFieldErrorID).should("not.be.visible");
+		cy.get(medicalAssuranceFieldErrorID).should("not.be.visible");
+		cy.get(emergencyFieldErrorID).should("not.be.visible");
 	});
 
 	it("shows error message on fields that have restrictions with an incorrect input", () => {
@@ -115,6 +115,7 @@ describe("studentsBasicInfo",() => {
         cy.get(emergencyFieldID).type("Cooperativa ABC123XYZ");
         cy.get(vaccineExpirationInputID).type("03/03/2019");
         cy.fillStudentFamilyInfo();
+        cy.wait(300)
         cy.get(createButtonID).click();
 
         cy.get("body").should("not.include.text","Hay errores en los campos del alumno")

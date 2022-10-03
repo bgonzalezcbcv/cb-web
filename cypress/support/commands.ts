@@ -104,7 +104,7 @@ Cypress.Commands.add("fillStudentFamilyInfo", () => {
 		cy.get(emailFieldID).clear().type(familyMember.email);
 		cy.get(addressFieldID).clear().type(familyMember.address);
 		cy.get(neighborhoodFieldID).clear().type(familyMember.neighborhood);
-		cy.get(educationLevelInputID).click().get(`[data-value="${familyMember.educationLevel}"]`).click();
+		cy.get(educationLevelInputID).click().get(`[data-value='${familyMember.educationLevel}']`).click();
 		cy.get(occupationFieldID).clear().type(familyMember.occupation);
 		cy.get(workplaceFieldID).clear().type(familyMember.workplace);
 		cy.get(workplaceAddressFieldID).clear().type(familyMember.workplaceAddress);
