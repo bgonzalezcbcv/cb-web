@@ -1,0 +1,17 @@
+{
+	"ci": "12345678",
+	"name": "Nombre",
+	"surname": "Apellido",
+	"tuition": "Matrícula",
+	"referenceNumber": 0,
+	"birthDate": "11/9/1999",
+	"birthplace": "Uruguay",
+	"nationality": "Uruguayo",
+	"firstLanguage": "Español",
+	"status": "Estado",
+	"address": "Calle Falsa 1234",
+	"neighborhood": "Cerro",
+	"medicalAssurance": "Española",
+	"emergency": "SEMM",
+	"expirationDate": "2/5/2023"
+}

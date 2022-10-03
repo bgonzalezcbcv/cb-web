@@ -1,0 +1,285 @@
+{
+	"student": {
+		"id": "asdf",
+		"ci": "12345678",
+		"name": "Juan José",
+		"surname": "Rodriguez Perez",
+		"schedule_start": "asdf",
+		"schedule_end": "asdf",
+		"tuition": "",
+		"reference_number": 0,
+		"birthplace": "Montevideo",
+		"birthdate": "01/01/2021",
+		"nationality": "Uruguay",
+		"first_language": "Español",
+		"office": "",
+		"status": "",
+		"address": "Maciel 1373",
+		"neighborhood": "Ciudad Vieja",
+		"medical_assurance": "-",
+		"emergency": "-",
+		"phone_number": "2915 5280",
+		"vaccine_expiration": "1/1/2024",
+		"inscription_date": "",
+		"starting_date": "",
+		"contact": "",
+		"contact_phone": "",
+		"email": "anonymous",
+		"family": [
+			{
+				"role": "Padre",
+				"full_name": "Uno",
+				"birthdate": "01/01/1990",
+				"birthplace": "Uruguay",
+				"nationality": "Uruguay",
+				"first_language": "Español",
+				"ci": "12345678",
+				"marital_status": "Casado",
+				"cellphone": "099111222",
+				"email": "serranagonzalezs@colegiociudadvieja.edu.uy",
+				"address": "Maciel 1373",
+				"neighbourhood": "Ciudad Vieja",
+				"education_level": "Terciaria completa",
+				"occupation": "-",
+				"workplace": "-",
+				"workplace_address": "-",
+				"workplace_neighbourhood": "-",
+				"workplace_phone": "-"
+			},
+			{
+				"role": "Madre",
+				"full_name": "Dos",
+				"birthdate": "01/01/1990",
+				"birthplace": "Uruguay",
+				"nationality": "Uruguay",
+				"first_language": "Español",
+				"ci": "12345678",
+				"marital_status": "Casado",
+				"cellphone": "099111222",
+				"email": "serranagonzalezs@colegiociudadvieja.edu.uy",
+				"address": "Maciel 1373",
+				"neighbourhood": "-",
+				"education_level": "Terciaria completa",
+				"occupation": "-",
+				"workplace": "-",
+				"workplace_address": "-",
+				"workplace_neighbourhood": "-",
+				"workplace_phone": "-"
+			}
+		],
+		"question_categories": [
+			{
+				"category": "new",
+				"questions": [
+					{
+						"id": "1",
+						"question": "¿Con quién/quiénes vive el alumno/a?",
+						"answer": "Madre y Padre"
+					},
+					{
+						"id": "2",
+						"question": "¿Tiene hermanos?",
+						"answer": "Sí"
+					},
+					{
+						"id": "3",
+						"question": "¿Concurren a nuestra Institución?",
+						"answer": "Sí"
+					},
+					{
+						"id": "4",
+						"question": "Ubicación del alumno/a a inscribir en el orden de los hermanos",
+						"answer": "2"
+					},
+					{
+						"id": "5",
+						"question": "¿Cuántas laptops hay en la vivienda? (No incluir laptops de CEIBAL)",
+						"answer": "Ninguna"
+					},
+					{
+						"id": "6",
+						"question": "¿Cuántas pc fijas hay en la vivienda?",
+						"answer": "Ninguna"
+					},
+					{
+						"id": "7",
+						"question": "¿Cuántas tablets hay en la vivienda? (No incluir tablets de CEIBAL)",
+						"answer": "Ninguna"
+					},
+					{
+						"id": "8",
+						"question": "¿Cuántas laptop/tablet CEIBAL hay en la vivienda?",
+						"answer": "Ninguna"
+					},
+					{
+						"id": "9",
+						"question": "¿En el hogar hay acceso a internet?",
+						"answer": "Si"
+					},
+					{
+						"id": "10",
+						"question": "¿Tiene smartphone o celular inteligente con acceso a internet desde su hogar?",
+						"answer": "Si"
+					},
+					{
+						"id": "11",
+						"question": "¿Asistió a Instituciones anteriores?",
+						"answer": "Sí"
+					},
+					{
+						"id": "12",
+						"question": "¿Desde qué edad?",
+						"answer": "."
+					},
+					{
+						"id": "13",
+						"question": "Nombre de instituciones anteriores:",
+						"answer": "-"
+					},
+					{
+						"id": "14",
+						"question": "Escarlatina",
+						"answer": "Sí"
+					},
+					{
+						"id": "15",
+						"question": "Sarampión",
+						"answer": "Sí"
+					},
+					{
+						"id": "16",
+						"question": "Varicela",
+						"answer": "Sí"
+					},
+					{
+						"id": "17",
+						"question": "Rubeola",
+						"answer": "Sí"
+					},
+					{
+						"id": "18",
+						"question": "Paperas",
+						"answer": "Sí"
+					},
+					{
+						"id": "19",
+						"question": "Tos convulsa",
+						"answer": "Sí"
+					},
+					{
+						"id": "20",
+						"question": "¿Tuvo o tiene enfermedades importantes? ¿Cuáles?",
+						"answer": "-"
+					},
+					{
+						"id": "21",
+						"question": "¿Sufre enfermedades crónicas? ¿Cuáles?",
+						"answer": "-"
+					},
+					{
+						"id": "22",
+						"question": "¿Toma medicamentos regularmente? ¿Cuáles?",
+						"answer": "-"
+					},
+					{
+						"id": "23",
+						"question": "¿Existen consecuencias de accidentes? ¿Cuáles?",
+						"answer": "-"
+					},
+					{
+						"id": "24",
+						"question": "Alergias o intolerancia a algún alimento:",
+						"answer": "-"
+					},
+					{
+						"id": "25",
+						"question": "Otra información que desee aclarar:",
+						"answer": "-"
+					},
+					{
+						"id": "26",
+						"question": "Foniatra",
+						"answer": "Sí"
+					},
+					{
+						"id": "27",
+						"question": "Psicomotricista",
+						"answer": "Sí"
+					},
+					{
+						"id": "28",
+						"question": "Psicopedagogo",
+						"answer": "Sí"
+					},
+					{
+						"id": "29",
+						"question": "Psicólogo",
+						"answer": "Sí"
+					},
+					{
+						"id": "30",
+						"question": "Psiquiatra",
+						"answer": "Sí"
+					},
+					{
+						"id": "31",
+						"question": "Neuropediatra",
+						"answer": "Sí"
+					},
+					{
+						"id": "32",
+						"question": "¿Desea realizar algún comentario al respecto?",
+						"answer": "-"
+					},
+					{
+						"id": "33",
+						"question": "¿Cómo llegó a conocer nuestra Institución?",
+						"answer": "-"
+					},
+					{
+						"id": "34",
+						"question": "¿Qué conocimientos, habilidades y/o actitudes fundamentales cree que deben desarrollarse en el proceso de aprendizaje de su hijo/a para lograr un alto desempeño en la complejidad y desafíos del mu...",
+						"answer": "-"
+					},
+					{
+						"id": "35",
+						"question": "¿Porque considera importante una propuesta bilingüe en la formación de su hijo/a?",
+						"answer": "-"
+					},
+					{
+						"id": "36",
+						"question": "Detalle aquí otra información que crea importante y que pueda contribuir a una atención eficiente e integral del alumno/a:",
+						"answer": "-"
+					}
+				]
+			}
+		],
+		"administrative_info": {
+			"enrollment_date": "01/02/2022",
+			"starting_date": "01/03/2022",
+			"registration_commitment_url": "",
+			"scholarship_type": "bonificada",
+			"agreement_type": "Ninguno",
+			"comments": "",
+			"payment_methods": [
+				{
+					"year": 2022,
+					"method": "contado",
+					"yearly_payment_url": ""
+				}
+			],
+			"discounts": [
+				{
+					"percentage": 10,
+					"starting_date": "2022-01-03T03:00:00.000Z",
+					"ending_date": "2022-10-08T03:00:00.000Z",
+					"type": "dirección",
+					"resolution_url": "",
+					"explanation": "hermano",
+					"report_url": "",
+					"description": ""
+				}
+			]
+		}
+	}
+}

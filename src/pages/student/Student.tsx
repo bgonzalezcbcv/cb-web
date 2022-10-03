@@ -1,4 +1,5 @@
 /* eslint-disable */
+import _ from "lodash";
 import * as React from "react";
 
 import { Card } from "@mui/material";
@@ -7,6 +8,7 @@ import { Student as StudentModel } from "../../core/Models";
 import { defaultStudent } from "./DefaultStudent";
 
 import "./Student.scss";
+import { TabData } from "./components/StudentPageTabs/StudentPageTabs";
 
 const { FamilyForm, StudentInfo, AdministrativeInfo, CreateStudentDialog, TabPanel, StudentPageHeader, StudentPageTabs, EnrollmentQuestions } =
 	StudentComponents;
@@ -21,13 +23,20 @@ export default function Student(props: StudentProps): React.ReactElement {
 	const [student, setStudent] = React.useState<StudentModel>(defaultStudent);
 	const [isEditable, setIsEditable] = React.useState(false);
 
-	const tabLabels = ["Básica", "Familiar", "Complementaria", "Administrativa"];
+	const tabData: TabData[] = [
+		{ label: "Básica", dataCY: "basicInfoTab" },
+		{ label: "Familiar", dataCY: "familyInfoTab" },
+		{ label: "Complementaria", dataCY: "complementaryInfoTab" },
+		{ label: "Administrativa", dataCY: "administrativeInfoTab" },
+	];
+
+	const debouncedSetStudent = React.useCallback(_.debounce(setStudent, 200), []);
 
 	const panels = [
-		<StudentInfo student={student} onChange={setStudent} editable={isEditable} />,
-		<FamilyForm student={student} onChange={setStudent} editable={isEditable} />,
-		<EnrollmentQuestions student={student} onChange={setStudent} editable={isEditable} viewMode={mode} />,
-		<AdministrativeInfo student={student} onChange={setStudent} editable={isEditable} />,
+		<StudentInfo student={student} onChange={debouncedSetStudent} editable={isEditable} />,
+		<FamilyForm student={student} onChange={debouncedSetStudent} editable={isEditable} />,
+		<EnrollmentQuestions student={student} onChange={debouncedSetStudent} editable={isEditable} viewMode={mode} />,
+		<AdministrativeInfo student={student} onChange={debouncedSetStudent} editable={isEditable} />,
 	];
 
 	return (
@@ -45,7 +54,7 @@ export default function Student(props: StudentProps): React.ReactElement {
 			}}>
 			<StudentPageHeader mode={mode} setStudent={setStudent} setIsEditable={setIsEditable} isEditable={isEditable} student={student} />
 
-			<StudentPageTabs tabLabels={tabLabels} onChange={setCurrentTabIndex} value={currentTabIndex} />
+			<StudentPageTabs tabData={tabData} onChange={setCurrentTabIndex} value={currentTabIndex} />
 
 			{panels.map((panel, index) => (
 				<TabPanel className="panel-item" value={currentTabIndex} index={index}>

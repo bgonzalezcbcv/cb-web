@@ -49,7 +49,11 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 						<UploadFileIcon />
 					</Button>
 
-					<Button color={"secondary"} startIcon={isEditable ? <EditOffIcon /> : <EditIcon />} onClick={(): void => setIsEditable(!isEditable)}>
+					<Button
+						data-cy={"studentEditInfoButton"}
+						color={"secondary"}
+						startIcon={isEditable ? <EditOffIcon /> : <EditIcon />}
+						onClick={(): void => setIsEditable(!isEditable)}>
 						{"Editar"}{" "}
 					</Button>
 					{mode !== "CREATE" ? (
