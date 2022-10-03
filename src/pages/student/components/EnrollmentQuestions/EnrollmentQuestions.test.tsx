@@ -9,31 +9,31 @@ import * as API from "../../../../core/ApiStore";
 
 describe("EnrollmentQuestions", () => {
 	beforeEach(() => {
-		jest.spyOn(API, "getCicleQuestions").mockResolvedValue({
-			success: true,
-			questionCategories: [
-				{
-					category: "Categoria",
-					questions: [
-						{
-							id: "1",
-							question: "Pregunta1",
-							answer: "Respuesta1",
-						},
-						{
-							id: "2",
-							question: "Pregunta2",
-							answer: "Respuesta2",
-						},
-						{
-							id: "3",
-							question: "Pregunta3",
-							answer: "Respuesta3",
-						},
-					],
-				},
-			],
-		});
+		// jest.spyOn(API, "getCicleQuestions").mockResolvedValue({
+		// 	success: true,
+		// 	questionCategories: [
+		// 		{
+		// 			category: "Categoria",
+		// 			questions: [
+		// 				{
+		// 					id: "1",
+		// 					question: "Pregunta1",
+		// 					answer: "Respuesta1",
+		// 				},
+		// 				{
+		// 					id: "2",
+		// 					question: "Pregunta2",
+		// 					answer: "Respuesta2",
+		// 				},
+		// 				{
+		// 					id: "3",
+		// 					question: "Pregunta3",
+		// 					answer: "Respuesta3",
+		// 				},
+		// 			],
+		// 		},
+		// 	],
+		// });
 		jest.spyOn(API, "postAnswersEnrollmentQuestions").mockResolvedValue(true);
 		jest.useFakeTimers();
 	});

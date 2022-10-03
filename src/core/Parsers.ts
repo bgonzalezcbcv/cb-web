@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-import { Question, QuestionCategories, Student, StudentCreationForm } from "./Models";
+import { Cicle, Question, QuestionCategories, Student, StudentCreationForm } from "./Models";
 import { addLeadingZeroToDate } from "./CoreHelper";
 import * as API from "./ApiStore";
 
@@ -29,11 +29,11 @@ function fillAnswers(inscriptionQuestions: QuestionCategories[], questionsKey: s
 
 export async function parseFormToStudent(form: StudentCreationForm, student: Student): Promise<Student | null> {
 	// todo: to obtain from API.
-	const getQuestionsResponse = await API.getCicleQuestions(0);
+	const getQuestionsResponse = await API.getStudentQuestions();
 
 	if (!getQuestionsResponse.success) return null;
 
-	const inscriptionQuestions: QuestionCategories[] = getQuestionsResponse.questionCategories;
+	const inscriptionQuestions: QuestionCategories[] = getQuestionsResponse.cicle_question_categories[0].question_categories;
 
 	const questionsKeys = Object.keys(form);
 
@@ -95,7 +95,10 @@ export async function parseFormToStudent(form: StudentCreationForm, student: Stu
 					workplace_phone: form["Teléfono trabajo:2"],
 				},
 			],
-			question_categories: fillAnswers(inscriptionQuestions, questionsKeys, form),
+			cicle_question_categories: {
+				cicle: Cicle.None,
+				question_categories: fillAnswers(inscriptionQuestions, questionsKeys, form),
+			},
 		};
 
 		return _.mergeWith(student, formStudent, (obj, src) => {

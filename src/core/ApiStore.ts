@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { Cicle, Question, QuestionCategories, Student } from "./Models";
+import { Cicle, CicleQuestionCategories, Question, QuestionCategories, Student } from "./Models";
 
 const baseConfig = {
 	baseURL: process.env["REACT_APP_API_URL"],
@@ -52,14 +52,17 @@ export async function getCicles(): Promise<{ success: boolean; cicles: Cicle[] }
 	}
 }
 
-export async function getCicleQuestions(cicleId: number): Promise<{ success: boolean; questionCategories: QuestionCategories[] }> {
+export async function getStudentQuestions(studentId?: string): Promise<{ success: boolean; cicle_question_categories: CicleQuestionCategories[] }> {
 	try {
 		const config = {
 			...baseConfig,
 			method: "get",
-			url: `api/cicles/${cicleId}/questions`,
+			url: `api/TODO`,
 			headers: {
 				"Content-Type": "application/json",
+			},
+			params: {
+				student_id: studentId ?? null,
 			},
 		};
 
@@ -67,12 +70,12 @@ export async function getCicleQuestions(cicleId: number): Promise<{ success: boo
 
 		const result = {
 			success: response.status === 200,
-			questionCategories: response.data.questionCategories,
+			cicle_question_categories: response.data.cicle_question_categories,
 		};
 
 		return result;
 	} catch (e) {
-		return { success: false, questionCategories: [] };
+		return { success: false, cicle_question_categories: [] };
 	}
 }
 

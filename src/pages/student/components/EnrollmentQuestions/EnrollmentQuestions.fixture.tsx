@@ -1,48 +1,54 @@
-import { Student } from "../../../../core/Models";
+import { Cicle, Student } from "../../../../core/Models";
 
 import { defaultStudent } from "../../DefaultStudent";
 
 export const initialStudentData: Student = {
 	...defaultStudent,
-	question_categories: [
+
+	cicle_question_categories: [
 		{
-			category: "categoria 1",
-			questions: [
+			cicle: Cicle.None,
+			question_categories: [
 				{
-					id: "1",
-					question:
-						"question 1 pero es mucho muchomuchomuchomucho muchomuchomuchomuchomucho muchomuchomuchomuchomuchomuchomucho muchomuchomuchomuchomuchomuchomuchomuchomucho mas larga para romper todo",
-					answer: "answer 1a",
+					category: "categoria 1",
+					questions: [
+						{
+							id: "1",
+							question:
+								"question 1 pero es mucho muchomuchomuchomucho muchomuchomuchomuchomucho muchomuchomuchomuchomuchomuchomucho muchomuchomuchomuchomuchomuchomuchomuchomucho mas larga para romper todo",
+							answer: "answer 1a",
+						},
+						{
+							id: "2",
+							question: "question 2",
+							answer: "answer 2",
+						},
+						{
+							id: "3",
+							question: "question 3",
+							answer: "answer 3",
+						},
+					],
 				},
 				{
-					id: "2",
-					question: "question 2",
-					answer: "answer 2",
-				},
-				{
-					id: "3",
-					question: "question 3",
-					answer: "answer 3",
-				},
-			],
-		},
-		{
-			category: "categoria 2",
-			questions: [
-				{
-					id: "12",
-					question: "question 12",
-					answer: "answer 12",
-				},
-				{
-					id: "22",
-					question: "question 22",
-					answer: "answer 22",
-				},
-				{
-					id: "32",
-					question: "question 32",
-					answer: "answer 32",
+					category: "categoria 2",
+					questions: [
+						{
+							id: "12",
+							question: "question 12",
+							answer: "answer 12",
+						},
+						{
+							id: "22",
+							question: "question 22",
+							answer: "answer 22",
+						},
+						{
+							id: "32",
+							question: "question 32",
+							answer: "answer 32",
+						},
+					],
 				},
 			],
 		},
@@ -51,45 +57,50 @@ export const initialStudentData: Student = {
 
 export const expectedNewStudentData: Student = {
 	...defaultStudent,
-	question_categories: [
+	cicle_question_categories: [
 		{
-			category: "categoria 1",
-			questions: [
+			cicle: Cicle.None,
+			question_categories: [
 				{
-					id: "1",
-					question:
-						"question 1 pero es mucho muchomuchomuchomucho muchomuchomuchomuchomucho muchomuchomuchomuchomuchomuchomucho muchomuchomuchomuchomuchomuchomuchomuchomucho mas larga para romper todo",
-					answer: "answer 1anew",
+					category: "categoria 1",
+					questions: [
+						{
+							id: "1",
+							question:
+								"question 1 pero es mucho muchomuchomuchomucho muchomuchomuchomuchomucho muchomuchomuchomuchomuchomuchomucho muchomuchomuchomuchomuchomuchomuchomuchomucho mas larga para romper todo",
+							answer: "answer 1anew",
+						},
+						{
+							id: "2",
+							question: "question 2",
+							answer: "answer 2",
+						},
+						{
+							id: "3",
+							question: "question 3",
+							answer: "answer 3",
+						},
+					],
 				},
 				{
-					id: "2",
-					question: "question 2",
-					answer: "answer 2",
-				},
-				{
-					id: "3",
-					question: "question 3",
-					answer: "answer 3",
-				},
-			],
-		},
-		{
-			category: "categoria 2",
-			questions: [
-				{
-					id: "12",
-					question: "question 12",
-					answer: "answer 12",
-				},
-				{
-					id: "22",
-					question: "question 22",
-					answer: "answer 22",
-				},
-				{
-					id: "32",
-					question: "question 32",
-					answer: "answer 32",
+					category: "categoria 2",
+					questions: [
+						{
+							id: "12",
+							question: "question 12",
+							answer: "answer 12",
+						},
+						{
+							id: "22",
+							question: "question 22",
+							answer: "answer 22",
+						},
+						{
+							id: "32",
+							question: "question 32",
+							answer: "answer 32",
+						},
+					],
 				},
 			],
 		},

@@ -18,7 +18,7 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import * as API from "../../../../core/ApiStore";
-import { Question as QuestionModel, Student, Cicle, QuestionCategories } from "../../../../core/Models";
+import { Question as QuestionModel, Student, Cicle } from "../../../../core/Models";
 import Question from "./components/Question";
 
 export interface EnrollmentQuestionsProps {
@@ -28,23 +28,14 @@ export interface EnrollmentQuestionsProps {
 	viewMode: string;
 }
 
-async function getCicleQuestions(cicle: string): Promise<QuestionCategories[] | null> {
-	const cicleKey = Object.values(Cicle).indexOf(cicle as Cicle);
-	const questionData = await API.getCicleQuestions(cicleKey);
-
-	if (!questionData.success) return null;
-
-	return questionData.questionCategories;
-}
-
 export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): React.ReactElement {
 	const { student, editable, onChange, viewMode } = props;
 
 	const isViewMode = viewMode == "VIEW";
+	const cicleQuestionCategories = student.cicle_question_categories;
 
-	// student.question_categories
-	const [question_categories, setQuestionCategories] = useState(student.question_categories);
-	const [selectedCicle, setSelectedCicle] = useState(isViewMode ? "" : "None");
+	const [selectedCicle, setSelectedCicle] = useState<Cicle>(Cicle.None);
+	const [question_categories, setQuestionCategories] = useState(cicleQuestionCategories[0].question_categories);
 	const [error, setError] = useState<string | null>(null);
 
 	const studentCicles = Object.keys(Cicle) as Array<keyof typeof Cicle>;
@@ -53,42 +44,27 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 
 	const onChangeHandler = (changedQuestionCategoryIndex: number, changedQuestionIndex: number, newAnswerValue: string): void => {
 		const newStudentData: Student = _.cloneDeep(student);
-		newStudentData.question_categories[changedQuestionCategoryIndex].questions[changedQuestionIndex].answer = newAnswerValue;
+		newStudentData.cicle_question_categories.filter((q) => q.cicle == selectedCicle)[0].question_categories[changedQuestionCategoryIndex].questions[
+			changedQuestionIndex
+		].answer = newAnswerValue;
 
 		onChange(newStudentData);
 	};
 
 	useEffect(() => {
-		getCicleQuestions(selectedCicle).then((result) => {
-			if (result == null) {
-				setError("Error al cargar el archivo.");
-				return;
-			} else {
-				setQuestionCategories(result);
-			}
-		});
-	}, [setError, setQuestionCategories]);
-
-	useEffect(() => {
 		if (error) window.setTimeout(() => setError(null), 3000);
 	}, [error]);
 
-	const handleCicleChange = useCallback(
-		async (event: SelectChangeEvent): Promise<void> => {
-			const cicle = event.target.value;
-			setSelectedCicle(cicle);
+	const handleCicleChange = (event: SelectChangeEvent): void => {
+		const cicleString = event.target.value;
+		const cicleList = Object.keys(Cicle) as Array<keyof typeof Cicle>;
+		const cicleKey = cicleList.filter((c) => c == cicleString)[0];
+		const cicle = Cicle[cicleKey];
+		const cicleCategories = student.cicle_question_categories.filter((q) => q.cicle == selectedCicle)[0].question_categories;
 
-			const questions = await getCicleQuestions(cicle);
-
-			if (questions == null) {
-				setError("Error al cargar preguntas.");
-				return;
-			} else {
-				setQuestionCategories(questions);
-			}
-		},
-		[question_categories]
-	);
+		setSelectedCicle(cicle);
+		setQuestionCategories(cicleCategories);
+	};
 
 	const sendAnswers = useCallback(async (): Promise<void> => {
 		const answers: QuestionModel[] = [];
@@ -117,7 +93,7 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 						<Select value={selectedCicle} onChange={handleCicleChange}>
 							{validCicles.map((key: keyof typeof Cicle) => {
 								return (
-									<MenuItem key={key} value={key}>
+									<MenuItem key={key} value={Cicle[key]}>
 										{Cicle[key]}
 									</MenuItem>
 								);
@@ -161,7 +137,7 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 												key={`${category}-${categoryIndex}-question-${questionIndex}`}
 												question={question}
 												questionIndex={questionIndex}
-												editable={editable}
+												editable={editable && student.cicle == selectedCicle}
 												onChangeQuestion={(newAnswer): void => onChangeHandler(categoryIndex, questionIndex, newAnswer)}
 											/>
 										)

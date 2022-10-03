@@ -49,39 +49,44 @@ export const defaultStudent: Student = {
 			workplace_phone: "",
 		},
 	],
-	question_categories: [
+	cicle_question_categories: [
 		{
-			category: "Categoria",
-			questions: [
+			cicle: Cicle.None,
+			question_categories: [
 				{
-					id: "1",
-					question: "Pregunta",
-					answer: "Respuesta",
-				},
-				{
-					id: "1",
-					question: "Pregunta",
-					answer: "Respuesta",
-				},
-				{
-					id: "1",
-					question: "Pregunta",
-					answer: "Respuesta",
-				},
-				{
-					id: "1",
-					question: "Pregunta",
-					answer: "Respuesta",
-				},
-				{
-					id: "1",
-					question: "Pregunta",
-					answer: "Respuesta",
-				},
-				{
-					id: "1",
-					question: "Pregunta",
-					answer: "Respuesta",
+					category: "Categoria",
+					questions: [
+						{
+							id: "1",
+							question: "Pregunta",
+							answer: "Respuesta",
+						},
+						{
+							id: "1",
+							question: "Pregunta",
+							answer: "Respuesta",
+						},
+						{
+							id: "1",
+							question: "Pregunta",
+							answer: "Respuesta",
+						},
+						{
+							id: "1",
+							question: "Pregunta",
+							answer: "Respuesta",
+						},
+						{
+							id: "1",
+							question: "Pregunta",
+							answer: "Respuesta",
+						},
+						{
+							id: "1",
+							question: "Pregunta",
+							answer: "Respuesta",
+						},
+					],
 				},
 			],
 		},

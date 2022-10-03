@@ -9,6 +9,11 @@ export interface QuestionCategories {
 	questions: Question[];
 }
 
+export interface CicleQuestionCategories {
+	cicle: Cicle;
+	question_categories: QuestionCategories[];
+}
+
 export enum Cicle {
 	None = "Pre-Inscripción",
 	Nursery = "Maternal",
@@ -120,7 +125,7 @@ export interface Student {
 	contact_phone: string;
 	email: string;
 	family: FamilyMember[];
-	question_categories: QuestionCategories[];
+	cicle_question_categories: CicleQuestionCategories[];
 	administrative_info: AdministrativeInfo;
 	cicle: Cicle;
 }
