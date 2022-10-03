@@ -69,7 +69,7 @@ function ErrorList(props: ErrorListProps): JSX.Element {
 					<Typography fontWeight="bold" color="darkred" fontSize="medium">
 						{name}
 					</Typography>
-					
+
 					<List>
 						{arr.map((entry, index) => (
 							<ErrorList

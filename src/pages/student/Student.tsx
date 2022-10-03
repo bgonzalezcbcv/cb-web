@@ -7,6 +7,7 @@ import { Student as StudentModel } from "../../core/Models";
 import { defaultStudent } from "./DefaultStudent";
 
 import "./Student.scss";
+import { TabData } from "./components/StudentPageTabs/StudentPageTabs";
 
 const { FamilyForm, StudentInfo, AdministrativeInfo, CreateStudentDialog, TabPanel, StudentPageHeader, StudentPageTabs, EnrollmentQuestions } =
 	StudentComponents;
@@ -21,7 +22,12 @@ export default function Student(props: StudentProps): React.ReactElement {
 	const [student, setStudent] = React.useState<StudentModel>(defaultStudent);
 	const [isEditable, setIsEditable] = React.useState(false);
 
-	const tabLabels = ["Básica", "Familiar", "Complementaria", "Administrativa"];
+	const tabData: TabData[] = [
+		{ label: "Básica", dataCY: "basicInfoTab" },
+		{ label: "Familiar", dataCY: "familyInfoTab" },
+		{ label: "Complementaria", dataCY: "complementaryInfoTab" },
+		{ label: "Administrativa", dataCY: "administrativeInfoTab" },
+	];
 
 	const panels = [
 		<StudentInfo student={student} onChange={setStudent} editable={isEditable} />,
@@ -45,7 +51,7 @@ export default function Student(props: StudentProps): React.ReactElement {
 			}}>
 			<StudentPageHeader mode={mode} setStudent={setStudent} setIsEditable={setIsEditable} isEditable={isEditable} student={student} />
 
-			<StudentPageTabs tabLabels={tabLabels} onChange={setCurrentTabIndex} value={currentTabIndex} />
+			<StudentPageTabs tabData={tabData} onChange={setCurrentTabIndex} value={currentTabIndex} />
 
 			{panels.map((panel, index) => (
 				<TabPanel className="panel-item" value={currentTabIndex} index={index}>

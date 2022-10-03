@@ -1,38 +1,38 @@
 .administrative-info {
-  display: flex;
-  flex-direction: row;
-  place-items: center;
-  justify-content: space-between;
+	display: flex;
+	flex-direction: row;
+	place-items: center;
+	justify-content: space-between;
 
-  .form-container {
-    width: 30%;
-    padding-left: 30px;
-  }
+	.form-container {
+		width: 30%;
+		padding-left: 30px;
+	}
 
-  .file-uploader-container {
-    margin-top: 5px;
-  }
+	.file-uploader-container {
+		margin-top: 5px;
+	}
 
-  .comments {
-    width: 100%;
-    margin-top: 2px;
-  }
+	.comments {
+		width: 100%;
+		margin-top: 2px;
+	}
 
-  .document-download-container {
-    display: flex;
-    padding-top: 20px;
-    justify-content: space-between;
-    align-items: center;
+	.document-download-container {
+		display: flex;
+		padding-top: 20px;
+		justify-content: space-between;
+		align-items: center;
 
-    .document-download {
-      color: rgba(0, 0, 0, 0.38);
-    }
-  }
+		.document-download {
+			color: rgba(0, 0, 0, 0.38);
+		}
+	}
 
-  .payment-details-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 70%;
-  }
+	.payment-details-wrapper {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 70%;
+	}
 }

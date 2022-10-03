@@ -7,11 +7,15 @@ import Tabs, { tabsClasses } from "@mui/material/Tabs";
 
 interface StudentPageTabsProps {
 	onChange: (newValue: number) => void;
-	tabLabels: string[];
+	tabData: TabData[];
 	value: number;
 }
+export interface TabData {
+	label: string;
+	dataCY: string;
+}
 export default function StudentPageTabs(props: StudentPageTabsProps): React.ReactElement {
-	const { tabLabels, onChange, value } = props;
+	const { tabData, onChange, value } = props;
 
 	const handleChange = (event: React.SyntheticEvent, newValue: number): void => {
 		onChange(newValue);
@@ -29,8 +33,8 @@ export default function StudentPageTabs(props: StudentPageTabsProps): React.Reac
 						"&.Mui-disabled": { opacity: 0.3 },
 					},
 				}}>
-				{tabLabels.map((tabLabel: string) => (
-					<Tab label={tabLabel} />
+				{tabData.map((tabData) => (
+					<Tab label={tabData.label} data-cy={tabData.dataCY} />
 				))}
 			</Tabs>
 		</Box>
