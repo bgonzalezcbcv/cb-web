@@ -6,34 +6,40 @@ import * as UseDebounce from "../../../../hooks/useDebounce";
 import EnrollmentQuestions from "./EnrollmentQuestions";
 import { initialStudentData, expectedNewStudentData } from "./EnrollmentQuestions.fixture";
 import * as API from "../../../../core/ApiStore";
+import { Cicle } from "../../../../core/Models";
 
 describe("EnrollmentQuestions", () => {
 	beforeEach(() => {
-		// jest.spyOn(API, "getCicleQuestions").mockResolvedValue({
-		// 	success: true,
-		// 	questionCategories: [
-		// 		{
-		// 			category: "Categoria",
-		// 			questions: [
-		// 				{
-		// 					id: "1",
-		// 					question: "Pregunta1",
-		// 					answer: "Respuesta1",
-		// 				},
-		// 				{
-		// 					id: "2",
-		// 					question: "Pregunta2",
-		// 					answer: "Respuesta2",
-		// 				},
-		// 				{
-		// 					id: "3",
-		// 					question: "Pregunta3",
-		// 					answer: "Respuesta3",
-		// 				},
-		// 			],
-		// 		},
-		// 	],
-		// });
+		jest.spyOn(API, "getStudentQuestions").mockResolvedValue({
+			success: true,
+			cicle_question_categories: [
+				{
+					cicle: Cicle.None,
+					question_categories: [
+						{
+							category: "Categoria",
+							questions: [
+								{
+									id: "1",
+									question: "Pregunta1",
+									answer: "Respuesta1",
+								},
+								{
+									id: "2",
+									question: "Pregunta2",
+									answer: "Respuesta2",
+								},
+								{
+									id: "3",
+									question: "Pregunta3",
+									answer: "Respuesta3",
+								},
+							],
+						},
+					],
+				},
+			],
+		});
 		jest.spyOn(API, "postAnswersEnrollmentQuestions").mockResolvedValue(true);
 		jest.useFakeTimers();
 	});

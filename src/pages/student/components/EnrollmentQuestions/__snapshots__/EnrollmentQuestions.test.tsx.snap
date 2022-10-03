@@ -36,7 +36,7 @@ exports[`EnrollmentQuestions should render correctly create mode 1`] = `
               aria-hidden="true"
               class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
               tabindex="-1"
-              value="None"
+              value="Pre-Inscripción"
             />
             <svg
               aria-hidden="true"
@@ -458,8 +458,8 @@ exports[`EnrollmentQuestions should render correctly view mode 1`] = `
           class="MuiFormControl-root css-1otb2k4-MuiFormControl-root"
         >
           <label
-            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-standard MuiFormLabel-colorPrimary css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root"
-            data-shrink="false"
+            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary MuiFormLabel-filled css-1c2i806-MuiFormLabel-root-MuiInputLabel-root"
+            data-shrink="true"
           >
             Seleccionar Ciclo
           </label>
@@ -473,17 +473,13 @@ exports[`EnrollmentQuestions should render correctly view mode 1`] = `
               role="button"
               tabindex="0"
             >
-              <span
-                class="notranslate"
-              >
-                ​
-              </span>
+              Pre-Inscripción
             </div>
             <input
               aria-hidden="true"
               class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
               tabindex="-1"
-              value=""
+              value="Pre-Inscripción"
             />
             <svg
               aria-hidden="true"
