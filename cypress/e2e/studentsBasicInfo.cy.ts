@@ -1,6 +1,6 @@
 describe("studentsBasicInfo",() => {
-    const basicInfoButtonID = "[data-cy="basicInfoTab"]"
-    const editButtonID= '[data-cy="studentEditInfoButton"]'
+    const basicInfoButtonID = '[data-cy="basicInfoTab"]';
+    const editButtonID= '[data-cy="studentEditInfoButton"]';
     
     const nameFieldID = "#\\#\\/properties\\/name2-input";
     const nameFieldErrorID = "#\\#\\/properties\\/name2 > :nth-child(3)";
@@ -53,7 +53,7 @@ describe("studentsBasicInfo",() => {
     const vaccineExpirationInputID = "#\\#\\/properties\\/vaccine_expiration2-input";
     const vaccineExpirationID = ":nth-child(6) > .MuiGrid-container > :nth-child(3) > .MuiFormControl-root";
 
-    const createButtonID = "[data-cy="createStudentButton"]"
+    const createButtonID = '[data-cy="createStudentButton"]'
 
     
     beforeEach(() => {
