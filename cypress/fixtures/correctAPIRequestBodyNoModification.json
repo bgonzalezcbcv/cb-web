@@ -1,7 +1,7 @@
 {
 	"student": {
 		"id": "asdf",
-		"ci": "1234567-8",
+		"ci": "12345678",
 		"name": "Juan José",
 		"surname": "Rodriguez Perez",
 		"schedule_start": "asdf",
@@ -33,7 +33,7 @@
 				"birthplace": "Uruguay",
 				"nationality": "Uruguay",
 				"first_language": "Español",
-				"ci": "1234567-8",
+				"ci": "12345678",
 				"marital_status": "Casado",
 				"cellphone": "099111222",
 				"email": "serranagonzalezs@colegiociudadvieja.edu.uy",
@@ -53,7 +53,7 @@
 				"birthplace": "Uruguay",
 				"nationality": "Uruguay",
 				"first_language": "Español",
-				"ci": "1234567-8",
+				"ci": "12345678",
 				"marital_status": "Casado",
 				"cellphone": "099111222",
 				"email": "serranagonzalezs@colegiociudadvieja.edu.uy",
@@ -255,8 +255,8 @@
 			}
 		],
 		"administrative_info": {
-			"enrollment_date": "2022-01-02T03:00:00.000Z",
-			"starting_date": "2022-01-03T03:00:00.000Z",
+			"enrollment_date": "01/02/2022",
+			"starting_date": "01/03/2022",
 			"registration_commitment_url": "",
 			"scholarship_type": "bonificada",
 			"agreement_type": "Ninguno",
