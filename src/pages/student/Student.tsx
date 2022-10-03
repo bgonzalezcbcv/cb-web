@@ -1,4 +1,5 @@
 /* eslint-disable */
+import _ from "lodash";
 import * as React from "react";
 
 import { Card } from "@mui/material";
@@ -23,11 +24,13 @@ export default function Student(props: StudentProps): React.ReactElement {
 
 	const tabLabels = ["Básica", "Familiar", "Complementaria", "Administrativa"];
 
+	const debouncedSetStudent = React.useCallback(_.debounce(setStudent, 200), []);
+
 	const panels = [
-		<StudentInfo student={student} onChange={setStudent} editable={isEditable} />,
-		<FamilyForm student={student} onChange={setStudent} editable={isEditable} />,
-		<EnrollmentQuestions student={student} onChange={setStudent} editable={isEditable} />,
-		<AdministrativeInfo student={student} onChange={setStudent} editable={isEditable} />,
+		<StudentInfo student={student} onChange={debouncedSetStudent} editable={isEditable} />,
+		<FamilyForm student={student} onChange={debouncedSetStudent} editable={isEditable} />,
+		<EnrollmentQuestions student={student} onChange={debouncedSetStudent} editable={isEditable} />,
+		<AdministrativeInfo student={student} onChange={debouncedSetStudent} editable={isEditable} />,
 	];
 
 	return (
