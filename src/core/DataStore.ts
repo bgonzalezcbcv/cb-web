@@ -45,12 +45,13 @@ export class DataStore {
 
 	// todo: need to implement this function.
 	@action
-	public logIn(email: string, token: string, name: string, role: UserRole): boolean {
+	public logIn(email: string, token: string, name: string, surname: string, role: UserRole): boolean {
 		this.loggedUser = {
-			email: email,
-			token: token,
-			name: name,
-			role: role,
+			email,
+			name,
+			surname,
+			token,
+			role,
 		};
 
 		return true;
@@ -80,7 +81,8 @@ export class DataStore {
 reaction(
 	() => JSON.stringify(DataStore.getInstance()),
 	(json) => {
-		localStorage.setItem("store", json);
+		console.log(json); // todo: Maybe this local storage will not go anymore
+		// localStorage.setItem("store", json);
 	},
 	{
 		delay: 500,
