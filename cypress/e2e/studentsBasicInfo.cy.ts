@@ -1,5 +1,5 @@
 describe("studentsBasicInfo",() => {
-    const basicInfoButtonID = ".MuiTabs-flexContainer > :nth-child(1)"
+    const basicInfoButtonID = "[data-cy="basicInfoTab"]"
     const editButtonID= '[data-cy="studentEditInfoButton"]'
     
     const nameFieldID = "#\\#\\/properties\\/name2-input";
@@ -53,7 +53,7 @@ describe("studentsBasicInfo",() => {
     const vaccineExpirationInputID = "#\\#\\/properties\\/vaccine_expiration2-input";
     const vaccineExpirationID = ":nth-child(6) > .MuiGrid-container > :nth-child(3) > .MuiFormControl-root";
 
-    const createButtonID = ".MuiBox-root > .MuiButtonBase-root"
+    const createButtonID = "[data-cy="createStudentButton"]"
 
     
     beforeEach(() => {
@@ -88,7 +88,7 @@ describe("studentsBasicInfo",() => {
 		cy.get(editButtonID).click();
 
 		//check basic data
-		cy.testInput(CIFieldID, CIFieldErrorID, "", "50137758", "Se deben ingresar solo números, sin puntos ni guiones y no puede quedar vacía");
+		cy.testInput(CIFieldID, CIFieldErrorID, "", "50137758", "Se deben ingresar solo números y letras, sin puntos ni guiones y no puede quedar vacía");
 		cy.testInput(dateOfBirthInputID, dateOfBirthID, "incorrecto", "10/5/1990", "");
 		cy.testInput(vaccineExpirationInputID, vaccineExpirationID, "incorrecto", "10/5/2022", "");
 	});
