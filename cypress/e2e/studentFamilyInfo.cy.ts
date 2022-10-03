@@ -13,6 +13,8 @@ describe("studentFamilyInfo", () => {
 	const familyInfoButtonID = '[data-cy="familyInfoTab"]';
 	const studentEditInfoButton = '[data-cy="studentEditInfoButton"]';
 
+	const errorAlertDialogID = '[data-cy="errorAlertDialog"]';
+
 	const roleInputID = "#properties\\/role2-input";
 
 	const fullNameErrorID = "#properties\\/full_name2 > :nth-child(3)";
@@ -48,6 +50,9 @@ describe("studentFamilyInfo", () => {
 
 	it("does not show error messages before inputting info on any field", () => {
 		cy.get(familyInfoButtonID).click();
+
+		cy.get(CIInputID);
+		cy.get(cellphoneInputID);
 
 		cy.get(fullNameErrorID).should("not.exist");
 		cy.get(CIErrorID).should("not.exist");
@@ -88,9 +93,23 @@ describe("studentFamilyInfo", () => {
 		cy.testInput(workPhoneInputID, workPhoneErrorID, "error", "24080808", "Tiene que ser un número de entre 8 a 9 dígitos.");
 	});
 
-	it("allows to create a student when all the required fields in the family info are complete", () => {
-		const errorAlertDialogID = '[data-cy="errorAlertDialog"]';
+	it("shows error when creating student if there is an error on some family info field", () => {
+		cy.get(studentEditInfoButton).click();
 
+		cy.fillStudentBasicInfo();
+
+		cy.get(familyInfoButtonID).click();
+
+		cy.get(CIInputID);
+		cy.get(cellphoneInputID);
+
+		cy.get(CIInputID).should("be.empty");
+
+		cy.get(createStudentButtonID).click();
+		cy.get(errorAlertDialogID).should("exist");
+	});
+
+	it("allows to create a student when all the required fields in the family info are complete", () => {
 		cy.get(studentEditInfoButton).click();
 
 		cy.fillStudentBasicInfo();
