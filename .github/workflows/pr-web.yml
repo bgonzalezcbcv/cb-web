@@ -11,8 +11,6 @@ jobs:
         strategy:
             matrix:
                 node-version: [16.x]
-        env: 
-            CI: ""
         steps:
             - uses: actions/checkout@v3
             - name: Use Node.js ${{ matrix.node-version }}
