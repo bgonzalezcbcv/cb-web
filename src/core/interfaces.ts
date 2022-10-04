@@ -42,7 +42,8 @@ export enum UserRole {
 export interface User {
 	email: string;
 	token: string;
-	displayName: string;
+	name: string;
+	surname: string;
 	role: UserRole;
 }
 

@@ -1,89 +1,110 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 
+import { login } from "../../core/ApiStore";
+import { DataStore } from "../../core/DataStore";
+import { Translator } from "@jsonforms/core";
 import { JsonForms } from "@jsonforms/react";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
-import { Alert, Button, Card, CardContent, Grid } from "@mui/material";
-import { VisualComponent } from "../../core/interfaces";
-import { DataStore } from "../../core/DataStore";
-import { useIsMounted } from "../../hooks/useIsMounted";
+import { Alert, Button, Card, CardContent, Grid, Box } from "@mui/material";
+import { ValidationMode } from "@jsonforms/core";
 
 import schema from "./login-schema.json";
 import ui from "./login-ui.json";
-import { ValidationMode } from "@jsonforms/core";
+import logo from "../../assets/Vertical.svg";
 
-function Login(props: VisualComponent): JSX.Element {
-	const { width, height } = props;
+import "./Login.scss";
+import { basicTranslator } from "../../core/CoreHelper";
+import { LoadingButton } from "@mui/lab";
 
-	const [data, setData] = useState({});
+function Login(): JSX.Element {
+	const dataStore = DataStore.getInstance();
+
+	const [loginInfo, setLoginInfo] = useState<{ email: string; password: string }>({ email: "", password: "" });
 	const [errors, setErrors] = useState<unknown[]>([]);
 	const [validationMode, setValidationMode] = useState<ValidationMode>("ValidateAndHide");
-
-	const [errorAlert, setErrorAlert] = useState<string | undefined>(undefined);
-
-	const [isMounted] = useIsMounted();
-
-	const dataStore = DataStore.getInstance();
+	const [errMsg, setErrMsg] = useState<string | undefined>(undefined);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		dataStore.loggedUser && navigate("/");
-	}, [dataStore.loggedUser, navigate]);
+	const handleSubmit = async (): Promise<void> => {
+		setIsLoading(true);
 
-	function onSubmit(): void {
+		setTimeout(() => {
+			setIsLoading(false);
+		}, 3000);
+
 		setValidationMode("ValidateAndShow");
-
-		if (errors.length > 0) return;
-
-		if (!dataStore.logIn()) {
-			setErrorAlert("Hubo un error al iniciar sesión. Intente de nuevo.");
-			setTimeout(() => setErrorAlert(undefined), 2000);
+		if (errors.length > 0) {
+			setIsLoading(false);
+			return;
 		}
-	}
 
-	if (!isMounted) return <></>;
+		const { success, data, err } = await login(loginInfo.email, loginInfo.password);
+
+		if (success && data) {
+			const { email, token, name, surname, role } = data;
+
+			if (dataStore.logIn(email, token, name, surname, role)) navigate("/");
+			else setErrMsg("Error al iniciar sesión. Intentar nuevamente.");
+		} else {
+			setErrMsg(err);
+		}
+
+		setIsLoading(false);
+	};
+
+	const translator = basicTranslator([
+		{
+			id: "email",
+			errorMessage: "Email incorrecto.",
+		},
+		{
+			id: "password",
+			errorMessage: "Esta campo debe tener largo mayor a 6.",
+		},
+	]);
 
 	return (
-		<Grid container alignContent="center" justifyContent="center" height="100%" style={{ background: "#8ea8d9" }}>
-			<Grid item height="fitcontent">
-				<Card
-					className="create-teachers"
-					sx={{
-						width: width ?? "100%",
-						height: height ?? "100%",
-						overflowY: "auto",
-					}}>
-					<CardContent>
-						<h1>Iniciar Sesión</h1>
-
+		<Box className="loginBody" width="100%" height="100%">
+			<Grid alignContent="center" justifyContent="center">
+				<Card className="contenedor">
+					<CardContent className="contenedor">
+						<div className="formHeader">
+							<img className="loginLogo" src={logo} alt="logo" />
+							<h1 className="title">Bienvenido</h1>
+						</div>
 						<JsonForms
+							i18n={{ translate: translator as Translator }}
 							schema={schema}
 							uischema={ui}
-							data={data}
+							data={loginInfo}
 							renderers={materialRenderers}
 							cells={materialCells}
 							onChange={({ errors, data }): void => {
 								setErrors(errors ?? []);
-								setData(data);
+								setLoginInfo(data);
 							}}
 							validationMode={validationMode}
 						/>
-
-						<Button variant="contained" onClick={onSubmit}>
-							Iniciar Sesión!
-						</Button>
-
-						{errorAlert ? (
-							<Alert severity="error" onClose={(): void => setErrorAlert(undefined)}>
-								{errorAlert}
+						{!isLoading ? (
+							<Button className="loginButton" onClick={handleSubmit}>
+								Iniciar Sesión
+							</Button>
+						) : (
+							<LoadingButton loading className="loadingButton"></LoadingButton>
+						)}
+						{errMsg ? (
+							<Alert severity="error" variant="outlined" onClose={(): void => setErrMsg(undefined)}>
+								{errMsg}
 							</Alert>
 						) : null}
 					</CardContent>
 				</Card>
 			</Grid>
-		</Grid>
+		</Box>
 	);
 }
 

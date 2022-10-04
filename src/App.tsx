@@ -1,5 +1,6 @@
 // First we import the named libraries: React, lodash, react-router-dom, etc.
 import React from "react";
+import _ from "lodash";
 
 // Secondly we import our types, core elements, pages, components and lastly images.
 import { DataStore } from "./core/DataStore";
@@ -28,7 +29,7 @@ function App(): React.ReactElement {
 				<Box className="container">
 					<ThemeProvider theme={theme}>
 						<Box className="content" style={{ display: "flex", width: "100%" }}>
-							{loggedUser?.role && <Sidebar sections={sidebarSections} />}
+							{!_.isNil(loggedUser?.role) && <Sidebar sections={sidebarSections} />}
 							<Box style={{ display: "flex", flexDirection: "column", width: "100%" }}>
 								<Box className="navbar">{loggedUser && <Navbar />}</Box>
 
@@ -37,7 +38,6 @@ function App(): React.ReactElement {
 										{loggedUser ? (
 											<>
 												<Route path="/student" element={<Student mode={"CREATE"} />} />
-												<Route path="/login" element={<Login />} />
 												<Route path="*" element={<Navigate to="/student" />} />
 											</>
 										) : (

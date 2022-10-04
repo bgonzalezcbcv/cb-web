@@ -5,7 +5,6 @@
 			"type": "string",
 			"title": "Correo electrónico",
 			"format": "email",
-			"minLength": 6,
 			"maxLength": 127
 		},
 		"password": {
