@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { Cicle, CicleQuestionCategories, Question, QuestionCategories, Student } from "./Models";
+import { Cicle, CicleQuestionCategories, Question, Student } from "./Models";
 
 const baseConfig = {
 	baseURL: process.env["REACT_APP_API_URL"],
