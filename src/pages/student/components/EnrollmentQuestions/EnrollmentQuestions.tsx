@@ -58,9 +58,10 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 	const handleCicleChange = (event: SelectChangeEvent): void => {
 		const cicleString = event.target.value;
 		const cicleList = Object.keys(Cicle) as Array<keyof typeof Cicle>;
-		const cicleKey = cicleList.filter((c) => c == cicleString)[0];
+		const cicleIndex = Object.values(Cicle).indexOf(cicleString as Cicle);
+		const cicleKey = cicleList[cicleIndex];
 		const cicle = Cicle[cicleKey];
-		const cicleCategories = student.cicle_question_categories.filter((q) => q.cicle == selectedCicle)[0].question_categories;
+		const cicleCategories = student.cicle_question_categories.filter((q) => q.cicle == cicle)[0].question_categories;
 
 		setSelectedCicle(cicle);
 		setQuestionCategories(cicleCategories);
