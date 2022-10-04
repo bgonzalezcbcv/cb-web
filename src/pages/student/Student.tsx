@@ -52,7 +52,15 @@ export default function Student(props: StudentProps): React.ReactElement {
 				justifyContent: "space-between",
 				boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
 			}}>
-			<StudentPageHeader mode={mode} setStudent={setStudent} setIsEditable={setIsEditable} isEditable={isEditable} student={student} />
+			<StudentPageHeader
+				mode={mode}
+				setStudent={(uploadedStudent) => {
+					setStudent({ ...uploadedStudent });
+				}}
+				setIsEditable={setIsEditable}
+				isEditable={isEditable}
+				student={student}
+			/>
 
 			<StudentPageTabs tabData={tabData} onChange={setCurrentTabIndex} value={currentTabIndex} />
 
