@@ -16,6 +16,7 @@ const baseConfig = {
 };
 
 // todo: use this instance in order to do a middleware.
+//eslint-disable-next-line
 const axiosInstance = new Axios(baseConfig);
 
 // todo: create middleware in order to log out on 403.
