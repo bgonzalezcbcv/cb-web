@@ -119,7 +119,7 @@ describe("createStudent", () => {
 
 		cy.get(nameFieldID).should("have.value", "Juan José");
 		cy.get(surnameFieldID).should("have.value", "Rodriguez Perez");
-		cy.get(CIFieldID).should("have.value", "1234567-8");
+		cy.get(CIFieldID).should("have.value", "12345678");
 		cy.get(statusFieldID).should("have.value", "");
 		cy.get(tuitionFieldID).should("have.value", "");
 		cy.get(referenceNumberFieldID).should("have.value", "0");
