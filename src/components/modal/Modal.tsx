@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 
-import { Box, Button, IconButton, Modal as MUIModal, Typography } from "@mui/material";
+import { Box, Button, IconButton, Typography, Dialog, Container } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 import "./Modal.scss";
@@ -8,53 +8,40 @@ import "./Modal.scss";
 export type ModalProps = {
 	show: boolean;
 	title: string;
-	body: React.ReactElement;
+	children: React.ReactElement;
 	cancelText?: string;
 	acceptText?: string;
 	onClose: () => void;
 	onAccept: () => void;
+	acceptEnabled?: boolean;
 };
 
 export default function Modal(props: ModalProps): React.ReactElement {
-	const { acceptText, body, cancelText, show, title, onClose, onAccept } = props;
+	const { acceptText, children, cancelText, show, title, onClose, onAccept, acceptEnabled } = props;
 
-	const [isOpen, setIsOpen] = useState<boolean>(false);
-
-	useEffect(() => {
-		setIsOpen(show);
-	}, [show]);
-
-	const handleModalClose = useCallback(() => {
-		setIsOpen(false);
-		onClose();
-	}, [onClose]);
-
-	const handleModalAccept = useCallback(() => {
-		setIsOpen(false);
-		onAccept();
-	}, [onAccept]);
-
-	return (
-		<MUIModal open={isOpen} onClose={handleModalClose}>
+	return show ? (
+		<Dialog open={show} onClose={onClose}>
 			<Box className="modal">
 				<IconButton>
-					<CloseIcon onClick={handleModalClose} />
+					<CloseIcon onClick={onClose} />
 				</IconButton>
-
-				<div className="wrapper">
+				<Container className="wrapper">
 					<Typography variant={"h6"}>{title}</Typography>
-					{body}
-				</div>
+					{children}
+				</Container>
 
-				<div className="button-container">
-					<Button variant="outlined" color={"secondary"} sx={{ marginRight: 2 }} onClick={handleModalClose}>
+				<Container className="button-container" sx={{ display: "flex" }}>
+					<Button variant="outlined" sx={{ marginRight: 2 }} onClick={onClose}>
 						{cancelText ?? "Cancelar"}
 					</Button>
-					<Button variant="contained" color={"secondary"} onClick={handleModalAccept}>
+
+					<Button variant="contained" onClick={onAccept} disabled={!acceptEnabled}>
 						{acceptText ?? "Aceptar"}
 					</Button>
-				</div>
+				</Container>
 			</Box>
-		</MUIModal>
+		</Dialog>
+	) : (
+		<></>
 	);
 }

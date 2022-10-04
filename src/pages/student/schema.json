@@ -398,7 +398,6 @@
 							"starting_date": {
 								"title": "Comienzo",
 								"type": "string",
-								"format": "date",
 								"errorMessage": "Debe ser una fecha de inicio correcta."
 							},
 							"ending_date": {

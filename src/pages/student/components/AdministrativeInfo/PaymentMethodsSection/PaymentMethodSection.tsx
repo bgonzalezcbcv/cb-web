@@ -4,7 +4,7 @@ import * as Models from "../../../../../core/Models";
 import { VisualComponent } from "../../../../../core/interfaces";
 import Modal from "../../../../../components/modal/Modal";
 import PaymentMethodHistory from "../historyTables/PaymentMethodHistory";
-import { Box, Card, CardContent, Divider, IconButton, Typography } from "@mui/material";
+import { Card, CardContent, Divider, Container, Box, IconButton, Typography } from "@mui/material";
 import { JsonForms } from "@jsonforms/react";
 import { JsonSchema7, Translator } from "@jsonforms/core";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
@@ -27,6 +27,7 @@ export default function PaymentMethodSection(props: VisualComponent & PaymentMet
 
 	const [paymentMethodModalOpen, setPaymentMethodModalOpen] = React.useState(false);
 	const [paymentMethodData, setPaymentMethodData] = useState<Models.PaymentMethod>({} as Models.PaymentMethod);
+	const [hasFormErrors, setHasFormErrors] = useState<boolean>(false);
 
 	const handlePaymentMethodModalOpen = useCallback(() => {
 		setPaymentMethodModalOpen(true);
@@ -75,29 +76,26 @@ export default function PaymentMethodSection(props: VisualComponent & PaymentMet
 						<Modal
 							show={paymentMethodModalOpen}
 							title={"Agregar una nueva forma de pago"}
-							body={
-								<Box className="payment-method-modal-wrapper">
-									<JsonForms
-										i18n={{ translate: translator as Translator }}
-										schema={schema as JsonSchema7}
-										uischema={ui}
-										data={{ administrative_info: { payment_methods: [paymentMethodData] } }}
-										renderers={materialRenderers}
-										cells={materialCells}
-										onChange={({ data, errors }): void => {
-											if (data?.administrative_info?.payment_methods && data.administrative_info.payment_methods.length > 0) {
-												const info = data.administrative_info.payment_methods[0];
-												setPaymentMethodData(info);
-											}
-										}}
-									/>
-								</Box>
-							}
 							onClose={handlePaymentMethodModalClose}
 							onAccept={() => {
 								handleAddNewPaymentMethod(paymentMethodData);
 							}}
-						/>
+							acceptEnabled={!hasFormErrors}>
+							<Container className="payment-method-modal-wrapper">
+								<JsonForms
+									i18n={{ translate: translator as Translator }}
+									schema={schema.properties.administrative_info.properties.payment_methods.items as JsonSchema7}
+									uischema={ui}
+									data={paymentMethodData}
+									renderers={materialRenderers}
+									cells={materialCells}
+									onChange={({ data, errors }): void => {
+										setPaymentMethodData(data);
+										setHasFormErrors(errors?.length != 0);
+									}}
+								/>
+							</Container>
+						</Modal>
 					</Box>
 				</Box>
 

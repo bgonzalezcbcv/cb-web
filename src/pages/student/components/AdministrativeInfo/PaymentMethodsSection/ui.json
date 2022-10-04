@@ -6,15 +6,15 @@
 			"elements": [
 				{
 					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/payment_methods/items/properties/year"
+					"scope": "#/properties/year"
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/payment_methods/items/properties/method"
+					"scope": "#/properties/method"
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/payment_methods/items/properties/yearly_payment_url"
+					"scope": "#/properties/yearly_payment_url"
 				}
 			]
 		}
