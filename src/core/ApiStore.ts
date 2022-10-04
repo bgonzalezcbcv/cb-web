@@ -62,7 +62,7 @@ export async function login(email: string, password: string): Promise<{ success:
 
 		if (bearer !== "Bearer") return errObject;
 
-		return { success: true, data: { email, token, name, surname, role: role ?? UserRole.Administrador }, err: "" };
+		return { success: true, data: { email, token, name, surname, role: role ?? UserRole.Administrativo }, err: "" };
 		// eslint-disable-next-line
 	} catch (error: any) {
 		let err = "";
