@@ -8,7 +8,7 @@ describe("Login", () => {
 	});
 
 	it("can login", () => {
-		cy.get(emailFieldID).type("aa@a.a");
+		cy.get(emailFieldID).type("test@test.com");
 		cy.get(passwordFieldID).type("password");
 		cy.wait(200);
 		cy.get(loginButtonID).click();
