@@ -26,8 +26,8 @@
 					"scope": "properties/birthdate",
 					"options": {
 						"format": "date",
-						"dateFormat": "DD/MM/YYYY",
-						"dateSaveFormat": "DD/MM/YYYY"
+						"dateFormat": "DD-MM-YYYY",
+						"dateSaveFormat": "DD-MM-YYYY"
 					}
 				},
 				{

@@ -21,7 +21,7 @@ export default function Student(props: StudentProps): React.ReactElement {
 
 	const [currentTabIndex, setCurrentTabIndex] = React.useState(0);
 	const [student, setStudent] = React.useState<StudentModel>(defaultStudent);
-	const [isEditable, setIsEditable] = React.useState(false);
+	const [isEditable, setIsEditable] = React.useState(true);
 
 	const tabData: TabData[] = [
 		{ label: "Básica", dataCY: "basicInfoTab" },
