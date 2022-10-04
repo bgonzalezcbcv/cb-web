@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite";
 
 import { login } from "../../core/ApiStore";
 import { DataStore } from "../../core/DataStore";
+import { Translator } from "@jsonforms/core";
 import { JsonForms } from "@jsonforms/react";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
 import { Alert, Button, Card, CardContent, Grid, Box } from "@mui/material";
@@ -14,6 +15,7 @@ import ui from "./login-ui.json";
 import logo from "../../assets/Vertical.svg";
 
 import "./Login.scss";
+import { basicTranslator } from "../../core/CoreHelper";
 import { LoadingButton } from "@mui/lab";
 
 function Login(): JSX.Element {
@@ -55,6 +57,17 @@ function Login(): JSX.Element {
 		setIsLoading(false);
 	};
 
+	const translator = basicTranslator([
+		{
+			id: "email",
+			errorMessage: "Email incorrecto.",
+		},
+		{
+			id: "password",
+			errorMessage: "Esta campo debe tener largo mayor a 6.",
+		},
+	]);
+
 	return (
 		<Box className="loginBody" width="100%" height="100%">
 			<Grid alignContent="center" justifyContent="center">
@@ -65,6 +78,7 @@ function Login(): JSX.Element {
 							<h1 className="title">Bienvenido</h1>
 						</div>
 						<JsonForms
+							i18n={{ translate: translator as Translator }}
 							schema={schema}
 							uischema={ui}
 							data={loginInfo}
