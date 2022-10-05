@@ -90,7 +90,7 @@ function Login(): JSX.Element {
 							validationMode={validationMode}
 						/>
 						{!isLoading ? (
-							<Button className="loginButton" onClick={handleSubmit}>
+							<Button className="loginButton" data-cy="loginButton" onClick={handleSubmit}>
 								Iniciar Sesión
 							</Button>
 						) : (

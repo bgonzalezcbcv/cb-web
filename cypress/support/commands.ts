@@ -16,7 +16,7 @@
 Cypress.Commands.add("login", (email = "test@test.com", password = "password") => {
 	const emailFieldID = "#\\#\\/properties\\/email2-input";
 	const passwordFieldID = "#\\#\\/properties\\/password2-input";
-	const loginButtonID = ".MuiButton-root";
+	const loginButtonID = '[data-cy="loginButton"]';
 
 	cy.session([email, password], () => {
 		cy.visit("/login");
@@ -27,8 +27,8 @@ Cypress.Commands.add("login", (email = "test@test.com", password = "password") =
 
 		cy.get(loginButtonID).click();
 
-		cy.wait(1000);
 		cy.url().should("not.contain", "/login");
+		cy.window().its("sessionStorage").invoke("getItem", "store").should("exist");
 	});
 });
 

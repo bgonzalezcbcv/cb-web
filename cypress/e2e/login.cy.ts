@@ -1,7 +1,7 @@
 describe("Login", () => {
 	const emailFieldID = "#\\#\\/properties\\/email2-input";
 	const passwordFieldID = "#\\#\\/properties\\/password2-input";
-	const loginButtonID = ".MuiButton-root";
+	const loginButtonID = '[data-cy="loginButton"]';
 
 	beforeEach(() => {
 		cy.visit("/login");
