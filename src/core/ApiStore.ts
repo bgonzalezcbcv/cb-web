@@ -52,12 +52,36 @@ export async function getCicles(): Promise<{ success: boolean; cicles: Cicle[] }
 	}
 }
 
+export async function getCicleQuetions(cicleId: number): Promise<{ success: boolean; cicle_questions: QuestionCategories[] }> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: `api/cicles/${cicleId}/questions`,
+			headers: {
+				"Content-Type": "application/json",
+			},
+		};
+
+		const response = await axios(config);
+
+		const result = {
+			success: response.status === 200,
+			cicle_question_categories: response.data.cicle_questions,
+		};
+
+		return result;
+	} catch (e) {
+		return { success: false, cicle_question_categories: [] };
+	}
+}
+
 export async function getStudentQuestions(studentId?: string): Promise<{ success: boolean; cicle_question_categories: CicleQuestionCategories[] }> {
 	try {
 		const config = {
 			...baseConfig,
 			method: "get",
-			url: `api/TODO`,
+			url: `api/cicles/:cicle_id/questions`,
 			headers: {
 				"Content-Type": "application/json",
 			},
