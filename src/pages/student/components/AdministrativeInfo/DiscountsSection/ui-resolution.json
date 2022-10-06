@@ -3,7 +3,7 @@
 	"elements": [
 		{
 			"type": "Control",
-			"scope": "#/properties/administrative_info/properties/discounts/items/0/properties/starting_date",
+			"scope": "#/properties/starting_date",
 			"options": {
 				"format": "date",
 				"dateFormat": "DD/MM/YYYY",
@@ -12,7 +12,7 @@
 		},
 		{
 			"type": "Control",
-			"scope": "#/properties/administrative_info/properties/discounts/items/0/properties/ending_date",
+			"scope": "#/properties/ending_date",
 			"options": {
 				"format": "date",
 				"dateFormat": "DD/MM/YYYY",
@@ -21,7 +21,7 @@
 		},
 		{
 			"type": "Control",
-			"scope": "#/properties/administrative_info/properties/discounts/items/0/properties/description"
+			"scope": "#/properties/description"
 		}
 	]
 }

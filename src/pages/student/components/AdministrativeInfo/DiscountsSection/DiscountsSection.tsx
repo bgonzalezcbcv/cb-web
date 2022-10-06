@@ -137,9 +137,9 @@ export default function DiscountsSection(props: VisualComponent & Administrative
 										<Typography>{"Resolución"}</Typography>
 										<JsonForms
 											i18n={{ translate: translator as Translator }}
-											schema={schema as JsonSchema7}
+											schema={schema.properties.administrative_info.properties.discounts.items as JsonSchema7}
 											uischema={uiResolution}
-											data={{ administrative_info: { discounts: [discountData] } }}
+											data={discountData}
 											renderers={materialRenderers}
 											cells={materialCells}
 											onChange={({ data, errors }): void => {
@@ -154,9 +154,9 @@ export default function DiscountsSection(props: VisualComponent & Administrative
 										<Typography>{"Informe Administrativo"}</Typography>
 										<JsonForms
 											i18n={{ translate: translator as Translator }}
-											schema={schema as JsonSchema7}
+											schema={schema.properties.administrative_info.properties.discounts.items as JsonSchema7}
 											uischema={uiReport}
-											data={{ administrative_info: { discounts: [discountData] } }}
+											data={discountData}
 											renderers={materialRenderers}
 											cells={materialCells}
 											onChange={({ data, errors }): void => {
