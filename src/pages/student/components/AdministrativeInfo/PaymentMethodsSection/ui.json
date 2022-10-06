@@ -1,22 +1,13 @@
 {
-	"type": "VerticalLayout",
+	"type": "HorizontalLayout",
 	"elements": [
 		{
-			"type": "HorizontalLayout",
-			"elements": [
-				{
-					"type": "Control",
-					"scope": "#/properties/year"
-				},
-				{
-					"type": "Control",
-					"scope": "#/properties/method"
-				},
-				{
-					"type": "Control",
-					"scope": "#/properties/yearly_payment_url"
-				}
-			]
+			"type": "Control",
+			"scope": "#/properties/year"
+		},
+		{
+			"type": "Control",
+			"scope": "#/properties/method"
 		}
 	]
 }

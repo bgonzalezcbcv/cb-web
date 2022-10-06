@@ -354,109 +354,107 @@
 				},
 				"payment_methods": {
 					"type": "array",
-					"items": {
-						"type": "object",
-						"properties": {
-							"method": {
-								"oneOf": [
-									{
-										"const": "contado",
-										"title": "Contado"
-									},
-									{
-										"const": "financiacion",
-										"title": "Financiación"
-									},
-									{
-										"const": "licitacion",
-										"title": "Licitación"
-									}
-								],
-								"title": "Método de pago",
-								"type": "string",
-								"errorMessage": "Tiene que ser alguno de los métodos de pagos disponibles."
+					"items": [
+						{
+							"type": "object",
+							"properties": {
+								"method": {
+									"oneOf": [
+										{
+											"const": "contado",
+											"title": "Contado"
+										},
+										{
+											"const": "financiacion",
+											"title": "Financiación"
+										},
+										{
+											"const": "licitacion",
+											"title": "Licitación"
+										}
+									],
+									"title": "Método de pago",
+									"type": "string",
+									"errorMessage": "Tiene que ser alguno de los métodos de pagos disponibles."
+								},
+								"year": {
+									"title": "Año",
+									"type": "integer"
+								},
+								"yearly_payment_url": {
+									"title": "Pago anualidad firmado",
+									"type": "string"
+								}
 							},
-							"year": {
-								"title": "Año",
-								"type": "integer"
-							},
-							"yearly_payment_url": {
-								"title": "Pago anualidad firmado",
-								"type": "string"
-							}
-						},
-						"required": ["method", "year"]
-					},
-					"minItems": 0
+							"required": ["method", "year"]
+						}
+					]
 				},
 				"discounts": {
 					"type": "array",
 					"title": "Descuentos",
-					"items": {
-						"type": "object",
-						"properties": {
-							"starting_date": {
-								"title": "Comienzo",
-								"type": "string",
-								"errorMessage": "Debe ser una fecha de inicio correcta."
+					"items": [
+						{
+							"type": "object",
+							"properties": {
+								"starting_date": {
+									"title": "Comienzo",
+									"type": "string"
+								},
+								"ending_date": {
+									"title": "Fin",
+									"type": "string"
+								},
+								"explanation": {
+									"oneOf": [
+										{
+											"const": "hermano",
+											"title": "Hermano"
+										},
+										{
+											"const": "resolución",
+											"title": "Resolución"
+										}
+									],
+									"title": "Explicación",
+									"type": "string",
+									"default": "Sibling"
+								},
+								"percentage": {
+									"title": "%",
+									"type": "integer"
+								},
+								"type": {
+									"oneOf": [
+										{
+											"const": "dirección",
+											"title": "Dirección"
+										},
+										{
+											"const": "asistente social",
+											"title": "Asistente Social"
+										}
+									],
+									"title": "Tipo",
+									"type": "string",
+									"default": "Direction"
+								},
+								"report_url": {
+									"title": "Informe administrativo",
+									"type": "string"
+								},
+								"description": {
+									"title": "Descripción",
+									"type": "string"
+								},
+								"resolution_url": {
+									"title": "Resolución",
+									"type": "string"
+								}
 							},
-							"ending_date": {
-								"title": "Fin",
-								"type": "string",
-								"errorMessage": "Debe ser una fecha de finalización correcta."
-							},
-							"explanation": {
-								"oneOf": [
-									{
-										"const": "hermano",
-										"title": "Hermano"
-									},
-									{
-										"const": "resolución",
-										"title": "Resolución"
-									}
-								],
-								"title": "Explicación",
-								"type": "string",
-								"default": "Sibling",
-								"errorMessage": "Tiene que ser una explicación de las disponibles."
-							},
-							"percentage": {
-								"title": "%",
-								"type": "integer"
-							},
-							"type": {
-								"oneOf": [
-									{
-										"const": "dirección",
-										"title": "Dirección"
-									},
-									{
-										"const": "asistente social",
-										"title": "Asistente Social"
-									}
-								],
-								"title": "Tipo",
-								"type": "string",
-								"default": "Direction",
-								"errorMessage": "Tiene que ser alguno de los tipos disponibles."
-							},
-							"report_url": {
-								"title": "Informe administrativo",
-								"type": "string"
-							},
-							"description": {
-								"title": "Descripción",
-								"type": "string"
-							},
-							"resolution_url": {
-								"title": "Resolución",
-								"type": "string"
-							}
-						},
-						"required": ["starting_date", "ending_date", "explanation", "percentage", "type", "report_url"]
-					},
-					"minItems": 0
+							"required": ["starting_date", "ending_date", "explanation", "percentage", "report_url"]
+						}
+					]
 				}
 			},
 			"required": ["registration_commitment_url", "scholarship_type", "agreement_type", "comments", "payment_methods", "discounts"]

@@ -18,12 +18,12 @@ export default function DiscountHistory(props: DiscountHistoryProps): React.Reac
 					<TableRow hover>
 						<TableCell sx={{ fontWeight: 600 }}>Comienzo</TableCell>
 						<TableCell sx={{ fontWeight: 600 }}>Fin</TableCell>
-						<TableCell sx={{ fontWeight: 600 }}>Porcentaje</TableCell>
+						<TableCell sx={{ fontWeight: 600 }}>%</TableCell>
 						<TableCell sx={{ fontWeight: 600 }}>Explicación</TableCell>
 						<TableCell sx={{ fontWeight: 600 }}>Descripción</TableCell>
 						<TableCell sx={{ fontWeight: 600 }}>Resolución</TableCell>
 						<TableCell sx={{ fontWeight: 600 }}>Tipo</TableCell>
-						<TableCell sx={{ fontWeight: 600 }}>Informe administrativo</TableCell>
+						<TableCell sx={{ fontWeight: 600 }}>Informe</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>

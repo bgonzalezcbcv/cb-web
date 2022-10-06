@@ -1,0 +1,9 @@
+{
+	"type": "HorizontalLayout",
+	"elements": [
+		{
+			"type": "Control",
+			"scope": "#/properties/administrative_info/properties/discounts/items/0/properties/type"
+		}
+	]
+}

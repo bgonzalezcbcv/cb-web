@@ -1,18 +1,21 @@
+/* eslint-disable */
 import React, { useCallback, useState } from "react";
 
 import * as Models from "../../../../../core/Models";
 import { VisualComponent } from "../../../../../core/interfaces";
 import Modal from "../../../../../components/modal/Modal";
 import DiscountHistory from ".././historyTables/DiscountHistory";
-import { Card, CardContent, Divider, IconButton, Box, Typography, Alert, Container } from "@mui/material";
+import FileUploader from "../../../../../components/fileUploader/FileUploader";
+import { Card, CardContent, Divider, IconButton, Container, Typography, Box, Alert } from "@mui/material";
 import { JsonForms } from "@jsonforms/react";
 import { JsonSchema7, Translator } from "@jsonforms/core";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
-
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 import schema from "../../../schema.json";
 import ui from "./ui.json";
+import uiResolution from "./ui-resolution.json";
+import uiReport from "./ui-report.json";
 
 import "./DiscountsSection.scss";
 
@@ -60,7 +63,7 @@ export default function DiscountsSection(props: VisualComponent & Administrative
 	};
 
 	//TODO: Adjust this when file handling is defined
-	const handleAddNewDiscount = useCallback((discountData: DiscountData) => {
+	const handleAddNewDiscount = useCallback((discountData: DiscountData, student: Models.Student) => {
 		const newDiscount: Models.Discount = {
 			percentage: discountData.percentage,
 			starting_date: new Date(discountData.starting_date),
@@ -80,6 +83,22 @@ export default function DiscountsSection(props: VisualComponent & Administrative
 		handleDiscountModalClose();
 	}, []);
 
+	function setResolutionFile(file: File | undefined): void {
+		//TODO
+	}
+
+	function setReportFile(file: File | undefined): void {
+		//TODO
+	}
+
+	function setData(data: any, hasErrors: boolean): void {
+		setDiscountData(data);
+		const startDate = new Date(data.starting_date);
+		const endDate = new Date(data.ending_date);
+		setHasDateErrors(data.starting_date && data.ending_date && startDate > endDate);
+		setHasFormErrors(hasErrors);
+	}
+
 	return (
 		<Card color={"primary"} className="discount-wrapper">
 			<CardContent className="payment-content">
@@ -98,7 +117,7 @@ export default function DiscountsSection(props: VisualComponent & Administrative
 							title={"Agregar un nuevo descuento"}
 							onClose={handleDiscountModalClose}
 							onAccept={(): void => {
-								handleAddNewDiscount(discountData);
+								handleAddNewDiscount(discountData, student);
 							}}
 							acceptEnabled={!hasFormErrors && !hasDateErrors}>
 							<Container>
@@ -110,13 +129,43 @@ export default function DiscountsSection(props: VisualComponent & Administrative
 									renderers={materialRenderers}
 									cells={materialCells}
 									onChange={({ data, errors }): void => {
-										setDiscountData(data);
-										const startDate = new Date(data.starting_date);
-										const endDate = new Date(data.ending_date);
-										setHasDateErrors(data.starting_date && data.ending_date && startDate > endDate);
-										setHasFormErrors(errors?.length != 0);
+										setData(data, errors?.length != 0);
 									}}
 								/>
+								{discountData.explanation == Models.DiscountExplanation.Resolution.valueOf() ? (
+									<Container style={{ paddingRight: "0px", paddingLeft: "0px", paddingTop: "15px" }}>
+										<Typography>{"Resolución"}</Typography>
+										<JsonForms
+											i18n={{ translate: translator as Translator }}
+											schema={schema as JsonSchema7}
+											uischema={uiResolution}
+											data={{ administrative_info: { discounts: [discountData] } }}
+											renderers={materialRenderers}
+											cells={materialCells}
+											onChange={({ data, errors }): void => {
+												setData(data, errors?.length != 0);
+											}}
+										/>
+										<FileUploader label={"Resolución"} width={"100%"} uploadedFile={(file): void => setResolutionFile(file)} />
+									</Container>
+								) : null}
+								{discountData.explanation == Models.DiscountExplanation.Resolution.valueOf() ? (
+									<Container style={{ paddingRight: "0px", paddingLeft: "0px", paddingTop: "15px" }}>
+										<Typography>{"Informe Administrativo"}</Typography>
+										<JsonForms
+											i18n={{ translate: translator as Translator }}
+											schema={schema as JsonSchema7}
+											uischema={uiReport}
+											data={{ administrative_info: { discounts: [discountData] } }}
+											renderers={materialRenderers}
+											cells={materialCells}
+											onChange={({ data, errors }): void => {
+												setData(data, errors?.length != 0);
+											}}
+										/>
+										<FileUploader label={"Informe"} width={"100%"} uploadedFile={(file): void => setReportFile(file)} />
+									</Container>
+								) : null}
 								{hasDateErrors ? <Alert severity="error">La fecha de fin debe ser posterior a la fecha de inicio</Alert> : null}
 							</Container>
 						</Modal>
