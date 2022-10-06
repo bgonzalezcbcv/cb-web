@@ -1,7 +1,7 @@
 name: Staging Deploy to Amazon ECS
 
 on:
-  worflow_dispatch:
+  workflow_dispatch:
   # push:
   #   branches: 
   #     - main
