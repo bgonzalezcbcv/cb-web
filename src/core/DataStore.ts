@@ -13,7 +13,7 @@ export class DataStore {
 	public agreementTypes: string[] = ["Ninguno"];
 
 	private constructor() {
-		const savedStateJson = localStorage.getItem("store");
+		const savedStateJson = sessionStorage.getItem("store");
 
 		if (savedStateJson) {
 			try {
@@ -81,8 +81,7 @@ export class DataStore {
 reaction(
 	() => JSON.stringify(DataStore.getInstance()),
 	(json) => {
-		console.log(json); // todo: Maybe this local storage will not go anymore
-		// localStorage.setItem("store", json);
+		sessionStorage.setItem("store", json);
 	},
 	{
 		delay: 500,

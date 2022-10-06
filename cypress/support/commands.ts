@@ -13,18 +13,23 @@
 //
 //
 // -- This is a parent command --
-Cypress.Commands.add("login", (email = "aa@a.a", password = "password") => {
+Cypress.Commands.add("login", (email = "test@test.com", password = "password") => {
 	const emailFieldID = "#\\#\\/properties\\/email2-input";
 	const passwordFieldID = "#\\#\\/properties\\/password2-input";
-	const loginButtonID = ".MuiButton-root";
+	const loginButtonID = '[data-cy="loginButton"]';
 
-	cy.visit("/login");
-	cy.wait(100);
-	cy.get(emailFieldID).type(email);
-	cy.get(passwordFieldID).type(password);
-	cy.wait(1000);
+	cy.session([email, password], () => {
+		cy.visit("/login");
+		cy.wait(100);
+		cy.get(emailFieldID).type(email);
+		cy.get(passwordFieldID).type(password);
+		cy.wait(1000);
 
-	cy.get(loginButtonID).click();
+		cy.get(loginButtonID).click();
+
+		cy.url().should("not.contain", "/login");
+		cy.window().its("sessionStorage").invoke("getItem", "store").should("exist");
+	});
 });
 
 Cypress.Commands.add("fillStudentBasicInfo", () => {
