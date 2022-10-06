@@ -8,7 +8,7 @@
 		"schedule_end": "asdf",
 		"tuition": "Matrícula",
 		"reference_number": 0,
-		"birthplace": "",
+		"birthplace": "Uruguay",
 		"nationality": "Uruguayo",
 		"first_language": "Español",
 		"office": "",
@@ -25,7 +25,7 @@
 		"email": "",
 		"family": [
 			{
-				"ci": "",
+				"ci": "23456789",
 				"role": "Madre",
 				"full_name": "Josefina Perez Perez",
 				"birthplace": "Uruguay",

@@ -90,6 +90,8 @@ describe("createStudent", () => {
 			}
 		);
 
+		cy.wait(500);
+
 		cy.get(createStudentButtonID).click();
 		cy.get(confirmCreateStudentButtonID).click();
 	});

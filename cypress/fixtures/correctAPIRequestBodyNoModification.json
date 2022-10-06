@@ -255,8 +255,8 @@
 			}
 		],
 		"administrative_info": {
-			"enrollment_date": "2022-01-02T03:00:00.000Z",
-			"starting_date": "2022-01-03T03:00:00.000Z",
+			"enrollment_date": "01/02/2022",
+			"starting_date": "01/03/2022",
 			"registration_commitment_url": "",
 			"scholarship_type": "bonificada",
 			"agreement_type": "Ninguno",
