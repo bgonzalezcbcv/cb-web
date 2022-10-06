@@ -8,6 +8,7 @@ import * as AJVHelper from "../../../../../core/AJVHelper";
 import * as ErrorList from "../../../../../components/ErrorList/ErrorList";
 import { ErrorObject } from "ajv";
 import userEvent from "@testing-library/user-event";
+import { StudentPageMode } from "../../../../../core/interfaces";
 
 describe("CreateStudentDialog", () => {
 	beforeEach(() => {

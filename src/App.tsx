@@ -1,20 +1,21 @@
 // First we import the named libraries: React, lodash, react-router-dom, etc.
-import React from "react";
 import _ from "lodash";
+import React from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { observer } from "mobx-react-lite";
 
 // Secondly we import our types, core elements, pages, components and lastly images.
 import { DataStore } from "./core/DataStore";
+import { StudentPageMode } from "./core/interfaces";
 import { getSidebarSectionsByUser } from "./core/userRoleHelper";
 import CreateUser from "./pages/user/CreateUser";
-import Student from "./pages/student/Student";
 import Login from "./pages/login/Login";
+import Student from "./pages/student/Student";
+import { theme } from "./core/theme";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
 import { Box } from "@mui/material";
-import { theme } from "./core/theme";
 import { ThemeProvider } from "@mui/material/styles";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { observer } from "mobx-react-lite";
 
 // Lastly we import our stylesheets.
 import "./App.css";
@@ -38,9 +39,12 @@ function App(): React.ReactElement {
 									<Routes>
 										{loggedUser ? (
 											<>
-												<Route path="/student" element={<Student mode={"CREATE"} />} />
 												<Route path="/login" element={<Login />} />
 												<Route path="/createuser" element={<CreateUser />} />
+												<Route path="/student" element={<Student mode={StudentPageMode.create} />} />
+												<Route path="/student/:id" element={<Student mode={StudentPageMode.view} />} />
+												<Route path="/student/:id/edit" element={<Student mode={StudentPageMode.edit} />} />
+
 												<Route path="*" element={<Navigate to="/student" />} />
 											</>
 										) : (

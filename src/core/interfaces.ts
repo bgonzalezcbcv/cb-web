@@ -64,3 +64,9 @@ export enum CreationState {
 	success = "success",
 	fail = "fail",
 }
+
+export enum StudentPageMode {
+	create = "CREATE",
+	edit = "EDIT",
+	view = "VIEW",
+}

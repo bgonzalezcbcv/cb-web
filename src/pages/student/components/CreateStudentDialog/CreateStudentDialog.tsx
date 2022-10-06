@@ -2,10 +2,10 @@ import React, { useCallback, useState } from "react";
 
 import { Student } from "../../../../core/Models";
 import * as API from "../../../../core/ApiStore";
-import { ajv as studentAjv, getAjvErrors } from "../../../../core/AJVHelper";
-import { getParsedErrors } from "../../../../core/AJVHelper";
+import { ajv as studentAjv, getAjvErrors, getParsedErrors } from "../../../../core/AJVHelper";
+import { StudentPageMode } from "../../../../core/interfaces";
 
-import { Button, Box, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Typography, Alert } from "@mui/material";
+import { Alert, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import ErrorList from "../../../../components/ErrorList/ErrorList";
 
@@ -13,10 +13,12 @@ import studentSchema from "../../schema.json";
 
 interface CreateStudentDialogProps {
 	student: Student;
+	mode?: StudentPageMode;
 }
 
 function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElement {
-	const { student } = props;
+	const { student, mode: modeProps } = props;
+	const mode = modeProps ?? StudentPageMode.create;
 
 	const [isOpen, setIsOpen] = React.useState(false);
 	const [studentCreationState, setStudentCreationState] = React.useState<"idle" | "inProcess" | "success" | "fail">("idle");
@@ -40,6 +42,8 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 		setStudentCreationState("idle");
 	};
 
+	const handleStudentEdition = (): void => alert("No implementada");
+
 	const onCreateClickHandler = (): void => {
 		studentAjv.validate(studentSchema, student);
 
@@ -49,7 +53,8 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 			setIsOpen(true);
 			setErrors(getParsedErrors(studentAjv));
 		} else {
-			handleStudentCreation();
+			if (mode === StudentPageMode.create) handleStudentCreation();
+			else handleStudentEdition();
 		}
 	};
 
@@ -60,7 +65,8 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 
 				<Box display="flex" justifyContent="flex-end" alignContent="flex-end" alignSelf="flex-end" onClick={onCreateClickHandler}>
 					<Button color={"secondary"} variant="outlined" data-cy="createStudentButton">
-						Crear Alumno
+						{mode === StudentPageMode.create && "Crear Alumno"}
+						{mode === StudentPageMode.edit && "Guardar"}
 					</Button>
 				</Box>
 			</Box>
@@ -76,10 +82,14 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 					<DialogContent>
 						{studentCreationState === "fail" ? (
 							<Alert severity="error" data-cy="errorAlertTitle">
-								No se pudo crear el alumno. Inténtelo de nuevo o corrija los errores.
+								{mode === StudentPageMode.create && "No se pudo crear el alumno. Inténtelo de nuevo o corrija los errores."}
+								{mode === StudentPageMode.edit && "No se pudo editar el alumno. Inténtelo de nuevo o corrija los errores."}
 							</Alert>
 						) : (
-							<Typography component={"span"}>¿Está seguro de querer crear este alumno?</Typography>
+							<Typography component={"span"}>
+								{mode === StudentPageMode.create && "¿Está seguro de querer crear este alumno?"}
+								{mode === StudentPageMode.edit && "¿Está seguro de querer editar este alumno?"}
+							</Typography>
 						)}
 
 						<Box height="400px" overflow="auto" paddingTop="12px">
@@ -95,7 +105,7 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 						<LoadingButton
 							color={"success"}
 							variant="outlined"
-							onClick={handleStudentCreation}
+							onClick={mode === StudentPageMode.create ? handleStudentCreation : handleStudentEdition}
 							loading={studentCreationState === "inProcess"}
 							data-cy="confirmCreateStudent">
 							{studentCreationState === "fail" ? "Reintentar" : "Aceptar"}
