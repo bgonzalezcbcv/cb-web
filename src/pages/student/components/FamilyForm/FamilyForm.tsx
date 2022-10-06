@@ -8,6 +8,7 @@ import { materialRenderers } from "@jsonforms/material-renderers";
 import { Box, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { defaultStudent } from "../../DefaultStudent";
 import NumericInputControl, { NumericInputControlTester } from "../../../../components/NumericInput/NumericInputControl";
+import DatePickerToString from "../../../../components/datePicker/DatePicker";
 
 import schema from "../../schema.json";
 import ui from "./ui.json";
@@ -87,6 +88,17 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 				onChange={({ data }): void => setCurrentData(data)}
 				validationMode="ValidateAndShow"
 				readonly={!editable}
+			/>
+			<DatePickerToString
+				editable={editable}
+				date={family[familyIndex]?.birthdate}
+				onChange={(date: string): void => {
+					const newFamily = student.family.slice();
+					newFamily[familyIndex] = { ...newFamily[familyIndex], birthdate: date };
+					const newStudent = { ...student, family: newFamily };
+					onChange(newStudent);
+				}}
+				label="Fecha de nacimiento"
 			/>
 		</Box>
 	);

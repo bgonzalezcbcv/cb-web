@@ -13,8 +13,8 @@
 					"scope": "#/properties/surname"
 				},
 				{
-				  "type": "Control",
-				  "scope": "#/properties/ci"
+					"type": "Control",
+					"scope": "#/properties/ci"
 				}
 			]
 		},
@@ -30,8 +30,8 @@
 					"scope": "#/properties/tuition"
 				},
 				{
-				  "type": "Control",
-				  "scope": "#/properties/reference_number"
+					"type": "Control",
+					"scope": "#/properties/reference_number"
 				}
 			]
 		},
@@ -47,8 +47,8 @@
 					"scope": "#/properties/subgroup"
 				},
 				{
-				  "type": "Control",
-				  "scope": "#/properties/birthplace"
+					"type": "Control",
+					"scope": "#/properties/birthplace"
 				}
 			]
 		},
@@ -56,21 +56,21 @@
 			"type": "HorizontalLayout",
 			"elements": [
 				{
-				  "type": "Control",
-				  "scope": "#/properties/birthdate",
-				  "options": {
-					"format": "date",
-					"dateFormat": "DD/MM/YYYY",
-					"dateSaveFormat": "DD/MM/YYYY"
-				  }
+					"type": "Control",
+					"scope": "#/properties/birthdate",
+					"options": {
+						"format": "date",
+						"dateFormat": "DD/MM/YYYY",
+						"dateSaveFormat": "DD-MM-YYYY"
+					}
 				},
 				{
 					"type": "Control",
 					"scope": "#/properties/nationality"
 				},
 				{
-				  "type": "Control",
-				  "scope": "#/properties/first_language"
+					"type": "Control",
+					"scope": "#/properties/first_language"
 				}
 			]
 		},
@@ -78,16 +78,16 @@
 			"type": "HorizontalLayout",
 			"elements": [
 				{
-				  "type": "Control",
-				  "scope": "#/properties/neighborhood"
+					"type": "Control",
+					"scope": "#/properties/neighborhood"
 				},
 				{
 					"type": "Control",
 					"scope": "#/properties/address"
 				},
 				{
-				  "type": "Control",
-				  "scope": "#/properties/phone_number"
+					"type": "Control",
+					"scope": "#/properties/phone_number"
 				}
 			]
 		},
@@ -108,7 +108,7 @@
 					"options": {
 						"format": "date",
 						"dateFormat": "DD/MM/YYYY",
-						"dateSaveFormat": "DD/MM/YYYY"
+						"dateSaveFormat": "DD-MM-YYYY"
 					}
 				}
 			]

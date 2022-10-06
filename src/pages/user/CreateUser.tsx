@@ -12,6 +12,7 @@ import { Button, Card, CardContent } from "@mui/material";
 
 import NumericInputControl, { NumericInputControlTester } from "../../components/NumericInput/NumericInputControl";
 import CreateUserDialog from "./components/CreateUserDialog";
+import DatePickerToString from "../../components/datePicker/DatePicker";
 
 import schema from "./schema.json";
 import ui from "./ui.json";
@@ -19,7 +20,7 @@ import ui from "./ui.json";
 const renderers = [...materialRenderers, { tester: NumericInputControlTester, renderer: NumericInputControl }];
 
 export default function CreateUser(): React.ReactElement {
-	const [data, setData] = useState({});
+	const [data, setData] = useState<Models.User>({} as Models.User);
 	const [errors, setErrors] = useState<ErrorObject[]>([]);
 	const [validationMode, setValidationMode] = useState<ValidationMode>("ValidateAndHide");
 	const [userCreationState, setUserCreationState] = React.useState<CreationState>(CreationState.idle);
@@ -68,6 +69,15 @@ export default function CreateUser(): React.ReactElement {
 						setData(data);
 					}}
 					validationMode={validationMode}
+				/>
+				<DatePickerToString
+					editable={true}
+					date={data.birthdate}
+					onChange={(date: string): void => {
+						const newUser = { ...data, birthdate: date };
+						setData(newUser);
+					}}
+					label="Fecha de nacimiento"
 				/>
 
 				<Button id="createButton" variant="contained" onClick={handleUserCreation} sx={{ marginTop: 10 }}>

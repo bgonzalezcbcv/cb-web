@@ -3,24 +3,6 @@
 	"elements": [
 		{
 			"type": "Control",
-			"scope": "#/properties/administrative_info/properties/enrollment_date",
-			"options": {
-				"format": "date",
-				"dateFormat": "DD/MM/YYYY",
-				"dateSaveFormat": "DD/MM/YYYY"
-			}
-		},
-		{
-			"type": "Control",
-			"scope": "#/properties/administrative_info/properties/starting_date",
-			"options": {
-				"format": "date",
-				"dateFormat": "DD/MM/YYYY",
-				"dateSaveFormat": "DD/MM/YYYY"
-			}
-		},
-		{
-			"type": "Control",
 			"scope": "#/properties/administrative_info/properties/scholarship_type"
 		}
 	]

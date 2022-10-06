@@ -49,10 +49,7 @@
 			"type": "string",
 			"title": "Fecha de nacimiento",
 			"minLength": 1,
-			"errorMessage": {
-				"format": "Tiene que ser una fecha válida.",
-				"minLength": "Este campo es requerido."
-			}
+			"errorMessage": "Debe ser una fecha válida."
 		},
 		"nationality": {
 			"type": "string",
@@ -116,25 +113,7 @@
 			"type": "string",
 			"title": "Vencimiento de vacunas",
 			"minLength": 1,
-			"errorMessage": {
-				"format": "Tiene que ser una fecha válida.",
-				"minLength": "Este campo es requerido."
-			}
-		},
-		"inscription_date": {
-			"type": "string",
-			"title": "Fecha de inscripción",
-			"errorMessage": {
-				"format": "Tiene que ser una fecha válida."
-			}
-		},
-		"starting_date": {
-			"type": "string",
-			"format": "date",
-			"title": "Fecha de inicio",
-			"errorMessage": {
-				"format": "Tiene que ser una fecha válida."
-			}
+			"errorMessage": "Debe ser una fecha válida."
 		},
 		"contact": {
 			"type": "string",
@@ -184,7 +163,7 @@
 						"type": "string",
 						"title": "Fecha de nacimiento",
 						"minLength": 1,
-						"errorMessage": "Este campo es requerido."
+						"errorMessage": "Debe ser una fecha válida."
 					},
 					"birthplace": {
 						"type": "string",
