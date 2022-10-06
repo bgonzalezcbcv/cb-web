@@ -86,7 +86,7 @@ describe("studentFamilyInfo", () => {
 		cy.get("#addFamilyMember").click();
 		cy.wait(200);
 
-		cy.testInput(CIInputID, CIErrorID, "a", "50137758", "Se deben ingresar solo los números, sin puntos ni guiones y no puede quedar vacía");
+		cy.testInput(CIInputID, CIErrorID, "", "50137758", "Se deben ingresar solo los números, sin puntos ni guiones y no puede quedar vacía");
 		cy.testInput(dateOfBirthInputID, dateOfBirthID, "incorrecto", "10/5/1990", "");
 		cy.testInput(cellphoneInputID, cellphoneErrorID, "error", "099099990", "Tiene que ser un número de 9 dígitos.");
 		cy.testInput(emailInputID, emailErrorID, "error", "correcto@gmail.com", "Tiene que ser E-mail válido.");
