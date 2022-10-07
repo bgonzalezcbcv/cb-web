@@ -4,7 +4,7 @@ import * as React from "react";
 import { useCallback, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { Alert, Card, CircularProgress } from "@mui/material";
+import { Alert, Card, CircularProgress, Typography } from "@mui/material";
 import { StudentPageMode } from "../../core/interfaces";
 import * as APIStore from "../../core/ApiStore";
 import * as StudentComponents from "./components/index";
@@ -52,8 +52,6 @@ export default function Student(props: StudentProps): React.ReactElement {
 		id ? getStudent() : setFetchState(FetchState.initial);
 	}, [id, getStudent]);
 
-	console.log(student);
-
 	const tabData: TabData[] = [
 		{ label: "Básica", dataCY: "basicInfoTab" },
 		{ label: "Familiar", dataCY: "familyInfoTab" },
@@ -74,8 +72,8 @@ export default function Student(props: StudentProps): React.ReactElement {
 
 	if (fetchState === FetchState.failure)
 		return (
-			<Alert severity="error" variant="outlined" onClick={getStudent}>
-				No se pudo cargar el alumno. Clickear aquí para reintentar.
+			<Alert severity="error" variant="outlined" onClick={getStudent} style={{ cursor: "pointer" }}>
+				<Typography>No se pudo cargar el alumno. Clickear aquí para reintentar.</Typography>
 			</Alert>
 		);
 
