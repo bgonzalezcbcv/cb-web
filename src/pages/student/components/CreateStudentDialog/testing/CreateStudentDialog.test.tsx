@@ -1,14 +1,14 @@
 import React from "react";
 import { act, render } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { ErrorObject } from "ajv";
 
 import { Student } from "../../../../../core/Models";
-import CreateStudentDialog from "../CreateStudentDialog";
+import { StudentPageMode } from "../../../../../core/interfaces";
 import * as API from "../../../../../core/ApiStore";
 import * as AJVHelper from "../../../../../core/AJVHelper";
 import * as ErrorList from "../../../../../components/ErrorList/ErrorList";
-import { ErrorObject } from "ajv";
-import userEvent from "@testing-library/user-event";
-import { StudentPageMode } from "../../../../../core/interfaces";
+import CreateStudentDialog from "../CreateStudentDialog";
 
 describe("CreateStudentDialog", () => {
 	beforeEach(() => {
