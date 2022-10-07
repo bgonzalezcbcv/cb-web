@@ -144,4 +144,26 @@ describe("CreateStudentDialog", () => {
 		expect(failureAlert).toBeVisible();
 		expect(retryButton).toBeVisible();
 	});
+
+	describe("@editable mode", () => {
+		beforeEach(() => {
+			jest.spyOn(ErrorList, "default").mockReturnValue(<div>Error List</div>);
+			jest.spyOn(API, "createStudent").mockResolvedValue(true);
+		});
+
+		it("should render an editable modal", async () => {
+			jest.spyOn(AJVHelper, "getAjvErrors").mockReturnValue([{} as ErrorObject]);
+			jest.spyOn(AJVHelper, "getParsedErrors").mockReturnValue({});
+
+			const wrapper = render(<CreateStudentDialog student={{} as Student} mode={StudentPageMode.edit} />);
+
+			const createStudentButton = await wrapper.findByText("Guardar");
+
+			act(() => {
+				userEvent.click(createStudentButton);
+			});
+
+			expect(wrapper).toMatchSnapshot();
+		});
+	});
 });
