@@ -75,7 +75,7 @@
 			"type": "string",
 			"title": "Dirección"
 		},
-		"neighborhood": {
+		"neighbourhood": {
 			"type": "string",
 			"title": "Barrio"
 		},
@@ -120,10 +120,6 @@
 		"contact_phone": {
 			"type": "string",
 			"title": "Teléfono de contacto"
-		},
-		"email": {
-			"type": "string",
-			"title": "Email"
 		},
 		"family": {
 			"type": "array",
@@ -211,32 +207,28 @@
 					"education_level": {
 						"oneOf": [
 							{
-								"const": "Ninguno",
-								"title": "Ninguno"
-							},
-							{
 								"const": "Primaria incompleta",
 								"title": "Primaria incompleta"
-							},
-							{
-								"const": "Secundaria incompleta",
-								"title": "Secundaria incompleta"
-							},
-							{
-								"const": "Terciario incompleta",
-								"title": "Terciario incompleta"
 							},
 							{
 								"const": "Primaria completa",
 								"title": "Primaria completa"
 							},
 							{
+								"const": "Secundaria incompleta",
+								"title": "Secundaria incompleta"
+							},
+							{
 								"const": "Secundaria completa",
 								"title": "Secundaria completa"
 							},
 							{
-								"const": "Terciario completa",
-								"title": "Terciario completa"
+								"const": "Terciaria incompleta",
+								"title": "Terciaria incompleta"
+							},
+							{
+								"const": "Terciaria completa",
+								"title": "Terciaria completa"
 							}
 						],
 						"title": "Nivel educativo",
@@ -268,7 +260,25 @@
 						}
 					}
 				},
-				"required": ["role", "ci"]
+				"required": [
+					"role",
+					"full_name",
+					"birthdate",
+					"birthplace",
+					"nationality",
+					"first_language",
+					"ci",
+					"marital_status",
+					"cellphone",
+					"email",
+					"address",
+					"neighbourhood",
+					"education_level",
+					"occupation",
+					"workplace",
+					"workplace_address",
+					"workplace_neighbourhood"
+				]
 			},
 			"minItems": 1,
 			"maxItems": 2
@@ -449,37 +459,22 @@
 						"required": ["starting_date", "ending_date", "explanation", "percentage", "report_url"]
 					}
 				}
-			},
-			"required": ["registration_commitment_url", "scholarship_type", "agreement_type", "comments", "payment_methods", "discounts"]
+			}
 		}
 	},
 	"required": [
 		"ci",
 		"name",
 		"surname",
-		"schedule_start",
-		"schedule_end",
-		"tuition",
-		"reference_number",
 		"birthplace",
 		"birthdate",
 		"nationality",
 		"first_language",
-		"office",
-		"status",
 		"address",
-		"neighborhood",
+		"neighbourhood",
 		"medical_assurance",
-		"emergency",
 		"phone_number",
 		"vaccine_expiration",
-		"inscription_date",
-		"starting_date",
-		"contact",
-		"contact_phone",
-		"email",
-		"family",
-		"question_categories",
-		"administrative_info"
+		"question_categories"
 	]
 }

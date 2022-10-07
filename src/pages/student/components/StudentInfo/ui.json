@@ -79,7 +79,7 @@
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/neighborhood"
+					"scope": "#/properties/neighbourhood"
 				},
 				{
 					"type": "Control",
