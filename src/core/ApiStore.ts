@@ -17,7 +17,6 @@ let baseConfig = {
 };
 
 autorun(() => {
-	console.log("Mira cpmp me corro", dataStore.loggedUser?.token);
 	baseConfig = {
 		headers: {
 			Authorization: `Bearer ${dataStore.loggedUser?.token}`,
