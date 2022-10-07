@@ -113,5 +113,3 @@ export const defaultStudent: Student = {
 		],
 	},
 };
-
-console.log(defaultStudent);
