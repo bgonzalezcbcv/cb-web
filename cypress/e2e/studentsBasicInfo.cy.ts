@@ -2,6 +2,7 @@
 describe("studentsBasicInfo", () => {
 	const basicInfoButtonID = '[data-cy="basicInfoTab"]';
 	const editButtonID = '[data-cy="studentEditInfoButton"]';
+	const errorAlertDialogID = '[data-cy="errorAlertDialog"]';
 
 	const nameFieldID = "#\\#\\/properties\\/name2-input";
 	const nameFieldErrorID = "#\\#\\/properties\\/name2 > :nth-child(3)";
@@ -31,6 +32,7 @@ describe("studentsBasicInfo", () => {
 	const placeOfBirthFieldErrorID = "#\\#\\/properties\\/birthplace2> :nth-child(3)";
 
 	const dateOfBirthInputID = "#\\#\\/properties\\/birthdate2-input";
+	//TODO: find a better way to find date fields
 	const dateOfBirthID = ":nth-child(4) > .MuiGrid-container > :nth-child(2) > .MuiFormControl-root";
 
 	const nationalityFieldID = "#\\#\\/properties\\/nationality2-input";
@@ -52,6 +54,7 @@ describe("studentsBasicInfo", () => {
 	const emergencyFieldErrorID = "#\\#\\/properties\\/emergency2> :nth-child(3)";
 
 	const vaccineExpirationInputID = "#\\#\\/properties\\/vaccine_expiration2-input";
+	//TODO: find a better way to find date fields
 	const vaccineExpirationID = ":nth-child(6) > .MuiGrid-container > :nth-child(3) > .MuiFormControl-root";
 
 	const createButtonID = '[data-cy="createStudentButton"]';
@@ -128,11 +131,14 @@ describe("studentsBasicInfo", () => {
 		cy.get(medicalAssuranceFieldID).type("Si tiene es la A23BVJ");
 		cy.get(emergencyFieldID).type("Cooperativa ABC123XYZ");
 		cy.get(vaccineExpirationInputID).type("03/03/2019");
+
 		cy.fillStudentFamilyInfo();
+
 		cy.wait(300);
+
 		cy.get(createButtonID).click();
 
-		cy.get("body").should("not.include.text", "Hay errores en los campos del alumno");
+		cy.get(errorAlertDialogID).should("not.be.visible");
 	});
 });
 

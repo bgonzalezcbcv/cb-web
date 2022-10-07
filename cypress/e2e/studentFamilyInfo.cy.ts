@@ -23,7 +23,7 @@ describe("studentFamilyInfo", () => {
 	const CIErrorID = "#properties\\/ci2 > :nth-child(3)";
 
 	const dateOfBirthInputID = "#properties\\/birthdate2-input";
-	//TODO: encontrar una manera mejor de conseguir este campo
+	//TODO: find a better way to find date fields
 	const dateOfBirthID = ":nth-child(2) > .MuiGrid-container > :nth-child(1) > .MuiFormControl-root";
 
 	const maritalStatusErrorID = "#properties\\/marital_status2 > :nth-child(3)";
@@ -106,7 +106,7 @@ describe("studentFamilyInfo", () => {
 		cy.get(CIInputID).should("be.empty");
 
 		cy.get(createStudentButtonID).click();
-		cy.get(errorAlertDialogID).should("exist");
+		cy.get(errorAlertDialogID).should("be.visible");
 	});
 
 	it("allows to create a student when all the required fields in the family info are complete", () => {
