@@ -103,7 +103,7 @@ export default function Student(props: StudentProps): React.ReactElement {
 			<StudentPageTabs tabData={tabData} onChange={setCurrentTabIndex} value={currentTabIndex} />
 
 			{panels.map((panel, index) => (
-				<TabPanel className="panel-item" value={currentTabIndex} index={index}>
+				<TabPanel key={`student-tab-panel-${index}`} className="panel-item" value={currentTabIndex} index={index}>
 					{panel}
 				</TabPanel>
 			))}
