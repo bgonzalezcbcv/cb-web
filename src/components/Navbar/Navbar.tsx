@@ -55,7 +55,7 @@ function Navbar(): React.ReactElement {
 	};
 
 	const renderUserAvatar = (): React.ReactElement => {
-		return <Avatar sx={{ bgcolor: getColorByUserRole(loggedUser?.role) }}>{userNameToInitials(loggedUser?.name)}</Avatar>;
+		return <Avatar sx={{ bgcolor: getColorByUserRole(loggedUser?.role), border: "0.2px solid white" }}>{userNameToInitials(loggedUser?.name)}</Avatar>;
 	};
 
 	const renderProfileMenuContent = (): React.ReactElement => {

@@ -1,19 +1,30 @@
 import axios, { Axios } from "axios";
 
-import { Student } from "./Models";
+import { Student, User as UserModel } from "./Models";
 import { User, UserRole } from "./interfaces";
 
 import { DataStore } from "./DataStore";
+import { autorun } from "mobx";
 
 const dataStore = DataStore.getInstance();
 
-const baseConfig = {
+let baseConfig = {
 	headers: {
 		Authorization: `Bearer ${dataStore.loggedUser?.token}`,
 		"Content-Type": "application/json",
 	},
 	baseURL: process.env["REACT_APP_API_URL"],
 };
+
+autorun(() => {
+	baseConfig = {
+		headers: {
+			Authorization: `Bearer ${dataStore.loggedUser?.token}`,
+			"Content-Type": "application/json",
+		},
+		baseURL: process.env["REACT_APP_API_URL"],
+	};
+});
 
 // todo: use this instance in order to do a middleware.
 //eslint-disable-next-line
@@ -32,6 +43,7 @@ interface SignInResponseData {
 	role?: UserRole;
 }
 //todo: make the logout.
+
 export async function login(email: string, password: string): Promise<{ success: boolean; data?: User; err: string }> {
 	try {
 		const errObject = {
@@ -56,13 +68,13 @@ export async function login(email: string, password: string): Promise<{ success:
 
 		if (!(response.data && response.headers)) return errObject;
 
-		const { name, surname, role }: SignInResponseData = response.data;
+		const { name, surname }: SignInResponseData = response.data;
 
 		const [bearer, token] = (response.headers["authorization"] ?? "").split(" ");
 
 		if (bearer !== "Bearer") return errObject;
 
-		return { success: true, data: { email, token, name, surname, role: role ?? UserRole.Administrativo }, err: "" };
+		return { success: true, data: { email, token, name, surname, role: UserRole.Administrativo }, err: "" };
 		// eslint-disable-next-line
 	} catch (error: any) {
 		let err = "";
@@ -98,7 +110,21 @@ export async function createStudent(studentToCreate: Student): Promise<boolean> 
 	}
 }
 
-// // eslint-disable-next-line
-// export async function login(user: string, pass: string): Promise<{ success: boolean; data?: User; err: string }> {
-// 	return { success: true, data: { email: "pepe@gmail.com", name: "Pepe Bolsilludo", role: UserRole.Administrador, token: "Bolsilludo" }, err: "" };
-// }
+export async function createUser(userToCreate: UserModel): Promise<boolean> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "post",
+			url: "/api/users",
+			data: JSON.stringify({
+				user: userToCreate,
+			}),
+		};
+
+		const response = await axios(config);
+
+		return response.status === 201;
+	} catch (e) {
+		return false;
+	}
+}

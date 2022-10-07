@@ -43,10 +43,6 @@ export enum PaymentMethodOption {
 	Bidding = "licitacion",
 }
 
-export enum AgreementType { //TODO: Estos son agregados por el admin del sistema
-	None = "ninguno",
-}
-
 export enum DiscountType {
 	Direction = "dirección",
 	SocialAssistant = "asistente social",
@@ -203,4 +199,16 @@ export interface StudentCreationForm {
 	"¿Qué conocimientos, habilidades y/o actitudes fundamentales cree que deben desarrollarse en el proceso de aprendizaje de su hijo/a para lograr un alto desempeño en la complejidad y desafíos del mu...": string;
 	"¿Porque considera importante una propuesta bilingüe en la formación de su hijo/a?": string;
 	"Detalle aquí otra información que crea importante y que pueda contribuir a una atención eficiente e integral del alumno/a:": string;
+}
+
+export interface User {
+	email: string;
+	name: string;
+	surname: string;
+	password: string;
+	role: string;
+	birthdate?: string;
+	ci?: string;
+	phone?: string;
+	address?: string;
 }

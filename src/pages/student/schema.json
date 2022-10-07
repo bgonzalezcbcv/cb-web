@@ -42,7 +42,6 @@
 		},
 		"birthdate": {
 			"type": "string",
-			"format": "date",
 			"title": "Fecha de nacimiento",
 			"errorMessage": {
 				"format": "Tiene que ser una fecha válida."
@@ -94,7 +93,6 @@
 		},
 		"vaccine_expiration": {
 			"type": "string",
-			"format": "date",
 			"title": "Vencimiento de vacunas",
 			"errorMessage": {
 				"format": "Tiene que ser una fecha válida."
@@ -102,7 +100,6 @@
 		},
 		"inscription_date": {
 			"type": "string",
-			"format": "date",
 			"title": "Fecha de inscripción",
 			"errorMessage": {
 				"format": "Tiene que ser una fecha válida."
