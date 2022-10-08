@@ -1,17 +1,19 @@
 import React from "react";
+
 import * as Models from "../../../../../core/Models";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 
 export type PaymentMethodHistoryProps = {
 	rows?: Models.PaymentMethod[];
+	height: number;
 };
 
 export default function PaymentMethodHistory(props: PaymentMethodHistoryProps): React.ReactElement {
-	const { rows } = props;
+	const { rows, height } = props;
 
 	return (
-		<TableContainer style={{ height: 160 }}>
+		<TableContainer style={{ height: height }}>
 			<Table sx={{ width: "100%" }} stickyHeader>
 				<TableHead>
 					<TableRow hover>

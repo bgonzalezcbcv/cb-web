@@ -383,8 +383,7 @@
 							}
 						},
 						"required": ["method", "year"]
-					},
-					"minItems": 0
+					}
 				},
 				"discounts": {
 					"type": "array",
@@ -394,13 +393,11 @@
 						"properties": {
 							"starting_date": {
 								"title": "Comienzo",
-								"type": "string",
-								"errorMessage": "Debe ser una fecha de inicio correcta."
+								"type": "string"
 							},
 							"ending_date": {
 								"title": "Fin",
-								"type": "string",
-								"errorMessage": "Debe ser una fecha de finalización correcta."
+								"type": "string"
 							},
 							"explanation": {
 								"oneOf": [
@@ -415,8 +412,7 @@
 								],
 								"title": "Explicación",
 								"type": "string",
-								"default": "Sibling",
-								"errorMessage": "Tiene que ser una explicación de las disponibles."
+								"default": "Sibling"
 							},
 							"percentage": {
 								"title": "%",
@@ -435,8 +431,7 @@
 								],
 								"title": "Tipo",
 								"type": "string",
-								"default": "Direction",
-								"errorMessage": "Tiene que ser alguno de los tipos disponibles."
+								"default": "Direction"
 							},
 							"report_url": {
 								"title": "Informe administrativo",
@@ -451,9 +446,8 @@
 								"type": "string"
 							}
 						},
-						"required": ["starting_date", "ending_date", "explanation", "percentage", "type", "report_url"]
-					},
-					"minItems": 0
+						"required": ["starting_date", "ending_date", "explanation", "percentage", "report_url"]
+					}
 				}
 			},
 			"required": ["registration_commitment_url", "scholarship_type", "agreement_type", "comments", "payment_methods", "discounts"]

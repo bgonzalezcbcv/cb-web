@@ -1,0 +1,9 @@
+{
+	"type": "HorizontalLayout",
+	"elements": [
+		{
+			"type": "Control",
+			"scope": "#/properties//type"
+		}
+	]
+}
