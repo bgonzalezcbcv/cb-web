@@ -25,7 +25,7 @@ export type AdministrativeInfoProps = {
 	onChange: (data: Models.Student) => void;
 };
 
-type DiscountData = {
+export type DiscountData = {
 	percentage: number;
 	starting_date: string;
 	ending_date: string;
@@ -132,39 +132,39 @@ export default function DiscountsSection(props: VisualComponent & Administrative
 										setData(data, errors?.length != 0);
 									}}
 								/>
-								{discountData.explanation == Models.DiscountExplanation.Resolution.valueOf() ? (
-									<Container style={{ paddingRight: "0px", paddingLeft: "0px", paddingTop: "15px" }}>
-										<Typography>{"Resolución"}</Typography>
-										<JsonForms
-											i18n={{ translate: translator as Translator }}
-											schema={schema.properties.administrative_info.properties.discounts.items as JsonSchema7}
-											uischema={uiResolution}
-											data={discountData}
-											renderers={materialRenderers}
-											cells={materialCells}
-											onChange={({ data, errors }): void => {
-												setData(data, errors?.length != 0);
-											}}
-										/>
-										<FileUploader label={"Resolución"} width={"100%"} uploadedFile={(file): void => setResolutionFile(file)} />
-									</Container>
-								) : null}
-								{discountData.explanation == Models.DiscountExplanation.Resolution.valueOf() ? (
-									<Container style={{ paddingRight: "0px", paddingLeft: "0px", paddingTop: "15px" }}>
-										<Typography>{"Informe Administrativo"}</Typography>
-										<JsonForms
-											i18n={{ translate: translator as Translator }}
-											schema={schema.properties.administrative_info.properties.discounts.items as JsonSchema7}
-											uischema={uiReport}
-											data={discountData}
-											renderers={materialRenderers}
-											cells={materialCells}
-											onChange={({ data, errors }): void => {
-												setData(data, errors?.length != 0);
-											}}
-										/>
-										<FileUploader label={"Informe"} width={"100%"} uploadedFile={(file): void => setReportFile(file)} />
-									</Container>
+								{discountData.explanation == Models.DiscountExplanation.Resolution ? (
+									<>
+										<Container style={{ padding: "15px 0 0 0" }}>
+											<Typography>{"Resolución"}</Typography>
+											<JsonForms
+												i18n={{ translate: translator as Translator }}
+												schema={schema.properties.administrative_info.properties.discounts.items as JsonSchema7}
+												uischema={uiResolution}
+												data={discountData}
+												renderers={materialRenderers}
+												cells={materialCells}
+												onChange={({ data, errors }): void => {
+													setData(data, errors?.length != 0);
+												}}
+											/>
+											<FileUploader label={"Resolución"} width={"100%"} uploadedFile={(file): void => setResolutionFile(file)} />
+										</Container>
+										<Container style={{ padding: "15px 0 0 0" }}>
+											<Typography>{"Informe Administrativo"}</Typography>
+											<JsonForms
+												i18n={{ translate: translator as Translator }}
+												schema={schema.properties.administrative_info.properties.discounts.items as JsonSchema7}
+												uischema={uiReport}
+												data={discountData}
+												renderers={materialRenderers}
+												cells={materialCells}
+												onChange={({ data, errors }): void => {
+													setData(data, errors?.length != 0);
+												}}
+											/>
+											<FileUploader label={"Informe"} width={"100%"} uploadedFile={(file): void => setReportFile(file)} />
+										</Container>
+									</>
 								) : null}
 								{hasDateErrors ? <Alert severity="error">La fecha de fin debe ser posterior a la fecha de inicio</Alert> : null}
 							</Container>

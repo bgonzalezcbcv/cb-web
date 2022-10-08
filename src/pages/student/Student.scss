@@ -1,12 +1,6 @@
-//.panel-item {
-//	display: grid;
-//	place-content: flex-start center;
-//
-//	height: 600px !important;
-//	overflow: auto;
-//
-//	margin: 10px 0;
-//}
+.panel-item {
+  box-sizing: border-box;
+}
 
 .MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-true.css-1vd824g-MuiGrid-root {
   height: 90px;
