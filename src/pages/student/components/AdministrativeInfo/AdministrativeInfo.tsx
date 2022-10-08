@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useState } from "react";
 import { JsonForms } from "@jsonforms/react";
-import { JsonSchema7 } from "@jsonforms/core";
+import {JsonSchema7, Translator} from "@jsonforms/core";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
 import { createAjv } from "@jsonforms/core";
 import { DataStore } from "../../../../core/DataStore";
@@ -23,12 +23,13 @@ export type AdministrativeInfoProps = {
 	editable: boolean;
 	student: Models.Student;
 	onChange: (data: Models.Student) => void;
+	translator?: (id: string, defaultMessage: string) => string;
 };
 
 export default function AdministrativeInfo(props: VisualComponent & AdministrativeInfoProps): React.ReactElement {
 	const dataStore = DataStore.getInstance();
 
-	const { editable, student, height, width, onChange } = props;
+	const { editable, student, translator, onChange } = props;
 
 	const [enrollmentCommitment, setEnrollmentCommitment] = useState<File | undefined>();
 	const [agreementType, setAgreementType] = useState<string | undefined>(undefined);
@@ -41,6 +42,7 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
 				<Card className="form-container" color={"primary"} sx={{ overflow: "auto" }}>
 					<CardContent>
 						<JsonForms
+							i18n={{ translate: translator as Translator }}
 							schema={schema as JsonSchema7}
 							uischema={uiSchema}
 							data={student}

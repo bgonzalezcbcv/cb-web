@@ -40,7 +40,7 @@
           "type": "string"
         },
 
-        "neighbourhood": {
+        "neighborhood": {
           "type": "string"
         },
         "education_level": {
@@ -55,7 +55,7 @@
         "workplace_address": {
           "type": "string"
         },
-        "workplace_neighbourhood": {
+        "workplace_neighborhood": {
           "type": "string"
         },
         "workplace_phone": {
@@ -74,12 +74,12 @@
         "cellphone",
         "email",
         "address",
-        "neighbourhood",
+        "neighborhood",
         "education_level",
         "occupation",
         "workplace",
         "workplace_address",
-        "workplace_neighbourhood",
+        "workplace_neighborhood",
         "workplace_phone"
       ]
     }

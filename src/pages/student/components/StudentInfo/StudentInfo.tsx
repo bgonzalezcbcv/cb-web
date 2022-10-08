@@ -16,15 +16,11 @@ export type StudentInfoProps = {
 	student: Student;
 	onChange: (data: Student) => void;
 	editable: boolean;
+	translator?: (id: string, defaultMessage: string) => string;
 };
 
 export default function StudentInfo(props: StudentInfoProps): React.ReactElement {
-	const { editable, student, onChange } = props;
-
-	const translator = (id: string, defaultMessage: string): string => {
-		if (id.includes("required")) return "Este campo es requerido.";
-		else return defaultMessage;
-	};
+	const { editable, student, translator, onChange } = props;
 
 	return (
 		<div style={{ paddingTop: "30px" }}>

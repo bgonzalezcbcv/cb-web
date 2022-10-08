@@ -17,10 +17,11 @@ export type FamilyFormProps = {
 	student: Student;
 	editable: boolean;
 	onChange: (data: Student) => void;
+	translator?: (id: string, defaultMessage: string) => string;
 };
 
 export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
-	const { student, onChange, editable } = props;
+	const { student, onChange, editable, translator } = props;
 	const { family } = student;
 
 	const [familyIndex, setFamilyIndex] = useState(0);
@@ -58,11 +59,6 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 			}),
 		[student]
 	);
-
-	const translator = (id: string, defaultMessage: string): string => {
-		if (id.includes("required")) return "Este campo es requerido.";
-		else return defaultMessage;
-	};
 
 	return (
 		<Box display="flex" flexDirection="column" width="100%" height="100%">

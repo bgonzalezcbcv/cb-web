@@ -75,7 +75,7 @@
 			"type": "string",
 			"title": "Dirección"
 		},
-		"neighbourhood": {
+		"neighborhood": {
 			"type": "string",
 			"title": "Barrio"
 		},
@@ -90,7 +90,7 @@
 		"phone_number": {
 			"type": "string",
 			"title": "Número de teléfono",
-		  	"pattern": "\\d{9}|\\d{8}",
+		  	"pattern": "\\d{9}|\\d{8}|(\\d{3}\\s\\d{3}\\s\\d{3}|(\\d{4}\\s\\d{4}))",
 		  	"errorMessage": {
 				"pattern": "Se deben ingresar 8 o 9 dígitos."
 		  	}
@@ -124,7 +124,7 @@
 		"contact_phone": {
 			"type": "string",
 			"title": "Teléfono de contacto",
-			"pattern": "\\d{9}|\\d{8}",
+			"pattern": "\\d{9}|\\d{8}|(\\d{3}\\s\\d{3}\\s\\d{3}|(\\d{4}\\s\\d{4}))",
 			"errorMessage": {
 			  "pattern": "Se deben ingresar 8 o 9 dígitos."
 			}
@@ -190,7 +190,7 @@
 					"cellphone": {
 						"type": "string",
 						"title": "Teléfono celular",
-						"pattern": "\\d{9}",
+						"pattern": "\\d{9}|(\\d{3}\\s\\d{3}\\s\\d{3})",
 						"errorMessage": {
 							"pattern": "Debe ingresar un número de 9 dígitos."
 						}
@@ -206,7 +206,7 @@
 						"type": "string",
 						"title": "Dirección"
 					},
-					"neighbourhood": {
+					"neighborhood": {
 						"type": "string",
 						"title": "Barrio de residencia"
 					},
@@ -253,14 +253,14 @@
 						"type": "string",
 						"title": "Dirección laboral"
 					},
-					"workplace_neighbourhood": {
+					"workplace_neighborhood": {
 						"type": "string",
 						"title": "Barrio laboral"
 					},
 					"workplace_phone": {
 						"type": "string",
 						"title": "Teléfono laboral",
-						"pattern": "\\d{8,9}",
+						"pattern": "\\d{9}|\\d{8}|(\\d{3}\\s\\d{3}\\s\\d{3}|(\\d{4}\\s\\d{4}))|-",
 						"errorMessage": {
 							"pattern": "Debe ingresar un número de entre 8 a 9 dígitos."
 						}
@@ -278,12 +278,12 @@
 					"cellphone",
 					"email",
 					"address",
-					"neighbourhood",
+					"neighborhood",
 					"education_level",
 					"occupation",
 					"workplace",
 					"workplace_address",
-					"workplace_neighbourhood"
+					"workplace_neighborhood"
 				]
 			},
 			"minItems": 1,
@@ -477,7 +477,7 @@
 		"nationality",
 		"first_language",
 		"address",
-		"neighbourhood",
+		"neighborhood",
 		"medical_assurance",
 		"phone_number",
 		"vaccine_expiration",

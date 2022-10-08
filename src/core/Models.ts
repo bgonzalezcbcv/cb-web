@@ -21,12 +21,12 @@ export interface FamilyMember {
 	cellphone: string;
 	email: string;
 	address: string;
-	neighbourhood: string;
+	neighborhood: string;
 	education_level: string;
 	occupation: string;
 	workplace: string;
 	workplace_address: string;
-	workplace_neighbourhood: string;
+	workplace_neighborhood: string;
 	workplace_phone: string;
 }
 

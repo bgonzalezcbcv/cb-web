@@ -35,12 +35,12 @@
 				"cellphone": "099099990",
 				"email": "jPerez@adinet.com",
 				"address": "Calle Falsa 1234",
-				"neighbourhood": "Cerro",
+				"neighborhood": "Cerro",
 				"education_level": "Secundaria completa",
 				"occupation": "Dueña de local",
 				"workplace": "Kiosko",
 				"workplace_address": "Maroñas 1414",
-				"workplace_neighbourhood": "Maroñas",
+				"workplace_neighborhood": "Maroñas",
 				"workplace_phone": "25105020"
 			}
 		],
