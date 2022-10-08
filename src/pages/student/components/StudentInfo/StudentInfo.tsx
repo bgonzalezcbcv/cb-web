@@ -22,7 +22,7 @@ export default function StudentInfo(props: StudentInfoProps): React.ReactElement
 	const { editable, student, onChange } = props;
 
 	const translator = (id: string, defaultMessage: string): string => {
-		if (id.includes("required")) return "Campo requerido";
+		if (id.includes("required")) return "Este campo es requerido.";
 		else return defaultMessage;
 	};
 

@@ -38,7 +38,7 @@ export function addLeadingZeroToDate(date: string): string {
 }
 
 export const basicTranslator =
-	(errors: { id: string; errorMessage: string }[], defaultErrorMessage = "Campo invalido.") =>
+	(errors: { id: string; errorMessage: string }[], defaultErrorMessage = "Campo inválido.") =>
 	(id: string, defaultMessage: string | undefined): string => {
 		for (let i = 0; i < errors.length; i++) {
 			if (id.includes(errors[i].id + ".error")) return errors[i].errorMessage;

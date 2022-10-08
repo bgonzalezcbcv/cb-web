@@ -9,7 +9,7 @@
 			"title": "CI",
 			"pattern": "^((\\d+)|([a-zA-Z]+))+$",
 			"errorMessage": {
-				"pattern": "Se deben ingresar solo números y letras, sin puntos ni guiones y no puede quedar vacía"
+				"pattern": "Se deben ingresar solo números y letras, sin puntos ni guiones."
 			}
 		},
 		"name": {
@@ -89,7 +89,11 @@
 		},
 		"phone_number": {
 			"type": "string",
-			"title": "Número de teléfono"
+			"title": "Número de teléfono",
+		  	"pattern": "\\d{9}|\\d{8}",
+		  	"errorMessage": {
+				"pattern": "Se deben ingresar 8 o 9 dígitos."
+		  	}
 		},
 		"vaccine_expiration": {
 			"type": "string",
@@ -119,7 +123,11 @@
 		},
 		"contact_phone": {
 			"type": "string",
-			"title": "Teléfono de contacto"
+			"title": "Teléfono de contacto",
+			"pattern": "\\d{9}|\\d{8}",
+			"errorMessage": {
+			  "pattern": "Se deben ingresar 8 o 9 dígitos."
+			}
 		},
 		"family": {
 			"type": "array",
@@ -145,7 +153,7 @@
 						"type": "string",
 						"title": "Tipo de responsable",
 						"default": "mother",
-						"errorMessage": "Tiene que ser algunos de los roles disponibles."
+						"errorMessage": "Debe seleccionar uno de los roles disponibles."
 					},
 					"full_name": {
 						"type": "string",
@@ -172,29 +180,27 @@
 						"title": "Cédula de identidad",
 						"pattern": "^((\\d+)|([a-zA-Z]+))+$",
 						"errorMessage": {
-							"pattern": "Se deben ingresar solo los números, sin puntos ni guiones y no puede quedar vacía"
+							"pattern": "Debe ingresar solo números o letras, sin puntos ni guiones."
 						}
 					},
 					"marital_status": {
 						"type": "string",
-						"title": "Estado civil",
-						"default": "Soltero/a"
+						"title": "Estado civil"
 					},
 					"cellphone": {
 						"type": "string",
 						"title": "Teléfono celular",
 						"pattern": "\\d{9}",
 						"errorMessage": {
-							"pattern": "Tiene que ser un número de 9 dígitos."
+							"pattern": "Debe ingresar un número de 9 dígitos."
 						}
 					},
 					"email": {
 						"type": "string",
 						"title": "E-mail",
 						"format": "email",
-						"errorMessage": {
-							"format": "Tiene que ser E-mail válido."
-						}
+					  	"pattern": "^\\S+@\\S+\\.\\S+$",
+						"errorMessage": "Debe ingresar un e-mail válido."
 					},
 					"address": {
 						"type": "string",
@@ -233,7 +239,7 @@
 						],
 						"title": "Nivel educativo",
 						"default": "none",
-						"errorMessage": "Tiene que ser alguno de los niveles educativos disponibles."
+						"errorMessage": "Debe seleccionar uno de los niveles educativos disponibles."
 					},
 					"occupation": {
 						"type": "string",
@@ -256,7 +262,7 @@
 						"title": "Teléfono laboral",
 						"pattern": "\\d{8,9}",
 						"errorMessage": {
-							"pattern": "Tiene que ser un número de entre 8 a 9 dígitos."
+							"pattern": "Debe ingresar un número de entre 8 a 9 dígitos."
 						}
 					}
 				},
@@ -381,7 +387,7 @@
 								],
 								"title": "Método de pago",
 								"type": "string",
-								"errorMessage": "Tiene que ser alguno de los métodos de pagos disponibles."
+								"errorMessage": "Debe seleccionar uno de los métodos de pago disponibles."
 							},
 							"year": {
 								"title": "Año",

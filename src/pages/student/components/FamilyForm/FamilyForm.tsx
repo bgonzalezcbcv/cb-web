@@ -3,7 +3,7 @@ import React, { useCallback, useState } from "react";
 import { FamilyMember, Student } from "../../../../core/Models";
 import { ajv as studentAjv } from "../../../../core/AJVHelper";
 import { JsonForms } from "@jsonforms/react";
-import { JsonSchema7 } from "@jsonforms/core";
+import {JsonSchema7, Translator} from "@jsonforms/core";
 import { materialRenderers } from "@jsonforms/material-renderers";
 import { Box, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { defaultStudent } from "../../DefaultStudent";
@@ -59,6 +59,11 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 		[student]
 	);
 
+	const translator = (id: string, defaultMessage: string): string => {
+		if (id.includes("required")) return "Este campo es requerido.";
+		else return defaultMessage;
+	};
+
 	return (
 		<Box display="flex" flexDirection="column" width="100%" height="100%">
 			<Box display="flex" flexDirection="row" justifyContent="flex-end" marginBottom="12px">
@@ -74,6 +79,7 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 			</Box>
 
 			<JsonForms
+				i18n={{ translate: translator as Translator }}
 				ajv={studentAjv}
 				schema={schema.properties.family.items as JsonSchema7}
 				uischema={ui}
