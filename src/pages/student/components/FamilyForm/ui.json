@@ -70,7 +70,7 @@
 				},
 				{
 					"type": "Control",
-					"scope": "properties/neighborhood"
+					"scope": "properties/neighbourhood"
 				}
 			]
 		},
@@ -100,7 +100,7 @@
 				},
 				{
 					"type": "Control",
-					"scope": "properties/workplace_neighborhood"
+					"scope": "properties/workplace_neighbourhood"
 				},
 				{
 					"type": "Control",

@@ -242,7 +242,7 @@
 						"minLength": 1,
 						"errorMessage": "Este campo es requerido."
 					},
-					"neighborhood": {
+					"neighbourhood": {
 						"type": "string",
 						"title": "Barrio de residencia",
 						"minLength": 1,
@@ -251,28 +251,32 @@
 					"education_level": {
 						"oneOf": [
 							{
-								"const": "Primaria incompleta",
-								"title": "Primaria incompleta"
+							  "const": "Ninguno",
+							  "title": "Ninguno"
 							},
 							{
-								"const": "Primaria completa",
-								"title": "Primaria completa"
+							  "const": "Primaria incompleta",
+							  "title": "Primaria incompleta"
 							},
 							{
-								"const": "Secundaria incompleta",
-								"title": "Secundaria incompleta"
+							  "const": "Secundaria incompleta",
+							  "title": "Secundaria incompleta"
 							},
 							{
-								"const": "Secundaria completa",
-								"title": "Secundaria completa"
+							  "const": "Terciario incompleta",
+							  "title": "Terciario incompleta"
 							},
 							{
-								"const": "Terciaria incompleta",
-								"title": "Terciaria incompleta"
+							  "const": "Primaria completa",
+							  "title": "Primaria completa"
 							},
 							{
-								"const": "Terciaria completa",
-								"title": "Terciaria completa"
+							  "const": "Secundaria completa",
+							  "title": "Secundaria completa"
+							},
+							{
+							  "const": "Terciario completa",
+							  "title": "Terciario completa"
 							}
 						],
 						"title": "Nivel educativo",
@@ -297,7 +301,7 @@
 						"minLength": 1,
 						"errorMessage": "Este campo es requerido."
 					},
-					"workplace_neighborhood": {
+					"workplace_neighbourhood": {
 						"type": "string",
 						"title": "Barrio laboral",
 						"minLength": 1,
@@ -324,12 +328,12 @@
 					"cellphone",
 					"email",
 					"address",
-					"neighborhood",
+					"neighbourhood",
 					"education_level",
 					"occupation",
 					"workplace",
 					"workplace_address",
-					"workplace_neighborhood"
+					"workplace_neighbourhood"
 				]
 			},
 			"minItems": 1,
