@@ -9,10 +9,7 @@
 			"title": "CI",
 			"pattern": "^((\\d+)|([a-zA-Z]+))+$",
 			"minLength": 1,
-			"errorMessage": {
-				"pattern": "Se deben ingresar solo números y letras, sin puntos ni guiones.",
-				"minLength": "Este campo es requerido."
-			}
+			"errorMessage": "Se deben ingresar solo números y letras, sin puntos ni guiones."
 		},
 		"name": {
 			"type": "string",
