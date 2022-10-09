@@ -8,17 +8,23 @@
 			"type": "string",
 			"title": "CI",
 			"pattern": "^((\\d+)|([a-zA-Z]+))+$",
+		  	"minLength": 1,
 			"errorMessage": {
-				"pattern": "Se deben ingresar solo números y letras, sin puntos ni guiones."
+				"pattern": "Se deben ingresar solo números y letras, sin puntos ni guiones.",
+			  	"minLength": "Este campo es requerido."
 			}
 		},
 		"name": {
 			"type": "string",
-			"title": "Nombres"
+			"title": "Nombres",
+			"minLength": 1,
+			"errorMessage": "Este campo es requerido."
 		},
 		"surname": {
 			"type": "string",
-			"title": "Apellidos"
+			"title": "Apellidos",
+			"minLength": 1,
+			"errorMessage": "Este campo es requerido."
 		},
 		"schedule_start": {
 			"type": "string",
@@ -38,22 +44,30 @@
 		},
 		"birthplace": {
 			"type": "string",
-			"title": "Lugar de nacimiento"
+			"title": "Lugar de nacimiento",
+		  	"minLength": 1,
+			"errorMessage": "Este campo es requerido."
 		},
 		"birthdate": {
 			"type": "string",
 			"title": "Fecha de nacimiento",
+		  	"minLength": 1,
 			"errorMessage": {
-				"format": "Tiene que ser una fecha válida."
+				"format": "Tiene que ser una fecha válida.",
+			  	"minLength": "Este campo es requerido."
 			}
 		},
 		"nationality": {
 			"type": "string",
-			"title": "Nacionalidad"
+			"title": "Nacionalidad",
+			"minLength": 1,
+			"errorMessage": "Este campo es requerido."
 		},
 		"first_language": {
 			"type": "string",
-			"title": "Lengua materna"
+			"title": "Lengua materna",
+			"minLength": 1,
+			"errorMessage": "Este campo es requerido."
 		},
 		"office": {
 			"type": "string",
@@ -73,15 +87,21 @@
 		},
 		"address": {
 			"type": "string",
-			"title": "Dirección"
+			"title": "Dirección",
+			"minLength": 1,
+			"errorMessage": "Este campo es requerido."
 		},
 		"neighborhood": {
 			"type": "string",
-			"title": "Barrio"
+			"title": "Barrio",
+			"minLength": 1,
+			"errorMessage": "Este campo es requerido."
 		},
 		"medical_assurance": {
 			"type": "string",
-			"title": "Cobertura médica"
+			"title": "Cobertura médica",
+			"minLength": 1,
+			"errorMessage": "Este campo es requerido."
 		},
 		"emergency": {
 			"type": "string",
@@ -98,8 +118,10 @@
 		"vaccine_expiration": {
 			"type": "string",
 			"title": "Vencimiento de vacunas",
+		  	"minLength": 1,
 			"errorMessage": {
-				"format": "Tiene que ser una fecha válida."
+				"format": "Tiene que ser una fecha válida.",
+			  	"minLength": "Este campo es requerido."
 			}
 		},
 		"inscription_date": {
@@ -157,35 +179,49 @@
 					},
 					"full_name": {
 						"type": "string",
-						"title": "Nombre completo"
+						"title": "Nombre completo",
+						"minLength": 1,
+						"errorMessage": "Este campo es requerido."
 					},
 					"birthdate": {
 						"type": "string",
-						"title": "Fecha de nacimiento"
+						"title": "Fecha de nacimiento",
+						"minLength": 1,
+						"errorMessage": "Este campo es requerido."
 					},
 					"birthplace": {
 						"type": "string",
-						"title": "País de nacimiento"
+						"title": "País de nacimiento",
+						"minLength": 1,
+						"errorMessage": "Este campo es requerido."
 					},
 					"nationality": {
 						"type": "string",
-						"title": "Nacionalidad"
+						"title": "Nacionalidad",
+						"minLength": 1,
+						"errorMessage": "Este campo es requerido."
 					},
 					"first_language": {
 						"type": "string",
-						"title": "Lengua materna"
+						"title": "Lengua materna",
+						"minLength": 1,
+						"errorMessage": "Este campo es requerido."
 					},
 					"ci": {
 						"type": "string",
 						"title": "Cédula de identidad",
 						"pattern": "^((\\d+)|([a-zA-Z]+))+$",
+					  	"minLength": 1,
 						"errorMessage": {
-							"pattern": "Debe ingresar solo números o letras, sin puntos ni guiones."
+							"pattern": "Debe ingresar solo números o letras, sin puntos ni guiones.",
+						  	"minLength": "Este campo es requerido."
 						}
 					},
 					"marital_status": {
 						"type": "string",
-						"title": "Estado civil"
+						"title": "Estado civil",
+						"minLength": 1,
+						"errorMessage": "Este campo es requerido."
 					},
 					"cellphone": {
 						"type": "string",
@@ -200,15 +236,20 @@
 						"title": "E-mail",
 						"format": "email",
 					  	"pattern": "^\\S+@\\S+\\.\\S+$",
+					  	"minLength": 6,
 						"errorMessage": "Debe ingresar un e-mail válido."
 					},
 					"address": {
 						"type": "string",
-						"title": "Dirección"
+						"title": "Dirección",
+						"minLength": 1,
+						"errorMessage": "Este campo es requerido."
 					},
 					"neighborhood": {
 						"type": "string",
-						"title": "Barrio de residencia"
+						"title": "Barrio de residencia",
+						"minLength": 1,
+						"errorMessage": "Este campo es requerido."
 					},
 					"education_level": {
 						"oneOf": [
@@ -243,19 +284,27 @@
 					},
 					"occupation": {
 						"type": "string",
-						"title": "Trabajo-Ocupación"
+						"title": "Trabajo-Ocupación",
+						"minLength": 1,
+						"errorMessage": "Este campo es requerido."
 					},
 					"workplace": {
 						"type": "string",
-						"title": "Empresa de trabajo"
+						"title": "Empresa de trabajo",
+						"minLength": 1,
+						"errorMessage": "Este campo es requerido."
 					},
 					"workplace_address": {
 						"type": "string",
-						"title": "Dirección laboral"
+						"title": "Dirección laboral",
+						"minLength": 1,
+						"errorMessage": "Este campo es requerido."
 					},
 					"workplace_neighborhood": {
 						"type": "string",
-						"title": "Barrio laboral"
+						"title": "Barrio laboral",
+						"minLength": 1,
+						"errorMessage": "Este campo es requerido."
 					},
 					"workplace_phone": {
 						"type": "string",
