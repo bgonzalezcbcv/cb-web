@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { Cicle, CicleQuestionCategories, Question, Student } from "./Models";
+import { Cicle, CicleQuestionCategories, Question, QuestionCategories, Student } from "./Models";
 
 const baseConfig = {
 	baseURL: process.env["REACT_APP_API_URL"],
@@ -67,12 +67,12 @@ export async function getCicleQuetions(cicleId: number): Promise<{ success: bool
 
 		const result = {
 			success: response.status === 200,
-			cicle_question_categories: response.data.cicle_questions,
+			cicle_questions: response.data,
 		};
 
 		return result;
 	} catch (e) {
-		return { success: false, cicle_question_categories: [] };
+		return { success: false, cicle_questions: [] };
 	}
 }
 

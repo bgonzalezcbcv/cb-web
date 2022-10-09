@@ -17,7 +17,7 @@ describe("EnrollmentQuestions", () => {
 					cicle: Cicle.None,
 					question_categories: [
 						{
-							category: "Categoria",
+							name: "Categoria",
 							questions: [
 								{
 									id: "1",

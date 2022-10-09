@@ -5,7 +5,7 @@ export type Question = {
 };
 
 export interface QuestionCategories {
-	category: string;
+	name: string;
 	questions: Question[];
 }
 

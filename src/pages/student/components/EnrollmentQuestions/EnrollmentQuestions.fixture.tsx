@@ -10,7 +10,7 @@ export const initialStudentData: Student = {
 			cicle: Cicle.None,
 			question_categories: [
 				{
-					category: "categoria 1",
+					name: "categoria 1",
 					questions: [
 						{
 							id: "1",
@@ -31,7 +31,7 @@ export const initialStudentData: Student = {
 					],
 				},
 				{
-					category: "categoria 2",
+					name: "categoria 2",
 					questions: [
 						{
 							id: "12",
@@ -62,7 +62,7 @@ export const expectedNewStudentData: Student = {
 			cicle: Cicle.None,
 			question_categories: [
 				{
-					category: "categoria 1",
+					name: "categoria 1",
 					questions: [
 						{
 							id: "1",
@@ -83,7 +83,7 @@ export const expectedNewStudentData: Student = {
 					],
 				},
 				{
-					category: "categoria 2",
+					name: "categoria 2",
 					questions: [
 						{
 							id: "12",

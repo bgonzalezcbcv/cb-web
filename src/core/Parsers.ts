@@ -10,7 +10,7 @@ function fillAnswers(inscriptionQuestions: QuestionCategories[], questionsKey: s
 	questionsKey.forEach((key: string) => {
 		filledInscriptionQuestions = filledInscriptionQuestions.map((category): QuestionCategories => {
 			return {
-				category: category.category,
+				name: category.name,
 				questions: category.questions.map((questionObject): Question => {
 					const { id, question, answer } = questionObject;
 
@@ -29,11 +29,11 @@ function fillAnswers(inscriptionQuestions: QuestionCategories[], questionsKey: s
 
 export async function parseFormToStudent(form: StudentCreationForm, student: Student): Promise<Student | null> {
 	// todo: to obtain from API.
-	const getQuestionsResponse = await API.getStudentQuestions();
+	const getQuestionsResponse = await API.getCicleQuetions(0);
 
 	if (!getQuestionsResponse.success) return null;
 
-	const inscriptionQuestions: QuestionCategories[] = getQuestionsResponse.cicle_question_categories[0].question_categories;
+	const inscriptionQuestions: QuestionCategories[] = getQuestionsResponse.cicle_questions;
 
 	const questionsKeys = Object.keys(form);
 
@@ -95,10 +95,12 @@ export async function parseFormToStudent(form: StudentCreationForm, student: Stu
 					workplace_phone: form["Teléfono trabajo:2"],
 				},
 			],
-			cicle_question_categories: {
-				cicle: Cicle.None,
-				question_categories: fillAnswers(inscriptionQuestions, questionsKeys, form),
-			},
+			cicle_question_categories: [
+				{
+					cicle: Cicle.None,
+					question_categories: fillAnswers(inscriptionQuestions, questionsKeys, form),
+				},
+			],
 		};
 
 		return _.mergeWith(student, formStudent, (obj, src) => {

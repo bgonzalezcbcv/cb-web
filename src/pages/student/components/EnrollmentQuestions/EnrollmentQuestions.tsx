@@ -128,7 +128,7 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 									alignContent: "center",
 								}}>
 								<AccordionSummary expandIcon={<ExpandMoreIcon />}>
-									<Typography> {category.category} </Typography>
+									<Typography> {category.name} </Typography>
 								</AccordionSummary>
 
 								<AccordionDetails>
