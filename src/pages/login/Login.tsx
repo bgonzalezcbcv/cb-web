@@ -59,7 +59,7 @@ function Login(): JSX.Element {
 		},
 		{
 			id: "password",
-			errorMessage: "Esta campo debe tener largo mayor a 6.",
+			errorMessage: "Este campo debe tener largo mayor a 6.",
 		},
 	]);
 

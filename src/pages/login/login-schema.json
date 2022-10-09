@@ -5,10 +5,7 @@
 			"type": "string",
 			"title": "Correo electrónico",
 			"format": "email",
-			"pattern": "^\\S+@\\S+\\.\\S+$",
-			"minLength": 6,
-			"maxLength": 127,
-			"errorMessage": "Email incorrecto."
+			"maxLength": 127
 		},
 		"password": {
 			"type": "string",
