@@ -32,10 +32,6 @@ function Login(): JSX.Element {
 	const handleSubmit = async (): Promise<void> => {
 		setIsLoading(true);
 
-		setTimeout(() => {
-			setIsLoading(false);
-		}, 3000);
-
 		setValidationMode("ValidateAndShow");
 		if (errors.length > 0) {
 			setIsLoading(false);
