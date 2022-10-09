@@ -8,10 +8,10 @@
 			"type": "string",
 			"title": "CI",
 			"pattern": "^((\\d+)|([a-zA-Z]+))+$",
-		  	"minLength": 1,
+			"minLength": 1,
 			"errorMessage": {
 				"pattern": "Se deben ingresar solo números y letras, sin puntos ni guiones.",
-			  	"minLength": "Este campo es requerido."
+				"minLength": "Este campo es requerido."
 			}
 		},
 		"name": {
@@ -45,16 +45,16 @@
 		"birthplace": {
 			"type": "string",
 			"title": "Lugar de nacimiento",
-		  	"minLength": 1,
+			"minLength": 1,
 			"errorMessage": "Este campo es requerido."
 		},
 		"birthdate": {
 			"type": "string",
 			"title": "Fecha de nacimiento",
-		  	"minLength": 1,
+			"minLength": 1,
 			"errorMessage": {
 				"format": "Tiene que ser una fecha válida.",
-			  	"minLength": "Este campo es requerido."
+				"minLength": "Este campo es requerido."
 			}
 		},
 		"nationality": {
@@ -110,18 +110,18 @@
 		"phone_number": {
 			"type": "string",
 			"title": "Número de teléfono",
-		  	"pattern": "\\d{9}|\\d{8}|(\\d{3}\\s\\d{3}\\s\\d{3}|(\\d{4}\\s\\d{4}))",
-		  	"errorMessage": {
+			"pattern": "\\d{9}|\\d{8}|(\\d{3}\\s\\d{3}\\s\\d{3}|(\\d{4}\\s\\d{4}))",
+			"errorMessage": {
 				"pattern": "Se deben ingresar 8 o 9 dígitos."
-		  	}
+			}
 		},
 		"vaccine_expiration": {
 			"type": "string",
 			"title": "Vencimiento de vacunas",
-		  	"minLength": 1,
+			"minLength": 1,
 			"errorMessage": {
 				"format": "Tiene que ser una fecha válida.",
-			  	"minLength": "Este campo es requerido."
+				"minLength": "Este campo es requerido."
 			}
 		},
 		"inscription_date": {
@@ -148,7 +148,7 @@
 			"title": "Teléfono de contacto",
 			"pattern": "\\d{9}|\\d{8}|(\\d{3}\\s\\d{3}\\s\\d{3}|(\\d{4}\\s\\d{4}))",
 			"errorMessage": {
-			  "pattern": "Se deben ingresar 8 o 9 dígitos."
+				"pattern": "Se deben ingresar 8 o 9 dígitos."
 			}
 		},
 		"family": {
@@ -211,7 +211,7 @@
 						"type": "string",
 						"title": "Cédula de identidad",
 						"pattern": "^((\\d+)|([a-zA-Z]+))+$",
-					  	"minLength": 1,
+						"minLength": 1,
 						"errorMessage": "Debe ingresar solo números o letras, sin puntos ni guiones."
 					},
 					"marital_status": {
@@ -232,8 +232,8 @@
 						"type": "string",
 						"title": "E-mail",
 						"format": "email",
-					  	"pattern": "^\\S+@\\S+\\.\\S+$",
-					  	"minLength": 6,
+						"pattern": "^\\S+@\\S+\\.\\S+$",
+						"minLength": 6,
 						"errorMessage": "Debe ingresar un e-mail válido."
 					},
 					"address": {
@@ -251,32 +251,32 @@
 					"education_level": {
 						"oneOf": [
 							{
-							  "const": "Ninguno",
-							  "title": "Ninguno"
+								"const": "Ninguno",
+								"title": "Ninguno"
 							},
 							{
-							  "const": "Primaria incompleta",
-							  "title": "Primaria incompleta"
+								"const": "Primaria incompleta",
+								"title": "Primaria incompleta"
 							},
 							{
-							  "const": "Secundaria incompleta",
-							  "title": "Secundaria incompleta"
+								"const": "Secundaria incompleta",
+								"title": "Secundaria incompleta"
 							},
 							{
-							  "const": "Terciario incompleta",
-							  "title": "Terciario incompleta"
+								"const": "Terciario incompleta",
+								"title": "Terciario incompleta"
 							},
 							{
-							  "const": "Primaria completa",
-							  "title": "Primaria completa"
+								"const": "Primaria completa",
+								"title": "Primaria completa"
 							},
 							{
-							  "const": "Secundaria completa",
-							  "title": "Secundaria completa"
+								"const": "Secundaria completa",
+								"title": "Secundaria completa"
 							},
 							{
-							  "const": "Terciario completa",
-							  "title": "Terciario completa"
+								"const": "Terciario completa",
+								"title": "Terciario completa"
 							}
 						],
 						"title": "Nivel educativo",
