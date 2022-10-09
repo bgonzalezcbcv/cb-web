@@ -10,7 +10,7 @@ import * as APIStore from "../../core/ApiStore";
 import * as StudentComponents from "./components/index";
 import { TabData } from "./components/StudentPageTabs/StudentPageTabs";
 import { Student as StudentModel } from "../../core/Models";
-import { defaultStudent } from "./DefaultStudent";
+import { defaultStudent, emptyStudent } from "./DefaultStudent";
 
 import "./Student.scss";
 
@@ -43,7 +43,8 @@ export default function Student(props: StudentProps): React.ReactElement {
 		const response = await APIStore.fetchStudent(id as string);
 
 		if (response.success && response.data) {
-			setStudent(response.data);
+			// setStudent(response.data); // todo: Add this when the endpoints are done.
+			setStudent(_.merge(emptyStudent, response.data));
 			setFetchState(FetchState.initial);
 		} else setFetchState(FetchState.failure);
 	}, [id, setFetchState, setStudent]);
