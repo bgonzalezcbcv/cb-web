@@ -33,8 +33,8 @@ export default function StudentPageTabs(props: StudentPageTabsProps): React.Reac
 						"&.Mui-disabled": { opacity: 0.3 },
 					},
 				}}>
-				{tabData.map((tabData) => (
-					<Tab label={tabData.label} data-cy={tabData.dataCY} />
+				{tabData.map((tabData, index) => (
+					<Tab key={`student-tab-${index}`} label={tabData.label} data-cy={tabData.dataCY} />
 				))}
 			</Tabs>
 		</Box>

@@ -1,13 +1,14 @@
 import React from "react";
 import { act, render } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { ErrorObject } from "ajv";
 
 import { Student } from "../../../../../core/Models";
-import CreateStudentDialog from "../CreateStudentDialog";
+import { StudentPageMode } from "../../../../../core/interfaces";
 import * as API from "../../../../../core/ApiStore";
 import * as AJVHelper from "../../../../../core/AJVHelper";
 import * as ErrorList from "../../../../../components/ErrorList/ErrorList";
-import { ErrorObject } from "ajv";
-import userEvent from "@testing-library/user-event";
+import CreateStudentDialog from "../CreateStudentDialog";
 
 describe("CreateStudentDialog", () => {
 	beforeEach(() => {
@@ -142,5 +143,27 @@ describe("CreateStudentDialog", () => {
 
 		expect(failureAlert).toBeVisible();
 		expect(retryButton).toBeVisible();
+	});
+
+	describe("@editable mode", () => {
+		beforeEach(() => {
+			jest.spyOn(ErrorList, "default").mockReturnValue(<div>Error List</div>);
+			jest.spyOn(API, "createStudent").mockResolvedValue(true);
+		});
+
+		it("should render an editable modal", async () => {
+			jest.spyOn(AJVHelper, "getAjvErrors").mockReturnValue([{} as ErrorObject]);
+			jest.spyOn(AJVHelper, "getParsedErrors").mockReturnValue({});
+
+			const wrapper = render(<CreateStudentDialog student={{} as Student} mode={StudentPageMode.edit} />);
+
+			const createStudentButton = await wrapper.findByText("Guardar");
+
+			act(() => {
+				userEvent.click(createStudentButton);
+			});
+
+			expect(wrapper).toMatchSnapshot();
+		});
 	});
 });

@@ -91,6 +91,38 @@ export async function login(email: string, password: string): Promise<{ success:
 	}
 }
 
+// todo: will need the admin info and complementary info.
+export async function fetchStudent(id: string): Promise<{ success: boolean; data?: Student; err: string }> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: `/api/students/${id}`,
+		};
+
+		const response = await axios(config);
+
+		if (![200, 304].includes(response.status) || response.data.student === undefined)
+			return {
+				success: false,
+				err: "Unabled to fetch student",
+			};
+
+		return {
+			success: true,
+			data: response.data.student as Student,
+			err: "",
+		};
+
+		//eslint-disable-next-line
+	} catch (error: any) {
+		return {
+			success: false,
+			err: error.message,
+		};
+	}
+}
+
 export async function createStudent(studentToCreate: Student): Promise<boolean> {
 	try {
 		const config = {
