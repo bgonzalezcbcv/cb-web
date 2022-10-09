@@ -1,7 +1,8 @@
 import _ from "lodash";
 import { makeAutoObservable, action, reaction } from "mobx";
 
-import { User, Teacher, UserRole } from "./interfaces";
+import { Teacher, UserRole } from "./interfaces";
+import { User } from "./Models";
 
 export class DataStore {
 	private static instance: DataStore;

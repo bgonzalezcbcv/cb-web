@@ -1,0 +1,31 @@
+{
+	"type": "VerticalLayout",
+	"elements": [
+		{
+			"type": "Control",
+			"scope": "properties/starting_date",
+			"options": {
+				"format": "date",
+				"dateFormat": "DD/MM/YYYY",
+				"dateSaveFormat": "DD-MM-YYYY"
+			}
+		},
+		{
+			"type": "Control",
+			"scope": "properties/ending_date",
+			"options": {
+				"format": "date",
+				"dateFormat": "DD/MM/YYYY",
+				"dateSaveFormat": "DD-MM-YYYY"
+			}
+		},
+		{
+			"type": "Control",
+			"scope": "properties/reason"
+		},
+		{
+			"type": "Control",
+			"scope": "properties/attachment"
+		}
+	]
+}

@@ -6,7 +6,7 @@ import { AppBar, Avatar, Badge, Box, Button, Chip, Menu, MenuItem, Toolbar } fro
 import NotificationsIcon from "@mui/icons-material/Notifications";
 
 import "./Navbar.scss";
-import { getColorByUserRole, getUserRoleName } from "../../core/userRoleHelper";
+import { getColorByUserRole } from "../../core/userRoleHelper";
 
 function userNameToInitials(displayName?: string): string {
 	return (
@@ -66,9 +66,13 @@ function Navbar(): React.ReactElement {
 					<div className="user-name-and-role">
 						{loggedUser?.name}
 
-						<Chip sx={{ bgcolor: getColorByUserRole(loggedUser?.role) }} className="rolePill" label={getUserRoleName(loggedUser?.role)} />
+						<Chip sx={{ bgcolor: getColorByUserRole(loggedUser?.role) }} className="rolePill" label={loggedUser?.role} />
 					</div>
 				</div>
+
+				<MenuItem color={"secondary"} onClick={() => navigate("/user/3")} sx={{ justifyContent: "center" }}>
+					Mi perfil
+				</MenuItem>
 
 				<MenuItem color={"secondary"} onClick={handleLogout} sx={{ justifyContent: "center" }}>
 					Cerrar Sesión

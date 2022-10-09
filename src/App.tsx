@@ -9,8 +9,9 @@ import { DataStore } from "./core/DataStore";
 import { StudentPageMode } from "./core/interfaces";
 import { getSidebarSectionsByUser } from "./core/userRoleHelper";
 import { theme } from "./core/theme";
-import CreateUser from "./pages/user/CreateUser";
+import CreateUser from "./pages/createuser/CreateUser";
 import Login from "./pages/login/Login";
+import User from "./pages/user/User";
 import Student from "./pages/student/Student";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
@@ -40,11 +41,14 @@ function App(): React.ReactElement {
 									<Routes>
 										{loggedUser ? (
 											<>
-												<Route path="/createuser" element={<CreateUser />} />
+												<Route path="/login" element={<Login />} />
 												<Route path="/student" element={<Student mode={StudentPageMode.create} />} />
 												<Route path="/student/:id" element={<Student mode={StudentPageMode.view} />} />
 												<Route path="/student/:id/edit" element={<Student mode={StudentPageMode.edit} />} />
 												<Route path="/students" element={<Students />} />
+												<Route path="/createuser" element={<CreateUser />} />
+												<Route path="/user/:id" element={<User editable={false} />} />
+												<Route path="/user/:id/edit" element={<User editable />} />
 												<Route path="*" element={<Navigate to="/student" />} />
 											</>
 										) : (

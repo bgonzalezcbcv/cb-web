@@ -1,0 +1,199 @@
+{
+	"type": "object",
+	"properties": {
+		"email": {
+			"type": "string",
+			"title": "Correo electrónico",
+			"format": "email",
+			"pattern": "^\\S+@\\S+\\.\\S+$",
+			"minLength": 6,
+			"maxLength": 127,
+			"errorMessage": "Email incorrecto."
+		},
+		"password": {
+			"type": "string",
+			"title": "Contraseña",
+			"format": "password",
+			"minLength": 6,
+			"maxLength": 127,
+			"errorMessage": {
+				"minLength": "Este campo debe tener como mínimo 6 caracteres."
+			}
+		},
+		"name": {
+			"type": "string",
+			"title": "Nombre",
+			"minLength": 1,
+			"maxLength": 127,
+			"errorMessage": "Este campo es requerido."
+		},
+		"surname": {
+			"type": "string",
+			"title": "Apellido",
+			"minLength": 1,
+			"maxLength": 127,
+			"errorMessage": "Este campo es requerido."
+		},
+		"birthdate": {
+			"type": "string",
+			"title": "Fecha de nacimiento",
+			"pattern": "^(\\d\\d-){2}\\d{4}$",
+			"errorMessage": "Tiene que ser una fecha válida."
+		},
+		"ci": {
+			"type": "string",
+			"pattern": "^((\\d+)|([a-zA-Z]+))+$",
+			"title": "Cédula de identidad",
+			"errorMessage": {
+				"pattern": "Se deben ingresar solo números y letras."
+			}
+		},
+		"phone": {
+			"type": "string",
+			"pattern": "\\d{9}|\\d{8}",
+			"title": "Teléfono",
+			"errorMessage": {
+				"pattern": "Se deben ingresar 8 o 9 dígitos."
+			}
+		},
+		"address": {
+			"type": "string",
+			"title": "Dirección"
+		},
+		"role": {
+			"oneOf": [
+				{
+					"const": "system_admin",
+					"title": "Administrador del sistema"
+				},
+				{
+					"const": "administrative",
+					"title": "Administrativo"
+				},
+				{
+					"const": "associate",
+					"title": "Adscripto"
+				},
+				{
+					"const": "principal",
+					"title": "Director"
+				},
+				{
+					"const": "teacher",
+					"title": "Docente"
+				},
+				{
+					"const": "receptionist",
+					"title": "Recepcionista"
+				}
+			],
+			"title": "Rol",
+			"type": "string"
+		},
+		"complementary_info": {
+			"type": "object",
+			"properties": {
+				"beginning_date": {
+					"type": "string",
+					"title": "Fecha de ingreso",
+					"pattern": "^(\\d\\d-){2}\\d{4}$",
+					"errorMessage": "Tiene que ser una fecha válida."
+				},
+				"academic_training": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"title": {
+								"type": "string",
+								"title": "Título/Curso",
+								"minLength": 1,
+								"errorMessage": "Se debe ingresar el nombre del título."
+							},
+							"date": {
+								"type": "string",
+								"title": "Fecha",
+								"pattern": "^(\\d\\d-){2}\\d{4}$",
+								"errorMessage": "Tiene que ser una fecha válida."
+							},
+							"attachment": {
+								"type": "string",
+								"title": "Adjunto",
+								"minLength": 1
+							}
+						},
+						"required": ["title", "date", "attachment"]
+					},
+					"minItems": 0
+				}
+			},
+			"required": ["beginning_date", "academic_training"]
+		},
+		"absences": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"starting_date": {
+						"type": "string",
+						"title": "Fecha de inicio",
+						"pattern": "^(\\d\\d-){2}\\d{4}$",
+						"errorMessage": "Tiene que ser una fecha válida."
+					},
+					"ending_date": {
+						"type": "string",
+						"pattern": "^(\\d\\d-){2}\\d{4}$",
+						"title": "Fecha de finalización",
+						"errorMessage": "Tiene que ser una fecha válida."
+					},
+					"reason": {
+						"type": "string",
+						"title": "Motivo",
+						"minLength": 1,
+						"errorMessage": "Tiene que ingresar un motivo."
+					},
+					"attachment": {
+						"type": "string",
+						"title": "Adjunto"
+					}
+				},
+				"required": ["starting_date", "ending_date", "reason", "attachment"]
+			}
+		},
+		"documents": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"oneOf": [
+							{
+								"const": "evaluation",
+								"title": "Evaluación"
+							},
+							{
+								"const": "project",
+								"title": "Proyecto"
+							}
+						],
+						"title": "Tipo de documento",
+						"errorMessage": "Tiene que ser alguna de las opciones disponibles."
+					},
+					"attachment": {
+						"type": "string",
+						"title": "Adjunto"
+					},
+					"upload_date": {
+						"type": "string",
+						"title": "Fecha de subida de documento",
+						"pattern": "^(\\d\\d-){2}\\d{4}$",
+						"errorMessage": "Tiene que ser una fecha válida."
+					}
+				},
+				"required": ["type", "attachment"]
+			}
+		}
+	},
+	"required": ["email", "password", "name", "surname", "role"]
+}

@@ -1,15 +1,10 @@
-import { User, UserRole, SidebarSection, UserRoleColor, UserRoleName } from "./interfaces";
+import { UserRole, SidebarSection, UserRoleColor } from "./interfaces";
+import { User } from "./Models";
 
 export function getColorByUserRole(userRole?: UserRole): string {
 	if (!userRole) return "black";
 
-	return UserRoleColor[UserRole[userRole] as keyof typeof UserRoleColor];
-}
-
-export function getUserRoleName(userRole?: UserRole): string {
-	if (!userRole) return "???";
-
-	return UserRoleName[UserRole[userRole] as keyof typeof UserRoleName];
+	return UserRoleColor[userRole as keyof typeof UserRoleColor];
 }
 
 export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {

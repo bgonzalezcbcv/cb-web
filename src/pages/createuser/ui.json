@@ -26,6 +26,15 @@
 		},
 		{
 			"type": "Control",
+			"scope": "#/properties/birthdate",
+			"options": {
+				"format": "date",
+				"dateFormat": "DD-MM-YYYY",
+				"dateSaveFormat": "DD-MM-YYYY"
+			}
+		},
+		{
+			"type": "Control",
 			"scope": "#/properties/ci"
 		},
 		{
