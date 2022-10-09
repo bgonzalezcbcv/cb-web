@@ -8,17 +8,20 @@
 			"type": "string",
 			"title": "CI",
 			"pattern": "^((\\d+)|([a-zA-Z]+))+$",
-			"errorMessage": {
-				"pattern": "Se deben ingresar solo números y letras, sin puntos ni guiones y no puede quedar vacía"
-			}
+			"minLength": 1,
+			"errorMessage": "Se deben ingresar solo números y letras, sin puntos ni guiones."
 		},
 		"name": {
 			"type": "string",
-			"title": "Nombres"
+			"title": "Nombres",
+			"minLength": 1,
+			"errorMessage": "Este campo es requerido."
 		},
 		"surname": {
 			"type": "string",
-			"title": "Apellidos"
+			"title": "Apellidos",
+			"minLength": 1,
+			"errorMessage": "Este campo es requerido."
 		},
 		"schedule_start": {
 			"type": "string",
@@ -38,22 +41,30 @@
 		},
 		"birthplace": {
 			"type": "string",
-			"title": "Lugar de nacimiento"
+			"title": "Lugar de nacimiento",
+			"minLength": 1,
+			"errorMessage": "Este campo es requerido."
 		},
 		"birthdate": {
 			"type": "string",
 			"title": "Fecha de nacimiento",
+			"minLength": 1,
 			"errorMessage": {
-				"format": "Tiene que ser una fecha válida."
+				"format": "Tiene que ser una fecha válida.",
+				"minLength": "Este campo es requerido."
 			}
 		},
 		"nationality": {
 			"type": "string",
-			"title": "Nacionalidad"
+			"title": "Nacionalidad",
+			"minLength": 1,
+			"errorMessage": "Este campo es requerido."
 		},
 		"first_language": {
 			"type": "string",
-			"title": "Lengua materna"
+			"title": "Lengua materna",
+			"minLength": 1,
+			"errorMessage": "Este campo es requerido."
 		},
 		"office": {
 			"type": "string",
@@ -73,15 +84,21 @@
 		},
 		"address": {
 			"type": "string",
-			"title": "Dirección"
+			"title": "Dirección",
+			"minLength": 1,
+			"errorMessage": "Este campo es requerido."
 		},
 		"neighborhood": {
 			"type": "string",
-			"title": "Barrio"
+			"title": "Barrio",
+			"minLength": 1,
+			"errorMessage": "Este campo es requerido."
 		},
 		"medical_assurance": {
 			"type": "string",
-			"title": "Cobertura médica"
+			"title": "Cobertura médica",
+			"minLength": 1,
+			"errorMessage": "Este campo es requerido."
 		},
 		"emergency": {
 			"type": "string",
@@ -89,13 +106,19 @@
 		},
 		"phone_number": {
 			"type": "string",
-			"title": "Número de teléfono"
+			"title": "Número de teléfono",
+			"pattern": "\\d{9}|\\d{8}|(\\d{3}\\s\\d{3}\\s\\d{3}|(\\d{4}\\s\\d{4}))",
+			"errorMessage": {
+				"pattern": "Se deben ingresar 8 o 9 dígitos."
+			}
 		},
 		"vaccine_expiration": {
 			"type": "string",
 			"title": "Vencimiento de vacunas",
+			"minLength": 1,
 			"errorMessage": {
-				"format": "Tiene que ser una fecha válida."
+				"format": "Tiene que ser una fecha válida.",
+				"minLength": "Este campo es requerido."
 			}
 		},
 		"inscription_date": {
@@ -119,11 +142,11 @@
 		},
 		"contact_phone": {
 			"type": "string",
-			"title": "Teléfono de contacto"
-		},
-		"email": {
-			"type": "string",
-			"title": "Email"
+			"title": "Teléfono de contacto",
+			"pattern": "\\d{9}|\\d{8}|(\\d{3}\\s\\d{3}\\s\\d{3}|(\\d{4}\\s\\d{4}))",
+			"errorMessage": {
+				"pattern": "Se deben ingresar 8 o 9 dígitos."
+			}
 		},
 		"family": {
 			"type": "array",
@@ -149,64 +172,78 @@
 						"type": "string",
 						"title": "Tipo de responsable",
 						"default": "mother",
-						"errorMessage": "Tiene que ser algunos de los roles disponibles."
+						"errorMessage": "Debe seleccionar uno de los roles disponibles."
 					},
 					"full_name": {
 						"type": "string",
-						"title": "Nombre completo"
+						"title": "Nombre completo",
+						"minLength": 1,
+						"errorMessage": "Este campo es requerido."
 					},
 					"birthdate": {
 						"type": "string",
-						"title": "Fecha de nacimiento"
+						"title": "Fecha de nacimiento",
+						"minLength": 1,
+						"errorMessage": "Este campo es requerido."
 					},
 					"birthplace": {
 						"type": "string",
-						"title": "País de nacimiento"
+						"title": "País de nacimiento",
+						"minLength": 1,
+						"errorMessage": "Este campo es requerido."
 					},
 					"nationality": {
 						"type": "string",
-						"title": "Nacionalidad"
+						"title": "Nacionalidad",
+						"minLength": 1,
+						"errorMessage": "Este campo es requerido."
 					},
 					"first_language": {
 						"type": "string",
-						"title": "Lengua materna"
+						"title": "Lengua materna",
+						"minLength": 1,
+						"errorMessage": "Este campo es requerido."
 					},
 					"ci": {
 						"type": "string",
 						"title": "Cédula de identidad",
 						"pattern": "^((\\d+)|([a-zA-Z]+))+$",
-						"errorMessage": {
-							"pattern": "Se deben ingresar solo los números, sin puntos ni guiones y no puede quedar vacía"
-						}
+						"minLength": 1,
+						"errorMessage": "Debe ingresar solo números o letras, sin puntos ni guiones."
 					},
 					"marital_status": {
 						"type": "string",
 						"title": "Estado civil",
-						"default": "Soltero/a"
+						"minLength": 1,
+						"errorMessage": "Este campo es requerido."
 					},
 					"cellphone": {
 						"type": "string",
 						"title": "Teléfono celular",
-						"pattern": "\\d{9}",
+						"pattern": "\\d{9}|(\\d{3}\\s\\d{3}\\s\\d{3})",
 						"errorMessage": {
-							"pattern": "Tiene que ser un número de 9 dígitos."
+							"pattern": "Debe ingresar un número de 9 dígitos."
 						}
 					},
 					"email": {
 						"type": "string",
 						"title": "E-mail",
 						"format": "email",
-						"errorMessage": {
-							"format": "Tiene que ser E-mail válido."
-						}
+						"pattern": "^\\S+@\\S+\\.\\S+$",
+						"minLength": 6,
+						"errorMessage": "Debe ingresar un e-mail válido."
 					},
 					"address": {
 						"type": "string",
-						"title": "Dirección"
+						"title": "Dirección",
+						"minLength": 1,
+						"errorMessage": "Este campo es requerido."
 					},
 					"neighbourhood": {
 						"type": "string",
-						"title": "Barrio de residencia"
+						"title": "Barrio de residencia",
+						"minLength": 1,
+						"errorMessage": "Este campo es requerido."
 					},
 					"education_level": {
 						"oneOf": [
@@ -241,34 +278,60 @@
 						],
 						"title": "Nivel educativo",
 						"default": "none",
-						"errorMessage": "Tiene que ser alguno de los niveles educativos disponibles."
+						"errorMessage": "Debe seleccionar uno de los niveles educativos disponibles."
 					},
 					"occupation": {
 						"type": "string",
-						"title": "Trabajo-Ocupación"
+						"title": "Trabajo-Ocupación",
+						"minLength": 1,
+						"errorMessage": "Este campo es requerido."
 					},
 					"workplace": {
 						"type": "string",
-						"title": "Empresa de trabajo"
+						"title": "Empresa de trabajo",
+						"minLength": 1,
+						"errorMessage": "Este campo es requerido."
 					},
 					"workplace_address": {
 						"type": "string",
-						"title": "Dirección laboral"
+						"title": "Dirección laboral",
+						"minLength": 1,
+						"errorMessage": "Este campo es requerido."
 					},
 					"workplace_neighbourhood": {
 						"type": "string",
-						"title": "Barrio laboral"
+						"title": "Barrio laboral",
+						"minLength": 1,
+						"errorMessage": "Este campo es requerido."
 					},
 					"workplace_phone": {
 						"type": "string",
 						"title": "Teléfono laboral",
-						"pattern": "\\d{8,9}",
+						"pattern": "\\d{9}|\\d{8}|(\\d{3}\\s\\d{3}\\s\\d{3}|(\\d{4}\\s\\d{4}))|-|^$",
 						"errorMessage": {
-							"pattern": "Tiene que ser un número de entre 8 a 9 dígitos."
+							"pattern": "Debe ingresar un número de entre 8 a 9 dígitos."
 						}
 					}
 				},
-				"required": ["role", "ci"]
+				"required": [
+					"role",
+					"full_name",
+					"birthdate",
+					"birthplace",
+					"nationality",
+					"first_language",
+					"ci",
+					"marital_status",
+					"cellphone",
+					"email",
+					"address",
+					"neighbourhood",
+					"education_level",
+					"occupation",
+					"workplace",
+					"workplace_address",
+					"workplace_neighbourhood"
+				]
 			},
 			"minItems": 1,
 			"maxItems": 2
@@ -371,7 +434,7 @@
 								],
 								"title": "Método de pago",
 								"type": "string",
-								"errorMessage": "Tiene que ser alguno de los métodos de pagos disponibles."
+								"errorMessage": "Debe seleccionar uno de los métodos de pago disponibles."
 							},
 							"year": {
 								"title": "Año",
@@ -449,37 +512,22 @@
 						"required": ["starting_date", "ending_date", "explanation", "percentage", "report_url"]
 					}
 				}
-			},
-			"required": ["registration_commitment_url", "scholarship_type", "agreement_type", "comments", "payment_methods", "discounts"]
+			}
 		}
 	},
 	"required": [
 		"ci",
 		"name",
 		"surname",
-		"schedule_start",
-		"schedule_end",
-		"tuition",
-		"reference_number",
 		"birthplace",
 		"birthdate",
 		"nationality",
 		"first_language",
-		"office",
-		"status",
 		"address",
 		"neighborhood",
 		"medical_assurance",
-		"emergency",
 		"phone_number",
 		"vaccine_expiration",
-		"inscription_date",
-		"starting_date",
-		"contact",
-		"contact_phone",
-		"email",
-		"family",
-		"question_categories",
-		"administrative_info"
+		"question_categories"
 	]
 }

@@ -39,7 +39,7 @@ export function parseFormToStudent(form: StudentCreationForm, student: Student):
 					workplace: form["Empresa o lugar de trabajo:"],
 					workplace_address: form["Dirección de trabajo:"],
 					workplace_neighbourhood: form["Barrio de trabajo:"],
-					workplace_phone: form["Teléfono trabajo:"],
+					workplace_phone: form["Teléfono trabajo:"].toString(),
 				},
 				{
 					role: form["Datos correspondientes a:2"],
@@ -59,7 +59,7 @@ export function parseFormToStudent(form: StudentCreationForm, student: Student):
 					workplace: form["Empresa o lugar de trabajo:2"],
 					workplace_address: form["Dirección de trabajo:2"],
 					workplace_neighbourhood: form["Barrio de trabajo:2"],
-					workplace_phone: form["Teléfono trabajo:2"],
+					workplace_phone: form["Teléfono trabajo:2"].toString(),
 				},
 			],
 			question_categories: [

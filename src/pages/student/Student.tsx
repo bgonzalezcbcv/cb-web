@@ -32,11 +32,16 @@ export default function Student(props: StudentProps): React.ReactElement {
 
 	const debouncedSetStudent = React.useCallback(_.debounce(setStudent, 200), []);
 
+	const translator = (id: string, defaultMessage: string): string => {
+		if (id.includes("required")) return "Este campo es requerido.";
+		else return defaultMessage;
+	};
+
 	const panels = [
-		<StudentInfo student={student} onChange={debouncedSetStudent} editable={isEditable} />,
-		<FamilyForm student={student} onChange={debouncedSetStudent} editable={isEditable} />,
+		<StudentInfo student={student} onChange={debouncedSetStudent} editable={isEditable} translator={translator} />,
+		<FamilyForm student={student} onChange={debouncedSetStudent} editable={isEditable} translator={translator} />,
 		<EnrollmentQuestions student={student} onChange={debouncedSetStudent} editable={isEditable} />,
-		<AdministrativeInfo student={student} onChange={debouncedSetStudent} editable={isEditable} />,
+		<AdministrativeInfo student={student} onChange={debouncedSetStudent} editable={isEditable} translator={translator} />,
 	];
 
 	return (

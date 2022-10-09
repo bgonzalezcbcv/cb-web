@@ -3,7 +3,7 @@ import React, { useCallback, useState } from "react";
 import { FamilyMember, Student } from "../../../../core/Models";
 import { ajv as studentAjv } from "../../../../core/AJVHelper";
 import { JsonForms } from "@jsonforms/react";
-import { JsonSchema7 } from "@jsonforms/core";
+import {JsonSchema7, Translator} from "@jsonforms/core";
 import { materialRenderers } from "@jsonforms/material-renderers";
 import { Box, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { defaultStudent } from "../../DefaultStudent";
@@ -17,10 +17,11 @@ export type FamilyFormProps = {
 	student: Student;
 	editable: boolean;
 	onChange: (data: Student) => void;
+	translator?: (id: string, defaultMessage: string) => string;
 };
 
 export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
-	const { student, onChange, editable } = props;
+	const { student, onChange, editable, translator } = props;
 	const { family } = student;
 
 	const [familyIndex, setFamilyIndex] = useState(0);
@@ -74,6 +75,7 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 			</Box>
 
 			<JsonForms
+				i18n={{ translate: translator as Translator }}
 				ajv={studentAjv}
 				schema={schema.properties.family.items as JsonSchema7}
 				uischema={ui}
