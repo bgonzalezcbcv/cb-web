@@ -256,24 +256,24 @@
 								"title": "Primaria incompleta"
 							},
 							{
-								"const": "Secundaria incompleta",
-								"title": "Secundaria incompleta"
-							},
-							{
-								"const": "Terciario incompleta",
-								"title": "Terciario incompleta"
-							},
-							{
 								"const": "Primaria completa",
 								"title": "Primaria completa"
+							},
+							{
+								"const": "Secundaria incompleta",
+								"title": "Secundaria incompleta"
 							},
 							{
 								"const": "Secundaria completa",
 								"title": "Secundaria completa"
 							},
 							{
-								"const": "Terciario completa",
-								"title": "Terciario completa"
+								"const": "Terciaria incompleta",
+								"title": "Terciaria incompleta"
+							},
+							{
+								"const": "Terciaria completa",
+								"title": "Terciaria completa"
 							}
 						],
 						"title": "Nivel educativo",

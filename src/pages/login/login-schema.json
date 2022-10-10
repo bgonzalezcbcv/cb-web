@@ -5,14 +5,16 @@
 			"type": "string",
 			"title": "Correo electrónico",
 			"format": "email",
-			"maxLength": 127
+			"maxLength": 127,
+			"errorMessage": "Email incorrecto."
 		},
 		"password": {
 			"type": "string",
-			"title": "Constraseña",
+			"title": "Contraseña",
 			"format": "password",
 			"minLength": 6,
-			"maxLength": 127
+			"maxLength": 127,
+			"errorMessage": "Este campo debe tener largo mayor a 6."
 		}
 	},
 	"required": ["email", "password"]
