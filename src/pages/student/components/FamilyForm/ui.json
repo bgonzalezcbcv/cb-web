@@ -37,10 +37,6 @@
 				{
 					"type": "Control",
 					"scope": "properties/cellphone"
-				},
-				{
-					"type": "Control",
-					"scope": "properties/education_level"
 				}
 			]
 		},
@@ -83,15 +79,15 @@
 			"elements": [
 				{
 					"type": "Control",
+					"scope": "properties/education_level"
+				},
+				{
+					"type": "Control",
 					"scope": "properties/occupation"
 				},
 				{
 					"type": "Control",
 					"scope": "properties/workplace"
-				},
-				{
-					"type": "Control",
-					"scope": "properties/workplace_phone"
 				}
 			]
 		},
@@ -105,6 +101,10 @@
 				{
 					"type": "Control",
 					"scope": "properties/workplace_neighbourhood"
+				},
+				{
+					"type": "Control",
+					"scope": "properties/workplace_phone"
 				}
 			]
 		}
