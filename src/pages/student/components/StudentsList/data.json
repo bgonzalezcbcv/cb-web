@@ -1,0 +1,74 @@
+[
+	{
+		"id": 1,
+		"names": "Ramiro Rodrigo",
+		"surnames": "Ramirez Rodriguez",
+		"ci": "1231231"
+	},
+	{
+		"id": 2,
+		"names": "Gonzalo Martin",
+		"surnames": "Gonzalez Martinez",
+		"ci": "4564564"
+	},
+	{
+		"id": 3,
+		"names": "Sancho Fernando",
+		"surnames": "Sanchez Fernandez",
+		"ci": "7897897"
+	},
+	{
+		"id": 4,
+		"names": "Fabiana",
+		"surnames": "Fabianez Fabianez",
+		"ci": "1471471"
+	},
+	{
+		"id": 5,
+		"names": "Romina Camila",
+		"surnames": "Rominez Camilez",
+		"ci": "2582582"
+	},
+	{
+		"id": 6,
+		"names": "Fulano Fulanito",
+		"surnames": "Fulanez Fulanitez",
+		"ci": "3693693"
+	},
+	{
+		"id": 7,
+		"names": "Juan Pedro",
+		"surnames": "Juanez Pedrez",
+		"ci": "1591591"
+	},
+	{
+		"id": 8,
+		"names": "Maria Agustina",
+		"surnames": "Mariez Agustinez",
+		"ci": "9519519"
+	},
+	{
+		"id": 9,
+		"names": "Kakaroto Goku",
+		"surnames": "San Kakaroto",
+		"ci": "3213213"
+	},
+	{
+		"id": 10,
+		"names": "Vegeta Vegetal",
+		"surnames": "Principe Saiyayin",
+		"ci": "9879879"
+	},
+	{
+		"id": 11,
+		"names": "Naruto",
+		"surnames": "Uzumaki Minato",
+		"ci": "5646545"
+	},
+	{
+		"id": 12,
+		"names": "Sasuke",
+		"surnames": "Uchiha",
+		"ci": "98749878"
+	}
+]
