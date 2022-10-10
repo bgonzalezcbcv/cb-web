@@ -17,7 +17,7 @@ import schema from "./login-schema.json";
 import ui from "./login-ui.json";
 import logo from "../../assets/Vertical.svg";
 
-import "./Login.scss";
+import styles from "./Login.module.scss";
 
 function Login(): JSX.Element {
 	const dataStore = DataStore.getInstance();
@@ -61,13 +61,13 @@ function Login(): JSX.Element {
 	};
 
 	return (
-		<Box className="loginBody" width="100%" height="100%">
+		<Box className={styles.loginBody} width="100%" height="100%">
 			<Grid alignContent="center" justifyContent="center">
-				<Card className="contenedor">
-					<CardContent className="contenedor">
-						<div className="formHeader">
-							<img className="loginLogo" src={logo} alt="logo" />
-							<h1 className="title">Bienvenido</h1>
+				<Card className={styles.container}>
+					<CardContent className={styles.container}>
+						<div className={styles.formHeader}>
+							<img className={styles.loginLogo} src={logo} alt="logo" />
+							<h1 className={styles.title}>Bienvenido</h1>
 						</div>
 
 						<JsonForms
@@ -86,11 +86,11 @@ function Login(): JSX.Element {
 						/>
 
 						{!isLoading ? (
-							<Button className="loginButton" data-cy="loginButton" onClick={handleSubmit}>
+							<Button className={styles.loginButton} data-cy="loginButton" onClick={handleSubmit}>
 								Iniciar Sesión
 							</Button>
 						) : (
-							<LoadingButton loading className="loadingButton"></LoadingButton>
+							<LoadingButton loading className={styles.loadingButton} />
 						)}
 
 						{errMsg ? (
