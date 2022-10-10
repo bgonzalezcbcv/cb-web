@@ -34,7 +34,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					items: [
 						{
 							title: "Crear",
-							navigationRoute: "/teachers",
+							navigationRoute: "/createuser",
 						},
 						{
 							title: "Ver todos",
@@ -64,6 +64,27 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 						{
 							title: "Dar de alta",
 							navigationRoute: "/student",
+						},
+					],
+				},
+				{
+					sectionTitle: "Usuarios",
+					items: [
+						// {
+						// 	title: "Activos",
+						// 	navigationRoute: "/teachers",
+						// },
+						// {
+						// 	title: "Pendientes",
+						// 	navigationRoute: "/teachers",
+						// },
+						// {
+						// 	title: "Inactivos",
+						// 	navigationRoute: "/teachers",
+						// },
+						{
+							title: "Dar de alta",
+							navigationRoute: "/createuser",
 						},
 					],
 				},

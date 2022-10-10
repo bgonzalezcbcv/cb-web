@@ -55,7 +55,7 @@ function Navbar(): React.ReactElement {
 	};
 
 	const renderUserAvatar = (): React.ReactElement => {
-		return <Avatar sx={{ bgcolor: getColorByUserRole(loggedUser?.role) }}>{userNameToInitials(loggedUser?.displayName)}</Avatar>;
+		return <Avatar sx={{ bgcolor: getColorByUserRole(loggedUser?.role), border: "0.2px solid white" }}>{userNameToInitials(loggedUser?.name)}</Avatar>;
 	};
 
 	const renderProfileMenuContent = (): React.ReactElement => {
@@ -64,7 +64,7 @@ function Navbar(): React.ReactElement {
 				<div className="user-info">
 					{renderUserAvatar()}
 					<div className="user-name-and-role">
-						{loggedUser?.displayName}
+						{loggedUser?.name}
 
 						<Chip sx={{ bgcolor: getColorByUserRole(loggedUser?.role) }} className="rolePill" label={getUserRoleName(loggedUser?.role)} />
 					</div>

@@ -10,10 +10,10 @@ export class DataStore {
 
 	public teachers: Teacher[] = [];
 
-	public agreementTypes: string[] = ['Ninguno'];
+	public agreementTypes: string[] = ["Ninguno"];
 
 	private constructor() {
-		const savedStateJson = localStorage.getItem("store");
+		const savedStateJson = sessionStorage.getItem("store");
 
 		if (savedStateJson) {
 			try {
@@ -45,12 +45,13 @@ export class DataStore {
 
 	// todo: need to implement this function.
 	@action
-	public logIn(): boolean {
+	public logIn(email: string, token: string, name: string, surname: string, role: UserRole): boolean {
 		this.loggedUser = {
-			email: "testingEmail@xmail.test",
-			token: "notAToken",
-			displayName: "Juan Prueba",
-			role: UserRole.Administrativo,
+			email,
+			name,
+			surname,
+			token,
+			role,
 		};
 
 		return true;
@@ -73,15 +74,14 @@ export class DataStore {
 
 	@action
 	public addAgreementType(agreementType: string): void {
-		if (!this.agreementTypes.includes(agreementType))
-			this.agreementTypes = [...this.agreementTypes, agreementType];
+		if (!this.agreementTypes.includes(agreementType)) this.agreementTypes = [...this.agreementTypes, agreementType];
 	}
 }
 
 reaction(
 	() => JSON.stringify(DataStore.getInstance()),
 	(json) => {
-		localStorage.setItem("store", json);
+		sessionStorage.setItem("store", json);
 	},
 	{
 		delay: 500,

@@ -32,10 +32,10 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 	const { student, editable, onChange, viewMode } = props;
 
 	const isViewMode = viewMode == "VIEW";
-	const cicleQuestionCategories = student.cicle_question_categories;
+	const cicle_question_categories = _.cloneDeep(student.cicle_question_categories);
 
 	const [selectedCicle, setSelectedCicle] = useState<Cicle>(Cicle.None);
-	const [question_categories, setQuestionCategories] = useState(cicleQuestionCategories[0].question_categories);
+	const [question_categories, setQuestionCategories] = useState(cicle_question_categories[0].question_categories);
 	const [error, setError] = useState<string | null>(null);
 
 	const studentCicles = Object.keys(Cicle) as Array<keyof typeof Cicle>;
@@ -54,6 +54,10 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 	useEffect(() => {
 		if (error) window.setTimeout(() => setError(null), 3000);
 	}, [error]);
+
+	useEffect(() => {
+		console.log("HOLA");
+	}, [student]);
 
 	const handleCicleChange = (event: SelectChangeEvent): void => {
 		const cicleString = event.target.value;

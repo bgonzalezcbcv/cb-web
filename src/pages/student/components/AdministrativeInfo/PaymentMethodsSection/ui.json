@@ -1,22 +1,13 @@
 {
-	"type": "VerticalLayout",
+	"type": "HorizontalLayout",
 	"elements": [
 		{
-			"type": "HorizontalLayout",
-			"elements": [
-				{
-					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/payment_methods/items/properties/year"
-				},
-				{
-					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/payment_methods/items/properties/method"
-				},
-				{
-					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/payment_methods/items/properties/yearly_payment_url"
-				}
-			]
+			"type": "Control",
+			"scope": "#/properties/year"
+		},
+		{
+			"type": "Control",
+			"scope": "#/properties/method"
 		}
 	]
 }

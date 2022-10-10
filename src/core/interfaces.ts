@@ -42,7 +42,8 @@ export enum UserRole {
 export interface User {
 	email: string;
 	token: string;
-	displayName: string;
+	name: string;
+	surname: string;
 	role: UserRole;
 }
 
@@ -55,4 +56,17 @@ export interface SidebarItem {
 export interface SidebarSection {
 	sectionTitle: string;
 	items: SidebarItem[];
+}
+
+export enum CreationState {
+	idle = "idle",
+	inProcess = "inProcess",
+	success = "success",
+	fail = "fail",
+}
+
+export enum StudentPageMode {
+	create = "CREATE",
+	edit = "EDIT",
+	view = "VIEW",
 }

@@ -1,5 +1,201 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`CreateStudentDialog @editable mode should render an editable modal 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body
+    style="padding-right: 1024px; overflow: hidden;"
+  >
+    <div
+      aria-hidden="true"
+    >
+      <div
+        class="MuiBox-root css-0"
+      >
+        <hr
+          class="MuiDivider-root MuiDivider-fullWidth css-o9b5bv-MuiDivider-root"
+        />
+        <div
+          class="MuiBox-root css-1doqpq5"
+        >
+          <button
+            class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeMedium MuiButton-outlinedSizeMedium css-wnpvqa-MuiButtonBase-root-MuiButton-root"
+            data-cy="createStudentButton"
+            tabindex="0"
+            type="button"
+          >
+            Guardar
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="MuiDialog-root MuiModal-root css-zw3mfo-MuiModal-root-MuiDialog-root"
+      data-cy="errorAlertDialog"
+      role="presentation"
+    >
+      <div
+        aria-hidden="true"
+        class="MuiBackdrop-root css-yiavyu-MuiBackdrop-root-MuiDialog-backdrop"
+        style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+      />
+      <div
+        data-testid="sentinelStart"
+        tabindex="0"
+      />
+      <div
+        class="MuiDialog-container MuiDialog-scrollPaper css-hz1bth-MuiDialog-container"
+        role="presentation"
+        style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+        tabindex="-1"
+      >
+        <div
+          aria-labelledby=":r7:"
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm css-1t1j96h-MuiPaper-root-MuiDialog-paper"
+          role="dialog"
+        >
+          <h2
+            class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-bdhsul-MuiTypography-root-MuiDialogTitle-root"
+            id=":r7:"
+          >
+            <span
+              class="MuiTypography-root MuiTypography-h5 css-bezmlo-MuiTypography-root"
+            >
+              Hay errores en los campos del alumno...
+            </span>
+          </h2>
+          <div
+            class="MuiDialogContent-root css-ypiqx9-MuiDialogContent-root"
+          >
+            <span
+              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+            >
+              ¿Está seguro de querer editar este alumno?
+            </span>
+            <div
+              class="MuiBox-root css-10idku2"
+            >
+              <div>
+                Error List
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiDialogActions-root MuiDialogActions-spacing css-1chrrgc-MuiDialogActions-root"
+          >
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiLoadingButton-root MuiButton-outlined MuiButton-outlinedError MuiButton-sizeMedium MuiButton-outlinedSizeMedium css-yvzrdt-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root"
+              tabindex="0"
+              type="button"
+            >
+              Cancelar
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiLoadingButton-root MuiButton-outlined MuiButton-outlinedSuccess MuiButton-sizeMedium MuiButton-outlinedSizeMedium css-bi5g9h-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root"
+              data-cy="confirmCreateStudent"
+              tabindex="0"
+              type="button"
+            >
+              Aceptar
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        data-testid="sentinelEnd"
+        tabindex="0"
+      />
+    </div>
+  </body>,
+  "container": <div
+    aria-hidden="true"
+  >
+    <div
+      class="MuiBox-root css-0"
+    >
+      <hr
+        class="MuiDivider-root MuiDivider-fullWidth css-o9b5bv-MuiDivider-root"
+      />
+      <div
+        class="MuiBox-root css-1doqpq5"
+      >
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeMedium MuiButton-outlinedSizeMedium css-wnpvqa-MuiButtonBase-root-MuiButton-root"
+          data-cy="createStudentButton"
+          tabindex="0"
+          type="button"
+        >
+          Guardar
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
+        </button>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
 exports[`CreateStudentDialog should not render a dialog when cancel button is clicked 1`] = `
 Object {
   "asFragment": [Function],

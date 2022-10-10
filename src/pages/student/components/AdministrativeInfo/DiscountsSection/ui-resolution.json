@@ -1,0 +1,27 @@
+{
+	"type": "HorizontalLayout",
+	"elements": [
+		{
+			"type": "Control",
+			"scope": "#/properties/starting_date",
+			"options": {
+				"format": "date",
+				"dateFormat": "DD/MM/YYYY",
+				"dateSaveFormat": "MM-DD-YYYY"
+			}
+		},
+		{
+			"type": "Control",
+			"scope": "#/properties/ending_date",
+			"options": {
+				"format": "date",
+				"dateFormat": "DD/MM/YYYY",
+				"dateSaveFormat": "MM-DD-YYYY"
+			}
+		},
+		{
+			"type": "Control",
+			"scope": "#/properties/description"
+		}
+	]
+}

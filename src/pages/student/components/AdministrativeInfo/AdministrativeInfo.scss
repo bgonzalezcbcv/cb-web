@@ -1,6 +1,6 @@
 .administrative-info {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	place-items: center;
 	justify-content: space-between;
 
@@ -31,8 +31,9 @@
 
 	.payment-details-wrapper {
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
 		align-items: center;
-		width: 70%;
+		width: 100%;
+		margin-bottom: 1.5%;
 	}
 }

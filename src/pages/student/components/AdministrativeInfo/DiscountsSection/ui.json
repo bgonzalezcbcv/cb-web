@@ -1,62 +1,13 @@
 {
-	"type": "VerticalLayout",
+	"type": "HorizontalLayout",
 	"elements": [
 		{
-			"type": "HorizontalLayout",
-			"elements": [
-				{
-					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/discounts/items/properties/starting_date",
-					"options": {
-						"format": "date",
-						"dateFormat": "DD/MM/YYYY",
-						"dateSaveFormat": "MM-DD-YYYY"
-					}
-				},
-				{
-					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/discounts/items/properties/ending_date",
-					"options": {
-						"format": "date",
-						"dateFormat": "DD/MM/YYYY",
-						"dateSaveFormat": "MM-DD-YYYY"
-					}
-				},
-				{
-					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/discounts/items/properties/percentage"
-				}
-			]
+			"type": "Control",
+			"scope": "#/properties/percentage"
 		},
 		{
-			"type": "HorizontalLayout",
-			"elements": [
-				{
-					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/discounts/items/properties/explanation"
-				},
-				{
-					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/discounts/items/properties/description"
-				},
-				{
-					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/discounts/items/properties/resolution_url"
-				}
-			]
-		},
-		{
-			"type": "HorizontalLayout",
-			"elements": [
-				{
-					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/discounts/items/properties/type"
-				},
-				{
-					"type": "Control",
-					"scope": "#/properties/administrative_info/properties/discounts/items/properties/report_url"
-				}
-			]
+			"type": "Control",
+			"scope": "#/properties/explanation"
 		}
 	]
 }

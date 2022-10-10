@@ -11,6 +11,10 @@
 				{
 					"type": "Control",
 					"scope": "#/properties/surname"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/ci"
 				}
 			]
 		},
@@ -19,15 +23,15 @@
 			"elements": [
 				{
 					"type": "Control",
-					"scope": "#/properties/ci"
-				},
-				{
-					"type": "Control",
 					"scope": "#/properties/status"
 				},
 				{
 					"type": "Control",
 					"scope": "#/properties/tuition"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/reference_number"
 				}
 			]
 		},
@@ -44,17 +48,13 @@
 				},
 				{
 					"type": "Control",
-					"scope": "#/properties/reference_number"
+					"scope": "#/properties/birthplace"
 				}
 			]
 		},
 		{
 			"type": "HorizontalLayout",
 			"elements": [
-				{
-					"type": "Control",
-					"scope": "#/properties/birthplace"
-				},
 				{
 					"type": "Control",
 					"scope": "#/properties/birthdate",
@@ -67,6 +67,10 @@
 				{
 					"type": "Control",
 					"scope": "#/properties/nationality"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/first_language"
 				}
 			]
 		},
@@ -75,15 +79,15 @@
 			"elements": [
 				{
 					"type": "Control",
-					"scope": "#/properties/first_language"
-				},
-				{
-					"type": "Control",
 					"scope": "#/properties/neighborhood"
 				},
 				{
 					"type": "Control",
 					"scope": "#/properties/address"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/phone_number"
 				}
 			]
 		},

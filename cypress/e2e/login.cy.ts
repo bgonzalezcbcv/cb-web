@@ -1,14 +1,14 @@
 describe("Login", () => {
 	const emailFieldID = "#\\#\\/properties\\/email2-input";
 	const passwordFieldID = "#\\#\\/properties\\/password2-input";
-	const loginButtonID = ".MuiButton-root";
+	const loginButtonID = '[data-cy="loginButton"]';
 
 	beforeEach(() => {
 		cy.visit("/login");
 	});
 
 	it("can login", () => {
-		cy.get(emailFieldID).type("aa@a.a");
+		cy.get(emailFieldID).type("test@test.com");
 		cy.get(passwordFieldID).type("password");
 		cy.wait(200);
 		cy.get(loginButtonID).click();
