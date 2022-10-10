@@ -1,22 +1,23 @@
+import _ from "lodash";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 
 import { login } from "../../core/ApiStore";
 import { DataStore } from "../../core/DataStore";
-import { Translator } from "@jsonforms/core";
+import { ajv } from "../../core/AJVHelper";
+
+import { Translator, ValidationMode } from "@jsonforms/core";
 import { JsonForms } from "@jsonforms/react";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
 import { Alert, Button, Card, CardContent, Grid, Box } from "@mui/material";
-import { ValidationMode } from "@jsonforms/core";
+import { LoadingButton } from "@mui/lab";
 
 import schema from "./login-schema.json";
 import ui from "./login-ui.json";
 import logo from "../../assets/Vertical.svg";
 
-import "./Login.scss";
-import { basicTranslator } from "../../core/CoreHelper";
-import { LoadingButton } from "@mui/lab";
+import styles from "./Login.module.scss";
 
 function Login(): JSX.Element {
 	const dataStore = DataStore.getInstance();
@@ -27,14 +28,12 @@ function Login(): JSX.Element {
 	const [errMsg, setErrMsg] = useState<string | undefined>(undefined);
 	const [isLoading, setIsLoading] = useState(false);
 
+	const debouncedSetLoginInfo = React.useCallback(_.debounce(setLoginInfo, 200), []);
+
 	const navigate = useNavigate();
 
 	const handleSubmit = async (): Promise<void> => {
 		setIsLoading(true);
-
-		setTimeout(() => {
-			setIsLoading(false);
-		}, 3000);
 
 		setValidationMode("ValidateAndShow");
 		if (errors.length > 0) {
@@ -56,28 +55,24 @@ function Login(): JSX.Element {
 		setIsLoading(false);
 	};
 
-	const translator = basicTranslator([
-		{
-			id: "email",
-			errorMessage: "Email incorrecto.",
-		},
-		{
-			id: "password",
-			errorMessage: "Esta campo debe tener largo mayor a 6.",
-		},
-	]);
+	const translator = (id: string, defaultMessage: string): string => {
+		if (id.includes("required")) return "Este campo es requerido.";
+		else return defaultMessage;
+	};
 
 	return (
-		<Box className="loginBody" width="100%" height="100%">
+		<Box className={styles.loginBody} width="100%" height="100%">
 			<Grid alignContent="center" justifyContent="center">
-				<Card className="contenedor">
-					<CardContent className="contenedor">
-						<div className="formHeader">
-							<img className="loginLogo" src={logo} alt="logo" />
-							<h1 className="title">Bienvenido</h1>
+				<Card className={styles.container}>
+					<CardContent className={styles.container}>
+						<div className={styles.formHeader}>
+							<img className={styles.loginLogo} src={logo} alt="logo" />
+							<h1 className={styles.title}>Bienvenido</h1>
 						</div>
+
 						<JsonForms
 							i18n={{ translate: translator as Translator }}
+							ajv={ajv}
 							schema={schema}
 							uischema={ui}
 							data={loginInfo}
@@ -85,17 +80,19 @@ function Login(): JSX.Element {
 							cells={materialCells}
 							onChange={({ errors, data }): void => {
 								setErrors(errors ?? []);
-								setLoginInfo(data);
+								debouncedSetLoginInfo(data);
 							}}
 							validationMode={validationMode}
 						/>
+
 						{!isLoading ? (
-							<Button className="loginButton" data-cy="loginButton" onClick={handleSubmit}>
+							<Button className={styles.loginButton} data-cy="loginButton" onClick={handleSubmit}>
 								Iniciar Sesión
 							</Button>
 						) : (
-							<LoadingButton loading className="loadingButton"></LoadingButton>
+							<LoadingButton loading className={styles.loadingButton} />
 						)}
+
 						{errMsg ? (
 							<Alert severity="error" variant="outlined" onClose={(): void => setErrMsg(undefined)}>
 								{errMsg}
