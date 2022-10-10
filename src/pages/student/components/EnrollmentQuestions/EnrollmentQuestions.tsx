@@ -56,7 +56,7 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 	}, [error]);
 
 	useEffect(() => {
-		console.log("HOLA");
+		setQuestionCategories(cicle_question_categories[0].question_categories);
 	}, [student]);
 
 	const handleCicleChange = (event: SelectChangeEvent): void => {

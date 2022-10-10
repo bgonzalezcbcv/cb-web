@@ -48,8 +48,7 @@ function App(): React.ReactElement {
 											</>
 										) : (
 											<>
-												{/* <Route path="/login" element={<Login />} /> */}
-												<Route path="/student" element={<Student mode={StudentPageMode.create} />} />
+												<Route path="/login" element={<Login />} />
 												<Route path="*" element={<Navigate to="/login" />} />
 											</>
 										)}
