@@ -1,10 +1,8 @@
 name: Staging Deploy to Amazon ECS
 
 on:
-  workflow_dispatch:
-  # push:
-  #   branches: 
-  #     - main
+  push:
+    branches: ["develop"]
 
 env:
   AWS_REGION: sa-east-1                   # set this to your preferred AWS region, e.g. us-west-1                                               # file, e.g. .aws/task-definition.json
