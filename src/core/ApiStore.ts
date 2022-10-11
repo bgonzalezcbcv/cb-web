@@ -1,6 +1,6 @@
 import _ from "lodash";
 import axios from "axios";
-import { autorun } from "mobx";
+import { reaction } from "mobx";
 
 import { Student, User as UserModel } from "./Models";
 import { User, UserRole } from "./interfaces";
@@ -16,11 +16,14 @@ let baseConfig = {
 	baseURL: process.env["REACT_APP_API_URL"],
 };
 
-autorun(() => {
-	baseConfig = _.merge(baseConfig, {
-		headers: { Authorization: `Bearer ${dataStore.loggedUser?.token}` },
-	});
-});
+reaction(
+	() => dataStore.loggedUser?.token,
+	(token) => {
+		baseConfig = _.merge(baseConfig, {
+			headers: { Authorization: `Bearer ${token}` },
+		});
+	}
+);
 
 axios.interceptors.response.use(
 	(response) => response,
