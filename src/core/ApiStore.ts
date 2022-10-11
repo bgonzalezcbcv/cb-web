@@ -1,10 +1,10 @@
-import axios, { Axios } from "axios";
+import _ from "lodash";
+import axios from "axios";
+import { reaction } from "mobx";
 
 import { Student, User as UserModel } from "./Models";
 import { User, UserRole } from "./interfaces";
-
 import { DataStore } from "./DataStore";
-import { autorun } from "mobx";
 
 const dataStore = DataStore.getInstance();
 
@@ -16,21 +16,23 @@ let baseConfig = {
 	baseURL: process.env["REACT_APP_API_URL"],
 };
 
-autorun(() => {
-	baseConfig = {
-		headers: {
-			Authorization: `Bearer ${dataStore.loggedUser?.token}`,
-			"Content-Type": "application/json",
-		},
-		baseURL: process.env["REACT_APP_API_URL"],
-	};
-});
+reaction(
+	() => dataStore.loggedUser?.token,
+	(token) => {
+		baseConfig = _.merge(baseConfig, {
+			headers: { Authorization: `Bearer ${token}` },
+		});
+	}
+);
 
-// todo: use this instance in order to do a middleware.
-//eslint-disable-next-line
-const axiosInstance = new Axios(baseConfig);
+axios.interceptors.response.use(
+	(response) => response,
+	(error) => {
+		if (error.response.state === 403 && error.response.config.baseURL === baseConfig.baseURL) dataStore.logOut();
 
-// todo: create middleware in order to log out on 403.
+		return Promise.reject();
+	}
+);
 
 interface SignInResponseData {
 	id: number;
