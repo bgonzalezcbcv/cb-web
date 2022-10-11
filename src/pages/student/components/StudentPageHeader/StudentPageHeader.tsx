@@ -46,11 +46,13 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 					</Typography>
 				</Box>
 				<Box>
-					<Button color={"secondary"} title="Subir formulario de inscripción" onClick={(): void => setIsFormUploadOpen(true)}>
-						{mode === StudentPageMode.create && <UploadFileIcon />}
-					</Button>
+					{mode === StudentPageMode.create ? (
+						<Button color={"secondary"} title="Subir formulario de inscripción" onClick={(): void => setIsFormUploadOpen(true)}>
+							<UploadFileIcon />
+						</Button>
+					) : null}
 
-					{[StudentPageMode.create, StudentPageMode.edit].includes(mode) && (
+					{[StudentPageMode.create, StudentPageMode.edit].includes(mode) ? (
 						<Button
 							data-cy={"studentEditInfoButton"}
 							color={"secondary"}
@@ -58,7 +60,7 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 							onClick={(): void => setIsEditable(!isEditable)}>
 							{"Editar"}
 						</Button>
-					)}
+					) : null}
 
 					{mode === StudentPageMode.edit ? (
 						<Button color={"secondary"} startIcon={<DeleteIcon />}>
