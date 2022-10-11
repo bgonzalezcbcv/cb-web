@@ -33,7 +33,7 @@ describe("studentsBasicInfo", () => {
 
 	const dateOfBirthInputID = "#\\#\\/properties\\/birthdate2-input";
 	//TODO: find a better way to find date fields
-	const dateOfBirthID = ":nth-child(4) > .MuiGrid-container > :nth-child(2) > .MuiFormControl-root";
+	const dateOfBirthErrorID = ".MuiGrid-container > :nth-child(1) > :nth-child(2)";
 
 	const nationalityFieldID = "#\\#\\/properties\\/nationality2-input";
 	const nationalityFieldErrorID = "#\\#\\/properties\\/nationality2> :nth-child(3)";
@@ -47,6 +47,9 @@ describe("studentsBasicInfo", () => {
 	const addressFieldID = "#\\#\\/properties\\/address2-input";
 	const addressFieldErrorID = "#\\#\\/properties\\/address2> :nth-child(3)";
 
+	const phoneNumberFieldID = "#\\#\\/properties\\/phone_number2-input";
+	const phoneNumberFieldErrorID = "#\\#\\/properties\\/phone_number2> :nth-child(3)";
+
 	const medicalAssuranceFieldID = "#\\#\\/properties\\/medical_assurance2-input";
 	const medicalAssuranceFieldErrorID = "#\\#\\/properties\\/medical_assurance2> :nth-child(3)";
 
@@ -55,7 +58,7 @@ describe("studentsBasicInfo", () => {
 
 	const vaccineExpirationInputID = "#\\#\\/properties\\/vaccine_expiration2-input";
 	//TODO: find a better way to find date fields
-	const vaccineExpirationID = ":nth-child(6) > .MuiGrid-container > :nth-child(3) > .MuiFormControl-root";
+	const vaccineExpirationErrorID = ".MuiGrid-container > :nth-child(3) > :nth-child(2)";
 
 	const createButtonID = '[data-cy="createStudentButton"]';
 
@@ -91,23 +94,19 @@ describe("studentsBasicInfo", () => {
 		cy.get(editButtonID).click();
 
 		//check basic data
-		cy.testInput(nameFieldID, nameFieldErrorID, "", "Adam", "");
-		cy.testInput(surnameFieldID, surnameFieldErrorID, "", "Sandler", "");
-		cy.testInput(CIFieldID, CIFieldErrorID, "", "50137758", "Se deben ingresar solo números y letras, sin puntos ni guiones y no puede quedar vacía");
-		cy.testInput(statusFieldID, statusFieldErrorID, "error", "Inactivo", "");
-		cy.testInput(tuitionFieldID, tuitionFieldErrorID, "error", "ABC123X", "");
-		cy.testInput(GroupFieldID, GroupFieldErrorID, "error", "3", "");
-		cy.testInput(SubGroupFieldID, SubGroupFieldErrorID, "error", "A", "");
+		cy.testInput(nameFieldID, nameFieldErrorID, "", "Adam", "Este campo es requerido.");
+		cy.testInput(surnameFieldID, surnameFieldErrorID, "", "Sandler", "Este campo es requerido.");
+		cy.testInput(CIFieldID, CIFieldErrorID, "", "50137758", "Se deben ingresar solo números y letras, sin puntos ni guiones.");
 		cy.testInput(referenceNumberFieldID, referenceNumberFieldErrorID, "e", "32", "");
-		cy.testInput(placeOfBirthFieldID, placeOfBirthFieldID, "error", "Artigas", "");
-		cy.testInput(dateOfBirthInputID, dateOfBirthID, "incorrecto", "10/5/1990", "");
-		cy.testInput(nationalityFieldID, nationalityFieldErrorID, "error", "Uruguayo", "");
-		cy.testInput(firstLanguageFieldID, firstLanguageFieldErrorID, "error", "Esperanto", "");
-		cy.testInput(neighborhoodFieldID, neighborhoodFieldErrorID, "error", "La Teja", "");
-		cy.testInput(addressFieldID, addressFieldErrorID, "mal", "Rincón del Chorro 1212", "");
-		cy.testInput(medicalAssuranceFieldID, medicalAssuranceFieldErrorID, "mal", "Española", "");
-		cy.testInput(emergencyFieldID, emergencyFieldErrorID, "mal", "SUAT", "");
-		cy.testInput(vaccineExpirationInputID, vaccineExpirationID, "incorrecto", "10/5/2022", "");
+		cy.testInput(placeOfBirthFieldID, placeOfBirthFieldErrorID, "", "Artigas", "Este campo es requerido.");
+		cy.testInput(dateOfBirthInputID, dateOfBirthErrorID, "", "10/5/1990", "Este campo es requerido.");
+		cy.testInput(nationalityFieldID, nationalityFieldErrorID, "", "Uruguayo", "Este campo es requerido.");
+		cy.testInput(firstLanguageFieldID, firstLanguageFieldErrorID, "", "Esperanto", "Este campo es requerido.");
+		cy.testInput(neighborhoodFieldID, neighborhoodFieldErrorID, "", "La Teja", "Este campo es requerido.");
+		cy.testInput(addressFieldID, addressFieldErrorID, "", "Rincón del Chorro 1212", "Este campo es requerido.");
+		cy.testInput(phoneNumberFieldID, phoneNumberFieldErrorID, "error", "099123123", "Se deben ingresar 8 o 9 dígitos.");
+		cy.testInput(medicalAssuranceFieldID, medicalAssuranceFieldErrorID, "", "Española", "Este campo es requerido.");
+		cy.testInput(vaccineExpirationInputID, vaccineExpirationErrorID, "incorrecto", "10/5/2022", "Este campo es requerido.");
 	});
 
 	it("allows to create a student when all the required fields in the basic info are complete", () => {

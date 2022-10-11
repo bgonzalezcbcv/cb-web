@@ -4,14 +4,15 @@
 	"surname": "Apellido",
 	"tuition": "Matrícula",
 	"referenceNumber": 0,
-	"birthDate": "11/9/1999",
+	"birthDate": "11/09/1999",
 	"birthplace": "Uruguay",
 	"nationality": "Uruguayo",
 	"firstLanguage": "Español",
 	"status": "Estado",
 	"address": "Calle Falsa 1234",
+	"phoneNumber": "099099923",
 	"neighborhood": "Cerro",
 	"medicalAssurance": "Española",
 	"emergency": "SEMM",
-	"expirationDate": "2/5/2023"
+	"expirationDate": "02/05/2023"
 }

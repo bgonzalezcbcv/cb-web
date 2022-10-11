@@ -170,7 +170,7 @@ describe("createStudent", () => {
 		cy.get(roleInputID).should("have.text", "Padre");
 		cy.get(fullNameFieldID).should("have.value", "Uno");
 		cy.get(CIFieldID).should("have.value", "12345678");
-		cy.get(dateOfBirthInputID).should("have.value", "01/01/1990");
+		cy.get(dateOfBirthInputID).should("have.value", "01-01-1990");
 		cy.get(maritalStatusFieldID).should("have.value", "Casado");
 		cy.get(cellphoneFieldID).should("have.value", "099111222");
 		cy.get(placeOfBirthFieldID).should("have.value", "Uruguay");
@@ -191,7 +191,7 @@ describe("createStudent", () => {
 		cy.get(roleInputID).should("have.text", "Madre");
 		cy.get(fullNameFieldID).should("have.value", "Dos");
 		cy.get(CIFieldID).should("have.value", "12345678");
-		cy.get(dateOfBirthInputID).should("have.value", "01/01/1990");
+		cy.get(dateOfBirthInputID).should("have.value", "01-01-1990");
 		cy.get(maritalStatusFieldID).should("have.value", "Casado");
 		cy.get(cellphoneFieldID).should("have.value", "099111222");
 		cy.get(placeOfBirthFieldID).should("have.value", "Uruguay");
