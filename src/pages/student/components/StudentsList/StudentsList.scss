@@ -1,11 +1,10 @@
-.studentsTableContainer {
-	margin: 5%;
-}
-
 .headStudentsTable {
 	background-color: #3b609090;
+}
 
-	.headCellStudentsTable {
-		color: white !important;
-	}
+.SearchAndGroupFilter {
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 5%;
+	padding: 2%;
 }
