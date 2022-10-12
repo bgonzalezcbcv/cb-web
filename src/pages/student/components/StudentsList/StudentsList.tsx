@@ -1,5 +1,7 @@
 /* eslint-disable */
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import _ from "lodash";
+
 import { useTheme } from "@material-ui/core";
 import EditIcon from "@mui/icons-material/Edit";
 import FirstPageIcon from "@mui/icons-material/FirstPage";
@@ -8,8 +10,6 @@ import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import { visuallyHidden } from "@mui/utils";
 import IconButton from "@mui/material/IconButton";
-
-import data from "./data.json";
 import {
 	TableContainer,
 	Table,
@@ -23,26 +23,31 @@ import {
 	TablePagination,
 	Box,
 	TableSortLabel,
+	Autocomplete,
+	TextField,
+	Input,
 } from "@mui/material";
+import * as APIStore from "../../../../core/ApiStore";
+import { emptyStudents, defaultStudents } from "../../DefaultStudent";
+import { Student as StudentModel } from "../../../../core/Models";
 
 import "./StudentsList.scss";
-import useEnhancedEffect from "@mui/material/utils/useEnhancedEffect";
+
+enum FetchState {
+	initial = "initial",
+	loading = "loading",
+	failure = "failure",
+}
 
 interface Data {
 	id: number;
 	ci: string;
-	surnames: string;
-	names: string;
+	surname: string;
+	name: string;
 }
 
-function createData(id: number, ci: string, surnames: string, names: string): Data {
-	return {
-		id,
-		ci,
-		surnames,
-		names,
-	};
-}
+//----------------------------------------------------------------------------------
+//orden
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
 	if (b[orderBy] < a[orderBy]) {
@@ -92,19 +97,19 @@ const headCells: readonly HeadCell[] = [
 	{
 		id: "ci",
 		numeric: false,
-		disablePadding: true,
+		disablePadding: false,
 		label: "CI",
 	},
 	{
-		id: "surnames",
+		id: "surname",
 		numeric: false,
-		disablePadding: true,
+		disablePadding: false,
 		label: "Apellidos",
 	},
 	{
-		id: "names",
+		id: "name",
 		numeric: false,
-		disablePadding: true,
+		disablePadding: false,
 		label: "Nombres",
 	},
 ];
@@ -118,7 +123,7 @@ interface EnhancedTableProps {
 }
 
 function EnhancedTableHead(props: EnhancedTableProps) {
-	const { order, orderBy, numSelected, rowCount, onRequestSort } = props;
+	const { order, orderBy, onRequestSort } = props;
 	const createSortHandler = (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
 		onRequestSort(event, property);
 	};
@@ -128,8 +133,9 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 			<TableRow>
 				{headCells.map((headCell) => (
 					<TableCell
+						className={"headStudentsTable"}
 						key={headCell.id}
-						align={headCell.numeric ? "right" : "left"}
+						align={"left"}
 						padding={headCell.disablePadding ? "none" : "normal"}
 						sortDirection={orderBy === headCell.id ? order : false}>
 						<TableSortLabel
@@ -151,6 +157,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 }
 
 //----------------------------------------------------------------------------------
+//paginacion
 
 interface TablePaginationActionsProps {
 	count: number;
@@ -198,21 +205,36 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 }
 
 //----------------------------------------------------------------------------------
+//buscador
+const FilterComponent = ({ filterText, onFilter }: { filterText: string; onFilter: any }) => (
+	<>
+		<Input id="search" type="text" placeholder="Buscar..." value={filterText} onChange={onFilter} />
+	</>
+);
+//----------------------------------------------------------------------------------
+//COMPONENTE PRINCIPAL
 
 export default function StudentsList() {
-	const [students, setStudents] = useState([]);
+	const [students, setStudents] = useState<StudentModel[]>(defaultStudents);
+	const [fetchState, setFetchState] = React.useState(FetchState.loading);
 
-	const URL = "https://cbcv-staging.herokuapp.com/api/students";
-	const showData = async () => {
-		const response = await fetch(URL);
-		const data = await response.json();
-		console.log(data);
-		setStudents(data);
-	};
+	const getStudents = useCallback(async (): Promise<void> => {
+		setFetchState(FetchState.loading);
 
-	useEnhancedEffect(() => {
-		showData();
+		const response = await APIStore.fetchStudents();
+
+		if (response.success && response.data) {
+			setStudents(_.merge(emptyStudents, response.data));
+			setFetchState(FetchState.initial);
+		} else setFetchState(FetchState.failure);
+	}, [setFetchState, setStudents]);
+
+	useEffect((): void => {
+		getStudents();
 	}, []);
+
+	//constantes para el orden
+	//----------------------------------------------------------------------------------
 
 	const [order, setOrder] = useState<Order>("asc");
 	const [orderBy, setOrderBy] = useState<keyof Data>("ci");
@@ -225,12 +247,12 @@ export default function StudentsList() {
 	};
 
 	//----------------------------------------------------------------------------------
+	//constante para las paginacion
 
 	const [page, setPage] = React.useState(0);
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-	// Avoid a layout jump when reaching the last page with empty rows.
-	const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
+	const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - students.length) : 0;
 
 	const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
 		setPage(newPage);
@@ -241,95 +263,100 @@ export default function StudentsList() {
 		setPage(0);
 	};
 
+	//----------------------------------------------------------------------------------
+	//constantes para el buscador
+	const [filterText, setFilterText] = React.useState("");
+
+	const filteredItems = students.filter(
+		(item) =>
+			(item.name + item.surname + item.ci)
+				.normalize("NFD")
+				.replace(/[\u0300-\u036f]/g, "")
+				.replace(/\s+/g, "")
+				.toLowerCase()
+				.indexOf(
+					filterText
+						.normalize("NFD")
+						.replace(/[\u0300-\u036f]/g, "")
+						.replace(/\s+/g, "")
+						.toLowerCase()
+				) !== -1
+	);
+	//----------------------------------------------------------------------------------
+	//contantes para el grupo
+
+	const grupos = ["Todos", "3A", "3B", "3C", "3D"];
+
+	//----------------------------------------------------------------------------------
+
 	return (
 		<Box>
-			<Paper sx={{ width: "100%", mb: 2 }}>
-				<TableContainer className="studentsTableContainer" component={Paper}>
-					<Table aria-label="custom pagination table">
-						<EnhancedTableHead
-							numSelected={selected.length}
-							order={order}
-							orderBy={orderBy}
-							onRequestSort={handleRequestSort}
-							rowCount={data.length}
-						/>
-						{/* <TableHead className="headStudentsTable">
-                            <TableRow>
-                                <TableCell className="headCellStudentsTable" width={"10%"}>ID</TableCell>
-                                <TableCell className="headCellStudentsTable" width={"20%"}>CI</TableCell>
-                                <TableCell className="headCellStudentsTable" width={"20%"}>Apellidos</TableCell>
-                                <TableCell className="headCellStudentsTable" width={"20%"}>Nombres</TableCell>
-                                <TableCell className="headCellStudentsTable" width={"10%"}></TableCell>
-                            </TableRow>
-                        </TableHead> */}
-						<TableBody>
-							{stableSort(data, getComparator(order, orderBy))
-								.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-								.map((row) => {
-									return (
-										<TableRow>
-											<TableCell align="right">{row.id}</TableCell>
-											<TableCell align="right">{row.ci}</TableCell>
-											<TableCell align="right">{row.surnames}</TableCell>
-											<TableCell align="right">{row.names}</TableCell>
-											<Tooltip title="Edit">
-												<IconButton
-													onClick={() => {
-														alert("Editar estudiante " + row.ci);
-													}}>
-													<EditIcon />
-												</IconButton>
-											</Tooltip>
-										</TableRow>
-									);
-								})}
-							{/* {(rowsPerPage > 0
-                                ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                : data
-                                ).map((row) => (
-                                    <TableRow key={row.id}>
-                                        <TableCell>{row.id}</TableCell>
-                                        <TableCell>{row.ci}</TableCell>
-                                        <TableCell>{row.surnames}</TableCell>
-                                        <TableCell>{row.names}</TableCell>
-                                        <Tooltip title="Edit">
-                                            <IconButton onClick={() => {
-                                                alert("Editar estudiante "+row.ci);
-                                                }}>
-                                                <EditIcon/>
-                                            </IconButton>
-                                        </Tooltip>
-                                    </TableRow>
-                                ))} */}
-							{emptyRows > 0 && (
-								<TableRow>
-									<TableCell colSpan={6} />
-								</TableRow>
-							)}
-						</TableBody>
-						<TableFooter>
-							<TableRow>
-								<TablePagination
-									rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-									colSpan={3}
-									count={data.length}
-									rowsPerPage={rowsPerPage}
-									page={page}
-									SelectProps={{
-										inputProps: {
-											"aria-label": "rows per page",
-										},
-										native: true,
-									}}
-									onPageChange={handleChangePage}
-									onRowsPerPageChange={handleChangeRowsPerPage}
-									ActionsComponent={TablePaginationActions}
-								/>
-							</TableRow>
-						</TableFooter>
-					</Table>
-				</TableContainer>
+			<Paper className="SearchAndGroupFilter">
+				<FilterComponent onFilter={(e: React.ChangeEvent<any>) => setFilterText(e.target.value)} filterText={filterText} />
+				<Autocomplete
+					style={{ width: 200 }}
+					options={grupos}
+					renderInput={(params) => <TextField {...params} label="Filtrar por grupo" variant="outlined" />}
+				/>
 			</Paper>
+			<TableContainer component={Paper}>
+				<Table aria-label="custom pagination table">
+					<EnhancedTableHead
+						numSelected={selected.length}
+						order={order}
+						orderBy={orderBy}
+						onRequestSort={handleRequestSort}
+						rowCount={filteredItems.length}
+					/>
+					<TableBody>
+						{stableSort(filteredItems, getComparator(order, orderBy))
+							.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+							.map((row) => {
+								return (
+									<TableRow>
+										<TableCell align="left">{row.id}</TableCell>
+										<TableCell align="left">{row.ci}</TableCell>
+										<TableCell align="left">{row.surname}</TableCell>
+										<TableCell align="left">{row.name}</TableCell>
+										<Tooltip title="Edit">
+											<IconButton
+												onClick={() => {
+													alert("Editar estudiante " + row.ci);
+												}}>
+												<EditIcon />
+											</IconButton>
+										</Tooltip>
+									</TableRow>
+								);
+							})}
+						{emptyRows > 0 && (
+							<TableRow>
+								<TableCell colSpan={6} />
+							</TableRow>
+						)}
+					</TableBody>
+					<TableFooter>
+						<TableRow>
+							<TablePagination
+								rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+								colSpan={3}
+								count={filteredItems.length}
+								rowsPerPage={rowsPerPage}
+								page={page}
+								SelectProps={{
+									inputProps: {
+										"aria-label": "rows per page",
+									},
+									native: true,
+								}}
+								onPageChange={handleChangePage}
+								onRowsPerPageChange={handleChangeRowsPerPage}
+								ActionsComponent={TablePaginationActions}
+							/>
+						</TableRow>
+					</TableFooter>
+				</Table>
+			</TableContainer>
 		</Box>
 	);
 }
