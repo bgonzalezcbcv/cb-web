@@ -3,12 +3,13 @@ import React from "react";
 import { TextField } from "@mui/material";
 
 export type NumericInputProps = {
+	labelName: string;
 	isFloat: boolean;
 	maxLength?: number;
 };
 
 export function NumericInput(props: NumericInputProps): React.ReactElement {
-	const { isFloat, maxLength } = props;
+	const { labelName, isFloat, maxLength } = props;
 
 	const [numberValue, setNumberValue] = React.useState("");
 
@@ -42,6 +43,8 @@ export function NumericInput(props: NumericInputProps): React.ReactElement {
 
 	return (
 		<TextField
+			label={labelName}
+			fullWidth
 			inputProps={{ maxLength: maxLength }}
 			variant="standard"
 			value={numberValue}
