@@ -23,8 +23,8 @@ describe("studentFamilyInfo", () => {
 	const CIErrorID = "#properties\\/ci2 > :nth-child(3)";
 
 	const dateOfBirthInputID = "#properties\\/birthdate2-input";
-	//TODO: encontrar una manera mejor de conseguir este campo
-	const dateOfBirthID = ":nth-child(2) > .MuiGrid-container > :nth-child(1) > .MuiFormControl-root";
+	//TODO: find a better way to find date fields
+	const dateOfBirthErrorID = ".MuiGrid-container > :nth-child(1) > :nth-child(2)";
 
 	const maritalStatusErrorID = "#properties\\/marital_status2 > :nth-child(3)";
 
@@ -76,21 +76,21 @@ describe("studentFamilyInfo", () => {
 		cy.get(studentEditInfoButton).click();
 
 		//check first family member
-		cy.testInput(CIInputID, CIErrorID, "", "50137758", "Se deben ingresar solo los números, sin puntos ni guiones y no puede quedar vacía");
-		cy.testInput(dateOfBirthInputID, dateOfBirthID, "incorrecto", "10/5/1990", "");
-		cy.testInput(cellphoneInputID, cellphoneErrorID, "error", "099099990", "Tiene que ser un número de 9 dígitos.");
-		cy.testInput(emailInputID, emailErrorID, "error", "correcto@gmail.com", "Tiene que ser E-mail válido.");
-		cy.testInput(workPhoneInputID, workPhoneErrorID, "error", "24080808", "Tiene que ser un número de entre 8 a 9 dígitos.");
+		cy.testInput(CIInputID, CIErrorID, "", "50137758", "Debe ingresar solo números o letras, sin puntos ni guiones.");
+		cy.testInput(dateOfBirthInputID, dateOfBirthErrorID, "incorrecto", "10-05-1990", "Este campo es requerido.");
+		cy.testInput(cellphoneInputID, cellphoneErrorID, "error", "099099990", "Debe ingresar un número de 9 dígitos.");
+		cy.testInput(emailInputID, emailErrorID, "error", "correcto@gmail.com", "Debe ingresar un e-mail válido.");
+		cy.testInput(workPhoneInputID, workPhoneErrorID, "error", "24080808", "Debe ingresar un número de entre 8 a 9 dígitos.");
 
 		//check second family member
 		cy.get("#addFamilyMember").click();
 		cy.wait(200);
 
-		cy.testInput(CIInputID, CIErrorID, "a", "50137758", "Se deben ingresar solo los números, sin puntos ni guiones y no puede quedar vacía");
-		cy.testInput(dateOfBirthInputID, dateOfBirthID, "incorrecto", "10/5/1990", "");
-		cy.testInput(cellphoneInputID, cellphoneErrorID, "error", "099099990", "Tiene que ser un número de 9 dígitos.");
-		cy.testInput(emailInputID, emailErrorID, "error", "correcto@gmail.com", "Tiene que ser E-mail válido.");
-		cy.testInput(workPhoneInputID, workPhoneErrorID, "error", "24080808", "Tiene que ser un número de entre 8 a 9 dígitos.");
+		cy.testInput(CIInputID, CIErrorID, "", "50137758", "Se deben ingresar solo los números, sin puntos ni guiones y no puede quedar vacía");
+		cy.testInput(dateOfBirthInputID, dateOfBirthErrorID, "incorrecto", "10-05-1990", "Este campo es requerido.");
+		cy.testInput(cellphoneInputID, cellphoneErrorID, "error", "099099990", "Debe ingresar un número de 9 dígitos.");
+		cy.testInput(emailInputID, emailErrorID, "error", "correcto@gmail.com", "Debe ingresar un e-mail válido.");
+		cy.testInput(workPhoneInputID, workPhoneErrorID, "error", "24080808", "Debe ingresar un número de entre 8 a 9 dígitos.");
 	});
 
 	it("shows error when creating student if there is an error on some family info field", () => {
@@ -106,7 +106,7 @@ describe("studentFamilyInfo", () => {
 		cy.get(CIInputID).should("be.empty");
 
 		cy.get(createStudentButtonID).click();
-		cy.get(errorAlertDialogID).should("exist");
+		cy.get(errorAlertDialogID).should("be.visible");
 	});
 
 	it("allows to create a student when all the required fields in the family info are complete", () => {

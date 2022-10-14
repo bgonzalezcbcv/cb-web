@@ -47,6 +47,7 @@ Cypress.Commands.add("fillStudentBasicInfo", () => {
 	const firstLanguageFieldID = "#\\#\\/properties\\/first_language2-input";
 	const neighborhoodFieldID = "#\\#\\/properties\\/neighborhood2-input";
 	const addressFieldID = "#\\#\\/properties\\/address2-input";
+	const phoneNumberFieldID = "#\\#\\/properties\\/phone_number2-input";
 	const medicalAssuranceFieldID = "#\\#\\/properties\\/medical_assurance2-input";
 	const emergencyFieldID = "#\\#\\/properties\\/emergency2-input";
 	const vaccineExpirationInputID = "#\\#\\/properties\\/vaccine_expiration2-input";
@@ -66,6 +67,7 @@ Cypress.Commands.add("fillStudentBasicInfo", () => {
 		cy.get(firstLanguageFieldID).clear().type(student.firstLanguage);
 		cy.get(neighborhoodFieldID).clear().type(student.neighborhood);
 		cy.get(addressFieldID).clear().type(student.address);
+		cy.get(phoneNumberFieldID).clear().type(student.phoneNumber);
 		cy.get(medicalAssuranceFieldID).clear().type(student.medicalAssurance);
 		cy.get(emergencyFieldID).clear().type(student.emergency);
 		cy.get(vaccineExpirationInputID).clear().type(student.expirationDate);
@@ -133,7 +135,7 @@ Cypress.Commands.add("testInput", (inputID: string, errorLabelID: string, incorr
 	}
 
 	input.clear().type(correctInput);
-	if (errorMessage) assert(errorLabel.contains(errorMessage));
+	if (errorMessage) errorLabel.should("not.contain", errorMessage);
 	cy.wait(100);
 });
 

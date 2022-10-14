@@ -1,7 +1,7 @@
-describe("Students", () => {
+describe("student", () => {
 	//buttons
-	const familyInfoButtonID = ".MuiTabs-flexContainer > :nth-child(2)";
-	const editButtonID = ".css-zi9jgv > :nth-child(2) > :nth-child(2)";
+	const familyInfoButtonID = '[data-cy="familyInfoTab"]';
+	const editButtonID = '[data-cy="studentEditInfoButton"]';
 
 	//student
 	const nameFieldID = "#\\#\\/properties\\/name2-input";
@@ -22,25 +22,28 @@ describe("Students", () => {
 		cy.get(nameFieldID).should("be.visible");
 	});
 
-	it("is disabled to edit", () => {
+	it("is disabled to edit on basicInfo", () => {
 		cy.get(nameFieldID).should("be.disabled");
 		cy.get(CIFieldID).should("be.disabled");
 	});
 
-	it("after edit button click is enabled to edit", () => {
+	it("is enabled to edit after edit button click", () => {
 		cy.get(editButtonID).click();
+
 		cy.get(nameFieldID).should("be.enabled");
 		cy.get(CIFieldID).should("be.enabled");
 	});
 
-	it("click on family info button loads page", () => {
+	it("loads page on family info button click", () => {
 		cy.get(familyInfoButtonID).click();
+
 		cy.get(familyCIID).should("be.visible");
 	});
 
-	it("after edit button click is enabled to edit on family info", () => {
+	it("enables editing on family info after edit button click ", () => {
 		cy.get(familyInfoButtonID).click();
 		cy.get(editButtonID).click();
+
 		cy.get(familyCIID).should("be.enabled");
 	});
 });

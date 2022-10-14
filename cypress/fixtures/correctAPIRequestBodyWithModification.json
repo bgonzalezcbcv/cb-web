@@ -1,112 +1,115 @@
 {
 	"student": {
-		"id": "asdf",
-		"ci": "12345678",
-		"name": "Nombre",
-		"surname": "Apellido",
-		"schedule_start": "asdf",
-		"schedule_end": "asdf",
-		"tuition": "Matrícula",
-		"reference_number": 0,
-		"birthplace": "",
-		"nationality": "Uruguayo",
-		"first_language": "Español",
-		"office": "",
-		"status": "Estado",
 		"address": "Calle Falsa 1234",
-		"neighborhood": "Cerro",
-		"medical_assurance": "Española",
-		"emergency": "",
-		"phone_number": "",
-		"inscription_date": "",
-		"starting_date": "",
+		"administrative_info": {
+			"agreement_type": "Ninguno",
+			"comments": "",
+			"discounts": [
+				{
+					"description": "",
+					"ending_date": "2022-10-08T03:00:00.000Z",
+					"explanation": "hermano",
+					"percentage": 10,
+					"report_url": "",
+					"resolution_url": "",
+					"starting_date": "2022-01-03T03:00:00.000Z",
+					"type": "dirección"
+				}
+			],
+			"enrollment_date": "01/02/2022",
+			"payment_methods": [
+				{
+					"method": "contado",
+					"year": 2022,
+					"yearly_payment_url": ""
+				}
+			],
+			"registration_commitment_url": "",
+			"scholarship_type": "bonificada",
+			"starting_date": "01/03/2022"
+		},
+		"birthdate": "11/09/1999",
+		"birthplace": "Uruguay",
+		"ci": "12345678",
 		"contact": "",
 		"contact_phone": "",
 		"email": "",
+		"emergency": "",
 		"family": [
 			{
-				"ci": "",
-				"role": "Madre",
-				"full_name": "Josefina Perez Perez",
-				"birthplace": "Uruguay",
-				"nationality": "Uruguaya",
-				"first_language": "Español",
-				"marital_status": "Casada",
-				"cellphone": "099099990",
-				"email": "jPerez@adinet.com",
 				"address": "Calle Falsa 1234",
-				"neighbourhood": "Cerro",
+				"birthdate": "25-04-1959",
+				"birthplace": "Uruguay",
+				"cellphone": "099099990",
+				"ci": "23456789",
 				"education_level": "Secundaria completa",
+				"email": "jPerez@adinet.com",
+				"first_language": "Español",
+				"full_name": "Josefina Perez Perez",
+				"marital_status": "Casada",
+				"nationality": "Uruguaya",
+				"neighbourhood": "Cerro",
 				"occupation": "Dueña de local",
+				"role": "Madre",
 				"workplace": "Kiosko",
 				"workplace_address": "Maroñas 1414",
 				"workplace_neighbourhood": "Maroñas",
 				"workplace_phone": "25105020"
 			}
 		],
+		"first_language": "Español",
+		"id": "asdf",
+		"inscription_date": "",
+		"medical_assurance": "Española",
+		"name": "Nombre",
+		"nationality": "Uruguayo",
+		"neighborhood": "Cerro",
+		"office": "",
+		"phone_number": "099099923",
 		"question_categories": [
 			{
 				"category": "Categoria",
 				"questions": [
 					{
+						"answer": "Respuesta",
 						"id": "1",
-						"question": "Pregunta",
-						"answer": "Respuesta"
+						"question": "Pregunta"
 					},
 					{
+						"answer": "Respuesta",
 						"id": "1",
-						"question": "Pregunta",
-						"answer": "Respuesta"
+						"question": "Pregunta"
 					},
 					{
+						"answer": "Respuesta",
 						"id": "1",
-						"question": "Pregunta",
-						"answer": "Respuesta"
+						"question": "Pregunta"
 					},
 					{
+						"answer": "Respuesta",
 						"id": "1",
-						"question": "Pregunta",
-						"answer": "Respuesta"
+						"question": "Pregunta"
 					},
 					{
+						"answer": "Respuesta",
 						"id": "1",
-						"question": "Pregunta",
-						"answer": "Respuesta"
+						"question": "Pregunta"
 					},
 					{
+						"answer": "Respuesta",
 						"id": "1",
-						"question": "Pregunta",
-						"answer": "Respuesta"
+						"question": "Pregunta"
 					}
 				]
 			}
 		],
-		"administrative_info": {
-			"enrollment_date": "2022-01-02T03:00:00.000Z",
-			"starting_date": "2022-01-03T03:00:00.000Z",
-			"registration_commitment_url": "",
-			"scholarship_type": "bonificada",
-			"agreement_type": "Ninguno",
-			"comments": "",
-			"payment_methods": [
-				{
-					"year": 2022,
-					"method": "contado",
-					"yearly_payment_url": ""
-				}
-			],
-			"discounts": [
-				{
-					"percentage": 10,
-					"starting_date": "2022-01-03T03:00:00.000Z",
-					"ending_date": "2022-10-08T03:00:00.000Z",
-					"type": "dirección",
-					"resolution_url": "",
-					"explanation": "hermano",
-					"report_url": "",
-					"description": ""
-				}
-			]
-		}
+		"reference_number": 0,
+		"schedule_end": "asdf",
+		"schedule_start": "asdf",
+		"starting_date": "",
+		"status": "Estado",
+		"surname": "Apellido",
+		"tuition": "Matrícula",
+		"vaccine_expiration": ""
 	}
 }

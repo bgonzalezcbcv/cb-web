@@ -90,6 +90,8 @@ describe("createStudent", () => {
 			}
 		);
 
+		cy.wait(500);
+
 		cy.get(createStudentButtonID).click();
 		cy.get(confirmCreateStudentButtonID).click();
 	});
@@ -119,7 +121,7 @@ describe("createStudent", () => {
 
 		cy.get(nameFieldID).should("have.value", "Juan José");
 		cy.get(surnameFieldID).should("have.value", "Rodriguez Perez");
-		cy.get(CIFieldID).should("have.value", "1234567-8");
+		cy.get(CIFieldID).should("have.value", "12345678");
 		cy.get(statusFieldID).should("have.value", "");
 		cy.get(tuitionFieldID).should("have.value", "");
 		cy.get(referenceNumberFieldID).should("have.value", "0");
@@ -168,7 +170,7 @@ describe("createStudent", () => {
 		cy.get(roleInputID).should("have.text", "Padre");
 		cy.get(fullNameFieldID).should("have.value", "Uno");
 		cy.get(CIFieldID).should("have.value", "12345678");
-		cy.get(dateOfBirthInputID).should("have.value", "01/01/1990");
+		cy.get(dateOfBirthInputID).should("have.value", "01-01-1990");
 		cy.get(maritalStatusFieldID).should("have.value", "Casado");
 		cy.get(cellphoneFieldID).should("have.value", "099111222");
 		cy.get(placeOfBirthFieldID).should("have.value", "Uruguay");
@@ -189,7 +191,7 @@ describe("createStudent", () => {
 		cy.get(roleInputID).should("have.text", "Madre");
 		cy.get(fullNameFieldID).should("have.value", "Dos");
 		cy.get(CIFieldID).should("have.value", "12345678");
-		cy.get(dateOfBirthInputID).should("have.value", "01/01/1990");
+		cy.get(dateOfBirthInputID).should("have.value", "01-01-1990");
 		cy.get(maritalStatusFieldID).should("have.value", "Casado");
 		cy.get(cellphoneFieldID).should("have.value", "099111222");
 		cy.get(placeOfBirthFieldID).should("have.value", "Uruguay");
