@@ -3,7 +3,7 @@ import React, { useCallback, useState } from "react";
 import { FamilyMember, Student } from "../../../../core/Models";
 import { ajv as studentAjv } from "../../../../core/AJVHelper";
 import { JsonForms } from "@jsonforms/react";
-import {JsonSchema7, Translator} from "@jsonforms/core";
+import { JsonSchema7, Translator } from "@jsonforms/core";
 import { materialRenderers } from "@jsonforms/material-renderers";
 import { Box, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { defaultStudent } from "../../DefaultStudent";
@@ -12,6 +12,7 @@ import schema from "../../schema.json";
 import ui from "./ui.json";
 
 import "./FamilyForm.scss";
+import NumericInputControl, { NumericInputControlTester } from "../../../../components/NumericInput/NumericInputControl";
 
 export type FamilyFormProps = {
 	student: Student;
@@ -19,6 +20,8 @@ export type FamilyFormProps = {
 	onChange: (data: Student) => void;
 	translator?: (id: string, defaultMessage: string) => string;
 };
+
+const renderers = [...materialRenderers, { tester: NumericInputControlTester, renderer: NumericInputControl }];
 
 export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 	const { student, onChange, editable, translator } = props;
@@ -80,7 +83,7 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 				schema={schema.properties.family.items as JsonSchema7}
 				uischema={ui}
 				data={family[familyIndex]}
-				renderers={materialRenderers}
+				renderers={renderers}
 				onChange={({ data }): void => setCurrentData(data)}
 				validationMode="ValidateAndShow"
 				readonly={!editable}

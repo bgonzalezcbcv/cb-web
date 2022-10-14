@@ -16,12 +16,15 @@ import schema from "../../../schema.json";
 import ui from "./ui.json";
 
 import "./PaymentMethodSection.scss";
+import NumericInputControl, { NumericInputControlTester } from "../../../../../components/NumericInput/NumericInputControl";
 
 export type PaymentMethodSectionProps = {
 	editable: boolean;
 	student: Models.Student;
 	onChange: (data: Models.Student) => void;
 };
+
+const renderers = [...materialRenderers, { tester: NumericInputControlTester, renderer: NumericInputControl }];
 
 export default function PaymentMethodSection(props: VisualComponent & PaymentMethodSectionProps): React.ReactElement {
 	const { editable, student, onChange } = props;
@@ -91,7 +94,7 @@ export default function PaymentMethodSection(props: VisualComponent & PaymentMet
 									schema={schema.properties.administrative_info.properties.payment_methods.items as JsonSchema7}
 									uischema={ui}
 									data={paymentMethodData}
-									renderers={materialRenderers}
+									renderers={renderers}
 									cells={materialCells}
 									onChange={({ data, errors }): void => {
 										setPaymentMethodData(data);
