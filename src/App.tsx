@@ -14,7 +14,7 @@ import Login from "./pages/login/Login";
 import Student from "./pages/student/Student";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
-import StudentsList from "./pages/student/components/StudentsList/StudentsList";
+import StudentsList from "./pages/student/components/StudentsList/Students";
 import { Box } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 
