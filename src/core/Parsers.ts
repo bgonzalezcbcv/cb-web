@@ -28,7 +28,6 @@ function fillAnswers(inscriptionQuestions: QuestionCategories[], questionsKey: s
 }
 
 export async function parseFormToStudent(form: StudentCreationForm, student: Student): Promise<Student | null> {
-	// todo: to obtain from API.
 	const getQuestionsResponse = await API.getCicleQuetions(0);
 
 	if (!getQuestionsResponse.success) return null;

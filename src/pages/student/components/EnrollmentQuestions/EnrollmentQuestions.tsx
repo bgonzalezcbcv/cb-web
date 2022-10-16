@@ -31,7 +31,7 @@ export interface EnrollmentQuestionsProps {
 export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): React.ReactElement {
 	const { student, editable, onChange, viewMode } = props;
 
-	const isViewMode = viewMode == "VIEW";
+	const isViewMode = viewMode === "VIEW";
 	const cicle_question_categories = _.cloneDeep(student.cicle_question_categories);
 
 	const [selectedCicle, setSelectedCicle] = useState<Cicle>(Cicle.None);

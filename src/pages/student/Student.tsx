@@ -70,7 +70,7 @@ export default function Student(props: StudentProps): React.ReactElement {
 	const panels = [
 		<StudentInfo student={student} onChange={debouncedSetStudent} editable={isEditable} translator={translator} />,
 		<FamilyForm student={student} onChange={debouncedSetStudent} editable={isEditable} translator={translator} />,
-		<EnrollmentQuestions student={{ ...student }} onChange={debouncedSetStudent} editable={isEditable} viewMode={mode} />,
+		<EnrollmentQuestions student={student} onChange={debouncedSetStudent} editable={isEditable} viewMode={mode} />,
 		<AdministrativeInfo student={student} onChange={debouncedSetStudent} editable={isEditable} translator={translator} />,
 	];
 

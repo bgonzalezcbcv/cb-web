@@ -175,7 +175,7 @@ export async function getCicles(): Promise<{ success: boolean; cicles: Cicle[] }
 		const response = await axios(config);
 
 		const result = {
-			success: response.status === 200,
+			success: [200, 304].includes(response.status),
 			cicles: response.data,
 		};
 
@@ -199,7 +199,7 @@ export async function getCicleQuetions(cicleId: number): Promise<{ success: bool
 		const response = await axios(config);
 
 		const result = {
-			success: response.status === 200,
+			success: [200, 304].includes(response.status),
 			cicle_questions: response.data,
 		};
 
@@ -226,7 +226,7 @@ export async function getStudentQuestions(studentId?: string): Promise<{ success
 		const response = await axios(config);
 
 		const result = {
-			success: response.status === 200,
+			success: [200, 304].includes(response.status),
 			cicle_question_categories: response.data.cicle_question_categories,
 		};
 
@@ -254,7 +254,7 @@ export async function postAnswersEnrollmentQuestions(studentID: string, cicleID:
 
 		const response = await axios(config);
 
-		return response.status === 201;
+		return [201, 304].includes(response.status);
 	} catch (e) {
 		return false;
 	}
