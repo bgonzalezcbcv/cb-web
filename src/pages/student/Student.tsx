@@ -61,7 +61,10 @@ export default function Student(props: StudentProps): React.ReactElement {
 		{ label: "Administrativa", dataCY: "administrativeInfoTab" },
 	];
 
-	const debouncedSetStudent = React.useCallback(_.debounce(setStudent, 200), []);
+	const debouncedSetStudent = React.useCallback(
+		(student: StudentModel, debounce = true) => (debounce ? _.debounce(setStudent, 200)(student) : setStudent(student)),
+		[]
+	);
 
 	const translator = (id: string, defaultMessage: string): string => {
 		if ((id.includes("date") || id.includes("expiration")) && id.includes("required")) return "Debe ser una fecha válida.";

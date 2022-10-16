@@ -19,7 +19,7 @@ import DatePickerToString from "../../../../components/datePicker/DatePicker";
 export type FamilyFormProps = {
 	student: Student;
 	editable: boolean;
-	onChange: (data: Student) => void;
+	onChange: (data: Student, debounce?: boolean) => void;
 	translator?: (id: string, defaultMessage: string) => string;
 };
 
@@ -48,7 +48,7 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 		onChange({
 			...student,
 			family: [...student.family, defaultStudent.family[0]],
-		});
+		}, false);
 	}
 
 	const toggleButtons = useCallback(

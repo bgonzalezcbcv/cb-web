@@ -24,7 +24,7 @@ import NumericInputControl, { NumericInputControlTester } from "../../../../comp
 export type AdministrativeInfoProps = {
 	editable: boolean;
 	student: Models.Student;
-	onChange: (data: Models.Student) => void;
+	onChange: (data: Models.Student, debounce?: boolean) => void;
 	translator?: (id: string, defaultMessage: string) => string;
 	setWarnings: (message: string[]) => void;
 };

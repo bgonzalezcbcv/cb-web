@@ -6,6 +6,7 @@ import { VisualComponent } from "../../../../../core/interfaces";
 import Modal from "../../../../../components/modal/Modal";
 import DiscountHistory from ".././historyTables/DiscountHistory";
 import FileUploader from "../../../../../components/fileUploader/FileUploader";
+import DatePickerToString from "../../../../../components/datePicker/DatePicker";
 import { Card, CardContent, Divider, IconButton, Container, Typography, Box, Alert } from "@mui/material";
 import { JsonForms } from "@jsonforms/react";
 import { JsonSchema7, Translator } from "@jsonforms/core";
@@ -139,6 +140,33 @@ export default function DiscountsSection(props: VisualComponent & Administrative
 								{discountData.explanation == Models.DiscountExplanation.Resolution.valueOf() ? (
 									<Container style={{ paddingRight: "0px", paddingLeft: "0px", paddingTop: "15px" }}>
 										<Typography>{"Resolución"}</Typography>
+
+										<Box className="dates-container">
+											<DatePickerToString
+												width={'48%'}
+												editable={true}
+												date={discountData.starting_date}
+												onChange={(date: string): void => {
+													const newDiscount = { ...discountData, starting_date: date };
+													setDiscountData(newDiscount);
+												}}
+												label="Comienzo"
+												required={true}
+											/>
+
+											<DatePickerToString
+												width={'48%'}
+												editable={true}
+												date={discountData.ending_date}
+												onChange={(date: string): void => {
+													const newDiscount = { ...discountData, ending_date: date };
+													setDiscountData(newDiscount);
+												}}
+												label="Fin"
+												required={true}
+											/>
+										</Box>
+
 										<JsonForms
 											i18n={{ translate: translator as Translator }}
 											schema={schema.properties.administrative_info.properties.discounts.items as JsonSchema7}
@@ -170,7 +198,7 @@ export default function DiscountsSection(props: VisualComponent & Administrative
 										<FileUploader label={"Informe"} width={"100%"} uploadedFile={(file): void => setReportFile(file)} />
 									</Container>
 								) : null}
-								{hasDateErrors ? <Alert severity="error">La fecha de fin debe ser posterior a la fecha de inicio</Alert> : null}
+								{hasDateErrors ? <Alert severity="error" className="alert">La fecha de fin debe ser posterior a la fecha de comienzo</Alert> : null}
 							</Container>
 						</Modal>
 					</Box>
