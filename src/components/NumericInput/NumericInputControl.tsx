@@ -14,6 +14,8 @@ const NumericInputControl: React.FunctionComponent<ControlProps> = (props: Contr
 			onChange={(ev: number): void => props.handleChange(props.path, ev)}
 			labelName={props.label}
 			isFloat={schema.type === ""}
+			enabled={props.enabled}
+			errors={props.errors}
 		/>
 	);
 };

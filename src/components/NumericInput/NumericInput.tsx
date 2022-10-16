@@ -8,11 +8,13 @@ export type NumericInputProps = {
 	onChange: (ev: number) => void;
 	labelName: string;
 	isFloat: boolean;
+	errors: string;
+	enabled: boolean;
 	maxLength?: number;
 };
 
 export function NumericInput(props: NumericInputProps): React.ReactElement {
-	const { value, onChange, labelName, isFloat, maxLength } = props;
+	const { value, onChange, labelName, isFloat, errors, enabled, maxLength } = props;
 
 	const [numberValue, setNumberValue] = React.useState(value === 0 || isUndefined(value) ? "" : value.toString());
 
@@ -51,6 +53,7 @@ export function NumericInput(props: NumericInputProps): React.ReactElement {
 		<TextField
 			label={labelName}
 			fullWidth
+			disabled={!enabled}
 			inputProps={{ maxLength: maxLength }}
 			variant="standard"
 			value={numberValue}
@@ -58,6 +61,8 @@ export function NumericInput(props: NumericInputProps): React.ReactElement {
 			onBlur={(event) => {
 				if (isFloat) handleOnBlur(event);
 			}}
+			error={errors !== ""}
+			helperText={errors !== "" ? errors : ""}
 		/>
 	);
 }
