@@ -1,17 +1,20 @@
 import React from "react";
 
 import { TextField } from "@mui/material";
+import { isUndefined } from "lodash";
 
 export type NumericInputProps = {
+	value: number;
+	onChange: (ev: number) => void;
 	labelName: string;
 	isFloat: boolean;
 	maxLength?: number;
 };
 
 export function NumericInput(props: NumericInputProps): React.ReactElement {
-	const { labelName, isFloat, maxLength } = props;
+	const { value, onChange, labelName, isFloat, maxLength } = props;
 
-	const [numberValue, setNumberValue] = React.useState("");
+	const [numberValue, setNumberValue] = React.useState(value === 0 || isUndefined(value) ? "" : value.toString());
 
 	const handeValueChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
 		let numberRegex;
@@ -26,7 +29,10 @@ export function NumericInput(props: NumericInputProps): React.ReactElement {
 
 		const testInt = numberRegex.test(event.target.value);
 
-		if (event.target.value === "" || (testInt && value >= 0)) setNumberValue(event.target.value);
+		if (event.target.value === "" || (testInt && value >= 0)) {
+			setNumberValue(event.target.value);
+			onChange(value);
+		}
 	};
 
 	const handleOnBlur = (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>): void => {

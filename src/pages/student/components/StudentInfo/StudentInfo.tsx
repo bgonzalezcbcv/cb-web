@@ -2,7 +2,7 @@ import React from "react";
 
 import { JsonForms } from "@jsonforms/react";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
-import { JsonSchema, rankWith, scopeEndsWith, Translator, UISchemaElement, uiTypeIs } from "@jsonforms/core";
+import { Translator } from "@jsonforms/core";
 import { Student } from "../../../../core/Models";
 
 import { ajv as studentAjv } from "../../../../core/AJVHelper";
