@@ -33,7 +33,7 @@ export function NumericInput(props: NumericInputProps): React.ReactElement {
 
 		if (event.target.value === "" || (testInt && value >= 0)) {
 			setNumberValue(event.target.value);
-			onChange(value);
+			onChange(event.target.value === "" ? 0 : value);
 		}
 	};
 
