@@ -7,12 +7,12 @@ import { JsonSchema7, Translator } from "@jsonforms/core";
 import { materialRenderers } from "@jsonforms/material-renderers";
 import { Box, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { defaultStudent } from "../../DefaultStudent";
+import NumericInputControl, { NumericInputControlTester } from "../../../../components/NumericInput/NumericInputControl";
 
 import schema from "../../schema.json";
 import ui from "./ui.json";
 
 import "./FamilyForm.scss";
-import NumericInputControl, { NumericInputControlTester } from "../../../../components/NumericInput/NumericInputControl";
 
 export type FamilyFormProps = {
 	student: Student;

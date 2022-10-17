@@ -8,14 +8,13 @@ import * as API from "../../core/ApiStore";
 import * as Models from "../../core/Models";
 import { CreationState } from "../../core/interfaces";
 import { ajv as userAjv } from "../../core/AJVHelper";
+import { Button, Card, CardContent } from "@mui/material";
 
+import NumericInputControl, { NumericInputControlTester } from "../../components/NumericInput/NumericInputControl";
 import CreateUserDialog from "./components/CreateUserDialog";
 
 import schema from "./schema.json";
 import ui from "./ui.json";
-
-import { Button, Card, CardContent } from "@mui/material";
-import NumericInputControl, { NumericInputControlTester } from "../../components/NumericInput/NumericInputControl";
 
 const renderers = [...materialRenderers, { tester: NumericInputControlTester, renderer: NumericInputControl }];
 

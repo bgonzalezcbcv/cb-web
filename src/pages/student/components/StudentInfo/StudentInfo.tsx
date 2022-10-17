@@ -4,6 +4,7 @@ import { JsonForms } from "@jsonforms/react";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
 import { Translator } from "@jsonforms/core";
 import { Student } from "../../../../core/Models";
+import NumericInputControl, { NumericInputControlTester } from "../../../../components/NumericInput/NumericInputControl";
 
 import { ajv as studentAjv } from "../../../../core/AJVHelper";
 
@@ -11,7 +12,6 @@ import uischema from "./ui.json";
 import schema from "../../schema.json";
 
 import "./StudentInfo.scss";
-import NumericInputControl, { NumericInputControlTester } from "../../../../components/NumericInput/NumericInputControl";
 
 export type StudentInfoProps = {
 	student: Student;
