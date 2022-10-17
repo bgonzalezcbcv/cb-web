@@ -13,10 +13,11 @@ import { materialCells, materialRenderers } from "@jsonforms/material-renderers"
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 import schema from "../../../schema.json";
+import NumericInputControl, { NumericInputControlTester } from "../../../../../components/NumericInput/NumericInputControl";
+
 import ui from "./ui.json";
 
 import "./PaymentMethodSection.scss";
-import NumericInputControl, { NumericInputControlTester } from "../../../../../components/NumericInput/NumericInputControl";
 
 export type PaymentMethodSectionProps = {
 	editable: boolean;
