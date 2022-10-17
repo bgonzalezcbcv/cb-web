@@ -15,6 +15,8 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import schema from "../../../schema.json";
 import ui from "./ui.json";
 import uiResolution from "./ui-resolution.json";
+import NumericInputControl, { NumericInputControlTester } from "../../../../../components/NumericInput/NumericInputControl";
+
 import uiReport from "./ui-report.json";
 
 import "./DiscountsSection.scss";
@@ -35,6 +37,8 @@ type DiscountData = {
 	report_url: string;
 	description: string;
 };
+
+const renderers = [...materialRenderers, { tester: NumericInputControlTester, renderer: NumericInputControl }];
 
 export default function DiscountsSection(props: VisualComponent & AdministrativeInfoProps): React.ReactElement {
 	const { editable, student, onChange } = props;
@@ -126,7 +130,7 @@ export default function DiscountsSection(props: VisualComponent & Administrative
 									schema={schema.properties.administrative_info.properties.discounts.items as JsonSchema7}
 									uischema={ui}
 									data={discountData}
-									renderers={materialRenderers}
+									renderers={renderers}
 									cells={materialCells}
 									onChange={({ data, errors }): void => {
 										setData(data, errors?.length != 0);
@@ -140,7 +144,7 @@ export default function DiscountsSection(props: VisualComponent & Administrative
 											schema={schema.properties.administrative_info.properties.discounts.items as JsonSchema7}
 											uischema={uiResolution}
 											data={discountData}
-											renderers={materialRenderers}
+											renderers={renderers}
 											cells={materialCells}
 											onChange={({ data, errors }): void => {
 												setData(data, errors?.length != 0);
@@ -157,7 +161,7 @@ export default function DiscountsSection(props: VisualComponent & Administrative
 											schema={schema.properties.administrative_info.properties.discounts.items as JsonSchema7}
 											uischema={uiReport}
 											data={discountData}
-											renderers={materialRenderers}
+											renderers={renderers}
 											cells={materialCells}
 											onChange={({ data, errors }): void => {
 												setData(data, errors?.length != 0);

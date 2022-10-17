@@ -2,8 +2,9 @@ import React from "react";
 
 import { JsonForms } from "@jsonforms/react";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
-import {Translator} from "@jsonforms/core";
+import { Translator } from "@jsonforms/core";
 import { Student } from "../../../../core/Models";
+import NumericInputControl, { NumericInputControlTester } from "../../../../components/NumericInput/NumericInputControl";
 
 import { ajv as studentAjv } from "../../../../core/AJVHelper";
 
@@ -19,6 +20,8 @@ export type StudentInfoProps = {
 	translator?: (id: string, defaultMessage: string) => string;
 };
 
+const renderers = [...materialRenderers, { tester: NumericInputControlTester, renderer: NumericInputControl }];
+
 export default function StudentInfo(props: StudentInfoProps): React.ReactElement {
 	const { editable, student, translator, onChange } = props;
 
@@ -30,7 +33,7 @@ export default function StudentInfo(props: StudentInfoProps): React.ReactElement
 				schema={schema}
 				uischema={uischema}
 				data={student}
-				renderers={materialRenderers}
+				renderers={renderers}
 				onChange={({ data }): void => {
 					onChange(data);
 				}}

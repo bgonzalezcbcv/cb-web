@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useState } from "react";
 import { JsonForms } from "@jsonforms/react";
-import {JsonSchema7, Translator} from "@jsonforms/core";
+import { JsonSchema7, Translator } from "@jsonforms/core";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
 import { createAjv } from "@jsonforms/core";
 import { DataStore } from "../../../../core/DataStore";
@@ -18,6 +18,7 @@ import "./AdministrativeInfo.scss";
 
 import DiscountsSection from "./DiscountsSection/DiscountsSection";
 import PaymentMethodSection from "./PaymentMethodsSection/PaymentMethodSection";
+import NumericInputControl, { NumericInputControlTester } from "../../../../components/NumericInput/NumericInputControl";
 
 export type AdministrativeInfoProps = {
 	editable: boolean;
@@ -25,6 +26,8 @@ export type AdministrativeInfoProps = {
 	onChange: (data: Models.Student) => void;
 	translator?: (id: string, defaultMessage: string) => string;
 };
+
+const renderers = [...materialRenderers, { tester: NumericInputControlTester, renderer: NumericInputControl }];
 
 export default function AdministrativeInfo(props: VisualComponent & AdministrativeInfoProps): React.ReactElement {
 	const dataStore = DataStore.getInstance();
@@ -46,7 +49,7 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
 							schema={schema as JsonSchema7}
 							uischema={uiSchema}
 							data={student}
-							renderers={materialRenderers}
+							renderers={renderers}
 							cells={materialCells}
 							onChange={({ data }): void => {
 								onChange(data);

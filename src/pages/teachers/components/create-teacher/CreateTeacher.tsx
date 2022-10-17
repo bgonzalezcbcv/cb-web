@@ -8,11 +8,15 @@ import { DataStore } from "../../../../core/DataStore";
 import { Teacher, VisualComponent } from "../../../../core/interfaces";
 
 import schema from "./schema.json";
+import NumericInputControl, { NumericInputControlTester } from "../../../../components/NumericInput/NumericInputControl";
+
 import ui from "./ui.json";
 
 import "./CreateTeacher.scss";
 
 const initialData = {};
+
+const renderers = [...materialRenderers, { tester: NumericInputControlTester, renderer: NumericInputControl }];
 
 export default function CreateTeacher(props: VisualComponent): React.ReactElement {
 	const { width, height } = props;
@@ -45,7 +49,7 @@ export default function CreateTeacher(props: VisualComponent): React.ReactElemen
 						schema={schema as JsonSchema7}
 						uischema={ui}
 						data={data}
-						renderers={materialRenderers}
+						renderers={renderers}
 						cells={materialCells}
 						onChange={({ errors, data }): void => {
 							setErrors(errors ?? []);
