@@ -1,7 +1,8 @@
 import React from "react";
+
+import { ControlProps, isIntegerControl, isNumberControl, or, RankedTester, rankWith } from "@jsonforms/core";
 import { withJsonFormsControlProps } from "@jsonforms/react";
 import { NumericInput } from "./NumericInput";
-import { ControlProps, isIntegerControl, isNumberControl, or, RankedTester, rankWith } from "@jsonforms/core";
 
 const NumericInputControl: React.FunctionComponent<ControlProps> = (props: ControlProps) => {
 	const splitScope = props.uischema.scope.split("/");
