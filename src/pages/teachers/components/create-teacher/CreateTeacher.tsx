@@ -8,10 +8,11 @@ import { DataStore } from "../../../../core/DataStore";
 import { Teacher, VisualComponent } from "../../../../core/interfaces";
 
 import schema from "./schema.json";
+import NumericInputControl, { NumericInputControlTester } from "../../../../components/NumericInput/NumericInputControl";
+
 import ui from "./ui.json";
 
 import "./CreateTeacher.scss";
-import NumericInputControl, { NumericInputControlTester } from "../../../../components/NumericInput/NumericInputControl";
 
 const initialData = {};
 
