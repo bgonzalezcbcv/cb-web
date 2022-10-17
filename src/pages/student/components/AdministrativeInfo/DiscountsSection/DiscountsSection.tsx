@@ -15,10 +15,11 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import schema from "../../../schema.json";
 import ui from "./ui.json";
 import uiResolution from "./ui-resolution.json";
+import NumericInputControl, { NumericInputControlTester } from "../../../../../components/NumericInput/NumericInputControl";
+
 import uiReport from "./ui-report.json";
 
 import "./DiscountsSection.scss";
-import NumericInputControl, { NumericInputControlTester } from "../../../../../components/NumericInput/NumericInputControl";
 
 export type AdministrativeInfoProps = {
 	editable: boolean;
