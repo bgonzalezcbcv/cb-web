@@ -1,7 +1,7 @@
+import { isUndefined } from "lodash";
 import React from "react";
 
 import { TextField } from "@mui/material";
-import { isUndefined } from "lodash";
 
 export type NumericInputProps = {
 	value: number;
