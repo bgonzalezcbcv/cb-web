@@ -1,6 +1,9 @@
 /* eslint-disable max-statements */
 /// <reference types="cypress" />
 
+import { SidebarItem, SidebarSection, UserRole } from "../../src/core/interfaces";
+import { getSidebarSectionsByUser } from "../../src/core/userRoleHelper";
+
 // ***********************************************
 // This example commands.ts shows you how to
 // create various custom commands and overwrite
@@ -155,6 +158,77 @@ Cypress.Commands.add("testInput", (inputID: string, errorLabelID: string, incorr
 	cy.wait(100);
 });
 
+Cypress.Commands.add("testUserCanNavigateByRole", (userRole: UserRole) => {
+	/*TODO: Get the routes from a better source, as this only includes routes that are available in the apps' sidebar.*/
+	const routesByRole: string[] = getSidebarSectionsByUser({ email: "", name: "", role: userRole, surname: "", token: "" })
+		.map((sidebarSection: SidebarSection) => {
+			return sidebarSection.items.map((sidebarSectionItem: SidebarItem) => {
+				return sidebarSectionItem.navigationRoute;
+			});
+		})
+		.flat();
+
+	const routesByRoleNoDuplicates = routesByRole.filter((route: string, index: number) => {
+		return routesByRole.indexOf(route) === index;
+	});
+
+	cy.log(`routes that will be tested: ${routesByRoleNoDuplicates.toString()}`);
+
+	for (const route of routesByRoleNoDuplicates) {
+		cy.visit(route);
+		cy.url().should("eq", Cypress.config().baseUrl + route);
+	}
+});
+
+Cypress.Commands.add("testUserShouldNotNavigateByRole", (userRole: UserRole) => {
+	/*TODO: Get the routes from a better source, as this only includes routes that are available in the apps' sidebar.*/
+	let allRoutesByRole: string[] = [];
+	for (const role of Object.values(UserRole).filter((a) => !isNaN(Number(a)))) {
+		cy.log(role.toString());
+		const routesByRole: string[] = getSidebarSectionsByUser({ email: "", name: "", role: role as UserRole, surname: "", token: "" })
+			.map((sidebarSection: SidebarSection) => {
+				return sidebarSection.items.map((sidebarSectionItem: SidebarItem) => {
+					return sidebarSectionItem.navigationRoute;
+				});
+			})
+			.flat();
+		allRoutesByRole = allRoutesByRole.concat(routesByRole);
+	}
+
+	allRoutesByRole = allRoutesByRole.filter((route: string, index: number) => {
+		return allRoutesByRole.indexOf(route) === index;
+	});
+
+	cy.log(allRoutesByRole.toString());
+
+	let userRoleRoutes: string[] = getSidebarSectionsByUser({ email: "", name: "", role: userRole, surname: "", token: "" })
+		.map((sidebarSection: SidebarSection) => {
+			return sidebarSection.items.map((sidebarSectionItem: SidebarItem) => {
+				return sidebarSectionItem.navigationRoute;
+			});
+		})
+		.flat();
+
+	userRoleRoutes = userRoleRoutes.filter((route: string, index: number) => {
+		return userRoleRoutes.indexOf(route) === index;
+	});
+
+	cy.log(userRoleRoutes.toString());
+
+	allRoutesByRole.filter((route) => {
+		return userRoleRoutes.indexOf(route) === -1;
+	});
+
+	cy.log(`routes that will be tested: ${allRoutesByRole.toString()}`);
+
+	for (const route of allRoutesByRole) {
+		cy.visit(route);
+		cy.url().should("not.include", route);
+	}
+});
+
+//
+//
 // -- This is a child command --
 Cypress.Commands.add("typeAndWait", { prevSubject: "element" }, (subject, input) => {
 	cy.wrap(subject).type(input);
@@ -177,9 +251,12 @@ declare global {
 			fillStudentFamilyInfo(): Chainable<void>;
 			testInput(inputID: string, errorLabelID: string, incorrectInput: string, correctInput: string, errorMessage?: string): Chainable<void>;
 			typeAndWait(input: string): Chainable<Element>;
-			/*dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
+			testUserCanNavigateByRole(userRole: UserRole): Chainable<void>;
+			testUserShouldNotNavigateByRole(userRole: UserRole): Chainable<void>;
+			/* drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
+			dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
 			visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element> */
 		}
 	}
 }
-export {};
+export { };
