@@ -84,6 +84,6 @@ reaction(
 		sessionStorage.setItem("store", json);
 	},
 	{
-		delay: 500,
+		delay: 100,
 	}
 );

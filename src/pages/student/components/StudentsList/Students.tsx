@@ -1,14 +1,13 @@
 /*eslint-disable*/
+import _ from "lodash";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DataGrid, GridApi, GridCellValue, GridColDef } from "@mui/x-data-grid";
-import ReactLoading from "react-loading";
 
 import * as APIStore from "../../../../core/ApiStore";
 import { emptyStudents, defaultStudents } from "../../DefaultStudent";
 import { Student as StudentModel } from "../../../../core/Models";
-import _ from "lodash";
-import { Alert, Autocomplete, Box, Button, Input, Paper, TextField } from "@mui/material";
+import { Alert, Autocomplete, Box, Button, Card, CircularProgress, Input, Paper, TextField, Typography } from "@mui/material";
 
 import "./StudentsList.scss";
 
@@ -18,13 +17,13 @@ enum FetchState {
 	failure = "failure",
 }
 
-const Example = ({ type, color }: { type: any; color: string }) => <ReactLoading type={type} color={color} height={"80px"} width={"80px"} />;
-
 const columns: GridColDef[] = [
-	{ field: "id", headerName: "ID", disableColumnMenu: true, flex: 1 },
-	{ field: "ci", headerName: "CI", disableColumnMenu: true, flex: 2 },
-	{ field: "name", headerName: "Nombres", disableColumnMenu: true, flex: 2 },
-	{ field: "surname", headerName: "Apellidos", disableColumnMenu: true, flex: 2 },
+	{ field: "id", headerName: "ID", disableColumnMenu: false, flex: 1 },
+	{ field: "ci", headerName: "CI", disableColumnMenu: false, flex: 2 },
+	{ field: "name", headerName: "Nombres", disableColumnMenu: false, flex: 2 },
+	{ field: "surname", headerName: "Apellidos", disableColumnMenu: false, flex: 2 },
+	//{ field: "", headerName: "Grupo", disableColumnMenu: true, flex: 1 }, TODO change here when implemented
+	//{ field: "", headerName: "Sub Grupo", disableColumnMenu: true, flex: 1 }, TODO change here when implemented
 	{
 		field: "",
 		headerName: "Ir al alumno",
@@ -36,7 +35,7 @@ const columns: GridColDef[] = [
 			let navigate = useNavigate();
 
 			const onClick = (e: any) => {
-				e.stopPropagation(); // don't select this row after clicking
+				e.stopPropagation();
 
 				const api: GridApi = params.api;
 				const thisRow: Record<string, GridCellValue> = {};
@@ -45,22 +44,19 @@ const columns: GridColDef[] = [
 					.filter((c: any) => c.field !== "__check__" && !!c)
 					.forEach((c: any) => (thisRow[c.field] = params.getValue(params.id, c.field)));
 				navigate("/student/" + thisRow.id);
-				//return alert(thisRow.ci);
-				//return (handleOnClick(thisRow.id));
 			};
-			return <Button onClick={onClick}>Ir</Button>;
+			return <Button onClick={onClick}>Ir</Button>; //Link component
 		},
 	},
 ];
 
-const FilterComponent = ({ filterText, onFilter }: { filterText: string; onFilter: any }) => (
+const SearchComponent = ({ searchText, onSearch }: { searchText: string; onSearch: any }) => (
 	<>
-		<Input style={{ flex: 3, marginRight: "10%" }} id="search" type="text" placeholder="Buscar..." value={filterText} onChange={onFilter} />
+		<Input style={{ flex: 3, marginRight: "10%" }} id="search" type="text" placeholder="Buscar..." value={searchText} onChange={onSearch} />
 	</>
 );
 
 export default function StudentsList() {
-	const [loading, setIsLoading] = useState(false);
 	const [students, setStudents] = useState<StudentModel[]>(defaultStudents);
 	const [fetchState, setFetchState] = React.useState(FetchState.loading);
 
@@ -81,8 +77,8 @@ export default function StudentsList() {
 		getStudents();
 	}, []);
 
-	const [filterText, setFilterText] = React.useState("");
-	const filteredItems = students.filter(
+	const [searchText, setSearchText] = React.useState("");
+	const foundItems = students.filter(
 		(item) =>
 			(item.name + item.surname + item.ci)
 				.normalize("NFD")
@@ -90,7 +86,7 @@ export default function StudentsList() {
 				.replace(/\s+/g, "")
 				.toLowerCase()
 				.indexOf(
-					filterText
+					searchText
 						.normalize("NFD")
 						.replace(/[\u0300-\u036f]/g, "")
 						.replace(/\s+/g, "")
@@ -99,43 +95,52 @@ export default function StudentsList() {
 	);
 
 	return (
-		<Box style={{ height: 465, width: "90%" }}>
-			<Paper className="SearchAndGroupFilter">
-				<FilterComponent onFilter={(e: React.ChangeEvent<any>) => setFilterText(e.target.value)} filterText={filterText} />
+		<Card
+			sx={{
+				width: "90%",
+				padding: "20px",
+				alignSelf: "flex-start",
+				marginTop: "20px",
+				display: "flex",
+				flexDirection: "column",
+				justifyContent: "space-between",
+				boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+			}}>
+			<Box display="flex" justifyContent="flex-start" width="100%">
+				<Typography variant="h4">Alumnos</Typography>
+			</Box>
+			<Box className="SearchAndGroupFilter">
+				<SearchComponent onSearch={(e: React.ChangeEvent<any>) => setSearchText(e.target.value)} searchText={searchText} />
 				<Autocomplete
 					style={{ width: 200, flex: 1 }}
 					options={grupos}
 					renderInput={(params) => <TextField {...params} label="Filtrar por grupo" variant="outlined" />}
 				/>
-			</Paper>
+			</Box>
 			<Paper>
 				{(() => {
 					switch (fetchState) {
 						case "loading":
 							return (
-								<div style={{ padding: "20px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-									<Example type={"spin"} color={"rgb(165 165 165)"} />
-								</div>
+								<Box style={{ padding: "20px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+									<CircularProgress />
+								</Box>
 							);
 						case "failure":
 							return (
-								<div style={{ padding: "20px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+								<Box style={{ padding: "20px", display: "flex", justifyContent: "center", alignItems: "center" }}>
 									<Alert severity="error" variant="outlined">
 										Falló la carga de alumnos.
 									</Alert>
-								</div>
+								</Box>
 							);
 						case "initial":
-							return filteredItems.length != 0 ? (
-								<DataGrid style={{ height: 380, width: "100%" }} rows={filteredItems} columns={columns} pageSize={5} rowsPerPageOptions={[5]} />
-							) : (
-								<h4 style={{ display: "flex", height: 80, justifyContent: "center", alignItems: "center", color: "rgb(165 165 165)" }}>
-									No hay alumnos para mostrar
-								</h4>
+							return (
+								<DataGrid style={{ height: 380, width: "100%" }} rows={foundItems} columns={columns} pageSize={5} rowsPerPageOptions={[5]} />
 							);
 					}
 				})()}
 			</Paper>
-		</Box>
+		</Card>
 	);
 }

@@ -44,7 +44,7 @@ function App(): React.ReactElement {
 												<Route path="/student" element={<Student mode={StudentPageMode.create} />} />
 												<Route path="/student/:id" element={<Student mode={StudentPageMode.view} />} />
 												<Route path="/student/:id/edit" element={<Student mode={StudentPageMode.edit} />} />
-												<Route path="/studentslist" element={<StudentsList />} />
+												<Route path="/students" element={<StudentsList />} />
 												<Route path="*" element={<Navigate to="/student" />} />
 											</>
 										) : (
