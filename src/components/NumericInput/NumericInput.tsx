@@ -57,8 +57,8 @@ export function NumericInput(props: NumericInputProps): React.ReactElement {
 			inputProps={{ maxLength: maxLength }}
 			variant="standard"
 			value={numberValue}
-			onChange={(event) => handeValueChange(event)}
-			onBlur={(event) => {
+			onChange={(event): void => handeValueChange(event)}
+			onBlur={(event): void => {
 				if (isFloat) handleOnBlur(event);
 			}}
 			error={errors !== ""}
