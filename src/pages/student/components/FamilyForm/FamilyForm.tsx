@@ -14,7 +14,6 @@ import schema from "../../schema.json";
 import ui from "./ui.json";
 
 import "./FamilyForm.scss";
-import DatePickerToString from "../../../../components/datePicker/DatePicker";
 
 export type FamilyFormProps = {
 	student: Student;
