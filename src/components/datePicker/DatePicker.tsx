@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
 
@@ -6,6 +6,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers";
 import { TextField } from "@mui/material";
+import useDebounce from "../../hooks/useDebounce";
 
 dayjs.locale("es");
 
@@ -41,6 +42,9 @@ export default function DatePickerToString(props: DatePickerProps): React.ReactE
 	const [pickerDate, setPickerDate] = useState<string | null | undefined>(stringToDateString(date));
 	const [errorMessage, setErrorMessage] = useState<string>("");
 
+	const debouncePickerDate = useDebounce<string | null | undefined>(pickerDate, 500);
+	const debounceErrorMessage = useDebounce<string>(errorMessage, 500);
+
 	const validDateError = "Debe ser una fecha válida.";
 
 	function AssignDate(newValue: string | null | undefined, errorMessage: string): void {
@@ -49,9 +53,12 @@ export default function DatePickerToString(props: DatePickerProps): React.ReactE
 			const date = new Date(newValue);
 			stringDate = dateToString(date);
 		}
-		setErrorMessage(errorMessage);
 		onChange(stringDate, errorMessage);
 	}
+
+	useEffect(() => {
+		AssignDate(debouncePickerDate, debounceErrorMessage);
+	}, [debouncePickerDate, debounceErrorMessage]);
 
 	return (
 		<LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -61,7 +68,7 @@ export default function DatePickerToString(props: DatePickerProps): React.ReactE
 				value={pickerDate}
 				onAccept={(newValue): void => {
 					setPickerDate(newValue);
-					AssignDate(newValue, "");
+					setErrorMessage("");
 				}}
 				onChange={(newValue): void => {
 					setPickerDate(newValue);
@@ -70,19 +77,17 @@ export default function DatePickerToString(props: DatePickerProps): React.ReactE
 						error = validDateError;
 					}
 					if (errorMessage == "") {
-						AssignDate(newValue, error);
+						setErrorMessage(error);
 					} else {
-						AssignDate(null, error);
+						setErrorMessage(error);
 					}
 				}}
 				onError={(reason, newValue): void => {
 					setPickerDate(newValue);
-					let dateToSet = newValue;
 					let error = newValue;
 					switch (reason) {
 						case "invalidDate":
 							error = validDateError;
-							dateToSet = null;
 							break;
 						case null:
 							if (!newValue && required) {
@@ -93,10 +98,9 @@ export default function DatePickerToString(props: DatePickerProps): React.ReactE
 							break;
 						default:
 							error = reason;
-							dateToSet = null;
 							break;
 					}
-					AssignDate(dateToSet, error);
+					setErrorMessage(error);
 				}}
 				renderInput={(params): React.ReactElement => (
 					<TextField
