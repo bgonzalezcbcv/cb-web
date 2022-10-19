@@ -105,6 +105,7 @@ export default function DatePickerToString(props: DatePickerProps): React.ReactE
 						helperText={errorMessage}
 						required={required}
 						error={errorMessage != ""}
+						disabled={!editable}
 						sx={{ display: "flex", width: width ? width : "100%" }}
 					/>
 				)}
