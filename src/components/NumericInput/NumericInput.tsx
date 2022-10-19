@@ -1,6 +1,8 @@
-import React from "react";
+import { isUndefined } from "lodash";
+import React, { useEffect } from "react";
 
 import { TextField } from "@mui/material";
+import useDebounce from "../../hooks/useDebounce";
 
 export type NumericInputProps = {
 	value: number;
@@ -16,6 +18,11 @@ export function NumericInput(props: NumericInputProps): React.ReactElement {
 	const { value, onChange, labelName, isFloat, errors, enabled, maxLength } = props;
 
 	const [numberValue, setNumberValue] = React.useState(!value ? "" : value.toString());
+	const debounceNumberValue = useDebounce<string>(numberValue, 100);
+
+	useEffect(() => {
+		setNumberValue(debounceNumberValue);
+	}, [numberValue]);
 
 	const handeValueChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
 		let numberRegex;
