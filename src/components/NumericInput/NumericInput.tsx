@@ -17,11 +17,12 @@ export type NumericInputProps = {
 export function NumericInput(props: NumericInputProps): React.ReactElement {
 	const { value, onChange, labelName, isFloat, errors, enabled, maxLength } = props;
 
-	const [numberValue, setNumberValue] = React.useState(!value ? "" : value.toString());
-	const debounceNumberValue = useDebounce<string>(numberValue, 100);
+	const [stringNumericValue, setStringNumericValue] = React.useState(!value ? "" : value.toString());
+	const [numberValue, setNumberValue] = React.useState(0);
+	const debounceNumberValue = useDebounce<number>(numberValue, 150);
 
 	useEffect(() => {
-		setNumberValue(debounceNumberValue);
+		onChange(debounceNumberValue);
 	}, [numberValue]);
 
 	const handeValueChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
@@ -38,8 +39,8 @@ export function NumericInput(props: NumericInputProps): React.ReactElement {
 		const testInt = numberRegex.test(event.target.value);
 
 		if (event.target.value === "" || (testInt && value >= 0)) {
-			setNumberValue(event.target.value);
-			onChange(event.target.value === "" ? 0 : value);
+			setStringNumericValue(event.target.value);
+			setNumberValue(event.target.value === "" ? 0 : value);
 		}
 	};
 
@@ -48,10 +49,10 @@ export function NumericInput(props: NumericInputProps): React.ReactElement {
 		const numberValue = parseFloat(value);
 		const trailingZeroesRegex = /^(0|[1-9]*)(\.(00|[1-9]0))?$/;
 
-		if (numberValue === 0) setNumberValue("");
+		if (numberValue === 0) setStringNumericValue("");
 		else if (trailingZeroesRegex.test(value)) {
 			const result = value.replace(/.00$|0$/, "");
-			setNumberValue(result);
+			setStringNumericValue(result);
 		}
 	};
 
@@ -62,7 +63,7 @@ export function NumericInput(props: NumericInputProps): React.ReactElement {
 			disabled={!enabled}
 			inputProps={{ maxLength: maxLength }}
 			variant="standard"
-			value={numberValue}
+			value={stringNumericValue}
 			onChange={(event): void => handeValueChange(event)}
 			onBlur={(event): void => {
 				if (isFloat) handleOnBlur(event);
