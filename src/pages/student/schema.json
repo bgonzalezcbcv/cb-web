@@ -7,9 +7,8 @@
 		"ci": {
 			"type": "string",
 			"title": "CI",
-			"pattern": "^((\\d+)|([a-zA-Z]+))+$",
 			"minLength": 1,
-			"errorMessage": "Se deben ingresar solo números y letras, sin puntos ni guiones."
+		  	"errorMessage": "Este campo es requerido."
 		},
 		"name": {
 			"type": "string",
@@ -49,10 +48,7 @@
 			"type": "string",
 			"title": "Fecha de nacimiento",
 			"minLength": 1,
-			"errorMessage": {
-				"format": "Tiene que ser una fecha válida.",
-				"minLength": "Este campo es requerido."
-			}
+			"errorMessage": "Debe ser una fecha válida."
 		},
 		"nationality": {
 			"type": "string",
@@ -116,25 +112,7 @@
 			"type": "string",
 			"title": "Vencimiento de vacunas",
 			"minLength": 1,
-			"errorMessage": {
-				"format": "Tiene que ser una fecha válida.",
-				"minLength": "Este campo es requerido."
-			}
-		},
-		"inscription_date": {
-			"type": "string",
-			"title": "Fecha de inscripción",
-			"errorMessage": {
-				"format": "Tiene que ser una fecha válida."
-			}
-		},
-		"starting_date": {
-			"type": "string",
-			"format": "date",
-			"title": "Fecha de inicio",
-			"errorMessage": {
-				"format": "Tiene que ser una fecha válida."
-			}
+			"errorMessage": "Debe ser una fecha válida."
 		},
 		"contact": {
 			"type": "string",
@@ -184,7 +162,7 @@
 						"type": "string",
 						"title": "Fecha de nacimiento",
 						"minLength": 1,
-						"errorMessage": "Este campo es requerido."
+						"errorMessage": "Debe ser una fecha válida."
 					},
 					"birthplace": {
 						"type": "string",
@@ -207,9 +185,8 @@
 					"ci": {
 						"type": "string",
 						"title": "Cédula de identidad",
-						"pattern": "^((\\d+)|([a-zA-Z]+))+$",
 						"minLength": 1,
-						"errorMessage": "Debe ingresar solo números o letras, sin puntos ni guiones."
+					  	"errorMessage": "Este campo es requerido."
 					},
 					"marital_status": {
 						"type": "string",
@@ -454,14 +431,6 @@
 					"items": {
 						"type": "object",
 						"properties": {
-							"starting_date": {
-								"title": "Comienzo",
-								"type": "string"
-							},
-							"ending_date": {
-								"title": "Fin",
-								"type": "string"
-							},
 							"explanation": {
 								"oneOf": [
 									{
@@ -509,7 +478,7 @@
 								"type": "string"
 							}
 						},
-						"required": ["starting_date", "ending_date", "explanation", "percentage", "report_url"]
+						"required": ["explanation", "percentage"]
 					}
 				}
 			}

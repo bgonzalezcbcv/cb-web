@@ -36,6 +36,7 @@ export default function Student(props: StudentProps): React.ReactElement {
 	const [student, setStudent] = React.useState<StudentModel>(defaultStudent);
 	const [isEditable, setIsEditable] = React.useState(false);
 	const [fetchState, setFetchState] = React.useState(FetchState.loading);
+	const [warnings, setWarnings] = React.useState<string[][]>([[], [], [], []]);
 
 	const getStudent = useCallback(async (): Promise<void> => {
 		setFetchState(FetchState.loading);
@@ -60,9 +61,13 @@ export default function Student(props: StudentProps): React.ReactElement {
 		{ label: "Administrativa", dataCY: "administrativeInfoTab" },
 	];
 
-	const debouncedSetStudent = React.useCallback(_.debounce(setStudent, 200), []);
+	const debouncedSetStudent = React.useCallback(
+		(student: StudentModel, debounce = true) => (debounce ? _.debounce(setStudent, 200)(student) : setStudent(student)),
+		[]
+	);
 
 	const translator = (id: string, defaultMessage: string): string => {
+		if ((id.includes("date") || id.includes("expiration")) && id.includes("required")) return "Debe ser una fecha válida.";
 		if (id.includes("required")) return "Este campo es requerido.";
 		else return defaultMessage;
 	};
@@ -71,7 +76,17 @@ export default function Student(props: StudentProps): React.ReactElement {
 		<StudentInfo student={student} onChange={debouncedSetStudent} editable={isEditable} translator={translator} />,
 		<FamilyForm student={student} onChange={debouncedSetStudent} editable={isEditable} translator={translator} />,
 		<EnrollmentQuestions student={student} onChange={debouncedSetStudent} editable={isEditable} />,
-		<AdministrativeInfo student={student} onChange={debouncedSetStudent} editable={isEditable} translator={translator} />,
+		<AdministrativeInfo
+			student={student}
+			onChange={debouncedSetStudent}
+			editable={isEditable}
+			translator={translator}
+			setWarnings={(warning: string[]): void => {
+				const newWarnings = warnings.slice();
+				newWarnings[3] = warning;
+				setWarnings(newWarnings);
+			}}
+		/>,
 	];
 
 	if (fetchState === FetchState.loading) return <CircularProgress />;
@@ -106,7 +121,16 @@ export default function Student(props: StudentProps): React.ReactElement {
 				student={student}
 			/>
 
-			<StudentPageTabs tabData={tabData} onChange={setCurrentTabIndex} value={currentTabIndex} />
+			<StudentPageTabs
+				tabData={tabData}
+				onChange={(newValue: number) => {
+					const newWarnings = warnings.slice();
+					newWarnings[currentTabIndex] = [];
+					setWarnings(newWarnings);
+					setCurrentTabIndex(newValue);
+				}}
+				value={currentTabIndex}
+			/>
 
 			{panels.map((panel, index) => (
 				<TabPanel key={`student-tab-panel-${index}`} className="panel-item" value={currentTabIndex} index={index}>
@@ -114,7 +138,9 @@ export default function Student(props: StudentProps): React.ReactElement {
 				</TabPanel>
 			))}
 
-			{[StudentPageMode.create, StudentPageMode.edit].includes(mode) && <CreateStudentDialog student={student} mode={mode} />}
+			{[StudentPageMode.create, StudentPageMode.edit].includes(mode) && (
+				<CreateStudentDialog student={student} mode={mode} warnings={warnings[currentTabIndex]} />
+			)}
 		</Card>
 	);
 }

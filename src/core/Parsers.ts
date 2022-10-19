@@ -19,7 +19,7 @@ export function parseFormToStudent(form: StudentCreationForm, student: Student):
 			first_language: form["Lengua materna:"],
 			medical_assurance: form["Cobertura médica:"],
 			emergency: form["Emergencia médica:"],
-			vaccine_expiration: form["Fecha de vencimiento de vacunas:"],
+			vaccine_expiration: addLeadingZeroToDate(form["Fecha de vencimiento de vacunas:"]),
 			family: [
 				{
 					role: form["Datos correspondientes a:"],

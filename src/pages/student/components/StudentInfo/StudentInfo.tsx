@@ -15,7 +15,7 @@ import "./StudentInfo.scss";
 
 export type StudentInfoProps = {
 	student: Student;
-	onChange: (data: Student) => void;
+	onChange: (data: Student, debounce?: boolean) => void;
 	editable: boolean;
 	translator?: (id: string, defaultMessage: string) => string;
 };

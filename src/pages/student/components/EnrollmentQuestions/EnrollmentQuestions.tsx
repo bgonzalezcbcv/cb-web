@@ -8,7 +8,7 @@ import useDebounce from "../../../../hooks/useDebounce";
 export interface EnrollmentQuestionsProps {
 	student: Student;
 	editable: boolean;
-	onChange: (newStudent: Student) => void;
+	onChange: (newStudent: Student, debounce?: boolean) => void;
 }
 
 function Question(props: {

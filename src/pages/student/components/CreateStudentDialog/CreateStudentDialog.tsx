@@ -5,7 +5,7 @@ import * as API from "../../../../core/ApiStore";
 import { ajv as studentAjv, getAjvErrors, getParsedErrors } from "../../../../core/AJVHelper";
 import { StudentPageMode } from "../../../../core/interfaces";
 
-import { Alert, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Typography } from "@mui/material";
+import { Alert, AlertTitle, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, List, ListItem, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import ErrorList from "../../../../components/ErrorList/ErrorList";
 
@@ -14,10 +14,11 @@ import studentSchema from "../../schema.json";
 interface CreateStudentDialogProps {
 	student: Student;
 	mode?: StudentPageMode;
+	warnings?: string[];
 }
 
 function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElement {
-	const { student, mode: modeProps } = props;
+	const { student, mode: modeProps, warnings } = props;
 	const mode = modeProps ?? StudentPageMode.create;
 
 	const [isOpen, setIsOpen] = React.useState(false);
@@ -94,6 +95,18 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 
 						<Box height="400px" overflow="auto" paddingTop="12px">
 							<ErrorList name="Errores" path="" value={errors} schema={studentSchema} />
+							{warnings ? (
+								warnings.length > 0 ? (
+									<Alert variant="outlined" severity="warning">
+										<AlertTitle>{warnings[0]}</AlertTitle>
+										<List>
+											{warnings.map((text, messageIndex) =>
+												messageIndex == 0 || !text ? null : <ListItem key={messageIndex}>{text}</ListItem>
+											)}
+										</List>
+									</Alert>
+								) : null
+							) : null}
 						</Box>
 					</DialogContent>
 

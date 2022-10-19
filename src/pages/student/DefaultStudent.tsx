@@ -1,12 +1,12 @@
 import { DiscountExplanation, DiscountType, PaymentMethodOption, ScholarshipType, Student } from "../../core/Models";
 
 export const defaultStudent: Student = {
-	id: "asdf",
-	ci: "asdf",
-	name: "asdf",
-	surname: "asda",
-	schedule_start: "asdf",
-	schedule_end: "asdf",
+	id: "",
+	ci: "",
+	name: "",
+	surname: "",
+	schedule_start: "",
+	schedule_end: "",
 	tuition: "",
 	reference_number: 0,
 	birthplace: "",
