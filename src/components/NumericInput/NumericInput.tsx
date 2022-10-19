@@ -23,7 +23,7 @@ export function NumericInput(props: NumericInputProps): React.ReactElement {
 
 	useEffect(() => {
 		onChange(debounceNumberValue);
-	}, [numberValue]);
+	}, [debounceNumberValue]);
 
 	const handeValueChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
 		let numberRegex;
