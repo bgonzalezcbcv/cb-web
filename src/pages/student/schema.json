@@ -478,7 +478,7 @@
 								"type": "string"
 							}
 						},
-						"required": ["explanation", "percentage", "report_url"]
+						"required": ["explanation", "percentage"]
 					}
 				}
 			}

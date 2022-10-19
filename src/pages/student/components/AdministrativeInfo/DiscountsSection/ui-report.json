@@ -3,7 +3,7 @@
 	"elements": [
 		{
 			"type": "Control",
-			"scope": "#/properties//type"
+			"scope": "#/properties/type"
 		}
 	]
 }
