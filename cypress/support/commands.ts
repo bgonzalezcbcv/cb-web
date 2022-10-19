@@ -40,7 +40,7 @@ Cypress.Commands.add("fillStudentBasicInfo", () => {
 	const CIFieldID = "#\\#\\/properties\\/ci2-input";
 	const statusFieldID = "#\\#\\/properties\\/status2-input";
 	const tuitionFieldID = "#\\#\\/properties\\/tuition2-input";
-	const referenceNumberFieldID = "#\\#\\/properties\\/reference_number2-input";
+	//const referenceNumberFieldID = "#\\#\\/properties\\/reference_number2-input";
 	const placeOfBirthFieldID = "#\\#\\/properties\\/birthplace2-input";
 	const dateOfBirthInputID = "#\\#\\/properties\\/birthdate2-input";
 	const nationalityFieldID = "#\\#\\/properties\\/nationality2-input";
@@ -60,7 +60,7 @@ Cypress.Commands.add("fillStudentBasicInfo", () => {
 		cy.get(CIFieldID).clear().type(student.ci);
 		cy.get(statusFieldID).clear().type(student.status);
 		cy.get(tuitionFieldID).clear().type(student.tuition);
-		cy.get(referenceNumberFieldID).clear().type(student.referenceNumber);
+		//cy.get(referenceNumberFieldID).clear().type(student.referenceNumber);
 		cy.get(placeOfBirthFieldID).clear().type(student.birthplace);
 		cy.get(dateOfBirthInputID).clear().type(student.birthDate);
 		cy.get(nationalityFieldID).clear().type(student.nationality);
@@ -77,7 +77,7 @@ Cypress.Commands.add("fillStudentBasicInfo", () => {
 Cypress.Commands.add("fillStudentFamilyInfo", () => {
 	const familyInfoButtonID = '[data-cy="familyInfoTab"]';
 
-	const roleInputID = "#properties\\/role2-input";
+	const roleInputID = "#properties\\/role2";
 	const fullNameFieldID = "#properties\\/full_name2-input";
 	const CIFieldID = "#properties\\/ci2-input";
 	const dateOfBirthInputID = "#properties\\/birthdate2-input";
@@ -89,7 +89,7 @@ Cypress.Commands.add("fillStudentFamilyInfo", () => {
 	const emailFieldID = "#properties\\/email2-input";
 	const addressFieldID = "#properties\\/address2-input";
 	const neighborhoodFieldID = "#properties\\/neighbourhood2-input";
-	const educationLevelInputID = "#properties\\/education_level2-input";
+	const educationLevelInputID = "#properties\\/education_level2";
 	const occupationFieldID = "#properties\\/occupation2-input";
 	const workplaceFieldID = "#properties\\/workplace2-input";
 	const workplaceAddressFieldID = "#properties\\/workplace_address2-input";
@@ -99,7 +99,7 @@ Cypress.Commands.add("fillStudentFamilyInfo", () => {
 	cy.get(familyInfoButtonID).click();
 
 	cy.fixture("familyMember1Info").then((familyMember) => {
-		cy.get(roleInputID).click().get(`[data-value="${familyMember.role}"]`).click();
+		cy.get(roleInputID).click().get(`#properties\\/role2-option-0`).click();
 		cy.get(fullNameFieldID).clear().type(familyMember.fullName);
 		cy.get(CIFieldID).clear().type(familyMember.ci);
 		cy.get(dateOfBirthInputID).clear().type(familyMember.birthDate);
@@ -111,7 +111,7 @@ Cypress.Commands.add("fillStudentFamilyInfo", () => {
 		cy.get(emailFieldID).clear().type(familyMember.email);
 		cy.get(addressFieldID).clear().type(familyMember.address);
 		cy.get(neighborhoodFieldID).clear().type(familyMember.neighborhood);
-		cy.get(educationLevelInputID).click().get(`[data-value='${familyMember.educationLevel}']`).click();
+		cy.get(educationLevelInputID).click().get(`#properties\\/education_level2-option-1`).click();
 		cy.get(occupationFieldID).clear().type(familyMember.occupation);
 		cy.get(workplaceFieldID).clear().type(familyMember.workplace);
 		cy.get(workplaceAddressFieldID).clear().type(familyMember.workplaceAddress);

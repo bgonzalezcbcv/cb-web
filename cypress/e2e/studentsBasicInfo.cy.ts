@@ -25,8 +25,8 @@ describe("studentsBasicInfo", () => {
 	const SubGroupFieldID = "#\\#\\/properties\\/subgroup2-input";
 	const SubGroupFieldErrorID = "#\\#\\/properties\\/subgroup2> :nth-child(3)";
 
-	const referenceNumberFieldID = "#\\#\\/properties\\/reference_number2-input";
-	const referenceNumberFieldErrorID = "#\\#\\/properties\\/reference_number2> :nth-child(3)";
+	//const referenceNumberFieldID = "#\\#\\/properties\\/reference_number2-input";
+	//const referenceNumberFieldErrorID = "#\\#\\/properties\\/reference_number2> :nth-child(3)";
 
 	const placeOfBirthFieldID = "#\\#\\/properties\\/birthplace2-input";
 	const placeOfBirthFieldErrorID = "#\\#\\/properties\\/birthplace2> :nth-child(3)";
@@ -96,17 +96,17 @@ describe("studentsBasicInfo", () => {
 		//check basic data
 		cy.testInput(nameFieldID, nameFieldErrorID, "", "Adam", "Este campo es requerido.");
 		cy.testInput(surnameFieldID, surnameFieldErrorID, "", "Sandler", "Este campo es requerido.");
-		cy.testInput(CIFieldID, CIFieldErrorID, "", "50137758", "Se deben ingresar solo números y letras, sin puntos ni guiones.");
-		cy.testInput(referenceNumberFieldID, referenceNumberFieldErrorID, "e", "32", "");
+		cy.testInput(CIFieldID, CIFieldErrorID, "", "50137758", "Este campo es requerido.");
+		//cy.testInput(referenceNumberFieldID, referenceNumberFieldErrorID, "e", "32", "");
 		cy.testInput(placeOfBirthFieldID, placeOfBirthFieldErrorID, "", "Artigas", "Este campo es requerido.");
-		cy.testInput(dateOfBirthInputID, dateOfBirthErrorID, "", "10/5/1990", "Este campo es requerido.");
+		cy.testInput(dateOfBirthInputID, dateOfBirthErrorID, "", "10/5/1990", "Debe ser una fecha válida.");
 		cy.testInput(nationalityFieldID, nationalityFieldErrorID, "", "Uruguayo", "Este campo es requerido.");
 		cy.testInput(firstLanguageFieldID, firstLanguageFieldErrorID, "", "Esperanto", "Este campo es requerido.");
 		cy.testInput(neighborhoodFieldID, neighborhoodFieldErrorID, "", "La Teja", "Este campo es requerido.");
 		cy.testInput(addressFieldID, addressFieldErrorID, "", "Rincón del Chorro 1212", "Este campo es requerido.");
 		cy.testInput(phoneNumberFieldID, phoneNumberFieldErrorID, "error", "099123123", "Se deben ingresar 8 o 9 dígitos.");
 		cy.testInput(medicalAssuranceFieldID, medicalAssuranceFieldErrorID, "", "Española", "Este campo es requerido.");
-		cy.testInput(vaccineExpirationInputID, vaccineExpirationErrorID, "incorrecto", "10/5/2022", "Este campo es requerido.");
+		cy.testInput(vaccineExpirationInputID, vaccineExpirationErrorID, "incorrecto", "10/5/2022", "");
 	});
 
 	it("allows to create a student when all the required fields in the basic info are complete", () => {
@@ -120,7 +120,7 @@ describe("studentsBasicInfo", () => {
 		cy.get(tuitionFieldID).type("Matricula buena");
 		cy.get(GroupFieldID).type("3");
 		cy.get(SubGroupFieldID).type("A");
-		cy.get(referenceNumberFieldID).type("42");
+		//cy.get(referenceNumberFieldID).type("42");
 		cy.get(placeOfBirthFieldID).type("Asociacion Española");
 		cy.get(dateOfBirthInputID).type("01/09/2000");
 		cy.get(nationalityFieldID).type("Uruguayo");
