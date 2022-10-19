@@ -27,20 +27,20 @@ export function NumericInput(props: NumericInputProps): React.ReactElement {
 
 	const handeValueChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
 		let numberRegex;
-		let value;
+		let newValue;
 		if (isFloat) {
 			numberRegex = /^(0|[1-9]*)(\.[0-9]{0,2})?$/;
-			value = parseFloat(event.target.value);
+			newValue = parseFloat(event.target.value);
 		} else {
 			numberRegex = /^[1-9][0-9]*$/;
-			value = parseInt(event.target.value);
+			newValue = parseInt(event.target.value);
 		}
 
 		const testInt = numberRegex.test(event.target.value);
 
-		if (event.target.value === "" || (testInt && value >= 0)) {
+		if (event.target.value === "" || (testInt && newValue >= 0 && newValue <= Number.MAX_SAFE_INTEGER)) {
 			setStringNumericValue(event.target.value);
-			setNumberValue(event.target.value === "" ? 0 : value);
+			setNumberValue(event.target.value === "" ? 0 : newValue);
 		}
 	};
 
