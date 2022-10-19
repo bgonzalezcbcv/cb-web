@@ -2,14 +2,14 @@
 import _ from "lodash";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { DataGrid, GridApi, GridCellValue, GridColDef } from "@mui/x-data-grid";
-
-import * as APIStore from "../../../../core/ApiStore";
-import { emptyStudents, defaultStudents } from "../../DefaultStudent";
-import { Student as StudentModel } from "../../../../core/Models";
 import { Alert, Autocomplete, Box, Button, Card, CircularProgress, Input, Paper, TextField, Typography } from "@mui/material";
+import * as APIStore from "../../core/ApiStore";
+import { Student as StudentModel } from "../../core/Models";
+import { emptyStudents } from "../student/DefaultStudent";
 
-import "./StudentsList.scss";
+import "./Students.scss";
 
 enum FetchState {
 	initial = "initial",
@@ -50,19 +50,22 @@ const columns: GridColDef[] = [
 	},
 ];
 
-const SearchComponent = ({ searchText, onSearch }: { searchText: string; onSearch: any }) => (
-	<>
-		<Input style={{ flex: 3, marginRight: "10%" }} id="search" type="text" placeholder="Buscar..." value={searchText} onChange={onSearch} />
-	</>
-);
+interface StudentsProps {
+	rows?: StudentModel[];
+}
 
-export default function StudentsList() {
-	const [students, setStudents] = useState<StudentModel[]>(defaultStudents);
-	const [fetchState, setFetchState] = React.useState(FetchState.loading);
+export default function Students(props: StudentsProps) {
+	const { rows } = props;
 
-	const grupos = ["Todos", "3A", "3B", "3C", "3D"];
+	const [students, setStudents] = useState<StudentModel[]>(rows ?? []);
+	const [fetchState, setFetchState] = React.useState(FetchState.initial);
+	const [searchText, setSearchText] = React.useState("");
+
+	const grupos = ["Todos", "3A", "3B", "3C", "3D"]; // TODO: remove this when the groups are established in the API.
 
 	const getStudents = useCallback(async (): Promise<void> => {
+		if (rows) return;
+
 		setFetchState(FetchState.loading);
 
 		const response = await APIStore.fetchStudents();
@@ -71,28 +74,44 @@ export default function StudentsList() {
 			setStudents(_.merge(emptyStudents, response.data));
 			setFetchState(FetchState.initial);
 		} else setFetchState(FetchState.failure);
-	}, [setFetchState, setStudents]);
+	}, [rows, setFetchState, setStudents]);
 
 	useEffect((): void => {
 		getStudents();
 	}, []);
 
-	const [searchText, setSearchText] = React.useState("");
-	const foundItems = students.filter(
-		(item) =>
-			(item.name + item.surname + item.ci)
-				.normalize("NFD")
-				.replace(/[\u0300-\u036f]/g, "")
-				.replace(/\s+/g, "")
-				.toLowerCase()
-				.indexOf(
-					searchText
-						.normalize("NFD")
-						.replace(/[\u0300-\u036f]/g, "")
-						.replace(/\s+/g, "")
-						.toLowerCase()
-				) !== -1
-	);
+	const printTable = useCallback((): JSX.Element | null => {
+		switch (fetchState) {
+			case "loading":
+				return (
+					<Box style={{ padding: "20px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+						<CircularProgress />
+					</Box>
+				);
+			case "failure":
+				return (
+					<Box style={{ padding: "20px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+						<Alert severity="error" variant="outlined">
+							Falló la carga de alumnos.
+						</Alert>
+					</Box>
+				);
+			case "initial":
+				const foundItems = students.filter((student) => Object.values(student).some((value) => value && value.toString().includes(searchText)));
+
+				return (
+					<DataGrid //
+						style={{ height: 380, width: "100%" }}
+						rows={foundItems}
+						columns={columns}
+						pageSize={5}
+						rowsPerPageOptions={[5]}
+					/>
+				);
+			default:
+				return null;
+		}
+	}, [fetchState, students, searchText]);
 
 	return (
 		<Card
@@ -109,38 +128,25 @@ export default function StudentsList() {
 			<Box display="flex" justifyContent="flex-start" width="100%">
 				<Typography variant="h4">Alumnos</Typography>
 			</Box>
+
 			<Box className="SearchAndGroupFilter">
-				<SearchComponent onSearch={(e: React.ChangeEvent<any>) => setSearchText(e.target.value)} searchText={searchText} />
+				<Input
+					style={{ flex: 3, marginRight: "10%" }}
+					id="search"
+					type="text"
+					placeholder="Buscar..."
+					value={searchText}
+					onChange={(e: React.ChangeEvent<any>) => setSearchText(e.target.value)}
+				/>
+
 				<Autocomplete
 					style={{ width: 200, flex: 1 }}
 					options={grupos}
 					renderInput={(params) => <TextField {...params} label="Filtrar por grupo" variant="outlined" />}
 				/>
 			</Box>
-			<Paper>
-				{(() => {
-					switch (fetchState) {
-						case "loading":
-							return (
-								<Box style={{ padding: "20px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-									<CircularProgress />
-								</Box>
-							);
-						case "failure":
-							return (
-								<Box style={{ padding: "20px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-									<Alert severity="error" variant="outlined">
-										Falló la carga de alumnos.
-									</Alert>
-								</Box>
-							);
-						case "initial":
-							return (
-								<DataGrid style={{ height: 380, width: "100%" }} rows={foundItems} columns={columns} pageSize={5} rowsPerPageOptions={[5]} />
-							);
-					}
-				})()}
-			</Paper>
+
+			<Paper>{printTable()}</Paper>
 		</Card>
 	);
 }
