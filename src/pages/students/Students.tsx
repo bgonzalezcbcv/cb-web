@@ -122,7 +122,6 @@ export default function Students(props: StudentsProps) {
 				marginTop: "20px",
 				display: "flex",
 				flexDirection: "column",
-				justifyContent: "space-between",
 				boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
 			}}>
 			<Box display="flex" justifyContent="flex-start" width="100%">
