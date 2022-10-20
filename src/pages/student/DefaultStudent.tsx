@@ -114,6 +114,8 @@ export const defaultStudent: Student = {
 	},
 };
 
+export const defaultStudents: [Student] = [defaultStudent];
+
 export const emptyStudent: Student = {
 	address: "",
 	administrative_info: {
@@ -153,3 +155,5 @@ export const emptyStudent: Student = {
 	tuition: "",
 	vaccine_expiration: "",
 };
+
+export const emptyStudents: [Student] = [emptyStudent];

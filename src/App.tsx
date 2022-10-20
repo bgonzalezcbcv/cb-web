@@ -14,6 +14,7 @@ import Login from "./pages/login/Login";
 import Student from "./pages/student/Student";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
+import Students from "./pages/students/Students";
 import { Box } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 
@@ -43,7 +44,7 @@ function App(): React.ReactElement {
 												<Route path="/student" element={<Student mode={StudentPageMode.create} />} />
 												<Route path="/student/:id" element={<Student mode={StudentPageMode.view} />} />
 												<Route path="/student/:id/edit" element={<Student mode={StudentPageMode.edit} />} />
-
+												<Route path="/students" element={<Students />} />
 												<Route path="*" element={<Navigate to="/student" />} />
 											</>
 										) : (

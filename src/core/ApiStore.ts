@@ -125,6 +125,37 @@ export async function fetchStudent(id: string): Promise<{ success: boolean; data
 	}
 }
 
+export async function fetchStudents(): Promise<{ success: boolean; data?: [Student]; err: string }> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: `/api/students/`,
+		};
+
+		const response = await axios(config);
+
+		if (![200, 304].includes(response.status) || response.data.students === undefined)
+			return {
+				success: false,
+				err: "Unabled to fetch students",
+			};
+
+		return {
+			success: true,
+			data: response.data.students as [Student],
+			err: "",
+		};
+
+		//eslint-disable-next-line
+	} catch (error: any) {
+		return {
+			success: false,
+			err: error.message,
+		};
+	}
+}
+
 export async function createStudent(studentToCreate: Student): Promise<boolean> {
 	try {
 		const config = {
