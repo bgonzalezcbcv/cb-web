@@ -42,8 +42,8 @@ export default function DatePickerToString(props: DatePickerProps): React.ReactE
 	const [pickerDate, setPickerDate] = useState<string | null | undefined>(stringToDateString(date));
 	const [errorMessage, setErrorMessage] = useState<string>("");
 
-	const debouncePickerDate = useDebounce<string | null | undefined>(pickerDate, 500);
-	const debounceErrorMessage = useDebounce<string>(errorMessage, 500);
+	const debouncePickerDate = useDebounce<string | null | undefined>(pickerDate, 50);
+	const debounceErrorMessage = useDebounce<string>(errorMessage, 50);
 
 	const validDateError = "Debe ser una fecha válida.";
 
@@ -61,7 +61,7 @@ export default function DatePickerToString(props: DatePickerProps): React.ReactE
 	}, [debouncePickerDate, debounceErrorMessage]);
 
 	return (
-		<LocalizationProvider dateAdapter={AdapterDayjs}>
+		<LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={"es"}>
 			<DatePicker
 				readOnly={!editable}
 				label={label}
