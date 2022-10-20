@@ -47,7 +47,7 @@ export default function DatePickerToString(props: DatePickerProps): React.ReactE
 
 	const validDateError = "Debe ser una fecha válida.";
 
-	function AssignDate(newValue: string | null | undefined, errorMessage: string): void {
+	function assignDate(newValue: string | null | undefined, errorMessage: string): void {
 		let stringDate = "";
 		if (newValue) {
 			const date = new Date(newValue);
@@ -57,7 +57,7 @@ export default function DatePickerToString(props: DatePickerProps): React.ReactE
 	}
 
 	useEffect(() => {
-		AssignDate(debouncePickerDate, debounceErrorMessage);
+		assignDate(debouncePickerDate, debounceErrorMessage);
 	}, [debouncePickerDate, debounceErrorMessage]);
 
 	return (
