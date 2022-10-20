@@ -21,7 +21,7 @@ function dateToString(date: Date): string {
 	}
 }
 
-function stringToDateString(stringDate: string | undefined): string | undefined | null {
+export function stringToDateString(stringDate: string | undefined): string | null {
 	if (!stringDate || !/^(\d{2}-){2}\d{4}$/gm.test(stringDate)) return null;
 	const aux = stringDate.split("-");
 	return new Date(parseInt(aux[2]), parseInt(aux[1]) - 1, parseInt(aux[0])).toString();
