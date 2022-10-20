@@ -70,7 +70,7 @@ function Navbar(): React.ReactElement {
 					</div>
 				</div>
 
-				<MenuItem color={"secondary"} onClick={() => navigate("/user/3")} sx={{ justifyContent: "center" }}>
+				<MenuItem color={"secondary"} onClick={() => navigate("/user/3/edit")} sx={{ justifyContent: "center" }}>
 					Mi perfil
 				</MenuItem>
 
