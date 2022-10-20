@@ -2,8 +2,9 @@ import _ from "lodash";
 import axios from "axios";
 import { reaction } from "mobx";
 
-import { Student, User as UserModel } from "./Models";
-import { User, UserRole } from "./interfaces";
+import { DocumentType, Student, User, UserInfo } from "./Models";
+import { UserRole } from "./interfaces";
+
 import { DataStore } from "./DataStore";
 
 const dataStore = DataStore.getInstance();
@@ -175,7 +176,7 @@ export async function createStudent(studentToCreate: Student): Promise<boolean> 
 	}
 }
 
-export async function createUser(userToCreate: UserModel): Promise<boolean> {
+export async function createUser(userToCreate: UserInfo): Promise<boolean> {
 	try {
 		const config = {
 			...baseConfig,
@@ -191,5 +192,72 @@ export async function createUser(userToCreate: UserModel): Promise<boolean> {
 		return response.status === 201;
 	} catch (e) {
 		return false;
+	}
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function fetchUser(id: string): Promise<{ success: boolean; data?: UserInfo; err: string }> {
+	try {
+		return {
+			success: true,
+			data: {
+				role: UserRole.Administrador,
+				email: "test@test.com",
+				name: "Testing",
+				surname: "Tester",
+				address: "Avenida Siempre viva 123",
+				birthdate: "01-01-1999",
+				ci: "11113334",
+				phone: "22223333",
+				token: "",
+				complementary_info: {
+					beginning_date: "01-03-1999",
+					academic_training: [{ title: "Profesorado de Ingles", date: "01-01-1999", attachment: "" }],
+				},
+				absences: [
+					{
+						starting_date: "01-01-2022",
+						ending_date: "05-01-2022",
+						reason: "Covid",
+						attachment: "",
+					},
+				],
+				documents: [
+					{
+						type: DocumentType.Evaluation,
+						attachment: "",
+						upload_date: "01-05-2022",
+					},
+				],
+			},
+			err: "",
+		};
+		//
+		// const config = {
+		// 	...baseConfig,
+		// 	method: "get",
+		// 	url: `/api/users/${id}`,
+		// };
+		//
+		// const response = await axios(config);
+		//
+		// if (![200, 304].includes(response.status) || response.data.user === undefined)
+		// 	return {
+		// 		success: false,
+		// 		err: "Unabled to fetch user",
+		// 	};
+		//
+		// return {
+		// 	success: true,
+		// 	data: response.data.user as UserInfo,
+		// 	err: "",
+		// };
+
+		//eslint-disable-next-line
+	} catch (error: any) {
+		return {
+			success: false,
+			err: error.message,
+		};
 	}
 }

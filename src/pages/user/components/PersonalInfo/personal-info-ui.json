@@ -1,0 +1,41 @@
+{
+	"type": "VerticalLayout",
+	"elements": [
+		{
+			"type": "Control",
+			"scope": "properties/ci"
+		},
+		{
+			"type": "Control",
+			"scope": "properties/name"
+		},
+		{
+			"type": "Control",
+			"scope": "properties/surname"
+		},
+		{
+			"type": "Control",
+			"scope": "properties/birthdate",
+			"options": {
+				"format": "date",
+				"dateFormat": "DD/MM/YYYY",
+				"dateSaveFormat": "DD-MM-YYYY"
+			}
+		},
+		{
+			"type": "Control",
+			"scope": "properties/address"
+		},
+		{
+			"type": "Control",
+			"scope": "properties/email",
+			"options": {
+				"readonly": true
+			}
+		},
+		{
+			"type": "Control",
+			"scope": "properties/phone"
+		}
+	]
+}

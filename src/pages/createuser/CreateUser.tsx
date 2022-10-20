@@ -4,23 +4,23 @@ import { ErrorObject } from "ajv";
 import { JsonForms } from "@jsonforms/react";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
 import { Translator, ValidationMode } from "@jsonforms/core";
+import { Button, Card, CardContent } from "@mui/material";
 import * as API from "../../core/ApiStore";
 import * as Models from "../../core/Models";
 import { CreationState } from "../../core/interfaces";
 import { ajv as userAjv } from "../../core/AJVHelper";
-import { Button, Card, CardContent } from "@mui/material";
 
 import NumericInputControl, { NumericInputControlTester } from "../../components/NumericInput/NumericInputControl";
 import CreateUserDialog from "./components/CreateUserDialog";
 import DatePickerToString from "../../components/datePicker/DatePicker";
 
-import schema from "./schema.json";
+import schema from "../../core/schemas/user_info.json";
 import ui from "./ui.json";
 
 const renderers = [...materialRenderers, { tester: NumericInputControlTester, renderer: NumericInputControl }];
 
 export default function CreateUser(): React.ReactElement {
-	const [data, setData] = useState<Models.User>({} as Models.User);
+	const [data, setData] = useState<Models.UserInfo>({} as Models.UserInfo);
 	const [errors, setErrors] = useState<ErrorObject[]>([]);
 	const [validationMode, setValidationMode] = useState<ValidationMode>("ValidateAndHide");
 	const [userCreationState, setUserCreationState] = React.useState<CreationState>(CreationState.idle);

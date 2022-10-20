@@ -49,10 +49,37 @@ export const basicTranslator =
 		return defaultMessage ?? "";
 	};
 
+export const requiredFieldsTranslator = (id: string, defaultMessage: string): string => {
+	if (id.includes("required")) return "Este campo es requerido.";
+	else return defaultMessage;
+};
+
 export function pathToSchemaPath(path: string): string {
 	return "properties." + path.replaceAll(".", ".properties.").replaceAll(/\[(\d*)\]/gm, ".items[$1]");
 }
 
 export function getTitleFromSchema(path: string, schema: JsonSchema7): string | undefined {
 	return _.get(schema, pathToSchemaPath(path) + ".title") as string | undefined;
+}
+
+export function getFormattedPhone(phone: string): string {
+	switch (phone.length) {
+		case 8:
+			return phone.replaceAll(/(\d{4})(\d{4})/gm, "$1 $2");
+		case 9:
+			return phone.replaceAll(/(\d{3})(\d{3})(\d{3})/gm, "$1 $2 $3");
+		default:
+			return phone;
+	}
+}
+
+export function decomposeDate(date: string, separator: string | RegExp = "-"): number[] {
+	return date.split(separator).map(Number);
+}
+
+export function dateBeforeOrEqualThan(date1: string, date2: string, separator = "-"): boolean {
+	const [d1, m1, y1] = decomposeDate(date1, separator).map(Number);
+	const [d2, m2, y2] = decomposeDate(date2, separator).map(Number);
+
+	return y2 >= y1 && m2 >= m1 && d2 >= d1;
 }

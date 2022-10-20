@@ -1,3 +1,5 @@
+import { UserRole } from "./interfaces";
+
 export type Question = {
 	id: string;
 	question: string;
@@ -204,11 +206,40 @@ export interface StudentCreationForm {
 export interface User {
 	email: string;
 	name: string;
+	role: UserRole;
 	surname: string;
-	password: string;
-	role: string;
+	token: string;
+}
+
+export enum DocumentType {
+	Evaluation = "evaluation",
+	Project = "project",
+}
+
+export enum DocumentTypeLabel {
+	evaluation = "Evaluación",
+	project = "Proyecto",
+}
+
+export interface UserInfo extends User {
+	address?: string;
 	birthdate?: string;
 	ci?: string;
+	password?: string;
 	phone?: string;
-	address?: string;
+	complementary_info?: {
+		beginning_date: string;
+		academic_training: { title: string; date: string; attachment: string }[];
+	};
+	absences?: {
+		starting_date: string;
+		ending_date: string;
+		reason: string;
+		attachment: string;
+	}[];
+	documents?: {
+		type: DocumentType;
+		attachment: string;
+		upload_date: string;
+	}[];
 }
