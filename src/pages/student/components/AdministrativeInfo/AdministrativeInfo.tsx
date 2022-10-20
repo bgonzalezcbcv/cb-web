@@ -1,4 +1,5 @@
 /* eslint-disable */
+import _ from "lodash";
 import React, { useState } from "react";
 
 import { JsonForms } from "@jsonforms/react";
@@ -14,12 +15,12 @@ import FileUploader from "../../../../components/fileUploader/FileUploader";
 import DiscountsSection from "./DiscountsSection/DiscountsSection";
 import PaymentMethodSection from "./PaymentMethodsSection/PaymentMethodSection";
 import DatePickerToString from "../../../../components/datePicker/DatePicker";
+import NumericInputControl, { NumericInputControlTester } from "../../../../components/NumericInput/NumericInputControl";
 
 import schema from "../../schema.json";
 import uiSchema from "./ui.json";
 
 import "./AdministrativeInfo.scss";
-import NumericInputControl, { NumericInputControlTester } from "../../../../components/NumericInput/NumericInputControl";
 
 export type AdministrativeInfoProps = {
 	editable: boolean;
@@ -68,6 +69,7 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
 							date={student.administrative_info.enrollment_date}
 							onChange={(date: string, errorMessage: string) => {
 								const newStudent = { ...student, administrative_info: { ...student.administrative_info, enrollment_date: date } };
+								console.log("Changed!");
 								onChange(newStudent);
 								SetWarningMessage(0, errorMessage);
 							}}
@@ -91,7 +93,7 @@ export default function AdministrativeInfo(props: VisualComponent & Administrati
 							renderers={renderers}
 							cells={materialCells}
 							onChange={({ data }): void => {
-								onChange(data);
+								onChange(data, false);
 							}}
 							readonly={!editable}
 							ajv={handleDefaultsAjv}

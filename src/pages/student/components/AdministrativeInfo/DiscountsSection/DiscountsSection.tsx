@@ -6,7 +6,7 @@ import { VisualComponent } from "../../../../../core/interfaces";
 import Modal from "../../../../../components/modal/Modal";
 import DiscountHistory from ".././historyTables/DiscountHistory";
 import FileUploader from "../../../../../components/fileUploader/FileUploader";
-import DatePickerToString from "../../../../../components/datePicker/DatePicker";
+import DatePickerToString, { stringToDateString } from "../../../../../components/datePicker/DatePicker";
 import { Card, CardContent, Divider, IconButton, Container, Typography, Box, Alert } from "@mui/material";
 import { JsonForms } from "@jsonforms/react";
 import { JsonSchema7, Translator } from "@jsonforms/core";
@@ -69,10 +69,14 @@ export default function DiscountsSection(props: VisualComponent & Administrative
 
 	//TODO: Adjust this when file handling is defined
 	const handleAddNewDiscount = useCallback((discountData: DiscountData, student: Models.Student) => {
+		const startDate = stringToDateString(discountData.starting_date);
+		const endDate = stringToDateString(discountData.ending_date);
+		// Dates should be valid.
+		if (startDate === null || endDate === null) return;
 		const newDiscount: Models.Discount = {
 			percentage: discountData.percentage,
-			starting_date: new Date(discountData.starting_date),
-			ending_date: new Date(discountData.ending_date),
+			starting_date: new Date(startDate),
+			ending_date: new Date(endDate),
 			type: discountData.type as Models.DiscountType,
 			resolution_url: discountData.resolution_url,
 			explanation: discountData.explanation as Models.DiscountExplanation,
@@ -143,7 +147,7 @@ export default function DiscountsSection(props: VisualComponent & Administrative
 
 										<Box className="dates-container">
 											<DatePickerToString
-												width={'48%'}
+												width={"48%"}
 												editable={true}
 												date={discountData.starting_date}
 												onChange={(date: string): void => {
@@ -155,7 +159,7 @@ export default function DiscountsSection(props: VisualComponent & Administrative
 											/>
 
 											<DatePickerToString
-												width={'48%'}
+												width={"48%"}
 												editable={true}
 												date={discountData.ending_date}
 												onChange={(date: string): void => {
@@ -198,7 +202,11 @@ export default function DiscountsSection(props: VisualComponent & Administrative
 										<FileUploader label={"Informe"} width={"100%"} uploadedFile={(file): void => setReportFile(file)} />
 									</Container>
 								) : null}
-								{hasDateErrors ? <Alert severity="error" className="alert">La fecha de fin debe ser posterior a la fecha de comienzo</Alert> : null}
+								{hasDateErrors ? (
+									<Alert severity="error" className="alert">
+										La fecha de fin debe ser posterior a la fecha de comienzo
+									</Alert>
+								) : null}
 							</Container>
 						</Modal>
 					</Box>
