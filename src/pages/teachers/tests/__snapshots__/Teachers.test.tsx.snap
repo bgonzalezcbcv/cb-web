@@ -1,0 +1,996 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Teachers should render an alert on fail 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-outlinedError MuiAlert-outlined css-c80q09-MuiPaper-root-MuiAlert-root"
+        role="alert"
+        style="cursor: pointer;"
+      >
+        <div
+          class="MuiAlert-icon css-1ytlwq5-MuiAlert-icon"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1vooibu-MuiSvgIcon-root"
+            data-testid="ErrorOutlineIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+            />
+          </svg>
+        </div>
+        <div
+          class="MuiAlert-message css-1pxa9xg-MuiAlert-message"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+          >
+            No se pudieron obtener los docentes. Haga click aquí para reintentar.
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-outlinedError MuiAlert-outlined css-c80q09-MuiPaper-root-MuiAlert-root"
+      role="alert"
+      style="cursor: pointer;"
+    >
+      <div
+        class="MuiAlert-icon css-1ytlwq5-MuiAlert-icon"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1vooibu-MuiSvgIcon-root"
+          data-testid="ErrorOutlineIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+          />
+        </svg>
+      </div>
+      <div
+        class="MuiAlert-message css-1pxa9xg-MuiAlert-message"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+        >
+          No se pudieron obtener los docentes. Haga click aquí para reintentar.
+        </p>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`Teachers should render the profile with a non editable user 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-10fa4ys-MuiPaper-root-MuiCard-root"
+      >
+        <div
+          class="MuiBox-root css-9f11mw"
+        >
+          <div
+            class="MuiBox-root css-1bf7e4w"
+          >
+            <h4
+              class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+            >
+              Docentes
+            </h4>
+          </div>
+          <div
+            class="MuiBox-root css-k008qs"
+          >
+            <div
+              class="MuiBox-root css-1txphps"
+            >
+              <div
+                class="MuiBox-root css-8atqhb"
+              >
+                <div
+                  class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth css-sje21u-MuiInputBase-root-MuiInput-root"
+                >
+                  <input
+                    class="MuiInputBase-input MuiInput-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
+                    id="search"
+                    placeholder="Buscar..."
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="MuiBox-root css-asvefe"
+            />
+          </div>
+          <div
+            class="MuiBox-root css-1o5n4wk"
+          >
+            <div
+              aria-colcount="4"
+              aria-multiselectable="false"
+              aria-rowcount="11"
+              class="MuiDataGrid-root MuiDataGrid-root--densityStandard css-1e2bxag-MuiDataGrid-root"
+              role="grid"
+            >
+              <div>
+                <div />
+              </div>
+              <div
+                class="MuiDataGrid-main css-204u17-MuiDataGrid-main"
+              >
+                <div
+                  class="MuiDataGrid-columnHeaders css-f3jnds-MuiDataGrid-columnHeaders"
+                  style="min-height: 56px; max-height: 56px; line-height: 56px;"
+                >
+                  <div
+                    class="MuiDataGrid-columnHeadersInner MuiDataGrid-columnHeadersInner--scrollable css-gl260s-MuiDataGrid-columnHeadersInner"
+                    role="rowgroup"
+                  />
+                </div>
+                <div
+                  style="overflow: visible; height: 0px; width: 0px;"
+                >
+                  <div
+                    class="MuiDataGrid-virtualScroller css-1w5m2wr-MuiDataGrid-virtualScroller"
+                    style="width: 0px; height: auto; margin-top: 56px; overflow-x: hidden;"
+                  >
+                    <div
+                      class="MuiDataGrid-virtualScrollerContent MuiDataGrid-virtualScrollerContent--overflowed css-1kwdphh-MuiDataGrid-virtualScrollerContent"
+                      style="width: auto; height: 520px; min-height: auto;"
+                    >
+                      <div
+                        class="MuiDataGrid-virtualScrollerRenderZone css-s1v7zr-MuiDataGrid-virtualScrollerRenderZone"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="Mui-resizeTriggers"
+                >
+                  <div
+                    class="expand-trigger"
+                  >
+                    <div
+                      style="width: 1px; height: 1px;"
+                    />
+                  </div>
+                  <div
+                    class="contract-trigger"
+                  />
+                </div>
+              </div>
+              <div>
+                <div
+                  class="MuiDataGrid-footerContainer css-17jjc08-MuiDataGrid-footerContainer"
+                >
+                  <div />
+                  <div
+                    class="MuiTablePagination-root css-rtrcn9-MuiTablePagination-root"
+                  >
+                    <div
+                      class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular MuiTablePagination-toolbar css-78c6dr-MuiToolbar-root-MuiTablePagination-toolbar"
+                    >
+                      <div
+                        class="MuiTablePagination-spacer css-1psng7p-MuiTablePagination-spacer"
+                      />
+                      <p
+                        class="MuiTablePagination-displayedRows css-levciy-MuiTablePagination-displayedRows"
+                      >
+                        1–10 of 10
+                      </p>
+                      <div
+                        class="MuiTablePagination-actions"
+                      >
+                        <button
+                          aria-label="Go to previous page"
+                          class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-colorInherit MuiIconButton-sizeMedium css-zylse7-MuiButtonBase-root-MuiIconButton-root"
+                          disabled=""
+                          tabindex="-1"
+                          title="Go to previous page"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                            data-testid="KeyboardArrowLeftIcon"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          aria-label="Go to next page"
+                          class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-colorInherit MuiIconButton-sizeMedium css-zylse7-MuiButtonBase-root-MuiIconButton-root"
+                          disabled=""
+                          tabindex="-1"
+                          title="Go to next page"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                            data-testid="KeyboardArrowRightIcon"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-10fa4ys-MuiPaper-root-MuiCard-root"
+    >
+      <div
+        class="MuiBox-root css-9f11mw"
+      >
+        <div
+          class="MuiBox-root css-1bf7e4w"
+        >
+          <h4
+            class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+          >
+            Docentes
+          </h4>
+        </div>
+        <div
+          class="MuiBox-root css-k008qs"
+        >
+          <div
+            class="MuiBox-root css-1txphps"
+          >
+            <div
+              class="MuiBox-root css-8atqhb"
+            >
+              <div
+                class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth css-sje21u-MuiInputBase-root-MuiInput-root"
+              >
+                <input
+                  class="MuiInputBase-input MuiInput-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
+                  id="search"
+                  placeholder="Buscar..."
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiBox-root css-asvefe"
+          />
+        </div>
+        <div
+          class="MuiBox-root css-1o5n4wk"
+        >
+          <div
+            aria-colcount="4"
+            aria-multiselectable="false"
+            aria-rowcount="11"
+            class="MuiDataGrid-root MuiDataGrid-root--densityStandard css-1e2bxag-MuiDataGrid-root"
+            role="grid"
+          >
+            <div>
+              <div />
+            </div>
+            <div
+              class="MuiDataGrid-main css-204u17-MuiDataGrid-main"
+            >
+              <div
+                class="MuiDataGrid-columnHeaders css-f3jnds-MuiDataGrid-columnHeaders"
+                style="min-height: 56px; max-height: 56px; line-height: 56px;"
+              >
+                <div
+                  class="MuiDataGrid-columnHeadersInner MuiDataGrid-columnHeadersInner--scrollable css-gl260s-MuiDataGrid-columnHeadersInner"
+                  role="rowgroup"
+                />
+              </div>
+              <div
+                style="overflow: visible; height: 0px; width: 0px;"
+              >
+                <div
+                  class="MuiDataGrid-virtualScroller css-1w5m2wr-MuiDataGrid-virtualScroller"
+                  style="width: 0px; height: auto; margin-top: 56px; overflow-x: hidden;"
+                >
+                  <div
+                    class="MuiDataGrid-virtualScrollerContent MuiDataGrid-virtualScrollerContent--overflowed css-1kwdphh-MuiDataGrid-virtualScrollerContent"
+                    style="width: auto; height: 520px; min-height: auto;"
+                  >
+                    <div
+                      class="MuiDataGrid-virtualScrollerRenderZone css-s1v7zr-MuiDataGrid-virtualScrollerRenderZone"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="Mui-resizeTriggers"
+              >
+                <div
+                  class="expand-trigger"
+                >
+                  <div
+                    style="width: 1px; height: 1px;"
+                  />
+                </div>
+                <div
+                  class="contract-trigger"
+                />
+              </div>
+            </div>
+            <div>
+              <div
+                class="MuiDataGrid-footerContainer css-17jjc08-MuiDataGrid-footerContainer"
+              >
+                <div />
+                <div
+                  class="MuiTablePagination-root css-rtrcn9-MuiTablePagination-root"
+                >
+                  <div
+                    class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular MuiTablePagination-toolbar css-78c6dr-MuiToolbar-root-MuiTablePagination-toolbar"
+                  >
+                    <div
+                      class="MuiTablePagination-spacer css-1psng7p-MuiTablePagination-spacer"
+                    />
+                    <p
+                      class="MuiTablePagination-displayedRows css-levciy-MuiTablePagination-displayedRows"
+                    >
+                      1–10 of 10
+                    </p>
+                    <div
+                      class="MuiTablePagination-actions"
+                    >
+                      <button
+                        aria-label="Go to previous page"
+                        class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-colorInherit MuiIconButton-sizeMedium css-zylse7-MuiButtonBase-root-MuiIconButton-root"
+                        disabled=""
+                        tabindex="-1"
+                        title="Go to previous page"
+                        type="button"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                          data-testid="KeyboardArrowLeftIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"
+                          />
+                        </svg>
+                      </button>
+                      <button
+                        aria-label="Go to next page"
+                        class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-colorInherit MuiIconButton-sizeMedium css-zylse7-MuiButtonBase-root-MuiIconButton-root"
+                        disabled=""
+                        tabindex="-1"
+                        title="Go to next page"
+                        type="button"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                          data-testid="KeyboardArrowRightIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`Teachers should render the profile with an editable user 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-10fa4ys-MuiPaper-root-MuiCard-root"
+      >
+        <div
+          class="MuiBox-root css-9f11mw"
+        >
+          <div
+            class="MuiBox-root css-1bf7e4w"
+          >
+            <h4
+              class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+            >
+              Docentes
+            </h4>
+          </div>
+          <div
+            class="MuiBox-root css-k008qs"
+          >
+            <div
+              class="MuiBox-root css-1txphps"
+            >
+              <div
+                class="MuiBox-root css-8atqhb"
+              >
+                <div
+                  class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth css-sje21u-MuiInputBase-root-MuiInput-root"
+                >
+                  <input
+                    class="MuiInputBase-input MuiInput-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
+                    id="search"
+                    placeholder="Buscar..."
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="MuiBox-root css-asvefe"
+            >
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  data-testid="DeleteOutlineIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9zm7.5-5-1-1h-5l-1 1H5v2h14V4z"
+                  />
+                </svg>
+              </button>
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  data-testid="AddIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div
+            class="MuiBox-root css-1o5n4wk"
+          >
+            <div
+              aria-colcount="5"
+              aria-multiselectable="false"
+              aria-rowcount="11"
+              class="MuiDataGrid-root MuiDataGrid-root--densityStandard css-1e2bxag-MuiDataGrid-root"
+              role="grid"
+            >
+              <div>
+                <div />
+              </div>
+              <div
+                class="MuiDataGrid-main css-204u17-MuiDataGrid-main"
+              >
+                <div
+                  class="MuiDataGrid-columnHeaders css-f3jnds-MuiDataGrid-columnHeaders"
+                  style="min-height: 56px; max-height: 56px; line-height: 56px;"
+                >
+                  <div
+                    class="MuiDataGrid-columnHeadersInner MuiDataGrid-columnHeadersInner--scrollable css-gl260s-MuiDataGrid-columnHeadersInner"
+                    role="rowgroup"
+                  />
+                </div>
+                <div
+                  style="overflow: visible; height: 0px; width: 0px;"
+                >
+                  <div
+                    class="MuiDataGrid-virtualScroller css-1w5m2wr-MuiDataGrid-virtualScroller"
+                    style="width: 0px; height: auto; margin-top: 56px; overflow-x: hidden;"
+                  >
+                    <div
+                      class="MuiDataGrid-virtualScrollerContent MuiDataGrid-virtualScrollerContent--overflowed css-1kwdphh-MuiDataGrid-virtualScrollerContent"
+                      style="width: auto; height: 520px; min-height: auto;"
+                    >
+                      <div
+                        class="MuiDataGrid-virtualScrollerRenderZone css-s1v7zr-MuiDataGrid-virtualScrollerRenderZone"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="Mui-resizeTriggers"
+                >
+                  <div
+                    class="expand-trigger"
+                  >
+                    <div
+                      style="width: 1px; height: 1px;"
+                    />
+                  </div>
+                  <div
+                    class="contract-trigger"
+                  />
+                </div>
+              </div>
+              <div>
+                <div
+                  class="MuiDataGrid-footerContainer css-17jjc08-MuiDataGrid-footerContainer"
+                >
+                  <div />
+                  <div
+                    class="MuiTablePagination-root css-rtrcn9-MuiTablePagination-root"
+                  >
+                    <div
+                      class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular MuiTablePagination-toolbar css-78c6dr-MuiToolbar-root-MuiTablePagination-toolbar"
+                    >
+                      <div
+                        class="MuiTablePagination-spacer css-1psng7p-MuiTablePagination-spacer"
+                      />
+                      <p
+                        class="MuiTablePagination-displayedRows css-levciy-MuiTablePagination-displayedRows"
+                      >
+                        1–10 of 10
+                      </p>
+                      <div
+                        class="MuiTablePagination-actions"
+                      >
+                        <button
+                          aria-label="Go to previous page"
+                          class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-colorInherit MuiIconButton-sizeMedium css-zylse7-MuiButtonBase-root-MuiIconButton-root"
+                          disabled=""
+                          tabindex="-1"
+                          title="Go to previous page"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                            data-testid="KeyboardArrowLeftIcon"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          aria-label="Go to next page"
+                          class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-colorInherit MuiIconButton-sizeMedium css-zylse7-MuiButtonBase-root-MuiIconButton-root"
+                          disabled=""
+                          tabindex="-1"
+                          title="Go to next page"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                            data-testid="KeyboardArrowRightIcon"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-10fa4ys-MuiPaper-root-MuiCard-root"
+    >
+      <div
+        class="MuiBox-root css-9f11mw"
+      >
+        <div
+          class="MuiBox-root css-1bf7e4w"
+        >
+          <h4
+            class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+          >
+            Docentes
+          </h4>
+        </div>
+        <div
+          class="MuiBox-root css-k008qs"
+        >
+          <div
+            class="MuiBox-root css-1txphps"
+          >
+            <div
+              class="MuiBox-root css-8atqhb"
+            >
+              <div
+                class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth css-sje21u-MuiInputBase-root-MuiInput-root"
+              >
+                <input
+                  class="MuiInputBase-input MuiInput-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
+                  id="search"
+                  placeholder="Buscar..."
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiBox-root css-asvefe"
+          >
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+              tabindex="0"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                data-testid="DeleteOutlineIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9zm7.5-5-1-1h-5l-1 1H5v2h14V4z"
+                />
+              </svg>
+            </button>
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+              tabindex="0"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                data-testid="AddIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div
+          class="MuiBox-root css-1o5n4wk"
+        >
+          <div
+            aria-colcount="5"
+            aria-multiselectable="false"
+            aria-rowcount="11"
+            class="MuiDataGrid-root MuiDataGrid-root--densityStandard css-1e2bxag-MuiDataGrid-root"
+            role="grid"
+          >
+            <div>
+              <div />
+            </div>
+            <div
+              class="MuiDataGrid-main css-204u17-MuiDataGrid-main"
+            >
+              <div
+                class="MuiDataGrid-columnHeaders css-f3jnds-MuiDataGrid-columnHeaders"
+                style="min-height: 56px; max-height: 56px; line-height: 56px;"
+              >
+                <div
+                  class="MuiDataGrid-columnHeadersInner MuiDataGrid-columnHeadersInner--scrollable css-gl260s-MuiDataGrid-columnHeadersInner"
+                  role="rowgroup"
+                />
+              </div>
+              <div
+                style="overflow: visible; height: 0px; width: 0px;"
+              >
+                <div
+                  class="MuiDataGrid-virtualScroller css-1w5m2wr-MuiDataGrid-virtualScroller"
+                  style="width: 0px; height: auto; margin-top: 56px; overflow-x: hidden;"
+                >
+                  <div
+                    class="MuiDataGrid-virtualScrollerContent MuiDataGrid-virtualScrollerContent--overflowed css-1kwdphh-MuiDataGrid-virtualScrollerContent"
+                    style="width: auto; height: 520px; min-height: auto;"
+                  >
+                    <div
+                      class="MuiDataGrid-virtualScrollerRenderZone css-s1v7zr-MuiDataGrid-virtualScrollerRenderZone"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="Mui-resizeTriggers"
+              >
+                <div
+                  class="expand-trigger"
+                >
+                  <div
+                    style="width: 1px; height: 1px;"
+                  />
+                </div>
+                <div
+                  class="contract-trigger"
+                />
+              </div>
+            </div>
+            <div>
+              <div
+                class="MuiDataGrid-footerContainer css-17jjc08-MuiDataGrid-footerContainer"
+              >
+                <div />
+                <div
+                  class="MuiTablePagination-root css-rtrcn9-MuiTablePagination-root"
+                >
+                  <div
+                    class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular MuiTablePagination-toolbar css-78c6dr-MuiToolbar-root-MuiTablePagination-toolbar"
+                  >
+                    <div
+                      class="MuiTablePagination-spacer css-1psng7p-MuiTablePagination-spacer"
+                    />
+                    <p
+                      class="MuiTablePagination-displayedRows css-levciy-MuiTablePagination-displayedRows"
+                    >
+                      1–10 of 10
+                    </p>
+                    <div
+                      class="MuiTablePagination-actions"
+                    >
+                      <button
+                        aria-label="Go to previous page"
+                        class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-colorInherit MuiIconButton-sizeMedium css-zylse7-MuiButtonBase-root-MuiIconButton-root"
+                        disabled=""
+                        tabindex="-1"
+                        title="Go to previous page"
+                        type="button"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                          data-testid="KeyboardArrowLeftIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"
+                          />
+                        </svg>
+                      </button>
+                      <button
+                        aria-label="Go to next page"
+                        class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-colorInherit MuiIconButton-sizeMedium css-zylse7-MuiButtonBase-root-MuiIconButton-root"
+                        disabled=""
+                        tabindex="-1"
+                        title="Go to next page"
+                        type="button"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                          data-testid="KeyboardArrowRightIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
