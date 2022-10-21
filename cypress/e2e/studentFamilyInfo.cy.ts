@@ -16,6 +16,7 @@ describe("studentFamilyInfo", () => {
 	const errorAlertDialogID = '[data-cy="errorAlertDialog"]';
 
 	const roleInputID = "#properties\\/role2";
+	const roleErrorID = ":nth-child(1) > .MuiGrid-container > :nth-child(1) > :nth-child(2)";
 
 	const fullNameInputID = "#properties\\/full_name2-input";
 	const fullNameErrorID = "#properties\\/full_name2 > :nth-child(3)";
@@ -25,7 +26,7 @@ describe("studentFamilyInfo", () => {
 
 	//const dateOfBirthInputID = "#properties\\/birthdate2-input";
 	//TODO: find a better way to find date fields
-	//const dateOfBirthErrorID = ".MuiGrid-container > :nth-child(1) > :nth-child(2)";
+	const dateOfBirthErrorID = ":nth-child(2) > .MuiGrid-container > :nth-child(1) > :nth-child(2)";
 
 	const dateOfBirthButton =
 		'.MuiGrid-container > :nth-child(1) > .MuiFormControl-root > .MuiInputBase-root > .MuiInputAdornment-root > .MuiButtonBase-root > [data-testid="CalendarIcon"]';
@@ -56,6 +57,7 @@ describe("studentFamilyInfo", () => {
 	const neighborhoodErrorID = "#properties\\/neighbourhood2 > :nth-child(3)";
 
 	const educationLevelInputID = "#properties\\/education_level2";
+	const educationLevelErrorID = ":nth-child(5) > .MuiGrid-container > :nth-child(1) > :nth-child(2)";
 
 	const occupationFieldID = "#properties\\/occupation2-input";
 	const occupationErrorID = "#properties\\/occupation2 > :nth-child(3)";
@@ -100,21 +102,53 @@ describe("studentFamilyInfo", () => {
 		cy.get(studentEditInfoButton).click();
 
 		//check first family member
+		cy.get(roleInputID).click().wait(500).get(`#properties\\/role2-option-0`).click().wait(200);
+		cy.get(roleErrorID).should("not.be.visible");
+		cy.testInput(fullNameInputID, fullNameErrorID, "", "José", "Este campo es requerido.");
 		cy.testInput(CIInputID, CIErrorID, "", "50137758", "Este campo es requerido.");
 		//cy.testInput(dateOfBirthInputID, dateOfBirthErrorID, "incorrecto", "10/05/1990", "Este campo es requerido.");
+		cy.get(dateOfBirthButton).click().wait(200).get(dateOfBirthToday).click().wait(200);
+		cy.get(dateOfBirthErrorID).should("not.be.visible");
+		cy.testInput(maritalStatusInputID, maritalStatusErrorID, "", "Abigeato", "Este campo es requerido.");
 		cy.testInput(cellphoneInputID, cellphoneErrorID, "error", "099099990", "Debe ingresar un número de 9 dígitos.");
+		cy.testInput(placeOfBirthInputID, placeOfBirthErrorID, "", "Antártica", "Este campo es requerido.");
+		cy.testInput(nationalityInputID, nationalityErrorID, "", "Antarticano", "Este campo es requerido.");
+		cy.testInput(firstLanguageInputID, firstLanguageErrorID, "", "Pingüino", "Este campo es requerido.");
 		cy.testInput(emailInputID, emailErrorID, "error", "correcto@gmail.com", "Debe ingresar un e-mail válido.");
-		cy.testInput(workPhoneFieldID, workPhoneErrorID, "error", "24080808", "Debe ingresar un número de entre 8 a 9 dígitos.");
+		cy.testInput(addressInputID, addressErrorID, "", "Iglú nº 5", "Este campo es requerido.");
+		cy.testInput(neighborhoodInputID, neighborhoodErrorID, "", "Punta Nieve", "Este campo es requerido.");
+		cy.get(educationLevelInputID).click().wait(500).get(`#properties\\/education_level2-option-1`).click();
+		cy.get(educationLevelErrorID).should("not.be.visible");
+		cy.testInput(occupationFieldID, occupationErrorID, "", "Catador de helados", "Este campo es requerido.");
+		cy.testInput(workplaceFieldID, workplaceErrorID, "", "CRUFI", "Este campo es requerido.");
+		cy.testInput(workplaceAddressFieldID, workplaceAddressErrorID, "", "Calle CRUFI 123", "Este campo es requerido.");
+		cy.testInput(workplaceNeighborhoodFieldID, workplaceNeighborhoodErrorID, "", "Barrio CRUFI");
 
 		//check second family member
 		cy.get("#addFamilyMember").click();
 		cy.wait(200);
 
+		cy.get(roleInputID).click().wait(500).get(`#properties\\/role2-option-0`).click().wait(200);
+		cy.get(roleErrorID).should("not.be.visible");
+		cy.testInput(fullNameInputID, fullNameErrorID, "", "José", "Este campo es requerido.");
 		cy.testInput(CIInputID, CIErrorID, "", "50137758", "Este campo es requerido.");
-		//cy.testInput(dateOfBirthInputID, dateOfBirthErrorID, "incorrecto", "10-05-1990", "Este campo es requerido.");
+		//cy.testInput(dateOfBirthInputID, dateOfBirthErrorID, "incorrecto", "10/05/1990", "Este campo es requerido.");
+		cy.get(dateOfBirthButton).click().wait(200).get(dateOfBirthToday).click().wait(200);
+		cy.get(dateOfBirthErrorID).should("not.be.visible");
+		cy.testInput(maritalStatusInputID, maritalStatusErrorID, "", "Abigeato", "Este campo es requerido.");
 		cy.testInput(cellphoneInputID, cellphoneErrorID, "error", "099099990", "Debe ingresar un número de 9 dígitos.");
+		cy.testInput(placeOfBirthInputID, placeOfBirthErrorID, "", "Antártica", "Este campo es requerido.");
+		cy.testInput(nationalityInputID, nationalityErrorID, "", "Antarticano", "Este campo es requerido.");
+		cy.testInput(firstLanguageInputID, firstLanguageErrorID, "", "Pingüino", "Este campo es requerido.");
 		cy.testInput(emailInputID, emailErrorID, "error", "correcto@gmail.com", "Debe ingresar un e-mail válido.");
-		cy.testInput(workPhoneFieldID, workPhoneErrorID, "error", "24080808", "Debe ingresar un número de entre 8 a 9 dígitos.");
+		cy.testInput(addressInputID, addressErrorID, "", "Iglú nº 5", "Este campo es requerido.");
+		cy.testInput(neighborhoodInputID, neighborhoodErrorID, "", "Punta Nieve", "Este campo es requerido.");
+		cy.get(educationLevelInputID).click().wait(500).get(`#properties\\/education_level2-option-1`).click();
+		cy.get(educationLevelErrorID).should("not.be.visible");
+		cy.testInput(occupationFieldID, occupationErrorID, "", "Catador de helados", "Este campo es requerido.");
+		cy.testInput(workplaceFieldID, workplaceErrorID, "", "CRUFI", "Este campo es requerido.");
+		cy.testInput(workplaceAddressFieldID, workplaceAddressErrorID, "", "Calle CRUFI 123", "Este campo es requerido.");
+		cy.testInput(workplaceNeighborhoodFieldID, workplaceNeighborhoodErrorID, "", "Barrio CRUFI");
 	});
 
 	it("shows error when creating student if there is an error on some family info field", () => {
