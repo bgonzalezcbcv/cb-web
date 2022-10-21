@@ -247,6 +247,7 @@ export interface UserInfo extends User {
 
 export interface ReportCard {
 	id: number;
+	grade: string;
 	starting_month: string;
 	ending_month: string;
 	type: string;

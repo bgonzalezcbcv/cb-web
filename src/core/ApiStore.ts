@@ -2,7 +2,7 @@ import _ from "lodash";
 import axios from "axios";
 import { reaction } from "mobx";
 
-import { DocumentType, FamilyMember, Student, User, UserInfo } from "./Models";
+import { DocumentType, FamilyMember, ReportCard, Student, User, UserInfo } from "./Models";
 import { DefaultApiResponse, UserRole } from "./interfaces";
 
 import { DataStore } from "./DataStore";
@@ -320,5 +320,60 @@ export async function fetchUser(id: string): Promise<DefaultApiResponse<UserInfo
 		//eslint-disable-next-line
 	} catch (error: any) {
 		return defaultErrorResponse(error.message);
+	}
+}
+
+export async function fetchReports(): Promise<{ success: boolean; data?: ReportCard[]; err: string }> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: `/api/reports/`,
+		};
+
+		// const response = await axios(config);
+
+		const response = {
+			status: 200,
+			data: {
+				reports: [
+					{
+						id: 1,
+						grade: "Primero",
+						starting_month: "Marzo",
+						ending_month: "Abril",
+						type: "Intermedio",
+						passed: false,
+					},
+					{
+						id: 2,
+						grade: "Primero",
+						starting_month: "2022",
+						ending_month: "",
+						type: "Final",
+						passed: false,
+					},
+				],
+			},
+		};
+
+		if (![200, 304].includes(response.status) || response.data.reports === undefined)
+			return {
+				success: false,
+				err: "Unabled to fetch reports",
+			};
+
+		return {
+			success: true,
+			data: response.data.reports as ReportCard[],
+			err: "",
+		};
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	} catch (error: any) {
+		return {
+			success: false,
+			err: error.message,
+		};
 	}
 }
