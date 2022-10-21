@@ -10,12 +10,7 @@ import { Student as StudentModel } from "../../core/Models";
 import { emptyStudents } from "../student/DefaultStudent";
 
 import "./Students.scss";
-
-enum FetchState {
-	initial = "initial",
-	loading = "loading",
-	failure = "failure",
-}
+import { FetchState } from "../../core/interfaces";
 
 const columns: GridColDef[] = [
 	{ field: "id", headerName: "ID", disableColumnMenu: false, flex: 1 },

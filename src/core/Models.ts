@@ -244,3 +244,11 @@ export interface UserInfo extends User {
 		upload_date: string;
 	}[];
 }
+
+export interface ReportCard {
+	id: number;
+	starting_month: string;
+	ending_month: string;
+	type: string;
+	passed: boolean;
+}

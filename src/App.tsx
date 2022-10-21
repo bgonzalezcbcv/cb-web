@@ -20,6 +20,7 @@ import { ThemeProvider } from "@mui/material/styles";
 
 // Lastly we import our stylesheets.
 import "./App.css";
+import ReportCardList from "./pages/reportcard/ReportCardList";
 
 function App(): React.ReactElement {
 	const loggedUser = DataStore.getInstance().loggedUser;
@@ -49,6 +50,7 @@ function App(): React.ReactElement {
 												<Route path="/createuser" element={<CreateUser />} />
 												<Route path="/user/:id" element={<User editable={false} />} />
 												<Route path="/user/:id/edit" element={<User editable />} />
+												<Route path="/reports" element={<ReportCardList />} />
 												<Route path="*" element={<Navigate to="/student" />} />
 											</>
 										) : (
