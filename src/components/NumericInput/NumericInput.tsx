@@ -1,4 +1,3 @@
-import { isUndefined } from "lodash";
 import React from "react";
 
 import { TextField } from "@mui/material";
@@ -16,7 +15,7 @@ export type NumericInputProps = {
 export function NumericInput(props: NumericInputProps): React.ReactElement {
 	const { value, onChange, labelName, isFloat, errors, enabled, maxLength } = props;
 
-	const [numberValue, setNumberValue] = React.useState(value === 0 || isUndefined(value) ? "" : value.toString());
+	const [numberValue, setNumberValue] = React.useState(!value || value === 0 ? "" : value.toString());
 
 	const handeValueChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
 		let numberRegex;
