@@ -1,3 +1,5 @@
+import { clear } from "console";
+
 /* eslint-disable max-statements */
 describe("studentsBasicInfo", () => {
 	const basicInfoButtonID = '[data-cy="basicInfoTab"]';
@@ -31,9 +33,13 @@ describe("studentsBasicInfo", () => {
 	const placeOfBirthFieldID = "#\\#\\/properties\\/birthplace2-input";
 	const placeOfBirthFieldErrorID = "#\\#\\/properties\\/birthplace2> :nth-child(3)";
 
-	const dateOfBirthInputID = "#\\#\\/properties\\/birthdate2-input";
+	//const dateOfBirthInputID = "#\\#\\/properties\\/birthdate2-input";
 	//TODO: find a better way to find date fields
-	const dateOfBirthErrorID = ".MuiGrid-container > :nth-child(1) > :nth-child(2)";
+	//const dateOfBirthErrorID = ".MuiGrid-container > :nth-child(1) > :nth-child(2)";
+
+	const dateOfBirthButton =
+		":nth-child(4) > .MuiGrid-container > :nth-child(1) > .MuiFormControl-root > .MuiInputBase-root > .MuiInputAdornment-root > .MuiButtonBase-root";
+	const dateOfBirthToday = ".MuiPickersDay-today";
 
 	const nationalityFieldID = "#\\#\\/properties\\/nationality2-input";
 	const nationalityFieldErrorID = "#\\#\\/properties\\/nationality2> :nth-child(3)";
@@ -58,7 +64,10 @@ describe("studentsBasicInfo", () => {
 
 	const vaccineExpirationInputID = "#\\#\\/properties\\/vaccine_expiration2-input";
 	//TODO: find a better way to find date fields
-	const vaccineExpirationErrorID = ".MuiGrid-container > :nth-child(3) > :nth-child(2)";
+	//const vaccineExpirationErrorID = ".MuiGrid-container > :nth-child(3) > :nth-child(2)";
+	const vaccineExpirationButton =
+		':nth-child(3) > .MuiFormControl-root > .MuiInputBase-root > .MuiInputAdornment-root > .MuiButtonBase-root > [data-testid="CalendarIcon"]';
+	const vaccineExpirationToday = ".MuiPickersDay-today";
 
 	const createButtonID = '[data-cy="createStudentButton"]';
 
@@ -99,37 +108,40 @@ describe("studentsBasicInfo", () => {
 		cy.testInput(CIFieldID, CIFieldErrorID, "", "50137758", "Este campo es requerido.");
 		//cy.testInput(referenceNumberFieldID, referenceNumberFieldErrorID, "e", "32", "");
 		cy.testInput(placeOfBirthFieldID, placeOfBirthFieldErrorID, "", "Artigas", "Este campo es requerido.");
-		cy.testInput(dateOfBirthInputID, dateOfBirthErrorID, "", "10/5/1990", "Debe ser una fecha válida.");
+		//cy.testInput(dateOfBirthInputID, dateOfBirthErrorID, "", "10/5/1990", "Debe ser una fecha válida.", 0);
 		cy.testInput(nationalityFieldID, nationalityFieldErrorID, "", "Uruguayo", "Este campo es requerido.");
 		cy.testInput(firstLanguageFieldID, firstLanguageFieldErrorID, "", "Esperanto", "Este campo es requerido.");
 		cy.testInput(neighborhoodFieldID, neighborhoodFieldErrorID, "", "La Teja", "Este campo es requerido.");
 		cy.testInput(addressFieldID, addressFieldErrorID, "", "Rincón del Chorro 1212", "Este campo es requerido.");
 		cy.testInput(phoneNumberFieldID, phoneNumberFieldErrorID, "error", "099123123", "Se deben ingresar 8 o 9 dígitos.");
 		cy.testInput(medicalAssuranceFieldID, medicalAssuranceFieldErrorID, "", "Española", "Este campo es requerido.");
-		cy.testInput(vaccineExpirationInputID, vaccineExpirationErrorID, "incorrecto", "10/5/2022", "");
+		//cy.testInput(vaccineExpirationInputID, vaccineExpirationErrorID, "incorrecto", "10/5/2022", "");
 	});
 
 	it("allows to create a student when all the required fields in the basic info are complete", () => {
 		cy.get(basicInfoButtonID).click();
 		cy.get(editButtonID).click();
 
-		cy.get(nameFieldID).clear().type("Adam");
-		cy.get(surnameFieldID).clear().type("Sandler");
-		cy.get(CIFieldID).clear().type("11111111");
-		cy.get(statusFieldID).type("Pendiente");
-		cy.get(tuitionFieldID).type("Matricula buena");
-		cy.get(GroupFieldID).type("3");
-		cy.get(SubGroupFieldID).type("A");
-		//cy.get(referenceNumberFieldID).type("42");
-		cy.get(placeOfBirthFieldID).type("Asociacion Española");
-		cy.get(dateOfBirthInputID).type("01/09/2000");
-		cy.get(nationalityFieldID).type("Uruguayo");
-		cy.get(firstLanguageFieldID).type("Español");
-		cy.get(neighborhoodFieldID).type("Cordon");
-		cy.get(addressFieldID).type("Guayabo 1729");
-		cy.get(medicalAssuranceFieldID).type("Si tiene es la A23BVJ");
-		cy.get(emergencyFieldID).type("Cooperativa ABC123XYZ");
-		cy.get(vaccineExpirationInputID).type("03/03/2019");
+		cy.get(nameFieldID).clear().typeAndWait("Adam");
+		cy.get(surnameFieldID).clear().typeAndWait("Sandler");
+		cy.get(CIFieldID).clear().typeAndWait("11111111");
+		cy.get(statusFieldID).clear().typeAndWait("Pendiente");
+		cy.get(tuitionFieldID).clear().typeAndWait("Matricula buena");
+		cy.get(GroupFieldID).clear().typeAndWait("3");
+		cy.get(SubGroupFieldID).clear().typeAndWait("A");
+		//cy.get(referenceNumberFieldID).clear().typeAndWait("42");
+		cy.get(placeOfBirthFieldID).clear().typeAndWait("Asociacion Española");
+		//cy.get(dateOfBirthInputID).clear().typeAndWait("01/09/2000");
+		cy.get(dateOfBirthButton).click().wait(200).get(dateOfBirthToday).click().wait(200);
+		cy.get(nationalityFieldID).clear().typeAndWait("Uruguayo");
+		cy.get(firstLanguageFieldID).clear().typeAndWait("Español");
+		cy.get(neighborhoodFieldID).clear().typeAndWait("Cordon");
+		cy.get(addressFieldID).clear().typeAndWait("Guayabo 1729");
+		cy.get(phoneNumberFieldID).clear().typeAndWait("25008080");
+		cy.get(medicalAssuranceFieldID).clear().typeAndWait("Si tiene es la A23BVJ");
+		cy.get(emergencyFieldID).clear().typeAndWait("Cooperativa ABC123XYZ");
+		//cy.get(vaccineExpirationInputID).clear().typeAndWait("03/03/2019");
+		cy.get(vaccineExpirationButton).click().wait(200).get(vaccineExpirationToday).click().wait(200);
 
 		cy.fillStudentFamilyInfo();
 

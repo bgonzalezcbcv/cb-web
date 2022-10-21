@@ -23,9 +23,13 @@ describe("studentFamilyInfo", () => {
 	const CIInputID = "#properties\\/ci2-input";
 	const CIErrorID = "#properties\\/ci2 > :nth-child(3)";
 
-	const dateOfBirthInputID = "#properties\\/birthdate2-input";
+	//const dateOfBirthInputID = "#properties\\/birthdate2-input";
 	//TODO: find a better way to find date fields
-	const dateOfBirthErrorID = ".MuiGrid-container > :nth-child(1) > :nth-child(2)";
+	//const dateOfBirthErrorID = ".MuiGrid-container > :nth-child(1) > :nth-child(2)";
+
+	const dateOfBirthButton =
+		'.MuiGrid-container > :nth-child(1) > .MuiFormControl-root > .MuiInputBase-root > .MuiInputAdornment-root > .MuiButtonBase-root > [data-testid="CalendarIcon"]';
+	const dateOfBirthToday = ".MuiPickersDay-today";
 
 	const maritalStatusInputID = "#properties\\/marital_status2-input";
 	const maritalStatusErrorID = "#properties\\/marital_status2 > :nth-child(3)";
@@ -96,8 +100,8 @@ describe("studentFamilyInfo", () => {
 		cy.get(studentEditInfoButton).click();
 
 		//check first family member
-		cy.testInput(CIInputID, CIErrorID, "", "50137758", "Debe ingresar solo números o letras, sin puntos ni guiones.");
-		cy.testInput(dateOfBirthInputID, dateOfBirthErrorID, "incorrecto", "10-05-1990", "Este campo es requerido.");
+		cy.testInput(CIInputID, CIErrorID, "", "50137758", "Este campo es requerido.");
+		//cy.testInput(dateOfBirthInputID, dateOfBirthErrorID, "incorrecto", "10/05/1990", "Este campo es requerido.");
 		cy.testInput(cellphoneInputID, cellphoneErrorID, "error", "099099990", "Debe ingresar un número de 9 dígitos.");
 		cy.testInput(emailInputID, emailErrorID, "error", "correcto@gmail.com", "Debe ingresar un e-mail válido.");
 		cy.testInput(workPhoneFieldID, workPhoneErrorID, "error", "24080808", "Debe ingresar un número de entre 8 a 9 dígitos.");
@@ -106,8 +110,8 @@ describe("studentFamilyInfo", () => {
 		cy.get("#addFamilyMember").click();
 		cy.wait(200);
 
-		cy.testInput(CIInputID, CIErrorID, "", "50137758", "Se deben ingresar solo los números, sin puntos ni guiones y no puede quedar vacía");
-		cy.testInput(dateOfBirthInputID, dateOfBirthErrorID, "incorrecto", "10-05-1990", "Este campo es requerido.");
+		cy.testInput(CIInputID, CIErrorID, "", "50137758", "Este campo es requerido.");
+		//cy.testInput(dateOfBirthInputID, dateOfBirthErrorID, "incorrecto", "10-05-1990", "Este campo es requerido.");
 		cy.testInput(cellphoneInputID, cellphoneErrorID, "error", "099099990", "Debe ingresar un número de 9 dígitos.");
 		cy.testInput(emailInputID, emailErrorID, "error", "correcto@gmail.com", "Debe ingresar un e-mail válido.");
 		cy.testInput(workPhoneFieldID, workPhoneErrorID, "error", "24080808", "Debe ingresar un número de entre 8 a 9 dígitos.");
@@ -133,27 +137,29 @@ describe("studentFamilyInfo", () => {
 		cy.get(studentEditInfoButton).click();
 
 		cy.fillStudentBasicInfo();
+		cy.wait(500);
 
 		cy.get(familyInfoButtonID).click();
 
-		cy.get(fullNameInputID).clear().type("Pedro");
-		cy.get(CIInputID).clear().type("50137758");
-		cy.get(roleInputID).click().get(`#properties\\/role2-option-0`).click();
-		cy.get(dateOfBirthInputID).clear().type("01/01/1990");
-		cy.get(maritalStatusInputID).clear().type("Casado");
-		cy.get(cellphoneInputID).clear().type("099099099");
-		cy.get(placeOfBirthInputID).clear().type("Uruguay");
-		cy.get(nationalityInputID).clear().type("Uruguayo");
-		cy.get(firstLanguageInputID).clear().type("Español");
-		cy.get(emailInputID).clear().type("correcto@gmail.com");
-		cy.get(addressInputID).clear().type("Calle Falsa 2323");
-		cy.get(neighborhoodInputID).clear().type("Cerrito");
-		cy.get(educationLevelInputID).click().get(`#properties\\/education_level2-option-1`).click();
-		cy.get(occupationFieldID).clear().type("Panadero");
-		cy.get(workplaceFieldID).clear().type("Panadería");
-		cy.get(workplaceAddressFieldID).clear().type("Calle Panadera 2222");
-		cy.get(workplaceNeighborhoodFieldID).clear().type("Barrio Panadero");
-		cy.get(workPhoneFieldID).clear().type("222200202");
+		cy.get(fullNameInputID).clear().typeAndWait("Pedro");
+		cy.get(CIInputID).clear().typeAndWait("50137758");
+		cy.get(roleInputID).click().wait(500).get(`#properties\\/role2-option-0`).click().wait(200);
+		//cy.get(dateOfBirthInputID).clear().typeAndWait("01/01/1990");
+		cy.get(dateOfBirthButton).click().wait(200).get(dateOfBirthToday).click().wait(200);
+		cy.get(maritalStatusInputID).clear().typeAndWait("Casado");
+		cy.get(cellphoneInputID).clear().typeAndWait("099099099");
+		cy.get(placeOfBirthInputID).clear().typeAndWait("Uruguay");
+		cy.get(nationalityInputID).clear().typeAndWait("Uruguayo");
+		cy.get(firstLanguageInputID).clear().typeAndWait("Español");
+		cy.get(emailInputID).clear().typeAndWait("correcto@gmail.com");
+		cy.get(addressInputID).clear().typeAndWait("Calle Falsa 2323");
+		cy.get(neighborhoodInputID).clear().typeAndWait("Cerrito");
+		cy.get(educationLevelInputID).click().wait(500).get(`#properties\\/education_level2-option-1`).click().wait(200);
+		cy.get(occupationFieldID).clear().typeAndWait("Panadero");
+		cy.get(workplaceFieldID).clear().typeAndWait("Panadería");
+		cy.get(workplaceAddressFieldID).clear().typeAndWait("Calle Panadera 2222");
+		cy.get(workplaceNeighborhoodFieldID).clear().typeAndWait("Barrio Panadero");
+		cy.get(workPhoneFieldID).clear().typeAndWait("222200202");
 
 		cy.get(createStudentButtonID).click();
 
