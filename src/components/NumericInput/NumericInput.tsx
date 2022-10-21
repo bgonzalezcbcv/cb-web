@@ -15,7 +15,7 @@ export type NumericInputProps = {
 export function NumericInput(props: NumericInputProps): React.ReactElement {
 	const { value, onChange, labelName, isFloat, errors, enabled, maxLength } = props;
 
-	const [numberValue, setNumberValue] = React.useState(!value || value === 0 ? "" : value.toString());
+	const [numberValue, setNumberValue] = React.useState(!value ? "" : value.toString());
 
 	const handeValueChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
 		let numberRegex;
