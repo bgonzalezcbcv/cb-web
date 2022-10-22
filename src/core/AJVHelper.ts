@@ -8,6 +8,7 @@ const newAjv = new Ajv({ allErrors: true, verbose: true, strictRequired: true })
 export const ajv = ajvErrors(ajvFormat(newAjv));
 
 export function getAjvErrors(ajvValidator = ajv): ErrorObject[] | null | undefined {
+	console.log(ajvValidator.errors);
 	return ajvValidator.errors;
 }
 

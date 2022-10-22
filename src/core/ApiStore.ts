@@ -109,6 +109,23 @@ export async function login(email: string, password: string): Promise<DefaultApi
 }
 
 // todo: will need the admin info and complementary info.
+export async function fetchFamilyMembers(studentId: number): Promise<DefaultApiResponse<FamilyMember[]>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: `/api/students/${studentId}/family_members`,
+		};
+
+		const response = await axios(config);
+
+		return defaultResponse(response.data.student.family_members);
+		//eslint-disable-next-line
+	} catch (error: any) {
+		return defaultErrorResponse(error.message);
+	}
+}
+
 export async function fetchStudent(id: string): Promise<DefaultApiResponse<Student>> {
 	try {
 		const config = {
@@ -119,14 +136,22 @@ export async function fetchStudent(id: string): Promise<DefaultApiResponse<Stude
 
 		const response = await axios(config);
 
-		return defaultResponse(response.data.student);
+		const { data: familyMembers } = await fetchFamilyMembers(Number(id));
+
+		const student = {
+			...response.data.student,
+			id: response.data.student.id.toString(),
+			family: familyMembers ?? [],
+		};
+
+		return defaultResponse(student);
 		//eslint-disable-next-line
 	} catch (error: any) {
 		return defaultResponse(error.message);
 	}
 }
 
-export async function fetchStudents(): Promise<{ success: boolean; data?: [Student]; err: string }> {
+export async function fetchStudents(): Promise<DefaultApiResponse<Student[]>> {
 	try {
 		const config = {
 			...baseConfig,
@@ -136,24 +161,10 @@ export async function fetchStudents(): Promise<{ success: boolean; data?: [Stude
 
 		const response = await axios(config);
 
-		if (![200, 304].includes(response.status) || response.data.students === undefined)
-			return {
-				success: false,
-				err: "Unabled to fetch students",
-			};
-
-		return {
-			success: true,
-			data: response.data.students as [Student],
-			err: "",
-		};
-
+		return defaultResponse(response.data.students);
 		//eslint-disable-next-line
 	} catch (error: any) {
-		return {
-			success: false,
-			err: error.message,
-		};
+		return defaultErrorResponse("No se pudieron listar los alumnos.");
 	}
 }
 
