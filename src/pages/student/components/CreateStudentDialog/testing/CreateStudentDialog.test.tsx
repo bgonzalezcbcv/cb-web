@@ -13,7 +13,7 @@ import CreateStudentDialog from "../CreateStudentDialog";
 describe("CreateStudentDialog", () => {
 	beforeEach(() => {
 		jest.spyOn(ErrorList, "default").mockReturnValue(<div>Error List</div>);
-		jest.spyOn(API, "createStudent").mockResolvedValue(true);
+		jest.spyOn(API, "createStudent").mockResolvedValue({ success: true, error: "" });
 	});
 
 	it("should render a button", () => {
@@ -57,7 +57,7 @@ describe("CreateStudentDialog", () => {
 	it("should not render a dialog with errors when create student button is clicked and no errors are found but fails creation", async () => {
 		jest.spyOn(AJVHelper, "getAjvErrors").mockReturnValue(null);
 		jest.spyOn(AJVHelper, "getParsedErrors").mockReturnValue({});
-		jest.spyOn(API, "createStudent").mockResolvedValue(false);
+		jest.spyOn(API, "createStudent").mockResolvedValue({ success: false, error: "" });
 
 		const wrapper = render(<CreateStudentDialog student={{} as Student} />);
 
@@ -98,7 +98,7 @@ describe("CreateStudentDialog", () => {
 	it("should render a success dialog on creation success", async () => {
 		jest.spyOn(AJVHelper, "getAjvErrors").mockReturnValue([{} as ErrorObject]);
 		jest.spyOn(AJVHelper, "getParsedErrors").mockReturnValue({});
-		jest.spyOn(API, "createStudent").mockResolvedValue(true);
+		jest.spyOn(API, "createStudent").mockResolvedValue({ success: true, error: "" });
 
 		const wrapper = render(<CreateStudentDialog student={{} as Student} />);
 
@@ -122,7 +122,7 @@ describe("CreateStudentDialog", () => {
 	it("should render a an alert on creation failure", async () => {
 		jest.spyOn(AJVHelper, "getAjvErrors").mockReturnValue([{} as ErrorObject]);
 		jest.spyOn(AJVHelper, "getParsedErrors").mockReturnValue({});
-		jest.spyOn(API, "createStudent").mockResolvedValue(false);
+		jest.spyOn(API, "createStudent").mockResolvedValue({ success: false, error: "" });
 
 		const wrapper = render(<CreateStudentDialog student={{} as Student} />);
 
@@ -148,7 +148,7 @@ describe("CreateStudentDialog", () => {
 	describe("@editable mode", () => {
 		beforeEach(() => {
 			jest.spyOn(ErrorList, "default").mockReturnValue(<div>Error List</div>);
-			jest.spyOn(API, "createStudent").mockResolvedValue(true);
+			jest.spyOn(API, "createStudent").mockResolvedValue({ success: true, error: "" });
 		});
 
 		it("should render an editable modal", async () => {

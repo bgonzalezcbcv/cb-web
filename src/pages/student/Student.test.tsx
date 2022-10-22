@@ -11,7 +11,7 @@ describe("Student", () => {
 		jest.spyOn(ApiStore, "fetchStudent").mockResolvedValue({
 			success: true,
 			data: defaultStudent,
-			err: "",
+			error: "",
 		});
 	});
 

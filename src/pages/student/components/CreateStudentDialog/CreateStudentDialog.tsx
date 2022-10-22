@@ -28,9 +28,9 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 	const handleStudentCreation = useCallback(async (): Promise<void> => {
 		setStudentCreationState("inProcess");
 
-		const successfulCreation = await API.createStudent(student);
+		const { success } = await API.createStudent(student);
 
-		if (successfulCreation) {
+		if (success) {
 			setStudentCreationState("success");
 		} else {
 			setStudentCreationState("fail");
@@ -43,7 +43,18 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 		setStudentCreationState("idle");
 	};
 
-	const handleStudentEdition = (): void => alert("No implementada");
+	const handleStudentEdition = async (): Promise<void> => {
+		setStudentCreationState("inProcess");
+
+		const { success } = await API.editStudent(student);
+
+		if (success) {
+			setStudentCreationState("success");
+		} else {
+			setStudentCreationState("fail");
+			setIsOpen(true);
+		}
+	};
 
 	const onCreateClickHandler = (): void => {
 		studentAjv.validate(studentSchema, student);
