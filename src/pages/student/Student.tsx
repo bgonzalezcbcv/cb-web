@@ -44,7 +44,6 @@ export default function Student(props: StudentProps): React.ReactElement {
 		const response = await APIStore.fetchStudent(id as string);
 
 		if (response.success && response.data) {
-			// setStudent(response.data); // todo: Add this when the endpoints are done.
 			setStudent(_.merge(emptyStudent, response.data));
 			setFetchState(FetchState.initial);
 		} else setFetchState(FetchState.failure);

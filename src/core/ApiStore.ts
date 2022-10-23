@@ -136,18 +136,20 @@ export async function fetchStudent(id: string): Promise<DefaultApiResponse<Stude
 
 		const response = await axios(config);
 
-		const { data: familyMembers } = await fetchFamilyMembers(Number(id));
+		const { success: fetchFamilySuccess, data: familyMembers } = await fetchFamilyMembers(Number(id));
+
+		if (!fetchFamilySuccess) return defaultErrorResponse("No se pudo obtener el estudiante.");
 
 		const student = {
 			...response.data.student,
 			id: response.data.student.id.toString(),
-			family: familyMembers ?? [],
+			family: _.uniqWith(familyMembers, _.isEqual),
 		};
 
 		return defaultResponse(student);
 		//eslint-disable-next-line
 	} catch (error: any) {
-		return defaultResponse(error.message);
+		return defaultErrorResponse(error.message);
 	}
 }
 
@@ -198,9 +200,17 @@ export async function createStudent(studentToCreate: Student): Promise<DefaultAp
 			}),
 		};
 
-		const { id, family } = studentToCreate;
+		const { family: unfilteredFamily } = studentToCreate;
+		const familyCIs: string[] = [];
+
+		const family = unfilteredFamily.filter((member) => {
+			if (!familyCIs.includes(member.ci)) return familyCIs.push(member.ci);
+			else return false;
+		});
 
 		const response = await axios(config);
+
+		const { id } = response.data.student;
 
 		let error = "";
 		for (const familyMember of family) {
