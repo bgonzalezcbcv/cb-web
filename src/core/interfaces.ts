@@ -59,3 +59,9 @@ export interface ProfileCardItem {
 	label: string;
 	value: string | React.ReactNode;
 }
+
+export interface DefaultApiResponse<DataType> {
+	success: boolean;
+	data?: DataType | undefined;
+	error: string;
+}

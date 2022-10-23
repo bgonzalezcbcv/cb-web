@@ -1,4 +1,5 @@
 import React from "react";
+import * as ReactRouter from "react-router";
 import { render } from "@testing-library/react";
 
 import * as ApiStore from "../../core/ApiStore";
@@ -11,8 +12,9 @@ describe("Student", () => {
 		jest.spyOn(ApiStore, "fetchStudent").mockResolvedValue({
 			success: true,
 			data: defaultStudent,
-			err: "",
+			error: "",
 		});
+		jest.spyOn(ReactRouter, "useNavigate").mockImplementation(() => jest.fn);
 	});
 
 	it("should render the create page on default", () => {

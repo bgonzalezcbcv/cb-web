@@ -39,7 +39,7 @@ export const defaultStudent: Student = {
 			cellphone: "",
 			email: "",
 			address: "",
-			neighbourhood: "",
+			neighborhood: "",
 			education_level: "",
 			occupation: "",
 			workplace: "",

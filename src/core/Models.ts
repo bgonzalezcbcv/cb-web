@@ -23,7 +23,7 @@ export interface FamilyMember {
 	cellphone: string;
 	email: string;
 	address: string;
-	neighbourhood: string;
+	neighborhood: string;
 	education_level: string;
 	occupation: string;
 	workplace: string;

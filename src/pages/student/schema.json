@@ -8,7 +8,7 @@
 			"type": "string",
 			"title": "CI",
 			"minLength": 1,
-		  	"errorMessage": "Este campo es requerido."
+			"errorMessage": "Este campo es requerido."
 		},
 		"name": {
 			"type": "string",
@@ -32,11 +32,13 @@
 		},
 		"tuition": {
 			"type": "string",
-			"title": "Matrícula"
+			"title": "Matrícula",
+			"errorMessage": "Tiene que tener una matricula correcta."
 		},
 		"reference_number": {
 			"type": "integer",
-			"title": "Número de referencia"
+			"title": "Número de referencia",
+			"errorMessage": "Tiene que tener un número de referencia correcto."
 		},
 		"birthplace": {
 			"type": "string",
@@ -68,7 +70,8 @@
 		},
 		"status": {
 			"type": "string",
-			"title": "Estado"
+			"title": "Estado",
+			"errorMessage": "Tiene que tener un estado correcto"
 		},
 		"group": {
 			"type": "string",
@@ -104,9 +107,7 @@
 			"type": "string",
 			"title": "Número de teléfono",
 			"pattern": "\\d{9}|\\d{8}|(\\d{3}\\s\\d{3}\\s\\d{3}|(\\d{4}\\s\\d{4}))",
-			"errorMessage": {
-				"pattern": "Se deben ingresar 8 o 9 dígitos."
-			}
+			"errorMessage": "Se deben ingresar 8 o 9 dígitos."
 		},
 		"vaccine_expiration": {
 			"type": "string",
@@ -186,7 +187,7 @@
 						"type": "string",
 						"title": "Cédula de identidad",
 						"minLength": 1,
-					  	"errorMessage": "Este campo es requerido."
+						"errorMessage": "Este campo es requerido."
 					},
 					"marital_status": {
 						"type": "string",
@@ -216,7 +217,7 @@
 						"minLength": 1,
 						"errorMessage": "Este campo es requerido."
 					},
-					"neighbourhood": {
+					"neighborhood": {
 						"type": "string",
 						"title": "Barrio de residencia",
 						"minLength": 1,
@@ -302,7 +303,7 @@
 					"cellphone",
 					"email",
 					"address",
-					"neighbourhood",
+					"neighborhood",
 					"education_level",
 					"occupation",
 					"workplace",
@@ -311,7 +312,10 @@
 				]
 			},
 			"minItems": 1,
-			"maxItems": 2
+			"maxItems": 2,
+			"errorMessage": {
+				"minItems": "El alumno ha de tener al menos un familiar."
+			}
 		},
 		"question_categories": {
 			"type": "array",

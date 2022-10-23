@@ -2,8 +2,8 @@ import _ from "lodash";
 import axios from "axios";
 import { reaction } from "mobx";
 
-import { DocumentType, Student, User, UserInfo } from "./Models";
-import { UserRole } from "./interfaces";
+import { DocumentType, FamilyMember, Student, User, UserInfo } from "./Models";
+import { DefaultApiResponse, UserRole } from "./interfaces";
 
 import { DataStore } from "./DataStore";
 
@@ -45,13 +45,27 @@ interface SignInResponseData {
 	address: string;
 	role?: UserRole;
 }
-//todo: make the logout.
 
-export async function login(email: string, password: string): Promise<{ success: boolean; data?: User; err: string }> {
+function defaultResponse<DataType>(data: DataType, error = ""): DefaultApiResponse<DataType> {
+	return {
+		success: true,
+		data,
+		error,
+	};
+}
+
+function defaultErrorResponse<DataType>(error: string): DefaultApiResponse<DataType> {
+	return {
+		success: false,
+		error: error,
+	};
+}
+
+export async function login(email: string, password: string): Promise<DefaultApiResponse<User>> {
 	try {
 		const errObject = {
 			success: false,
-			err: "Error durante el inicio de sesión, volver a intentarlo.",
+			error: "Error durante el inicio de sesión, volver a intentarlo.",
 		};
 
 		const config = {
@@ -77,7 +91,7 @@ export async function login(email: string, password: string): Promise<{ success:
 
 		if (bearer !== "Bearer") return errObject;
 
-		return { success: true, data: { email, token, name, surname, role: UserRole.Administrativo }, err: "" };
+		return defaultResponse({ email, token, name, surname, role: UserRole.Administrativo });
 		// eslint-disable-next-line
 	} catch (error: any) {
 		let err = "";
@@ -90,12 +104,29 @@ export async function login(email: string, password: string): Promise<{ success:
 		} else {
 			err = "Falló el inicio";
 		}
-		return { success: false, err };
+		return defaultErrorResponse(err);
 	}
 }
 
 // todo: will need the admin info and complementary info.
-export async function fetchStudent(id: string): Promise<{ success: boolean; data?: Student; err: string }> {
+export async function fetchFamilyMembers(studentId: number): Promise<DefaultApiResponse<FamilyMember[]>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: `/api/students/${studentId}/family_members`,
+		};
+
+		const response = await axios(config);
+
+		return defaultResponse(response.data.student.family_members);
+		//eslint-disable-next-line
+	} catch (error: any) {
+		return defaultErrorResponse(error.message);
+	}
+}
+
+export async function fetchStudent(id: string): Promise<DefaultApiResponse<Student>> {
 	try {
 		const config = {
 			...baseConfig,
@@ -105,28 +136,24 @@ export async function fetchStudent(id: string): Promise<{ success: boolean; data
 
 		const response = await axios(config);
 
-		if (![200, 304].includes(response.status) || response.data.student === undefined)
-			return {
-				success: false,
-				err: "Unabled to fetch student",
-			};
+		const { success: fetchFamilySuccess, data: familyMembers } = await fetchFamilyMembers(Number(id));
 
-		return {
-			success: true,
-			data: response.data.student as Student,
-			err: "",
+		if (!fetchFamilySuccess) return defaultErrorResponse("No se pudo obtener el estudiante.");
+
+		const student = {
+			...response.data.student,
+			id: response.data.student.id.toString(),
+			family: _.uniqWith(familyMembers, _.isEqual),
 		};
 
+		return defaultResponse(student);
 		//eslint-disable-next-line
 	} catch (error: any) {
-		return {
-			success: false,
-			err: error.message,
-		};
+		return defaultErrorResponse(error.message);
 	}
 }
 
-export async function fetchStudents(): Promise<{ success: boolean; data?: [Student]; err: string }> {
+export async function fetchStudents(): Promise<DefaultApiResponse<Student[]>> {
 	try {
 		const config = {
 			...baseConfig,
@@ -136,28 +163,33 @@ export async function fetchStudents(): Promise<{ success: boolean; data?: [Stude
 
 		const response = await axios(config);
 
-		if (![200, 304].includes(response.status) || response.data.students === undefined)
-			return {
-				success: false,
-				err: "Unabled to fetch students",
-			};
-
-		return {
-			success: true,
-			data: response.data.students as [Student],
-			err: "",
-		};
-
+		return defaultResponse(response.data.students);
 		//eslint-disable-next-line
 	} catch (error: any) {
-		return {
-			success: false,
-			err: error.message,
-		};
+		return defaultErrorResponse("No se pudieron listar los alumnos.");
 	}
 }
 
-export async function createStudent(studentToCreate: Student): Promise<boolean> {
+export async function createFamilyMember(studentId: number, family_member: FamilyMember): Promise<DefaultApiResponse<FamilyMember>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "post",
+			url: `/api/students/${studentId}/family_members`,
+			data: JSON.stringify({
+				family_member,
+			}),
+		};
+
+		const response = await axios(config);
+
+		return defaultResponse(response.data);
+	} catch (e) {
+		return defaultErrorResponse(`Familiar con ci ${family_member.ci} no pudo ser creado.`);
+	}
+}
+
+export async function createStudent(studentToCreate: Student): Promise<DefaultApiResponse<Student>> {
 	try {
 		const config = {
 			...baseConfig,
@@ -168,15 +200,61 @@ export async function createStudent(studentToCreate: Student): Promise<boolean> 
 			}),
 		};
 
+		const { family: unfilteredFamily } = studentToCreate;
+		const familyCIs: string[] = [];
+
+		const family = unfilteredFamily.filter((member) => {
+			if (!familyCIs.includes(member.ci)) return familyCIs.push(member.ci);
+			else return false;
+		});
+
 		const response = await axios(config);
 
-		return response.status === 201;
+		const { id } = response.data.student;
+
+		let error = "";
+		for (const familyMember of family) {
+			const { success, error: errorFM } = await createFamilyMember(Number(id), familyMember);
+
+			//todo: ver de marcar estos errors de alguna forma.
+			if (!success) error = error + "\n" + errorFM;
+		}
+
+		return defaultResponse(response.data.student as Student, error);
 	} catch (e) {
-		return false;
+		return defaultErrorResponse("El alumno no ha podido ser creado.");
 	}
 }
 
-export async function createUser(userToCreate: UserInfo): Promise<boolean> {
+export async function editStudent(studentToEdit: Student): Promise<DefaultApiResponse<Student>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "patch",
+			url: `/api/students/${studentToEdit.id}`,
+			data: JSON.stringify({
+				student: studentToEdit,
+			}),
+		};
+
+		const { id, family } = studentToEdit;
+
+		const response = await axios(config);
+
+		let error = "";
+		for (const familyMember of family) {
+			const { success, error: errorFM } = await createFamilyMember(Number(id), familyMember);
+
+			if (!success) error = error + "\n" + errorFM;
+		}
+
+		return defaultResponse(response.data.student as Student);
+	} catch (e) {
+		return defaultErrorResponse("El alumno no ha podido ser editado.");
+	}
+}
+
+export async function createUser(userToCreate: UserInfo): Promise<DefaultApiResponse<User>> {
 	try {
 		const config = {
 			...baseConfig,
@@ -189,49 +267,45 @@ export async function createUser(userToCreate: UserInfo): Promise<boolean> {
 
 		const response = await axios(config);
 
-		return response.status === 201;
+		return defaultResponse(response.data.user);
 	} catch (e) {
-		return false;
+		return defaultErrorResponse("No se ha podido crear el usuario.");
 	}
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export async function fetchUser(id: string): Promise<{ success: boolean; data?: UserInfo; err: string }> {
+export async function fetchUser(id: string): Promise<DefaultApiResponse<UserInfo>> {
 	try {
-		return {
-			success: true,
-			data: {
-				role: UserRole.Administrador,
-				email: "test@test.com",
-				name: "Testing",
-				surname: "Tester",
-				address: "Avenida Siempre viva 123",
-				birthdate: "01-01-1999",
-				ci: "11113334",
-				phone: "22223333",
-				token: "",
-				complementary_info: {
-					beginning_date: "01-03-1999",
-					academic_training: [{ title: "Profesorado de Ingles", date: "01-01-1999", attachment: "" }],
-				},
-				absences: [
-					{
-						starting_date: "01-01-2022",
-						ending_date: "05-01-2022",
-						reason: "Covid",
-						attachment: "",
-					},
-				],
-				documents: [
-					{
-						type: DocumentType.Evaluation,
-						attachment: "",
-						upload_date: "01-05-2022",
-					},
-				],
+		return defaultResponse({
+			role: UserRole.Administrador,
+			email: "test@test.com",
+			name: "Testing",
+			surname: "Tester",
+			address: "Avenida Siempre viva 123",
+			birthdate: "01-01-1999",
+			ci: "11113334",
+			phone: "22223333",
+			token: "",
+			complementary_info: {
+				beginning_date: "01-03-1999",
+				academic_training: [{ title: "Profesorado de Ingles", date: "01-01-1999", attachment: "" }],
 			},
-			err: "",
-		};
+			absences: [
+				{
+					starting_date: "01-01-2022",
+					ending_date: "05-01-2022",
+					reason: "Covid",
+					attachment: "",
+				},
+			],
+			documents: [
+				{
+					type: DocumentType.Evaluation,
+					attachment: "",
+					upload_date: "01-05-2022",
+				},
+			],
+		});
 		//
 		// const config = {
 		// 	...baseConfig,
@@ -255,9 +329,6 @@ export async function fetchUser(id: string): Promise<{ success: boolean; data?: 
 
 		//eslint-disable-next-line
 	} catch (error: any) {
-		return {
-			success: false,
-			err: error.message,
-		};
+		return defaultErrorResponse(error.message);
 	}
 }
