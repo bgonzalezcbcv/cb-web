@@ -47,12 +47,16 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 				</Box>
 				<Box>
 					{mode === StudentPageMode.create ? (
-						<Button color={"secondary"} title="Subir formulario de inscripción" onClick={(): void => setIsFormUploadOpen(true)}>
-							<UploadFileIcon />
+						<Button
+							color={"secondary"}
+							startIcon={<UploadFileIcon />}
+							title="Subir formulario de inscripción"
+							onClick={(): void => setIsFormUploadOpen(true)}>
+							{"Subir formulario"}
 						</Button>
 					) : null}
 
-					{[StudentPageMode.create, StudentPageMode.edit].includes(mode) ? (
+					{[StudentPageMode.edit].includes(mode) ? (
 						<Button
 							data-cy={"studentEditInfoButton"}
 							color={"secondary"}

@@ -34,9 +34,13 @@ export default function Student(props: StudentProps): React.ReactElement {
 
 	const [currentTabIndex, setCurrentTabIndex] = React.useState(0);
 	const [student, setStudent] = React.useState<StudentModel>(defaultStudent);
-	const [isEditable, setIsEditable] = React.useState(false);
+	const [isEditable, setIsEditable] = React.useState(mode === StudentPageMode.create);
 	const [fetchState, setFetchState] = React.useState(FetchState.loading);
 	const [warnings, setWarnings] = React.useState<string[][]>([[], [], [], []]);
+
+	useEffect(() => {
+		if (mode === StudentPageMode.create) setStudent(defaultStudent);
+	}, [mode]);
 
 	const getStudent = useCallback(async (): Promise<void> => {
 		setFetchState(FetchState.loading);

@@ -80,7 +80,7 @@ export default function CreateUser(): React.ReactElement {
 					label="Fecha de nacimiento"
 				/>
 
-				<Button id="createButton" variant="contained" onClick={handleUserCreation} sx={{ marginTop: 10 }}>
+				<Button id="createButton" size={"large"} variant="outlined" color={"secondary"} onClick={handleUserCreation} sx={{ marginTop: 10 }}>
 					Crear
 				</Button>
 			</CardContent>
