@@ -1,4 +1,5 @@
 import React from "react";
+import * as ReactRouter from "react-router";
 import { act, render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ErrorObject } from "ajv";
@@ -14,6 +15,7 @@ describe("CreateStudentDialog", () => {
 	beforeEach(() => {
 		jest.spyOn(ErrorList, "default").mockReturnValue(<div>Error List</div>);
 		jest.spyOn(API, "createStudent").mockResolvedValue({ success: true, error: "" });
+		jest.spyOn(ReactRouter, "useNavigate").mockImplementation(() => jest.fn);
 	});
 
 	it("should render a button", () => {

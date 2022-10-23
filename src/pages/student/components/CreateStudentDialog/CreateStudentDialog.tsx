@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Student } from "../../../../core/Models";
 import * as API from "../../../../core/ApiStore";
@@ -24,14 +25,18 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 	const [isOpen, setIsOpen] = React.useState(false);
 	const [studentCreationState, setStudentCreationState] = React.useState<"idle" | "inProcess" | "success" | "fail">("idle");
 	const [errors, setErrors] = useState({});
+	const [newStudentId, setNewStudentId] = useState<string>();
+
+	const navigate = useNavigate();
 
 	const handleStudentCreation = useCallback(async (): Promise<void> => {
 		setStudentCreationState("inProcess");
 
-		const { success } = await API.createStudent(student);
+		const { success, data } = await API.createStudent(student);
 
 		if (success) {
 			setStudentCreationState("success");
+			setNewStudentId(data?.id);
 		} else {
 			setStudentCreationState("fail");
 			setIsOpen(true);
@@ -41,6 +46,12 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 	const dismiss = (): void => {
 		setIsOpen(false);
 		setStudentCreationState("idle");
+	};
+
+	const dismissCreation = (): void => {
+		setIsOpen(false);
+		setStudentCreationState("idle");
+		navigate(`/student/${newStudentId}/edit`);
 	};
 
 	const handleStudentEdition = async (): Promise<void> => {
@@ -139,11 +150,11 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 			) : null}
 
 			{studentCreationState === "success" ? (
-				<Dialog open={studentCreationState === "success"} onClose={dismiss}>
+				<Dialog open={studentCreationState === "success"} onClose={dismissCreation}>
 					<DialogTitle data-cy="successAlertTitle">¡Estudiante creado correctamente!</DialogTitle>
 
 					<DialogActions>
-						<Button variant="outlined" onClick={dismiss}>
+						<Button variant="outlined" onClick={dismissCreation}>
 							Aceptar
 						</Button>
 					</DialogActions>
