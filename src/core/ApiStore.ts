@@ -323,12 +323,12 @@ export async function fetchUser(id: string): Promise<DefaultApiResponse<UserInfo
 	}
 }
 
-export async function fetchReports(): Promise<{ success: boolean; data?: ReportCard[]; err: string }> {
+export async function fetchReports(studentId: string): Promise<{ success: boolean; data?: ReportCard[]; err: string }> {
 	try {
 		const config = {
 			...baseConfig,
 			method: "get",
-			url: `/api/reports/`,
+			url: `/api/reports/${studentId}`,
 		};
 
 		// const response = await axios(config);

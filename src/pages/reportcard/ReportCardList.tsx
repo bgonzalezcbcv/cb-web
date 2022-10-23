@@ -2,15 +2,10 @@ import _ from "lodash";
 import React, { useCallback, useEffect, useState } from "react";
 
 import * as API from "../../core/ApiStore";
-import { DataGrid, GridCellValue, GridColDef } from "@mui/x-data-grid";
-import CloseIcon from "@mui/icons-material/Close";
-import RemoveIcon from "@mui/icons-material/Remove";
-import { ReportCard, ReportCard as ReportCardModel } from "../../core/Models";
-import { Alert, Box, Card, CircularProgress, Icon, Input, Paper, Typography } from "@mui/material";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { ReportCard, ReportCard as ReportCardModel, Student } from "../../core/Models";
+import { Alert, Box, Card, CircularProgress, Input, Paper } from "@mui/material";
 import { FetchState } from "../../core/interfaces";
-
-// starting_month: string;
-// ending_month: string;
 
 const columns: GridColDef[] = [
 	{ field: "id", headerName: "ID", disableColumnMenu: false, flex: 1 },
@@ -62,11 +57,13 @@ export const emptyReport: ReportCard = {
 export const emptyReportList: ReportCard[] = [emptyReport];
 
 interface ReportCardListProps {
-	rows?: ReportCardModel[];
+	student: Student;
 }
 
 export default function ReportCardList(props: ReportCardListProps): React.ReactElement {
-	const { rows } = props;
+	const { student } = props;
+
+	const rows = student.report_card;
 
 	const [reports, setReports] = useState<ReportCardModel[]>(rows ?? []);
 	const [fetchState, setFetchState] = React.useState(FetchState.initial);
@@ -77,7 +74,7 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 
 		setFetchState(FetchState.loading);
 
-		const response = await API.fetchReports();
+		const response = await API.fetchReports(student.id);
 
 		if (response.success && response.data) {
 			setReports(_.merge(emptyReportList, response.data));
@@ -117,20 +114,7 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 	}, [reports, fetchState, searchText]);
 
 	return (
-		<Card
-			sx={{
-				width: "90%",
-				padding: "20px",
-				alignSelf: "flex-start",
-				marginTop: "20px",
-				display: "flex",
-				flexDirection: "column",
-				boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-			}}>
-			<Box display="flex" justifyContent="flex-start" width="100%">
-				<Typography variant="h4">Boletines</Typography>
-			</Box>
-
+		<Box>
 			<Box className="SearchAndGroupFilter">
 				<Input
 					style={{ flex: 1, marginRight: "10%" }}
@@ -143,6 +127,6 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 			</Box>
 
 			<Paper>{printTable()}</Paper>
-		</Card>
+		</Box>
 	);
 }

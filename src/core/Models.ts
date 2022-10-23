@@ -112,6 +112,7 @@ export interface Student {
 	family: FamilyMember[];
 	question_categories: QuestionCategories[];
 	administrative_info: AdministrativeInfo;
+	report_card: ReportCard[];
 }
 
 export interface StudentCreationForm {
