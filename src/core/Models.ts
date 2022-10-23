@@ -324,3 +324,10 @@ export interface IntermediateEvaluation {
 		grade_name: string;
 	};
 }
+
+export enum Cycle {
+	Nursery = "maternal",
+	Preschool = "inicial",
+	Primary = "primaria",
+	Secondary = "secundaria",
+}

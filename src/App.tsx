@@ -16,6 +16,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Students from "./pages/students/Students";
 import Teachers from "./pages/teachers/Teachers";
+import Groups from "./pages/groups/Groups";
 import { Box } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 
@@ -53,6 +54,7 @@ function App(): React.ReactElement {
 												<Route path="/teachers/:id/edit" element={<Teachers editable />} />
 												<Route path="/teachers" element={<Teachers editable={false} />} />
 												<Route path="/teachers/edit" element={<Teachers editable={true} />} />
+												<Route path="/groups" element={<Groups />} />
 												<Route path="*" element={<Navigate to="/student" />} />
 											</>
 										) : (

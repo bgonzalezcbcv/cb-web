@@ -3,10 +3,7 @@ import axios from "axios";
 import { reaction } from "mobx";
 
 import {
-	DocumentType,
-	FamilyMember,
-	FinalEvaluation,
-	FinalReportCardRequest,
+	Cycle, Group, DocumentType, FamilyMember, FinalEvaluation, FinalReportCardRequest,
 	IntermediateEvaluation,
 	IntermediateReportCardRequest,
 	ReportApprovalState,
@@ -489,5 +486,63 @@ export async function fetchTeachers(id?: number, mock = false): Promise<DefaultA
 		return defaultResponse(response.data.students);
 	} catch (e) {
 		return defaultErrorResponse("No se pudieron obtener los docentes.");
+	}
+}
+
+export async function fetchGroups(): Promise<{ success: boolean; data?: Group[]; err: string }> {
+	// try {
+	// 	const config = {
+	// 		...baseConfig,
+	// 		method: "get",
+	// 		url: `/api/groups`,
+	// 	};
+	//
+	// 	const response = await axios(config);
+	//
+	// 	if (![200, 304].includes(response.status) || response.data.groups === undefined)
+	// 		return {
+	// 			success: false,
+	// 			err: "Unable to fetch groups",
+	// 		};
+	//
+	// 	return {
+	// 		success: true,
+	// 		data: response.data.groups as [Group],
+	// 		err: "",
+	// 	};
+	//
+	// 	//eslint-disable-next-line
+	// } catch (error: any) {
+	// 	return {
+	// 		success: false,
+	// 		err: error.message,
+	// 	};
+	// }
+
+	const groups: Group[] = [
+		{
+			id: "1",
+			cycle: Cycle.Primary,
+			class: "3ro",
+			subgroup: "A",
+			year: 2022,
+			teachers: [],
+			students: [],
+		},
+		{
+			id: "2",
+			cycle: Cycle.Primary,
+			class: "4to",
+			subgroup: "A",
+			year: 2022,
+			teachers: [],
+			students: [],
+		},
+	]
+
+	return {
+		success: true,
+		data: groups,
+		err: "",
 	}
 }

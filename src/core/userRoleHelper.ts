@@ -56,6 +56,10 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 							title: "Crear grupo",
 							navigationRoute: "/group",
 						},
+						{
+							title: "Asignar director",
+							navigationRoute: "/teachers",
+						},
 					],
 				},
 				{
@@ -113,6 +117,15 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 						},
 					],
 				},
+				{
+					sectionTitle: "Grupos",
+					items: [
+						{
+							title: "Ver Todos",
+							navigationRoute: "/groups",
+						},
+					],
+				},
 			];
 		case Adscripto:
 			return [
@@ -133,7 +146,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					sectionTitle: "Grupos",
 					items: [
 						{
-							title: "Ver mis grupos",
+							title: "Mis grupos",
 							navigationRoute: `/groups/${id}`,
 						},
 					],
@@ -142,7 +155,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					sectionTitle: "Docentes",
 					items: [
 						{
-							title: "Ver mis docentes",
+							title: "Mis docentes",
 							navigationRoute: `/teachers/${id}`,
 						},
 					],
@@ -154,7 +167,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					sectionTitle: "Alumnos",
 					items: [
 						{
-							title: "Ver mis alumnos",
+							title: "Mis alumnos",
 							navigationRoute: `/students/${id}`,
 						},
 						{
@@ -167,7 +180,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					sectionTitle: "Grupos",
 					items: [
 						{
-							title: "Ver mis grupos",
+							title: "Mis grupos",
 							navigationRoute: `/groups/${id}`,
 						},
 					],
@@ -188,7 +201,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					sectionTitle: "Alumnos",
 					items: [
 						{
-							title: "Ver mis alumnos",
+							title: "Mis alumnos",
 							navigationRoute: `/students/${id}`,
 						},
 					],
@@ -197,7 +210,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					sectionTitle: "Grupos",
 					items: [
 						{
-							title: "Ver mis grupos",
+							title: "Mis grupos",
 							navigationRoute: `/groups/${id}`,
 						},
 					],
@@ -223,7 +236,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					items: [
 						{
 							title: "Ver todos",
-							navigationRoute: `/groups`,
+							navigationRoute: "/groups",
 						},
 					],
 				},
