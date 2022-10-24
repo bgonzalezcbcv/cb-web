@@ -22,7 +22,7 @@
 	  ],
 	  "type": "string",
 	  "title": "Ciclo",
-	  "errorMessage": "Debe seleccionar un ciclo"
+	  "errorMessage": "Debe seleccionar un ciclo."
 	},
 	"class": {
 	  "type": "string",
@@ -34,13 +34,15 @@
 	  "type": "string",
 	  "title": "Subgrupo",
 	  "minLength": 1,
-	  "errorMessage": "Este campo es requerido."
+	  "pattern": "[A-Z]",
+	  "errorMessage": "Este campo es requerido y debe tener como máximo una letra."
 	},
 	"year": {
-	  "type": "integer",
+	  "type": "string",
 	  "title": "Año",
 	  "minLength": 1,
 	  "errorMessage": "Este campo es requerido."
 	}
-  }
+  },
+  "required": ["cycle", "class", "subgroup", "year"]
 }

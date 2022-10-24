@@ -525,8 +525,8 @@ export async function fetchGroups(): Promise<{ success: boolean; data?: Group[];
 			cycle: Cycle.Primary,
 			class: "3ro",
 			subgroup: "A",
-			year: 2022,
-			teachers: [],
+			year: "2022",
+			teachers: ["Juan Pérez", "María López", "Ana Gutiérrez", "Pedro González"],
 			students: [],
 		},
 		{
@@ -534,8 +534,17 @@ export async function fetchGroups(): Promise<{ success: boolean; data?: Group[];
 			cycle: Cycle.Primary,
 			class: "4to",
 			subgroup: "A",
-			year: 2022,
-			teachers: [],
+			year: "2022",
+			teachers: ["Juan Pérez", "María López"],
+			students: [],
+		},
+		{
+			id: "3",
+			cycle: Cycle.Preschool,
+			class: "Inicial 3",
+			subgroup: "A",
+			year: "2022",
+			teachers: ["Juan Pérez", "María López"],
 			students: [],
 		},
 	]
@@ -545,4 +554,25 @@ export async function fetchGroups(): Promise<{ success: boolean; data?: Group[];
 		data: groups,
 		err: "",
 	}
+}
+
+export async function createGroup(groupToCreate: Group): Promise<boolean> {
+	// try {
+	// 	const config = {
+	// 		...baseConfig,
+	// 		method: "post",
+	// 		url: "/api/groups",
+	// 		data: JSON.stringify({
+	// 			user: groupToCreate,
+	// 		}),
+	// 	};
+	//
+	// 	const response = await axios(config);
+	//
+	// 	return response.status === 201;
+	// } catch (e) {
+	// 	return false;
+	// }
+
+	return true;
 }

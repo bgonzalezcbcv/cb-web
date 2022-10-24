@@ -203,11 +203,6 @@ export interface StudentCreationForm {
 	"Detalle aquí otra información que crea importante y que pueda contribuir a una atención eficiente e integral del alumno/a:": string;
 }
 
-export interface Group {
-	id: string;
-	name: string;
-}
-
 export interface User {
 	id: number;
 	email: string;
@@ -330,4 +325,14 @@ export enum Cycle {
 	Preschool = "inicial",
 	Primary = "primaria",
 	Secondary = "secundaria",
+}
+
+export interface Group {
+	id: string;
+	cycle: Cycle;
+	class: string;
+	subgroup: string;
+	year: string;
+	teachers: string[];
+	students: Student[]
 }

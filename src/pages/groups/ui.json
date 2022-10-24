@@ -10,7 +10,13 @@
         },
         {
           "type": "Control",
-          "scope": "#/properties/year"
+          "scope": "#/properties/year",
+          "options": {
+            "format": "date",
+            "dateFormat": "YYYY",
+            "dateSaveFormat": "YYYY",
+            "views": ["year"]
+          }
         }
       ]
     },
