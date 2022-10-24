@@ -11,6 +11,7 @@ import { emptyStudents } from "../student/DefaultStudent";
 
 import "./Students.scss";
 import { FetchState } from "../../core/interfaces";
+import { normalizeText } from "../../core/CoreHelper";
 
 const columns: GridColDef[] = [
 	{ field: "id", headerName: "ID", disableColumnMenu: false, flex: 1 },
@@ -92,7 +93,9 @@ export default function Students(props: StudentsProps) {
 					</Box>
 				);
 			case "initial":
-				const foundItems = students.filter((student) => Object.values(student).some((value) => value && value.toString().includes(searchText)));
+				const foundItems = students.filter((student) =>
+					Object.values(student).some((value) => value && normalizeText(value.toString()).includes(normalizeText(searchText)))
+				);
 
 				return (
 					<DataGrid //

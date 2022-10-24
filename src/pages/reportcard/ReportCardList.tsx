@@ -7,6 +7,7 @@ import { ReportCard, ReportCard as ReportCardModel, Student } from "../../core/M
 import { Alert, Box, CircularProgress, IconButton, Input, Paper } from "@mui/material";
 import { FetchState } from "../../core/interfaces";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { normalizeText } from "../../core/CoreHelper";
 
 const columns: GridColDef[] = [
 	{ field: "id", headerName: "ID", disableColumnMenu: false, flex: 1 },
@@ -106,7 +107,10 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 					</Box>
 				);
 			case "initial": {
-				const foundItems = reports.filter((report) => Object.values(report).some((value) => value && value.toString().includes(searchText)));
+				const foundItems = reports.filter((report) =>
+					Object.values(report).some((value) => value && normalizeText(value.toString()).includes(normalizeText(searchText)))
+				);
+
 				return <DataGrid style={{ height: 380, width: "100%" }} rows={foundItems} columns={columns} pageSize={5} rowsPerPageOptions={[5]} />;
 			}
 			default:
