@@ -1,4 +1,3 @@
-import { isUndefined } from "lodash";
 import React, { useEffect } from "react";
 
 import { TextField } from "@mui/material";
@@ -36,9 +35,9 @@ export function NumericInput(props: NumericInputProps): React.ReactElement {
 			newValue = parseInt(event.target.value);
 		}
 
-		const testInt = numberRegex.test(event.target.value);
+		const testNumber = numberRegex.test(event.target.value);
 
-		if (event.target.value === "" || (testInt && newValue >= 0 && newValue <= Number.MAX_SAFE_INTEGER)) {
+		if (event.target.value === "" || (testNumber && newValue >= 0 && newValue <= Number.MAX_SAFE_INTEGER)) {
 			setStringNumericValue(event.target.value);
 			setNumberValue(event.target.value === "" ? 0 : newValue);
 		}
