@@ -1,6 +1,8 @@
-import React from "react";
+import { isUndefined } from "lodash";
+import React, { useEffect } from "react";
 
 import { TextField } from "@mui/material";
+import useDebounce from "../../hooks/useDebounce";
 
 export type NumericInputProps = {
 	value: number;
@@ -15,24 +17,30 @@ export type NumericInputProps = {
 export function NumericInput(props: NumericInputProps): React.ReactElement {
 	const { value, onChange, labelName, isFloat, errors, enabled, maxLength } = props;
 
-	const [numberValue, setNumberValue] = React.useState(!value ? "" : value.toString());
+	const [stringNumericValue, setStringNumericValue] = React.useState(!value ? "" : value.toString());
+	const [numberValue, setNumberValue] = React.useState(0);
+	const debounceNumberValue = useDebounce<number>(numberValue, 150);
+
+	useEffect(() => {
+		onChange(debounceNumberValue);
+	}, [debounceNumberValue]);
 
 	const handeValueChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
 		let numberRegex;
-		let value;
+		let newValue;
 		if (isFloat) {
 			numberRegex = /^(0|[1-9]*)(\.[0-9]{0,2})?$/;
-			value = parseFloat(event.target.value);
+			newValue = parseFloat(event.target.value);
 		} else {
 			numberRegex = /^[1-9][0-9]*$/;
-			value = parseInt(event.target.value);
+			newValue = parseInt(event.target.value);
 		}
 
 		const testInt = numberRegex.test(event.target.value);
 
-		if (event.target.value === "" || (testInt && value >= 0)) {
-			setNumberValue(event.target.value);
-			onChange(event.target.value === "" ? 0 : value);
+		if (event.target.value === "" || (testInt && newValue >= 0 && newValue <= Number.MAX_SAFE_INTEGER)) {
+			setStringNumericValue(event.target.value);
+			setNumberValue(event.target.value === "" ? 0 : newValue);
 		}
 	};
 
@@ -41,10 +49,10 @@ export function NumericInput(props: NumericInputProps): React.ReactElement {
 		const numberValue = parseFloat(value);
 		const trailingZeroesRegex = /^(0|[1-9]*)(\.(00|[1-9]0))?$/;
 
-		if (numberValue === 0) setNumberValue("");
+		if (numberValue === 0) setStringNumericValue("");
 		else if (trailingZeroesRegex.test(value)) {
 			const result = value.replace(/.00$|0$/, "");
-			setNumberValue(result);
+			setStringNumericValue(result);
 		}
 	};
 
@@ -55,7 +63,7 @@ export function NumericInput(props: NumericInputProps): React.ReactElement {
 			disabled={!enabled}
 			inputProps={{ maxLength: maxLength }}
 			variant="standard"
-			value={numberValue}
+			value={stringNumericValue}
 			onChange={(event): void => handeValueChange(event)}
 			onBlur={(event): void => {
 				if (isFloat) handleOnBlur(event);
