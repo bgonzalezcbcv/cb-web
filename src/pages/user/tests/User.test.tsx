@@ -7,7 +7,8 @@ import { UserRole } from "../../../core/interfaces";
 import { DocumentType, UserInfo } from "../../../core/Models";
 import User from "../User";
 
-const studentMock: UserInfo = {
+const userMock: UserInfo = {
+	id: 1,
 	role: UserRole.Administrador,
 	email: "test@test.com",
 	name: "Testing",
@@ -42,7 +43,7 @@ describe("User", () => {
 	it("should render the profile with an editable user", async () => {
 		jest.spyOn(API, "fetchUser").mockResolvedValue({
 			success: true,
-			data: studentMock,
+			data: userMock,
 			error: "",
 		});
 
@@ -54,14 +55,14 @@ describe("User", () => {
 			</MemoryRouter>
 		);
 
-		expect(await wrapper.findByText(`${studentMock.name} ${studentMock.surname}`)).toBeVisible();
+		expect(await wrapper.findByText(`${userMock.name} ${userMock.surname}`)).toBeVisible();
 		expect(wrapper).toMatchSnapshot();
 	});
 
 	it("should render the profile with a non editable user", async () => {
 		jest.spyOn(API, "fetchUser").mockResolvedValue({
 			success: true,
-			data: studentMock,
+			data: userMock,
 			error: "",
 		});
 
@@ -73,14 +74,14 @@ describe("User", () => {
 			</MemoryRouter>
 		);
 
-		expect(await wrapper.findByText(`${studentMock.name} ${studentMock.surname}`)).toBeVisible();
+		expect(await wrapper.findByText(`${userMock.name} ${userMock.surname}`)).toBeVisible();
 		expect(wrapper).toMatchSnapshot();
 	});
 
 	it("should render an alert on fail", async () => {
 		jest.spyOn(API, "fetchUser").mockResolvedValue({
 			success: false,
-			data: studentMock,
+			data: userMock,
 			error: "",
 		});
 

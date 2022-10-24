@@ -4,61 +4,77 @@ import { User } from "./Models";
 export function getColorByUserRole(userRole?: UserRole): string {
 	if (!userRole) return "black";
 
-	return UserRoleColor[userRole as keyof typeof UserRoleColor];
+	return UserRoleColor[userRole];
 }
 
 export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
-	switch (user?.role) {
-		case UserRole.Administrador:
+	const { Administrador, Administrativo, Docente, Director, Recepcion, Adscripto } = UserRole;
+
+	if (!user) return [];
+
+	console.log(user);
+
+	const { id, role } = user;
+
+	switch (role) {
+		case Administrador:
 			return [
-				{
-					sectionTitle: "Grupos",
-					items: [
-						{
-							title: "Crear grupo",
-							navigationRoute: "/teachers",
-						},
-						{
-							title: "Asignar director",
-							navigationRoute: "/teachers",
-						},
-					],
-				},
 				{
 					sectionTitle: "Usuarios",
 					items: [
 						{
+							title: "Ver todos",
+							navigationRoute: "/users",
+						},
+						{
 							title: "Crear",
 							navigationRoute: "/createuser",
 						},
+					],
+				},
+				{
+					sectionTitle: "Grupos",
+					items: [
 						{
 							title: "Ver todos",
-							navigationRoute: "/teachers",
+							navigationRoute: "/groups",
+						},
+						{
+							title: "Crear grupo",
+							navigationRoute: "/group",
+						},
+					],
+				},
+				{
+					sectionTitle: "Convenios",
+					items: [
+						{
+							title: "Ver todos",
+							navigationRoute: "/groups",
 						},
 					],
 				},
 			];
-
-		case UserRole.Administrativo:
+		case Administrativo:
 			return [
 				{
 					sectionTitle: "Alumnos",
 					items: [
-						// {
-						// 	title: "Activos",
-						// 	navigationRoute: "/teachers",
-						// },
-						// {
-						// 	title: "Pendientes",
-						// 	navigationRoute: "/teachers",
-						// },
-						// {
-						// 	title: "Inactivos",
-						// 	navigationRoute: "/teachers",
-						// },
 						{
-							title: "Ver todos",
-							navigationRoute: "/students",
+							title: "Activos",
+							navigationRoute: `/students/${id}/active`,
+						},
+						{
+							title: "Pendientes",
+							navigationRoute: `/students/${id}/pending`,
+						},
+						{
+							title: "Inactivos",
+							navigationRoute: `/students/${id}/inactive`,
+						},
+						{
+							title: "Mis alumnos",
+							navigationRoute: `/students/${id}`,
 						},
 						{
 							title: "Dar de alta",
@@ -67,66 +83,11 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					],
 				},
 				{
-					sectionTitle: "Usuarios",
-					items: [
-						// {
-						// 	title: "Activos",
-						// 	navigationRoute: "/teachers",
-						// },
-						// {
-						// 	title: "Pendientes",
-						// 	navigationRoute: "/teachers",
-						// },
-						// {
-						// 	title: "Inactivos",
-						// 	navigationRoute: "/teachers",
-						// },
-						{
-							title: "Dar de alta",
-							navigationRoute: "/createuser",
-						},
-					],
-				},
-				// {
-				// 	sectionTitle: "Grupos",
-				// 	items: [
-				// 		{
-				// 			title: "Ver Todos",
-				// 			navigationRoute: "/teachers",
-				// 		},
-				// 	],
-				// },
-				// {
-				// 	sectionTitle: "Docentes",
-				// 	items: [
-				// 		{
-				// 			title: "Ver Todos",
-				// 			navigationRoute: "/teachers",
-				// 		},
-				// 	],
-				// },
-			];
-		case UserRole.Adscripto:
-			return [
-				{
-					sectionTitle: "Alumnos",
-					items: [
-						{
-							title: "Mis alumnos",
-							navigationRoute: "/teachers",
-						},
-						{
-							title: "Pendientes",
-							navigationRoute: "/teachers",
-						},
-					],
-				},
-				{
 					sectionTitle: "Grupos",
 					items: [
 						{
-							title: "Ver Mis Grupos",
-							navigationRoute: "/teachers",
+							title: "Mis grupos",
+							navigationRoute: `/groups/${id}`,
 						},
 					],
 				},
@@ -134,33 +95,24 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					sectionTitle: "Docentes",
 					items: [
 						{
-							title: "Ver Docentes",
-							navigationRoute: "/teachers",
-						},
-					],
-				},
-				{
-					sectionTitle: "Perfil",
-					items: [
-						{
-							title: "Ver perfiles",
-							navigationRoute: "/teachers",
+							title: "Mis docentes",
+							navigationRoute: `/teachers/${id}`,
 						},
 					],
 				},
 			];
-		case UserRole.Director:
+		case Adscripto:
 			return [
 				{
 					sectionTitle: "Alumnos",
 					items: [
 						{
-							title: "Mis alumnos",
-							navigationRoute: "/teachers",
+							title: "Ver todos",
+							navigationRoute: `/students/${id}`,
 						},
 						{
 							title: "Pendientes",
-							navigationRoute: "/teachers",
+							navigationRoute: `/students/${id}/pending`,
 						},
 					],
 				},
@@ -168,8 +120,8 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					sectionTitle: "Grupos",
 					items: [
 						{
-							title: "Ver Todos",
-							navigationRoute: "/teachers",
+							title: "Mis grupos",
+							navigationRoute: `/groups/${id}`,
 						},
 					],
 				},
@@ -177,22 +129,47 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					sectionTitle: "Docentes",
 					items: [
 						{
-							title: "Ver Todos",
-							navigationRoute: "/teachers",
-						},
-					],
-				},
-				{
-					sectionTitle: "Perfil",
-					items: [
-						{
-							title: "Ver Todos",
-							navigationRoute: "/teachers",
+							title: "Ver mis docentes",
+							navigationRoute: `/teachers/${id}`,
 						},
 					],
 				},
 			];
-		case UserRole.Docente:
+		case Director:
+			return [
+				{
+					sectionTitle: "Alumnos",
+					items: [
+						{
+							title: "Mis alumnos",
+							navigationRoute: `/students/${id}`,
+						},
+						{
+							title: "Pendientes",
+							navigationRoute: `/students/${id}/pending`,
+						},
+					],
+				},
+				{
+					sectionTitle: "Grupos",
+					items: [
+						{
+							title: "Ver mis grupos",
+							navigationRoute: `/groups/${id}`,
+						},
+					],
+				},
+				{
+					sectionTitle: "Docentes",
+					items: [
+						{
+							title: "Ver mis docentes",
+							navigationRoute: `/teachers/${id}`,
+						},
+					],
+				},
+			];
+		case Docente:
 			return [
 				{
 					sectionTitle: "Alumnos",
@@ -207,32 +184,19 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					sectionTitle: "Grupos",
 					items: [],
 				},
-				{
-					sectionTitle: "Perfil",
-					items: [
-						{
-							title: "Ver Todos",
-							navigationRoute: "/teachers",
-						},
-					],
-				},
 			];
-		case UserRole.Recepcion:
+		case Recepcion:
 			return [
 				{
 					sectionTitle: "Alumnos",
 					items: [
 						{
 							title: "Activos",
-							navigationRoute: "/teachers",
+							navigationRoute: `/students/active`,
 						},
 						{
 							title: "Pendientes",
-							navigationRoute: "/teachers",
-						},
-						{
-							title: "Inactivos",
-							navigationRoute: "/teachers",
+							navigationRoute: `/students/pending`,
 						},
 					],
 				},
@@ -241,7 +205,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					items: [
 						{
 							title: "Ver Todos",
-							navigationRoute: "/teachers",
+							navigationRoute: `/groups`,
 						},
 					],
 				},
@@ -250,7 +214,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					items: [
 						{
 							title: "Ver Todos",
-							navigationRoute: "/teachers",
+							navigationRoute: `/teachers`,
 						},
 					],
 				},

@@ -5,7 +5,7 @@ import { Alert, Box, Card, CardContent, Chip, CircularProgress, Divider, Link, T
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import { UserInfo } from "../../core/Models";
 import { fetchUser } from "../../core/ApiStore";
-import { UserRoleColor } from "../../core/interfaces";
+import { UserRoleColor, UserRoleName } from "../../core/interfaces";
 import PersonalInformation from "./components/PersonalInfo/PersonalInformation";
 import ComplementaryInformation from "./components/ComplementaryInfo/ComplementaryInformation";
 import Absences from "./components/Absences/Absences";
@@ -79,7 +79,7 @@ function User(props: UserProps): JSX.Element {
 					</Typography>
 
 					<Box display="flex" flexDirection="column">
-						<Chip label={role} style={{ background: UserRoleColor[role] }} />
+						<Chip label={UserRoleName[role]} style={{ background: UserRoleColor[role] }} />
 					</Box>
 
 					<Link href={`mailto:${email}`}>

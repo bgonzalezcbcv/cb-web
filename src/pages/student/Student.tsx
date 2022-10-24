@@ -7,15 +7,15 @@ import { useParams } from "react-router-dom";
 import { Alert, Card, CircularProgress, Typography } from "@mui/material";
 import { StudentPageMode } from "../../core/interfaces";
 import * as APIStore from "../../core/ApiStore";
+import { Student as StudentModel } from "../../core/Models";
 import * as StudentComponents from "./components/index";
 import { TabData } from "./components/StudentPageTabs/StudentPageTabs";
-import { Student as StudentModel } from "../../core/Models";
 import { defaultStudent, emptyStudent } from "./DefaultStudent";
-
-import "./Student.scss";
 
 const { FamilyForm, StudentInfo, AdministrativeInfo, CreateStudentDialog, TabPanel, StudentPageHeader, StudentPageTabs, EnrollmentQuestions } =
 	StudentComponents;
+
+import "./Student.scss";
 
 enum FetchState {
 	initial = "initial",

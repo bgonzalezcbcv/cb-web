@@ -1,5 +1,4 @@
 import { NavigateOptions } from "react-router-dom";
-import React from "react";
 
 export interface VisualComponent {
 	width?: string;
@@ -13,22 +12,31 @@ export interface Teacher {
 	subjects: string[];
 }
 
+export enum UserRoleName {
+	administrator = "Administrador",
+	administrative = "Administrativo",
+	support_teacher = "Adscripto",
+	principal = "Director",
+	teacher = "Docente",
+	reception = "Recepción",
+}
+
 export enum UserRoleColor {
-	Administrador = "rgb(71,148,40)",
-	Administrativo = "rgb(59 , 96 , 144)",
-	Adscripto = "rgb(148,40,131)",
-	Director = "rgb(150,146,55)",
-	Docente = "rgb(144,85,59)",
-	Recepción = "rgb(144,59,92)",
+	administrator = "rgb(71,148,40)",
+	administrative = "rgb(59 , 96 , 144)",
+	support_teacher = "rgb(148,40,131)",
+	principal = "rgb(150,146,55)",
+	teacher = "rgb(144,85,59)",
+	reception = "rgb(144,59,92)",
 }
 
 export enum UserRole {
-	Administrador = "Administrador",
-	Administrativo = "Administrativo",
-	Adscripto = "Adscripto",
-	Director = "Director",
-	Docente = "Docente",
-	Recepcion = "Recepción",
+	Administrador = "administrator",
+	Administrativo = "administrative",
+	Adscripto = "support_teacher",
+	Director = "principal",
+	Docente = "teacher",
+	Recepcion = "reception",
 }
 
 export interface SidebarItem {
