@@ -4,8 +4,9 @@ import React, { useCallback, useEffect, useState } from "react";
 import * as API from "../../core/ApiStore";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { ReportCard, ReportCard as ReportCardModel, Student } from "../../core/Models";
-import { Alert, Box, Card, CircularProgress, Input, Paper } from "@mui/material";
+import { Alert, Box, CircularProgress, IconButton, Input, Paper } from "@mui/material";
 import { FetchState } from "../../core/interfaces";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 const columns: GridColDef[] = [
 	{ field: "id", headerName: "ID", disableColumnMenu: false, flex: 1 },
@@ -58,12 +59,12 @@ export const emptyReportList: ReportCard[] = [emptyReport];
 
 interface ReportCardListProps {
 	student: Student;
+	rows?: ReportCard[];
+	editable: boolean;
 }
 
 export default function ReportCardList(props: ReportCardListProps): React.ReactElement {
-	const { student } = props;
-
-	const rows = student.report_card;
+	const { student, rows, editable } = props;
 
 	const [reports, setReports] = useState<ReportCardModel[]>(rows ?? []);
 	const [fetchState, setFetchState] = React.useState(FetchState.initial);
@@ -126,7 +127,21 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 				/>
 			</Box>
 
-			<Paper>{printTable()}</Paper>
+			<Paper>
+				<Box
+					sx={{
+						display: "flex",
+						flexDirection: "column-reverse",
+						alignItems: "flex-end",
+					}}>
+					{editable && (
+						<IconButton color="secondary">
+							<AddCircleOutlineIcon />
+						</IconButton>
+					)}
+				</Box>
+				{printTable()}
+			</Paper>
 		</Box>
 	);
 }

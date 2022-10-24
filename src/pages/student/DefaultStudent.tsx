@@ -112,24 +112,6 @@ export const defaultStudent: Student = {
 			},
 		],
 	},
-	report_card: [
-		{
-			id: 1,
-			grade: "Primero",
-			starting_month: "Marzo",
-			ending_month: "Abril",
-			type: "Intermedio",
-			passed: false,
-		},
-		{
-			id: 2,
-			grade: "Primero",
-			starting_month: "2022",
-			ending_month: "",
-			type: "Final",
-			passed: true,
-		},
-	],
 };
 
 export const defaultStudents: [Student] = [defaultStudent];
@@ -172,7 +154,6 @@ export const emptyStudent: Student = {
 	surname: "",
 	tuition: "",
 	vaccine_expiration: "",
-	report_card: [],
 };
 
 export const emptyStudents: [Student] = [emptyStudent];
