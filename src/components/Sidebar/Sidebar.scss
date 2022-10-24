@@ -2,7 +2,15 @@
 	display: flex;
 	flex-shrink: 0;
 	width: 240px;
+
+	transition-property: all;
+	transition-delay: 200ms;
 }
+
+.sidebar-container-hidden {
+	width: 0 !important;
+}
+
 .section-item {
 	text-align: center;
 }
@@ -20,4 +28,5 @@
 
 .logo {
 	padding: 40px 20px 30px 20px;
+	cursor: pointer;
 }

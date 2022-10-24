@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { DataStore } from "../../core/DataStore";
-import { AppBar, Avatar, Badge, Box, Button, Chip, Menu, MenuItem, Toolbar } from "@mui/material";
+import { getColorByUserRole, getRoleNameByUserRole } from "../../core/userRoleHelper";
+import { AppBar, Avatar, Badge, Box, Button, Chip, IconButton, Menu, MenuItem, Toolbar, Typography } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import MenuIcon from "@mui/icons-material/Menu";
 
 import "./Navbar.scss";
-import { getColorByUserRole } from "../../core/userRoleHelper";
 
 function userNameToInitials(displayName?: string): string {
 	return (
@@ -27,6 +28,8 @@ function Navbar(): React.ReactElement {
 	const [anchorElProfile, setAnchorElProfile] = useState<null | HTMLElement>(null);
 	const [isOpenNotificationsMenu, setIsOpenNotificationsMenu] = useState(false);
 	const [anchorElNotifications, setAnchorElNotifications] = useState<null | HTMLElement>(null);
+
+	const handleHamburgerClick = (): void => dataStore.setIsDrawerOpen();
 
 	const handleProfileClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
 		setIsOpenUserProfileMenu(true);
@@ -64,13 +67,13 @@ function Navbar(): React.ReactElement {
 				<div className="user-info">
 					{renderUserAvatar()}
 					<div className="user-name-and-role">
-						{loggedUser?.name}
+						<Typography variant="body1">{loggedUser?.name}</Typography>
 
-						<Chip sx={{ bgcolor: getColorByUserRole(loggedUser?.role) }} className="rolePill" label={loggedUser?.role} />
+						<Chip sx={{ bgcolor: getColorByUserRole(loggedUser?.role) }} label={getRoleNameByUserRole(loggedUser?.role)} />
 					</div>
 				</div>
 
-				<MenuItem color={"secondary"} onClick={(): void => navigate("/user/3/edit")} sx={{ justifyContent: "center" }}>
+				<MenuItem color={"secondary"} onClick={(): void => navigate(`/user/${loggedUser?.id}/edit`)} sx={{ justifyContent: "center" }}>
 					Mi perfil
 				</MenuItem>
 
@@ -86,9 +89,15 @@ function Navbar(): React.ReactElement {
 	};
 
 	return (
-		<Box sx={{ flex: 1 }}>
-			<AppBar position="static">
-				<Toolbar sx={{ justifyContent: "flex-end", bgcolor: "primary" }}>
+		<Box sx={{ display: "flex", flexGrow: 1 }}>
+			<AppBar position="static" sx={{ display: "flex", flexDirection: "row", padding: "6px 0 0 20px" }}>
+				{loggedUser && (
+					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={handleHamburgerClick}>
+						<MenuIcon />
+					</IconButton>
+				)}
+
+				<Toolbar sx={{ justifyContent: "flex-end", bgcolor: "primary", flexGrow: 1 }}>
 					{loggedUser ? (
 						<div className="logged-user-controls">
 							<Button onClick={handleNotificationsClick}>

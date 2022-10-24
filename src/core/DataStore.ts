@@ -13,6 +13,8 @@ export class DataStore {
 
 	public agreementTypes: string[] = ["Ninguno"];
 
+	public isDrawerOpen = true;
+
 	private constructor() {
 		const savedStateJson = sessionStorage.getItem("store");
 
@@ -77,6 +79,11 @@ export class DataStore {
 	@action
 	public addAgreementType(agreementType: string): void {
 		if (!this.agreementTypes.includes(agreementType)) this.agreementTypes = [...this.agreementTypes, agreementType];
+	}
+
+	@action
+	public setIsDrawerOpen(newValue?: boolean): void {
+		this.isDrawerOpen = newValue ?? !this.isDrawerOpen;
 	}
 }
 
