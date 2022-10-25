@@ -63,7 +63,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					items: [
 						{
 							title: "Ver todos",
-							navigationRoute: "/groups",
+							navigationRoute: "/scholarship",
 						},
 					],
 				},
