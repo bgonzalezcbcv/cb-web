@@ -35,17 +35,6 @@ axios.interceptors.response.use(
 	}
 );
 
-interface SignInResponseData {
-	id: number;
-	email: string;
-	ci: string;
-	name: string;
-	surname: string;
-	birthdate: string;
-	address: string;
-	role?: UserRole;
-}
-
 function defaultResponse<DataType>(data: DataType, error = ""): DefaultApiResponse<DataType> {
 	return {
 		success: true,
