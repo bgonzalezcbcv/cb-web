@@ -67,7 +67,7 @@ function Sidebar(props: SidebarProps): React.ReactElement {
 				anchor="left"
 				sx={{ bgcolor: "primary", "& .MuiDrawer-paper": { boxSizing: "border-box" } }}
 				open={isDrawerOpen}>
-				<img className="logo" src={SvgLogo} alt="logo" onClick={() => navigate("/")} />
+				<img className="logo" src={SvgLogo} alt="logo" onClick={(): void => navigate("/")} />
 				{renderSections(sections)}
 			</Drawer>
 		</Box>

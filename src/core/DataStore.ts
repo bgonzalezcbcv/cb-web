@@ -13,7 +13,7 @@ export class DataStore {
 
 	public agreementTypes: string[] = ["Ninguno"];
 
-	public isDrawerOpen = true;
+	public isDrawerOpen = false;
 
 	private constructor() {
 		const savedStateJson = sessionStorage.getItem("store");
@@ -64,6 +64,7 @@ export class DataStore {
 	@action
 	public logOut(): void {
 		this.loggedUser = null;
+		this.isDrawerOpen = false;
 	}
 
 	@action
