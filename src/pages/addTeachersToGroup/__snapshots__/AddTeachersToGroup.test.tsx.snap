@@ -1,0 +1,375 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Teachers should render an alert on fail 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-j4i0o4-MuiPaper-root-MuiCard-root"
+      >
+        <div
+          class="MuiBox-root css-1b1a8p0"
+        >
+          <h4
+            class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+          >
+             Grupo:
+            3A
+          </h4>
+          <br />
+        </div>
+        <div
+          class="MuiBox-root css-1tqz4rm"
+        >
+          <div
+            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary css-1tcs2i1-MuiInputBase-root-MuiInput-root"
+            style="flex: 3; margin-right: 10%;"
+          >
+            <input
+              class="MuiInputBase-input MuiInput-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
+              id="search"
+              placeholder="Buscar..."
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1ps6pg7-MuiPaper-root"
+        >
+          <div
+            class="MuiBox-root css-0"
+            style="padding: 20px; display: flex; justify-content: center; align-items: center;"
+          >
+            <div
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-outlinedError MuiAlert-outlined css-c80q09-MuiPaper-root-MuiAlert-root"
+              role="alert"
+            >
+              <div
+                class="MuiAlert-icon css-1ytlwq5-MuiAlert-icon"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1vooibu-MuiSvgIcon-root"
+                  data-testid="ErrorOutlineIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="MuiAlert-message css-1pxa9xg-MuiAlert-message"
+              >
+                Falló la carga de docentes. Clickear aquí para reintentar.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-j4i0o4-MuiPaper-root-MuiCard-root"
+    >
+      <div
+        class="MuiBox-root css-1b1a8p0"
+      >
+        <h4
+          class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+        >
+           Grupo:
+          3A
+        </h4>
+        <br />
+      </div>
+      <div
+        class="MuiBox-root css-1tqz4rm"
+      >
+        <div
+          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary css-1tcs2i1-MuiInputBase-root-MuiInput-root"
+          style="flex: 3; margin-right: 10%;"
+        >
+          <input
+            class="MuiInputBase-input MuiInput-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
+            id="search"
+            placeholder="Buscar..."
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1ps6pg7-MuiPaper-root"
+      >
+        <div
+          class="MuiBox-root css-0"
+          style="padding: 20px; display: flex; justify-content: center; align-items: center;"
+        >
+          <div
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-outlinedError MuiAlert-outlined css-c80q09-MuiPaper-root-MuiAlert-root"
+            role="alert"
+          >
+            <div
+              class="MuiAlert-icon css-1ytlwq5-MuiAlert-icon"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1vooibu-MuiSvgIcon-root"
+                data-testid="ErrorOutlineIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+                />
+              </svg>
+            </div>
+            <div
+              class="MuiAlert-message css-1pxa9xg-MuiAlert-message"
+            >
+              Falló la carga de docentes. Clickear aquí para reintentar.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`Teachers should render the list 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-j4i0o4-MuiPaper-root-MuiCard-root"
+      >
+        <div
+          class="MuiBox-root css-1b1a8p0"
+        >
+          <h4
+            class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+          >
+             Grupo:
+            3A
+          </h4>
+          <br />
+        </div>
+        <div
+          class="MuiBox-root css-1tqz4rm"
+        >
+          <div
+            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary css-1tcs2i1-MuiInputBase-root-MuiInput-root"
+            style="flex: 3; margin-right: 10%;"
+          >
+            <input
+              class="MuiInputBase-input MuiInput-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
+              id="search"
+              placeholder="Buscar..."
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1ps6pg7-MuiPaper-root"
+        >
+          <div
+            class="MuiBox-root css-0"
+            style="padding: 20px; display: flex; justify-content: center; align-items: center;"
+          >
+            <span
+              class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-18lrjg1-MuiCircularProgress-root"
+              role="progressbar"
+              style="width: 40px; height: 40px;"
+            >
+              <svg
+                class="MuiCircularProgress-svg css-1idz92c-MuiCircularProgress-svg"
+                viewBox="22 22 44 44"
+              >
+                <circle
+                  class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-176wh8e-MuiCircularProgress-circle"
+                  cx="44"
+                  cy="44"
+                  fill="none"
+                  r="20.2"
+                  stroke-width="3.6"
+                />
+              </svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-j4i0o4-MuiPaper-root-MuiCard-root"
+    >
+      <div
+        class="MuiBox-root css-1b1a8p0"
+      >
+        <h4
+          class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+        >
+           Grupo:
+          3A
+        </h4>
+        <br />
+      </div>
+      <div
+        class="MuiBox-root css-1tqz4rm"
+      >
+        <div
+          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary css-1tcs2i1-MuiInputBase-root-MuiInput-root"
+          style="flex: 3; margin-right: 10%;"
+        >
+          <input
+            class="MuiInputBase-input MuiInput-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
+            id="search"
+            placeholder="Buscar..."
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1ps6pg7-MuiPaper-root"
+      >
+        <div
+          class="MuiBox-root css-0"
+          style="padding: 20px; display: flex; justify-content: center; align-items: center;"
+        >
+          <span
+            class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-18lrjg1-MuiCircularProgress-root"
+            role="progressbar"
+            style="width: 40px; height: 40px;"
+          >
+            <svg
+              class="MuiCircularProgress-svg css-1idz92c-MuiCircularProgress-svg"
+              viewBox="22 22 44 44"
+            >
+              <circle
+                class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-176wh8e-MuiCircularProgress-circle"
+                cx="44"
+                cy="44"
+                fill="none"
+                r="20.2"
+                stroke-width="3.6"
+              />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

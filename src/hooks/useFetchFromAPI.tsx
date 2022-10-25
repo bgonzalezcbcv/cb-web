@@ -12,10 +12,12 @@ export enum FetchStatus {
  * @param fetchFunction: Function from the APIStore needed to fetch. Tip: If you need to pass a parameter, like an ID,
  * pass this parameter as () => myAPIFunc(id)
  * @param onFetch: this is the setter that will be used when the fetch was correct to save the data.
+ * @param shouldFetch: Default to true and it could be used to disallow the fetching (conditional fetching).
  */
 function useFetchFromAPI<Type>(
 	fetchFunction: (...params: unknown[]) => Promise<DefaultApiResponse<Type>>,
-	onFetch: (data: Type) => void
+	onFetch: (data: Type) => void,
+	shouldFetch = true
 ): { fetchStatus: FetchStatus; refetch: () => void } {
 	const [fetchStatus, setFetchStatus] = React.useState(FetchStatus.Fetching);
 
@@ -31,11 +33,11 @@ function useFetchFromAPI<Type>(
 	}, []);
 
 	useEffect(() => {
-		fetchHandler();
+		shouldFetch && fetchHandler();
 	}, []);
 
 	return {
-		fetchStatus,
+		fetchStatus: shouldFetch ? fetchStatus : FetchStatus.Initial,
 		refetch: () => fetchHandler(),
 	};
 }

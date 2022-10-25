@@ -228,6 +228,7 @@ export enum DocumentTypeLabel {
 }
 
 export interface UserInfo extends User {
+	id: number;
 	address?: string;
 	birthdate?: string;
 	ci?: string;
