@@ -76,7 +76,7 @@ describe("studentsBasicInfo", () => {
 
 		cy.wait(300);
 
-		cy.visit("/students");
+		cy.visit("/student");
 	});
 
 	it("does not show error messages before inputting info on any field", () => {
