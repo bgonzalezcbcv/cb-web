@@ -1,5 +1,6 @@
 import { UserRole, SidebarSection, UserRoleColor, UserRoleName } from "./interfaces";
 import { User } from "./Models";
+import { DataStore } from "./DataStore";
 
 export function getColorByUserRole(userRole?: UserRole): string {
 	if (!userRole) return "black";
@@ -11,6 +12,14 @@ export function getRoleNameByUserRole(userRole?: UserRole): string {
 	if (!userRole) return "";
 
 	return UserRoleName[userRole];
+}
+
+export function restrictEditionTo(roles: UserRole[], editable = true): boolean {
+	const role = DataStore.getInstance().loggedUser?.role;
+
+	if (!role) return false;
+
+	return editable && roles.includes(role);
 }
 
 export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {

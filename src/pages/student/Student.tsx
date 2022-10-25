@@ -5,17 +5,19 @@ import { useCallback, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import { Alert, Card, CircularProgress, Typography } from "@mui/material";
-import { StudentPageMode } from "../../core/interfaces";
+import { StudentPageMode, UserRole } from "../../core/interfaces";
 import * as APIStore from "../../core/ApiStore";
+import { restrictEditionTo } from "../../core/userRoleHelper";
 import { Student as StudentModel } from "../../core/Models";
 import * as StudentComponents from "./components/index";
 import { TabData } from "./components/StudentPageTabs/StudentPageTabs";
+import Restrict from "../../components/Restrict/Restrict";
 import { defaultStudent, emptyStudent } from "./DefaultStudent";
+
+import "./Student.scss";
 
 const { FamilyForm, StudentInfo, AdministrativeInfo, CreateStudentDialog, TabPanel, StudentPageHeader, StudentPageTabs, EnrollmentQuestions } =
 	StudentComponents;
-
-import "./Student.scss";
 
 enum FetchState {
 	initial = "initial",
@@ -64,6 +66,12 @@ export default function Student(props: StudentProps): React.ReactElement {
 		{ label: "Administrativa", dataCY: "administrativeInfoTab" },
 	];
 
+	const tabsCreation: TabData[] = [
+		{ label: "Básica", dataCY: "basicInfoTab" },
+		{ label: "Familiar", dataCY: "familyInfoTab" },
+		{ label: "Complementaria", dataCY: "complementaryInfoTab" },
+	];
+
 	const debouncedSetStudent = React.useCallback(
 		(student: StudentModel, debounce = true) => (debounce ? _.debounce(setStudent, 200)(student) : setStudent(student)),
 		[]
@@ -75,21 +83,48 @@ export default function Student(props: StudentProps): React.ReactElement {
 		else return defaultMessage;
 	};
 
-	const panels = [
+	const creationPanels = [
 		<StudentInfo student={student} onChange={debouncedSetStudent} editable={isEditable} translator={translator} />,
-		<FamilyForm student={student} onChange={debouncedSetStudent} editable={isEditable} translator={translator} />,
-		<EnrollmentQuestions student={student} onChange={debouncedSetStudent} editable={isEditable} />,
-		<AdministrativeInfo
+		<FamilyForm //
 			student={student}
 			onChange={debouncedSetStudent}
 			editable={isEditable}
 			translator={translator}
-			setWarnings={(warning: string[]): void => {
-				const newWarnings = warnings.slice();
-				newWarnings[3] = warning;
-				setWarnings(newWarnings);
-			}}
 		/>,
+		<EnrollmentQuestions student={student} onChange={debouncedSetStudent} editable={isEditable} />,
+	];
+
+	const panels = [
+		<StudentInfo student={student} onChange={debouncedSetStudent} editable={isEditable} translator={translator} />,
+		<FamilyForm //
+			student={student}
+			onChange={debouncedSetStudent}
+			editable={restrictEditionTo(
+				[UserRole.Adscripto, UserRole.Director, UserRole.Recepcion, UserRole.Administrativo, UserRole.Administrador],
+				isEditable
+			)}
+			translator={translator}
+		/>,
+		<Restrict to={[UserRole.Director, UserRole.Docente, UserRole.Adscripto, UserRole.Administrador]}>
+			<EnrollmentQuestions
+				student={student}
+				onChange={debouncedSetStudent}
+				editable={restrictEditionTo([UserRole.Director, UserRole.Administrativo], isEditable)}
+			/>
+		</Restrict>,
+		<Restrict to={[UserRole.Administrador, UserRole.Administrativo]}>
+			<AdministrativeInfo
+				student={student}
+				onChange={debouncedSetStudent}
+				editable={isEditable}
+				translator={translator}
+				setWarnings={(warning: string[]): void => {
+					const newWarnings = warnings.slice();
+					newWarnings[3] = warning;
+					setWarnings(newWarnings);
+				}}
+			/>
+		</Restrict>,
 	];
 
 	if (fetchState === FetchState.loading) return <CircularProgress />;
@@ -125,7 +160,7 @@ export default function Student(props: StudentProps): React.ReactElement {
 			/>
 
 			<StudentPageTabs
-				tabData={tabData}
+				tabData={mode === StudentPageMode.create ? tabsCreation : tabData}
 				onChange={(newValue: number) => {
 					const newWarnings = warnings.slice();
 					newWarnings[currentTabIndex] = [];
@@ -135,7 +170,7 @@ export default function Student(props: StudentProps): React.ReactElement {
 				value={currentTabIndex}
 			/>
 
-			{panels.map((panel, index) => (
+			{(mode === StudentPageMode.create ? creationPanels : panels).map((panel, index) => (
 				<TabPanel key={`student-tab-panel-${index}`} className="panel-item" value={currentTabIndex} index={index}>
 					{panel}
 				</TabPanel>
