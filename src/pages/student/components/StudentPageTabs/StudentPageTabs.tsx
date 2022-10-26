@@ -13,6 +13,7 @@ interface StudentPageTabsProps {
 export interface TabData {
 	label: string;
 	dataCY: string;
+	panel: React.ReactElement | null;
 }
 export default function StudentPageTabs(props: StudentPageTabsProps): React.ReactElement {
 	const { tabData, onChange, value } = props;

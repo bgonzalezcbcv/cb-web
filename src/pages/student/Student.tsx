@@ -59,19 +59,6 @@ export default function Student(props: StudentProps): React.ReactElement {
 		id ? getStudent() : setFetchState(FetchState.initial);
 	}, [id, getStudent]);
 
-	const tabData: TabData[] = [
-		{ label: "Básica", dataCY: "basicInfoTab" },
-		{ label: "Familiar", dataCY: "familyInfoTab" },
-		{ label: "Complementaria", dataCY: "complementaryInfoTab" },
-		{ label: "Administrativa", dataCY: "administrativeInfoTab" },
-	];
-
-	const tabsCreation: TabData[] = [
-		{ label: "Básica", dataCY: "basicInfoTab" },
-		{ label: "Familiar", dataCY: "familyInfoTab" },
-		{ label: "Complementaria", dataCY: "complementaryInfoTab" },
-	];
-
 	const debouncedSetStudent = React.useCallback(
 		(student: StudentModel, debounce = true) => (debounce ? _.debounce(setStudent, 200)(student) : setStudent(student)),
 		[]
@@ -83,49 +70,89 @@ export default function Student(props: StudentProps): React.ReactElement {
 		else return defaultMessage;
 	};
 
-	const creationPanels = [
-		<StudentInfo student={student} onChange={debouncedSetStudent} editable={isEditable} translator={translator} />,
-		<FamilyForm //
-			student={student}
-			onChange={debouncedSetStudent}
-			editable={isEditable}
-			translator={translator}
-		/>,
-		<EnrollmentQuestions student={student} onChange={debouncedSetStudent} editable={isEditable} />,
-	];
+	const createTabs = ["Básica", "Familiar", "Complementaria", "Administrativa"];
+	const viewTabs = ["Básica", "Familiar", "Complementaria", "Administrativa", "Boletines"];
+	const editableTabs = ["Básica", "Familiar", "Complementaria", "Administrativa", "Boletines"];
 
-	const panels = [
-		<StudentInfo student={student} onChange={debouncedSetStudent} editable={isEditable} translator={translator} />,
-		<FamilyForm //
-			student={student}
-			onChange={debouncedSetStudent}
-			editable={restrictEditionTo(
-				[UserRole.Adscripto, UserRole.Director, UserRole.Recepcion, UserRole.Administrativo, UserRole.Administrador],
-				isEditable
-			)}
-			translator={translator}
-		/>,
-		<Restrict to={[UserRole.Director, UserRole.Docente, UserRole.Adscripto, UserRole.Administrador]}>
-			<EnrollmentQuestions
-				student={student}
-				onChange={debouncedSetStudent}
-				editable={restrictEditionTo([UserRole.Director, UserRole.Administrativo], isEditable)}
-			/>
-		</Restrict>,
-		<Restrict to={[UserRole.Administrador, UserRole.Administrativo]}>
-			<AdministrativeInfo
-				student={student}
-				onChange={debouncedSetStudent}
-				editable={isEditable}
-				translator={translator}
-				setWarnings={(warning: string[]): void => {
-					const newWarnings = warnings.slice();
-					newWarnings[3] = warning;
-					setWarnings(newWarnings);
-				}}
-			/>
-		</Restrict>,
-	];
+	const tabsData: TabData[] = [
+		{
+			label: "Básica",
+			dataCY: "basicInfoTab",
+			panel: <StudentInfo student={student} onChange={debouncedSetStudent} editable={isEditable} translator={translator} />,
+		},
+		{
+			label: "Familiar",
+			dataCY: "familyInfoTab",
+			panel: (
+				<FamilyForm //
+					student={student}
+					onChange={debouncedSetStudent}
+					editable={restrictEditionTo(
+						[UserRole.Adscripto, UserRole.Director, UserRole.Recepcion, UserRole.Administrativo, UserRole.Administrador],
+						isEditable
+					)}
+					translator={translator}
+				/>
+			),
+		},
+		{
+			label: "Complementaria",
+			dataCY: "complementaryInfoTab",
+			panel: (
+				<Restrict
+					to={[UserRole.Director, UserRole.Docente, UserRole.Adscripto, UserRole.Administrador]}
+					fallback={
+						<Alert severity="info" variant="outlined">
+							<Typography variant="body1">No tiene permisos para ver esta información.</Typography>
+						</Alert>
+					}>
+					<EnrollmentQuestions
+						student={student}
+						onChange={debouncedSetStudent}
+						editable={restrictEditionTo([UserRole.Director, UserRole.Administrativo], isEditable)}
+					/>
+				</Restrict>
+			),
+		},
+		{
+			label: "Administrativa",
+			dataCY: "administrativeInfoTab",
+			panel: (
+				<Restrict
+					to={[UserRole.Administrador, UserRole.Administrativo]}
+					fallback={
+						<Alert severity="info" variant="outlined">
+							<Typography variant="body1">No tiene permisos para ver esta información.</Typography>
+						</Alert>
+					}>
+					<AdministrativeInfo
+						student={student}
+						onChange={debouncedSetStudent}
+						editable={isEditable}
+						translator={translator}
+						setWarnings={(warning: string[]): void => {
+							const newWarnings = warnings.slice();
+							newWarnings[3] = warning;
+							setWarnings(newWarnings);
+						}}
+					/>
+				</Restrict>
+			),
+		},
+	].filter(({ label, panel }) => {
+		switch (mode) {
+			case StudentPageMode.create:
+				return createTabs.includes(label);
+
+			case StudentPageMode.view:
+				return viewTabs.includes(label);
+
+			case StudentPageMode.edit:
+				return editableTabs.includes(label);
+			default:
+				return false;
+		}
+	});
 
 	if (fetchState === FetchState.loading) return <CircularProgress />;
 
@@ -160,7 +187,7 @@ export default function Student(props: StudentProps): React.ReactElement {
 			/>
 
 			<StudentPageTabs
-				tabData={mode === StudentPageMode.create ? tabsCreation : tabData}
+				tabData={tabsData}
 				onChange={(newValue: number) => {
 					const newWarnings = warnings.slice();
 					newWarnings[currentTabIndex] = [];
@@ -170,7 +197,7 @@ export default function Student(props: StudentProps): React.ReactElement {
 				value={currentTabIndex}
 			/>
 
-			{(mode === StudentPageMode.create ? creationPanels : panels).map((panel, index) => (
+			{tabsData.map(({ panel }, index) => (
 				<TabPanel key={`student-tab-panel-${index}`} className="panel-item" value={currentTabIndex} index={index}>
 					{panel}
 				</TabPanel>
