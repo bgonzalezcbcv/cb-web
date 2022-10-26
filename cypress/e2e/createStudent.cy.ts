@@ -70,7 +70,6 @@ describe("createStudent", () => {
 	});
 
 	it("sends correct info to API after modification", () => {
-		cy.get('[data-cy="studentEditInfoButton"]').click();
 		cy.fillStudentBasicInfo();
 		cy.fillStudentFamilyInfo();
 

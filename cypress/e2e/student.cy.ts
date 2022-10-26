@@ -15,7 +15,7 @@ describe("student", () => {
 
 		cy.wait(300);
 
-		cy.visit("/student");
+		cy.visit("/student/2");
 	});
 
 	it("loads page", () => {

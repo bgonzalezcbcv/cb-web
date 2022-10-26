@@ -11,7 +11,6 @@ describe("studentFamilyInfo", () => {
 	const createStudentButtonID = '[data-cy="createStudentButton"]';
 
 	const familyInfoButtonID = '[data-cy="familyInfoTab"]';
-	const studentEditInfoButton = '[data-cy="studentEditInfoButton"]';
 
 	const errorAlertDialogID = '[data-cy="errorAlertDialog"]';
 
@@ -53,8 +52,8 @@ describe("studentFamilyInfo", () => {
 	const addressInputID = "#properties\\/address2-input";
 	const addressErrorID = "#properties\\/address2 > :nth-child(3)";
 
-	const neighborhoodInputID = "#properties\\/neighbourhood2-input";
-	const neighborhoodErrorID = "#properties\\/neighbourhood2 > :nth-child(3)";
+	const neighborhoodInputID = "#properties\\/neighborhood2-input";
+	const neighborhoodErrorID = "#properties\\/neighborhood2 > :nth-child(3)";
 
 	const educationLevelInputID = "#properties\\/education_level2";
 	const educationLevelErrorID = ":nth-child(5) > .MuiGrid-container > :nth-child(1) > :nth-child(2)";
@@ -99,7 +98,6 @@ describe("studentFamilyInfo", () => {
 
 	it("shows error message on fields that have restrictions with an incorrect input", () => {
 		cy.get(familyInfoButtonID).click();
-		cy.get(studentEditInfoButton).click();
 
 		//check first family member
 		cy.get(roleInputID).click().wait(500).get(`#properties\\/role2-option-0`).click().wait(200);
@@ -152,8 +150,6 @@ describe("studentFamilyInfo", () => {
 	});
 
 	it("shows error when creating student if there is an error on some family info field", () => {
-		cy.get(studentEditInfoButton).click();
-
 		cy.fillStudentBasicInfo();
 
 		cy.get(familyInfoButtonID).click();
@@ -168,8 +164,6 @@ describe("studentFamilyInfo", () => {
 	});
 
 	it("allows to create a student when all the required fields in the family info are complete", () => {
-		cy.get(studentEditInfoButton).click();
-
 		cy.fillStudentBasicInfo();
 		cy.wait(500);
 

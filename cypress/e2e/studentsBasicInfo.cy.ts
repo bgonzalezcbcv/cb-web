@@ -1,9 +1,6 @@
-import { clear } from "console";
-
 /* eslint-disable max-statements */
 describe("studentsBasicInfo", () => {
 	const basicInfoButtonID = '[data-cy="basicInfoTab"]';
-	const editButtonID = '[data-cy="studentEditInfoButton"]';
 	const errorAlertDialogID = '[data-cy="errorAlertDialog"]';
 
 	const nameFieldID = "#\\#\\/properties\\/name2-input";
@@ -100,7 +97,6 @@ describe("studentsBasicInfo", () => {
 
 	it("shows error message on fields that have restrictions with an incorrect input", () => {
 		cy.get(basicInfoButtonID).click();
-		cy.get(editButtonID).click();
 
 		//check basic data
 		cy.testInput(nameFieldID, nameFieldErrorID, "", "Adam", "Este campo es requerido.");
@@ -120,7 +116,6 @@ describe("studentsBasicInfo", () => {
 
 	it("allows to create a student when all the required fields in the basic info are complete", () => {
 		cy.get(basicInfoButtonID).click();
-		cy.get(editButtonID).click();
 
 		cy.get(nameFieldID).clear().typeAndWait("Adam");
 		cy.get(surnameFieldID).clear().typeAndWait("Sandler");
