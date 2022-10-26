@@ -59,7 +59,7 @@ describe("studentsBasicInfo", () => {
 	const emergencyFieldID = "#\\#\\/properties\\/emergency2-input";
 	const emergencyFieldErrorID = "#\\#\\/properties\\/emergency2> :nth-child(3)";
 
-	const vaccineExpirationInputID = "#\\#\\/properties\\/vaccine_expiration2-input";
+	//const vaccineExpirationInputID = "#\\#\\/properties\\/vaccine_expiration2-input";
 	//TODO: find a better way to find date fields
 	//const vaccineExpirationErrorID = ".MuiGrid-container > :nth-child(3) > :nth-child(2)";
 	const vaccineExpirationButton =
