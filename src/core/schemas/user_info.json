@@ -34,12 +34,6 @@
 			"maxLength": 127,
 			"errorMessage": "Este campo es requerido."
 		},
-		"birthdate": {
-			"type": "string",
-			"title": "Fecha de nacimiento",
-			"pattern": "^(\\d\\d-){2}\\d{4}$",
-			"errorMessage": "Tiene que ser una fecha válida."
-		},
 		"ci": {
 			"type": "string",
 			"pattern": "^((\\d+)|([a-zA-Z]+))+$",

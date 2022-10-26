@@ -42,13 +42,6 @@ export interface SidebarSection {
 	items: SidebarItem[];
 }
 
-export enum CreationState {
-	idle = "idle",
-	inProcess = "inProcess",
-	success = "success",
-	fail = "fail",
-}
-
 export enum StudentPageMode {
 	create = "CREATE",
 	edit = "EDIT",

@@ -7,7 +7,7 @@ import { Translator, ValidationMode } from "@jsonforms/core";
 import { Button, Card, CardContent } from "@mui/material";
 import * as API from "../../core/ApiStore";
 import * as Models from "../../core/Models";
-import { CreationState } from "../../core/interfaces";
+import { DefaultApiResponse } from "../../core/interfaces";
 import { ajv as userAjv } from "../../core/AJVHelper";
 
 import NumericInputControl, { NumericInputControlTester } from "../../components/NumericInput/NumericInputControl";
@@ -23,18 +23,17 @@ export default function CreateUser(): React.ReactElement {
 	const [data, setData] = useState<Models.UserInfo>({} as Models.UserInfo);
 	const [errors, setErrors] = useState<ErrorObject[]>([]);
 	const [validationMode, setValidationMode] = useState<ValidationMode>("ValidateAndHide");
-	const [userCreationState, setUserCreationState] = React.useState<CreationState>(CreationState.idle);
+	const [userCreationState, setUserCreationState] = React.useState<DefaultApiResponse<Models.User>>();
 	const [showDialog, setShowDialog] = React.useState(false);
 
 	const handleUserCreation = useCallback(async (): Promise<void> => {
 		setValidationMode("ValidateAndShow");
 		if (errors.length > 0) return;
 
-		setUserCreationState(CreationState.inProcess);
+		setUserCreationState({} as DefaultApiResponse<Models.User>);
 
 		const successfulCreation = await API.createUser(data as Models.User);
-
-		successfulCreation ? setUserCreationState(CreationState.success) : setUserCreationState(CreationState.fail);
+		setUserCreationState(successfulCreation);
 		setShowDialog(true);
 	}, [data, errors]);
 
@@ -85,7 +84,7 @@ export default function CreateUser(): React.ReactElement {
 				</Button>
 			</CardContent>
 
-			{showDialog && <CreateUserDialog success={userCreationState === "success"} show={(value): void => setShowDialog(value)} />}
+			{showDialog && userCreationState && <CreateUserDialog apiResponse={userCreationState} show={(value): void => setShowDialog(value)} />}
 		</Card>
 	);
 }
