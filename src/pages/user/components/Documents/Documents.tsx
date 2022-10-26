@@ -21,11 +21,13 @@ interface DocumentsProps {
 	user: UserInfo;
 	setUser: (newUser: UserInfo) => void;
 	editable: boolean;
+	canAdd: boolean;
+	canDelete: boolean;
 }
 
 //todo: usar date input de eva.
 function Documents(props: DocumentsProps): JSX.Element {
-	const { user, setUser, editable } = props;
+	const { user, setUser, editable, canAdd, canDelete } = props;
 	const { documents } = user;
 
 	const [selectedRows, setSelectedRows] = useState<GridRowId[]>([]);
@@ -75,13 +77,17 @@ function Documents(props: DocumentsProps): JSX.Element {
 			<Box display="flex" justifyContent="flex-end" width="100%">
 				{editable && (
 					<>
-						<Button onClick={handleDeleteDocumentsRows}>
-							<DeleteOutlineIcon />
-						</Button>
+						{canDelete && (
+							<Button onClick={handleDeleteDocumentsRows}>
+								<DeleteOutlineIcon />
+							</Button>
+						)}
 
-						<Button onClick={openAddDialog}>
-							<AddIcon />
-						</Button>
+						{canAdd && (
+							<Button onClick={openAddDialog}>
+								<AddIcon />
+							</Button>
+						)}
 					</>
 				)}
 

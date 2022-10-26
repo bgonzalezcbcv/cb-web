@@ -3,8 +3,10 @@ import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { render } from "@testing-library/react";
 
 import * as API from "../../../core/ApiStore";
+import { DataStore } from "../../../core/DataStore";
 import { UserRole } from "../../../core/interfaces";
 import { DocumentType, UserInfo } from "../../../core/Models";
+import { mockRestrictEditionTo, mockRestrictionsComponent, mockUseIsAuthenticated } from "../../../core/TestHelper";
 import User from "../User";
 
 const userMock: UserInfo = {
@@ -40,6 +42,13 @@ const userMock: UserInfo = {
 };
 
 describe("User", () => {
+	beforeEach(() => {
+		mockRestrictionsComponent();
+		mockRestrictEditionTo();
+		mockUseIsAuthenticated();
+		DataStore.getInstance().logIn(1, "test@test.com", "", "testing", "tester", UserRole.Administrador);
+	});
+
 	it("should render the profile with an editable user", async () => {
 		jest.spyOn(API, "fetchUser").mockResolvedValue({
 			success: true,

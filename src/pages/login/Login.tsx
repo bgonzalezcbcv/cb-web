@@ -46,8 +46,6 @@ function Login(): JSX.Element {
 		if (success && data) {
 			const { id, email, token, name, surname, role } = data;
 
-			console.log("data", data);
-
 			if (dataStore.logIn(id, email, token, name, surname, role)) navigate("/");
 			else setErrMsg("Error al iniciar sesión. Intentar nuevamente.");
 		} else {
