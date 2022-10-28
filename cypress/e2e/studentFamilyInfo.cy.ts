@@ -189,6 +189,15 @@ describe("studentFamilyInfo", () => {
 		cy.get(workplaceNeighborhoodFieldID).clear().typeAndWait("Barrio Panadero");
 		cy.get(workPhoneFieldID).clear().typeAndWait("222200202");
 
+		cy.fixture("validResponse").then((json) => {
+			cy.intercept(
+				{
+					method: "POST", // Route all POST requests
+					url: "/api/students", // that have a URL that matches '/students'
+				},
+				{ statusCode: 201, body: json } // and force the response to have correct status
+			);
+		});
 		cy.get(createStudentButtonID).click();
 
 		cy.get(errorAlertDialogID).should("not.be.visible");

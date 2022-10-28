@@ -1,6 +1,8 @@
 describe("student", () => {
 	//buttons
 	const familyInfoButtonID = '[data-cy="familyInfoTab"]';
+	const complementaryInfoButtonID = '[data-cy="complementaryInfoTab"]';
+	const administrativeInfoButtonID = '[data-cy="administrativeInfoTab"]';
 	//const editButtonID = '[data-cy="studentEditInfoButton"]';
 
 	//student
@@ -46,6 +48,18 @@ describe("student", () => {
 
 	// 	cy.get(familyCIID).should("be.enabled");
 	// });
+
+	it("loads page on complementary info button click", () => {
+		cy.get(complementaryInfoButtonID).click();
+
+		cy.get(".panel-item").should("contain.text", "Respuesta");
+	});
+
+	it("loads page on administrative info button click", () => {
+		cy.get(administrativeInfoButtonID).click();
+
+		cy.get(".administrative-info > :nth-child(1)").should("be.visible");
+	});
 });
 
 export {};

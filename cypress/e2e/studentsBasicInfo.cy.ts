@@ -142,6 +142,15 @@ describe("studentsBasicInfo", () => {
 
 		cy.wait(300);
 
+		cy.fixture("validResponse").then((json) => {
+			cy.intercept(
+				{
+					method: "POST", // Route all POST requests
+					url: "/api/students", // that have a URL that matches '/students'
+				},
+				{ statusCode: 201, body: json } // and force the response to have correct status
+			);
+		});
 		cy.get(createButtonID).click();
 
 		cy.get(errorAlertDialogID).should("not.be.visible");
