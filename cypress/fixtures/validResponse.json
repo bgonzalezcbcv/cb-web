@@ -1,0 +1,29 @@
+{
+	"student": {
+		"id": 43,
+		"ci": "13467958",
+		"surname": "Firminho",
+		"name": "Roberto",
+		"birthplace": "Brazil",
+		"birthdate": "2018-10-19",
+		"nationality": "Brasileño",
+		"schedule_start": "",
+		"schedule_end": "",
+		"tuition": "",
+		"reference_number": 12,
+		"office": "",
+		"status": "pending",
+		"first_language": "Portugués",
+		"address": "Maracaná 1234",
+		"neighborhood": "Maracaná",
+		"medical_assurance": "Cubiertinho",
+		"emergency": "Emergentinho",
+		"vaccine_name": null,
+		"vaccine_expiration": "2022-10-30",
+		"phone_number": "08001010",
+		"inscription_date": null,
+		"starting_date": null,
+		"contact": "",
+		"contact_phone": ""
+	}
+}

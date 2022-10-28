@@ -17,13 +17,15 @@ describe("createStudent", () => {
 	});
 
 	it("shows the success message on creation of a correct student", () => {
-		cy.intercept(
-			{
-				method: "POST", // Route all POST requests
-				url: "/api/students", // that have a URL that matches '/students'
-			},
-			{ statusCode: 201, body: {} } // and force the response to have correct status
-		);
+		cy.fixture("validResponse").then((json) => {
+			cy.intercept(
+				{
+					method: "POST", // Route all POST requests
+					url: "/api/students", // that have a URL that matches '/students'
+				},
+				{ statusCode: 201, body: json } // and force the response to have correct status
+			);
+		});
 
 		cy.get(createStudentButtonID).click();
 		cy.get(confirmCreateStudentButtonID).click();
