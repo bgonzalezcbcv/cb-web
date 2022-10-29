@@ -253,4 +253,5 @@ export interface ReportCard {
 	year: Date;
 	type: string;
 	passed: boolean;
+	report_url: string;
 }

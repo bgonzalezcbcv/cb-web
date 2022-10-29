@@ -346,6 +346,7 @@ export async function fetchReports(studentId: string): Promise<{ success: boolea
 						year: new Date(),
 						type: "Intermedio",
 						passed: false,
+						report_url: "",
 					},
 					{
 						id: 2,
@@ -355,6 +356,7 @@ export async function fetchReports(studentId: string): Promise<{ success: boolea
 						year: new Date(2022, 11),
 						type: "Final",
 						passed: true,
+						report_url: "",
 					},
 				],
 			},

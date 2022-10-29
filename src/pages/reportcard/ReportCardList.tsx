@@ -21,6 +21,7 @@ export const emptyReport: ReportCard = {
 	year: new Date(),
 	type: "",
 	passed: false,
+	report_url: "",
 };
 
 export const emptyReportList: ReportCard[] = [emptyReport];
