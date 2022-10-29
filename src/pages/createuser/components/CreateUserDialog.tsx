@@ -1,14 +1,16 @@
 import React from "react";
 
 import { Button, Dialog, DialogActions, DialogContent, Typography, Alert } from "@mui/material";
+import { DefaultApiResponse } from "../../../core/interfaces";
+import { User } from "../../../core/Models";
 
 interface CreateUserDialogProps {
-	success: boolean;
+	apiResponse: DefaultApiResponse<User>;
 	show: (show: boolean) => void;
 }
 
 function CreateUserDialog(props: CreateUserDialogProps): React.ReactElement {
-	const { success, show } = props;
+	const { apiResponse, show } = props;
 
 	const accept = (): void => {
 		show(false);
@@ -17,10 +19,10 @@ function CreateUserDialog(props: CreateUserDialogProps): React.ReactElement {
 	return (
 		<Dialog open={true} onClose={(): void => show(false)}>
 			<DialogContent>
-				{success ? (
+				{apiResponse && apiResponse.success ? (
 					<Typography component={"span"}>¡Usuario creado correctamente!</Typography>
 				) : (
-					<Alert severity="error">No se pudo crear el usuario. Inténtelo de nuevo.</Alert>
+					<Alert severity="error">{apiResponse.error} Inténtelo de nuevo.</Alert>
 				)}
 			</DialogContent>
 

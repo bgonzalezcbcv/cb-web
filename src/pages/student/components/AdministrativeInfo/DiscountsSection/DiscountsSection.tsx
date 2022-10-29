@@ -102,8 +102,15 @@ export default function DiscountsSection(props: VisualComponent & Administrative
 
 	function setData(data: any, hasErrors: boolean): void {
 		setDiscountData(data);
-		const startDate = new Date(data.starting_date);
-		const endDate = new Date(data.ending_date);
+		const startDateString = stringToDateString(discountData.starting_date);
+		const endDateString = stringToDateString(discountData.ending_date);
+		// Dates should be valid.
+		if (startDateString === null || endDateString === null) {
+			setHasDateErrors(false);
+			return;
+		}
+		const startDate = new Date(startDateString);
+		const endDate = new Date(endDateString);
 		setHasDateErrors(data.starting_date && data.ending_date && startDate > endDate);
 		setHasFormErrors(hasErrors);
 	}
