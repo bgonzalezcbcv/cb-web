@@ -10,6 +10,7 @@ import { FetchState } from "../../core/interfaces";
 
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import DeleteIcon from "@mui/icons-material/Delete";
+import DownloadIcon from "@mui/icons-material/Download";
 import { DeleteReportCardDialog, ReportDeletionSuccessDialog } from "./components/DeleteReportCardDialog";
 
 export const emptyReport: ReportCard = {
@@ -106,9 +107,22 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 			},
 		},
 		{
-			field: "delete",
-			headerName: "Delete",
+			field: "download",
+			headerName: "Descargar",
 			disableColumnMenu: false,
+			flex: 1,
+			renderCell: (): React.ReactElement => {
+				return (
+					<IconButton>
+						<DownloadIcon />
+					</IconButton>
+				);
+			},
+		},
+		{
+			field: "delete",
+			headerName: "Borrar",
+			disableColumnMenu: editable,
 			flex: 1,
 			renderCell: (params): React.ReactElement => {
 				return (
