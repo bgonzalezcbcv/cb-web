@@ -1,36 +1,7 @@
 {
   "type": "object",
   "properties": {
-	"cycle": {
-	  "oneOf": [
-		{
-		  "const": "maternal",
-		  "title": "Maternal"
-		},
-		{
-		  "const": "inicial",
-		  "title": "Inicial"
-		},
-		{
-		  "const": "primaria",
-		  "title": "Primaria"
-		},
-		{
-		  "const": "secundaria",
-		  "title": "Secundaria"
-		}
-	  ],
-	  "type": "string",
-	  "title": "Ciclo",
-	  "errorMessage": "Debe seleccionar un ciclo."
-	},
-	"class": {
-	  "type": "string",
-	  "title": "Clase",
-	  "minLength": 1,
-	  "errorMessage": "Este campo es requerido."
-	},
-	"subgroup": {
+	"name": {
 	  "type": "string",
 	  "title": "Subgrupo",
 	  "minLength": 1,
@@ -44,5 +15,5 @@
 	  "errorMessage": "Este campo es requerido."
 	}
   },
-  "required": ["cycle", "class", "subgroup", "year"]
+  "required": ["name", "year"]
 }

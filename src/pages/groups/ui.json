@@ -1,37 +1,19 @@
 {
-  "type": "VerticalLayout",
+  "type": "HorizontalLayout",
   "elements": [
     {
-      "type": "HorizontalLayout",
-      "elements": [
-        {
-          "type": "Control",
-          "scope": "#/properties/cycle"
-        },
-        {
-          "type": "Control",
-          "scope": "#/properties/year",
-          "options": {
-            "format": "date",
-            "dateFormat": "YYYY",
-            "dateSaveFormat": "YYYY",
-            "views": ["year"]
-          }
-        }
-      ]
+      "type": "Control",
+      "scope": "#/properties/year",
+      "options": {
+        "format": "date",
+        "dateFormat": "YYYY",
+        "dateSaveFormat": "YYYY",
+        "views": ["year"]
+      }
     },
     {
-      "type": "HorizontalLayout",
-      "elements": [
-        {
-          "type": "Control",
-          "scope": "#/properties/class"
-        },
-        {
-          "type": "Control",
-          "scope": "#/properties/subgroup"
-        }
-      ]
+      "type": "Control",
+      "scope": "#/properties/name"
     }
   ]
 }

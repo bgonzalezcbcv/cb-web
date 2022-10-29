@@ -1,13 +1,23 @@
 /*eslint-disable*/
 import React, {useCallback, useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+// import {useNavigate} from "react-router-dom";
 import {JsonForms} from "@jsonforms/react";
 import {Translator} from "@jsonforms/core";
 import {materialCells, materialRenderers} from "@jsonforms/material-renderers";
-import {Alert, Box, Button, Card, CircularProgress, IconButton, Paper, Tooltip, Typography} from "@mui/material";
-import {DataGrid, GridApi, GridCellValue, GridColDef} from "@mui/x-data-grid";
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import {Group} from "../../core/Models";
+import {
+    Alert,
+    Box,
+    Button,
+    Card,
+    CircularProgress,
+    // IconButton,
+    InputLabel, MenuItem,
+    Paper, Select,
+    // Tooltip,
+    Typography
+} from "@mui/material";
+import {DataGrid, GridColDef} from "@mui/x-data-grid";
+import {Cycle, Grade, Group} from "../../core/Models";
 import * as APIStore from "../../core/ApiStore";
 import Modal from "../../components/modal/Modal";
 import NumericInputControl, {NumericInputControlTester} from "../../components/NumericInput/NumericInputControl";
@@ -15,16 +25,16 @@ import NumericInputControl, {NumericInputControlTester} from "../../components/N
 import schema from "./schema.json";
 import uischema from "./ui.json";
 
-import AddIcon from '@mui/icons-material/Add';
+// import VisibilityIcon from '@mui/icons-material/Visibility';
+// import AddIcon from '@mui/icons-material/Add';
 
 import "./Groups.scss";
 
 type GroupData = {
-    cycle: string;
-    class: string;
-    subgroup: string;
+    cycle: Cycle;
+    gradeId: string;
+    name: string;
     year: string;
-    teachers: string[] | [];
 };
 
 enum FetchState {
@@ -34,91 +44,92 @@ enum FetchState {
 }
 
 const columns: GridColDef[] = [
-    { field: "class", headerName: "Clase", disableColumnMenu: false, width: 120, align: "center" },
-    { field: "subgroup", headerName: "Subgrupo", disableColumnMenu: false, width: 120, align: "center" },
-    { field: "cycle", headerName: "Ciclo", disableColumnMenu: false, width: 180, align: "center",
-        renderCell: (params) => {
-        const capitalizedCycle = params.value[0].toUpperCase() + params.value.slice(1);
-            return (
-                <Typography fontSize={14}>{capitalizedCycle}</Typography>
-            );
-        }},
-    {
-        field: "teachers",
-        headerName: "Docentes",
-        align: "center",
-        sortable: false,
-        disableColumnMenu: true,
-        width: 250,
-        renderCell: (params) => {
-            const teachers = params.value.sort();
-            const teachersToShow = teachers.length > 3 ? teachers.slice(0, 3) : teachers;
-
-            const tooltipText = <div>
-                <Box className="tooltip-text-container">
-                    {teachers.map((value: string, index: number) => {
-                        return (
-                            <Typography key={index} fontSize={12}>{value}</Typography>
-                        )}
-                    )}
-                </Box>
-            </div>
-
-            return (
-                <Tooltip title={tooltipText} arrow>
-                    <Box className="teachers-wrapper">
-                        <Box className="teachers-container">
-                            {teachersToShow.map((value: string, index: number) => {
-                                return (
-                                    <Typography key={index} fontSize={14}>{value}</Typography>
-                                )}
-                            )}
-                            {teachers.length > 3 && <Typography fontSize={12} sx={{marginTop: "5px"}}>{`(Ver ${teachers.length - 3} más)`}</Typography>}
-                        </Box>
-                    </Box>
-                </Tooltip>
-            );
-        },
-    },
-    { field: "addTeachers", headerName: "Agregar docentes", disableColumnMenu: true, width: 180, align: "center",
-        renderCell: () => {
-            return (
-                <IconButton onClick={() => {}}><AddIcon /></IconButton>
-            )
-        }},
-    {field: "students", headerName: "Cantidad de estudiantes", disableColumnMenu: true, align: "center", width: 200,
-        renderCell: (params) => {
-            const amount = params.value.length;
-
-            return (
-                <Typography fontSize={14}>{`${amount} estudiantes`}</Typography>
-            )
-        }},
-    {
-        field: "seeStudents",
-        headerName: "Ver estudiantes",
-        align: "center",
-        sortable: false,
-        disableColumnMenu: true,
-        width: 150,
-        renderCell: (params) => {
-            const navigate = useNavigate();
-
-            const onClick = (e: any) => {
-                e.stopPropagation();
-
-                const api: GridApi = params.api;
-                const thisRow: Record<string, GridCellValue> = {};
-
-                api.getAllColumns()
-                    .filter((c) => c.field !== "__check__" && !!c)
-                    .forEach((c) => (thisRow[c.field] = params.row(params.id, c.field)));
-                //navigate("/students/" + thisRow.id); //TODO: use this line
-                navigate("/students");
-            };
-            return <IconButton onClick={onClick}><VisibilityIcon /></IconButton>;
-        },
-    }
+    // { field: "class", headerName: "Clase", disableColumnMenu: false, width: 130, align: "center" },
+    { field: "name", headerName: "Subgrupo", disableColumnMenu: false, width: 130, align: "center" },
+    { field: "year", headerName: "Año", disableColumnMenu: false, width: 130, align: "center" },
+    // { field: "cycle", headerName: "Ciclo", disableColumnMenu: false, width: 150, align: "center",
+    //     renderCell: (params) => {
+    //     const capitalizedCycle = params.value[0].toUpperCase() + params.value.slice(1);
+    //         return (
+    //             <Typography fontSize={14}>{capitalizedCycle}</Typography>
+    //         );
+    //     }},
+    // {
+    //     field: "teachers",
+    //     headerName: "Docentes",
+    //     align: "center",
+    //     sortable: false,
+    //     disableColumnMenu: true,
+    //     width: 250,
+    //     renderCell: (params) => {
+    //         const teachers: Teacher[] = params.value.map((teacher: UserData) => {return {name: teacher.name, surname: teacher.surname}}).sort((a: Teacher, b: Teacher) => (a.surname > b.surname) ? 1 : ((b.surname > a.surname) ? -1 : 0));
+    //         const teachersToShow = teachers.length > 3 ? teachers.slice(0, 3) : teachers;
+    //
+    //         const tooltipText = <div>
+    //             <Box className="tooltip-text-container">
+    //                 {teachers.map((value: {name: string, surname: string}, index: number) => {
+    //                     return (
+    //                         <Typography key={index} fontSize={12}>{value.name + " " + value.surname}</Typography>
+    //                     )}
+    //                 )}
+    //             </Box>
+    //         </div>
+    //
+    //         return (
+    //             <Tooltip title={tooltipText} arrow>
+    //                 <Box className="teachers-wrapper">
+    //                     <Box className="teachers-container">
+    //                         {teachersToShow.map((value: {name: string, surname: string}, index: number) => {
+    //                             return (
+    //                                 <Typography key={index} fontSize={14}>{value.name + " " + value.surname}</Typography>
+    //                             )}
+    //                         )}
+    //                         {teachers.length > 3 && <Typography fontSize={12} sx={{marginTop: "5px"}}>{`(Ver ${teachers.length - 3} más)`}</Typography>}
+    //                     </Box>
+    //                 </Box>
+    //             </Tooltip>
+    //         );
+    //     },
+    // },
+    // { field: "addTeachers", headerName: "Agregar docentes", disableColumnMenu: true, flex: 1, align: "center",
+    //     renderCell: () => {
+    //         return (
+    //             <IconButton onClick={() => {}}><AddIcon /></IconButton>
+    //         )
+    //     }},
+    // {field: "students", headerName: "Cantidad de estudiantes", disableColumnMenu: true, align: "center", flex: 1,
+    //     renderCell: (params) => {
+    //         const amount = params.value.length;
+    //
+    //         return (
+    //             <Typography fontSize={14}>{`${amount} estudiantes`}</Typography>
+    //         )
+    //     }},
+    // {
+    //     field: "seeStudents",
+    //     headerName: "Ver estudiantes",
+    //     align: "center",
+    //     sortable: false,
+    //     disableColumnMenu: true,
+    //     flex: 1,
+    //     renderCell: (params) => {
+    //         const navigate = useNavigate();
+    //
+    //         const onClick = (e: any) => {
+    //             e.stopPropagation();
+    //
+    //             const api: GridApi = params.api;
+    //             const thisRow: Record<string, GridCellValue> = {};
+    //
+    //             api.getAllColumns()
+    //                 .filter((c) => c.field !== "__check__" && !!c)
+    //                 .forEach((c) => (thisRow[c.field] = params.row(params.id, c.field)));
+    //             //navigate("/students/" + thisRow.id); //TODO: use this line
+    //             navigate("/students");
+    //         };
+    //         return <IconButton onClick={onClick}><VisibilityIcon /></IconButton>;
+    //     },
+    // }
 ];
 
 interface GroupsProps {
@@ -135,6 +146,7 @@ export default function Groups(props: GroupsProps): React.ReactElement {
     const [createGroupModalOpen, setCreateGroupModalOpen] = React.useState(false);
     const [groupData, setGroupData] = React.useState<GroupData>({} as GroupData);
     const [hasFormErrors, setHasFormErrors] = useState<boolean>(false);
+    const [grades, setGrades] = useState<Grade[] | undefined>(undefined)
 
     const translator = (id: string, defaultMessage: string): string => {
         if (id.includes("required")) return "Este campo es requerido.";
@@ -158,11 +170,26 @@ export default function Groups(props: GroupsProps): React.ReactElement {
         getGroups();
     }, []);
 
-    const handleCreateGroupModalAccept = useCallback(async () => {
-        const response = await APIStore.createGroup(groupData as Group);
+    const handleCreateGroupModalOpen = useCallback(async () => {
+        const response = await APIStore.fetchGrades();
 
-        response && setCreateGroupModalOpen(true);
+        if (response.success && response.data) {
+            setGrades(response.data);
+        }
+        setCreateGroupModalOpen(true)
     }, []);
+
+    const handleCreateGroupModalAccept = useCallback(async () => {
+        const request = {
+            gradeId: groupData.gradeId,
+            groupName: groupData.name,
+            groupYear: groupData.year,
+        };
+
+        const response = await APIStore.createGroup(request);
+
+        response && setCreateGroupModalOpen(false);
+    }, [groupData, grades]);
 
     const handleCreateGroupModalClose = useCallback(() => {
         setCreateGroupModalOpen(false);
@@ -219,13 +246,54 @@ export default function Groups(props: GroupsProps): React.ReactElement {
             }}>
             <Box display="flex" justifyContent="space-between" width="100%" marginBottom="30px">
                 <Typography variant="h4">Grupos</Typography>
-                <Button variant={"outlined"} onClick={() => setCreateGroupModalOpen(true)}>Crear grupo</Button>
+                <Button variant={"outlined"} onClick={handleCreateGroupModalOpen}>Crear grupo</Button>
             </Box>
 
             <Paper>{printTable()}</Paper>
 
             <Modal show={createGroupModalOpen} title={"Crear grupo"} onClose={handleCreateGroupModalClose} onAccept={handleCreateGroupModalAccept} acceptEnabled={!hasFormErrors}>
                 <Box>
+                    <Box sx={{display: "flex", flexDirection: "row", marginBottom: 2}}>
+                        <Box sx={{display: "flex", flexDirection: "column", marginRight: 2}}>
+                            <InputLabel id="cycle">Ciclo</InputLabel>
+                            <Select
+                                labelId="cycle"
+                                variant="standard"
+                                value={groupData.cycle ?? ""}
+                                defaultValue={"Maternal"}
+                                style={{width: 218}}
+                                onChange={(e): void => {
+                                    const {value} = e.target;
+                                    const newCycle = { ...groupData, cycle: value };
+                                    setData(newCycle, value.length === 0);
+                                }}
+                            >
+                                <MenuItem key={"maternal"} value={Cycle.Nursery}>{"Maternal"}</MenuItem>
+                                <MenuItem key={"inicial"} value={Cycle.Preschool}>{"Inicial"}</MenuItem>
+                                <MenuItem key={"primaria"} value={Cycle.Primary}>{"Primaria"}</MenuItem>
+                                <MenuItem key={"secundaria"} value={Cycle.Secondary}>{"Secundaria"}</MenuItem>
+                            </Select>
+                        </Box>
+
+                        <Box sx={{display: "flex", flexDirection: "column"}}>
+                            <InputLabel id="grade">Clase</InputLabel>
+                            <Select
+                                labelId="grade"
+                                variant="standard"
+                                value={groupData.gradeId}
+                                style={{width: 218}}
+                                onChange={(e): void => {
+                                    const {value} = e.target;
+                                    console.log(value);
+                                    const newGrade = { ...groupData, gradeId: value };
+                                    setData(newGrade, false);
+                                }}
+                            >
+                                {grades && grades?.map((grade) => {return <MenuItem key={grade.id} value={grade.id}>{grade.name}</MenuItem>})}
+                            </Select>
+                        </Box>
+                    </Box>
+
                     <JsonForms
                         i18n={{ translate: translator as Translator }}
                         schema={schema}

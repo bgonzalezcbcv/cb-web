@@ -327,12 +327,13 @@ export enum Cycle {
 	Secondary = "secundaria",
 }
 
+export interface Grade {
+	id: string;
+	name: string;
+}
+
 export interface Group {
 	id: string;
-	cycle: Cycle;
-	class: string;
-	subgroup: string;
+	name: string;
 	year: string;
-	teachers: string[];
-	students: Student[]
 }

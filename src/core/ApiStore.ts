@@ -3,7 +3,7 @@ import axios from "axios";
 import { reaction } from "mobx";
 
 import {
-	Cycle, Group, DocumentType, FamilyMember, FinalEvaluation, FinalReportCardRequest,
+	Grade, Group, DocumentType, FamilyMember, FinalEvaluation, FinalReportCardRequest,
 	IntermediateEvaluation,
 	IntermediateReportCardRequest,
 	ReportApprovalState,
@@ -53,6 +53,12 @@ function defaultResponse<DataType>(data: DataType, error = ""): DefaultApiRespon
 		data,
 		error,
 	};
+}
+
+interface CreateGroupRequest {
+	gradeId: string;
+	groupName: string;
+	groupYear: string;
 }
 
 function defaultErrorResponse<DataType>(error: string): DefaultApiResponse<DataType> {
@@ -490,89 +496,86 @@ export async function fetchTeachers(id?: number, mock = false): Promise<DefaultA
 }
 
 export async function fetchGroups(): Promise<{ success: boolean; data?: Group[]; err: string }> {
-	// try {
-	// 	const config = {
-	// 		...baseConfig,
-	// 		method: "get",
-	// 		url: `/api/groups`,
-	// 	};
-	//
-	// 	const response = await axios(config);
-	//
-	// 	if (![200, 304].includes(response.status) || response.data.groups === undefined)
-	// 		return {
-	// 			success: false,
-	// 			err: "Unable to fetch groups",
-	// 		};
-	//
-	// 	return {
-	// 		success: true,
-	// 		data: response.data.groups as [Group],
-	// 		err: "",
-	// 	};
-	//
-	// 	//eslint-disable-next-line
-	// } catch (error: any) {
-	// 	return {
-	// 		success: false,
-	// 		err: error.message,
-	// 	};
-	// }
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: `/api/groups`,
+		};
 
-	const groups: Group[] = [
-		{
-			id: "1",
-			cycle: Cycle.Primary,
-			class: "3ro",
-			subgroup: "A",
-			year: "2022",
-			teachers: ["Juan Pérez", "María López", "Ana Gutiérrez", "Pedro González"],
-			students: [],
-		},
-		{
-			id: "2",
-			cycle: Cycle.Primary,
-			class: "4to",
-			subgroup: "A",
-			year: "2022",
-			teachers: ["Juan Pérez", "María López"],
-			students: [],
-		},
-		{
-			id: "3",
-			cycle: Cycle.Preschool,
-			class: "Inicial 3",
-			subgroup: "A",
-			year: "2022",
-			teachers: ["Juan Pérez", "María López"],
-			students: [],
-		},
-	]
+		const response = await axios(config);
 
-	return {
-		success: true,
-		data: groups,
-		err: "",
+		if (![200, 304].includes(response.status) || response.data.groups === undefined)
+			return {
+				success: false,
+				err: "Unable to fetch groups",
+			};
+
+		return {
+			success: true,
+			data: response.data.groups,
+			err: "",
+		};
+
+		//eslint-disable-next-line
+	} catch (error: any) {
+		return {
+			success: false,
+			err: error.message,
+		};
 	}
 }
 
-export async function createGroup(groupToCreate: Group): Promise<boolean> {
-	// try {
-	// 	const config = {
-	// 		...baseConfig,
-	// 		method: "post",
-	// 		url: "/api/groups",
-	// 		data: JSON.stringify({
-	// 			user: groupToCreate,
-	// 		}),
-	// 	};
-	//
-	// 	const response = await axios(config);
-	//
-	// 	return response.status === 201;
-	// } catch (e) {
-	// 	return false;
-	// }
+export async function createGroup(groupToCreate: CreateGroupRequest): Promise<boolean> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "post",
+			url: `/api/grades/${groupToCreate.gradeId}/groups`,
+			data: JSON.stringify({
+				group: {
+					name: groupToCreate.groupName,
+					year: groupToCreate.groupYear,
+				}
+			}),
+		};
 
-	return true;
+		const response = await axios(config);
+
+		return response.status === 201;
+	} catch (e) {
+		return false;
+	}
 }
+
+export async function fetchGrades(): Promise<{ success: boolean; data?: Grade[]; err: string }> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: `/api/grades`,
+		};
+
+		const response = await axios(config);
+
+		if (![200, 304].includes(response.status) || response.data.grades === undefined)
+			return {
+				success: false,
+				err: "Unable to fetch grades",
+			};
+
+		return {
+			success: true,
+			data: response.data.grades as Grade[],
+			err: "",
+		};
+
+		//eslint-disable-next-line
+	} catch (error: any) {
+		return {
+			success: false,
+			err: error.message,
+		};
+	}
+}
+
