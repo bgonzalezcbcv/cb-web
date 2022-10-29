@@ -169,8 +169,6 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 		}
 	}, [reports, fetchState, searchText]);
 
-	console.log(showDeletionSuccessAlert);
-
 	return (
 		<Box>
 			<Box className="SearchAndGroupFilter">
