@@ -3,55 +3,21 @@ import React, { useCallback, useEffect, useState } from "react";
 
 import * as API from "../../core/ApiStore";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { normalizeText } from "../../core/CoreHelper";
 import { ReportCard, ReportCard as ReportCardModel, Student } from "../../core/Models";
 import { Alert, Box, CircularProgress, IconButton, Input, Paper } from "@mui/material";
 import { FetchState } from "../../core/interfaces";
+
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { normalizeText } from "../../core/CoreHelper";
-
-const columns: GridColDef[] = [
-	{ field: "id", headerName: "ID", disableColumnMenu: false, flex: 1 },
-	{ field: "grade", headerName: "Grado", disableColumnMenu: false, flex: 2 },
-	{
-		field: "",
-		headerName: "Periodo",
-		disableColumnMenu: false,
-		flex: 2,
-		renderCell: (params): React.ReactElement => {
-			let period = "";
-
-			params.row.type === "Intermedio"
-				? (period = `${params.row.starting_month} - ${params.row.ending_month}`)
-				: (period = `${params.row.starting_month}`);
-
-			return <span>{period}</span>;
-		},
-	},
-	{ field: "type", headerName: "Tipo", disableColumnMenu: false, flex: 2 },
-	{
-		field: "passed",
-		headerName: "Aprobado",
-		disableColumnMenu: false,
-		flex: 1,
-		renderCell: (params): React.ReactElement => {
-			let cellValue = "N/A";
-			const isFinal = params.row.type === "Final";
-			const passed = params.row.passed === true;
-
-			if (isFinal) {
-				passed ? (cellValue = "SI") : (cellValue = "NO");
-			}
-
-			return <span>{cellValue}</span>;
-		},
-	},
-];
+import DeleteIcon from "@mui/icons-material/Delete";
+import { DeleteReportCardDialog, ReportDeletionSuccessDialog } from "./components/DeleteReportCardDialog";
 
 export const emptyReport: ReportCard = {
 	id: -1,
-	grade: "",
-	starting_month: "",
-	ending_month: "",
+	group: "",
+	starting_month: new Date(),
+	ending_month: new Date(),
+	year: new Date(),
 	type: "",
 	passed: false,
 };
@@ -68,8 +34,93 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 	const { student, rows, editable } = props;
 
 	const [reports, setReports] = useState<ReportCardModel[]>(rows ?? []);
-	const [fetchState, setFetchState] = React.useState(FetchState.initial);
+	const [fetchState, setFetchState] = useState(FetchState.initial);
 	const [searchText, setSearchText] = useState("");
+	const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+	const [deletionSuccess, setDeletionSuccess] = useState(false);
+	const [showDeletionSuccessAlert, setShowDeletionSuccessAlert] = useState(false);
+	const [reportToDeleteId, setReportToDeleteId] = useState<number | null>(null);
+
+	const handleDeleteAlert = (reportId: number): void => {
+		setShowDeleteAlert(true);
+		setReportToDeleteId(reportId);
+	};
+
+	const handleDeletion = async (setOpen: boolean, shouldDelete: boolean): Promise<void> => {
+		setShowDeleteAlert(setOpen);
+		if (shouldDelete) {
+			const response = await API.deleteReport(student.id, reportToDeleteId as number);
+			setDeletionSuccess(response.success);
+			setShowDeletionSuccessAlert(true);
+		}
+	};
+
+	const columns: GridColDef[] = [
+		{ field: "group", headerName: "Grupo", disableColumnMenu: false, flex: 2 },
+		{
+			field: "starting_month",
+			headerName: "Inicio de Periodo",
+			disableColumnMenu: false,
+			flex: 1,
+			renderCell: (params): React.ReactElement => {
+				let period = "";
+
+				params.row.type === "Intermedio"
+					? (period = `${params.row.starting_month.getMonth()}/${params.row.starting_month.getFullYear()}`)
+					: (period = `12/${params.row.year.getFullYear()}`);
+
+				return <span>{period}</span>;
+			},
+		},
+		{
+			field: "ending_month",
+			headerName: "Fin de Periodo",
+			disableColumnMenu: false,
+			flex: 1,
+			renderCell: (params): React.ReactElement => {
+				let period = "";
+
+				params.row.type === "Intermedio"
+					? (period = `${params.row.ending_month.getMonth()}/${params.row.ending_month.getFullYear()}`)
+					: (period = `12/${params.row.year.getFullYear()}`);
+
+				return <span>{period}</span>;
+			},
+		},
+		{ field: "type", headerName: "Tipo", disableColumnMenu: false, flex: 2 },
+		{
+			field: "passed",
+			headerName: "Aprobado",
+			disableColumnMenu: false,
+			flex: 1,
+			renderCell: (params): React.ReactElement => {
+				let cellValue = "N/A";
+				const isFinal = params.row.type === "Final";
+				const passed = params.row.passed === true;
+
+				if (isFinal) {
+					passed ? (cellValue = "SI") : (cellValue = "NO");
+				}
+
+				return <span>{cellValue}</span>;
+			},
+		},
+		{
+			field: "delete",
+			headerName: "Delete",
+			disableColumnMenu: false,
+			flex: 1,
+			renderCell: (params): React.ReactElement => {
+				return (
+					<Box>
+						<IconButton>
+							<DeleteIcon onClick={(): void => handleDeleteAlert(params.row.id)} />
+						</IconButton>
+					</Box>
+				);
+			},
+		},
+	];
 
 	const getReports = useCallback(async (): Promise<void> => {
 		if (rows) return;
@@ -118,6 +169,8 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 		}
 	}, [reports, fetchState, searchText]);
 
+	console.log(showDeletionSuccessAlert);
+
 	return (
 		<Box>
 			<Box className="SearchAndGroupFilter">
@@ -138,14 +191,14 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 						flexDirection: "column-reverse",
 						alignItems: "flex-end",
 					}}>
-					{editable && (
-						<IconButton color="secondary">
-							<AddCircleOutlineIcon />
-						</IconButton>
-					)}
+					<IconButton disabled={!editable} color="secondary">
+						<AddCircleOutlineIcon />
+					</IconButton>
 				</Box>
 				{printTable()}
 			</Paper>
+			<DeleteReportCardDialog show={showDeleteAlert} setOpen={handleDeletion} />
+			<ReportDeletionSuccessDialog success={deletionSuccess} show={showDeletionSuccessAlert} setOpen={setShowDeletionSuccessAlert} />
 		</Box>
 	);
 }

@@ -325,6 +325,7 @@ export async function fetchUser(id: string): Promise<DefaultApiResponse<UserInfo
 
 export async function fetchReports(studentId: string): Promise<{ success: boolean; data?: ReportCard[]; err: string }> {
 	try {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		const config = {
 			...baseConfig,
 			method: "get",
@@ -339,19 +340,21 @@ export async function fetchReports(studentId: string): Promise<{ success: boolea
 				reports: [
 					{
 						id: 1,
-						grade: "Primero",
-						starting_month: "Marzo",
-						ending_month: "Abril",
+						group: "Primero",
+						starting_month: new Date(2022, 4),
+						ending_month: new Date(2022, 5),
+						year: new Date(),
 						type: "Intermedio",
 						passed: false,
 					},
 					{
 						id: 2,
-						grade: "Primero",
-						starting_month: "2022",
-						ending_month: "",
+						group: "Primero",
+						starting_month: new Date(),
+						ending_month: new Date(),
+						year: new Date(2022, 11),
 						type: "Final",
-						passed: false,
+						passed: true,
 					},
 				],
 			},
@@ -374,6 +377,38 @@ export async function fetchReports(studentId: string): Promise<{ success: boolea
 		return {
 			success: false,
 			err: error.message,
+		};
+	}
+}
+
+export async function deleteReport(studentId: string, reportId: number): Promise<{ success: boolean }> {
+	try {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		const config = {
+			...baseConfig,
+			method: "delete",
+			url: `/api/reports/${reportId}`,
+		};
+
+		// const response = await axios(config);
+
+		const response = {
+			status: 200,
+		};
+
+		if (![200, 304].includes(response.status))
+			return {
+				success: false,
+			};
+
+		return {
+			success: true,
+		};
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	} catch (error: any) {
+		return {
+			success: false,
 		};
 	}
 }
