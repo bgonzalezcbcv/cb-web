@@ -2,7 +2,7 @@ import _ from "lodash";
 import axios from "axios";
 import { reaction } from "mobx";
 
-import { DocumentType, FamilyMember, ReportCard, Student, User, UserInfo } from "./Models";
+import { DocumentType, FamilyMember, ReportApprovalState, ReportCard, Student, User, UserInfo } from "./Models";
 import { DefaultApiResponse, UserRole } from "./interfaces";
 
 import { DataStore } from "./DataStore";
@@ -345,7 +345,7 @@ export async function fetchReports(studentId: string): Promise<{ success: boolea
 						ending_month: new Date(2022, 5),
 						year: new Date(),
 						type: "Intermedio",
-						passed: false,
+						passed: ReportApprovalState.NA,
 						report_url: "",
 					},
 					{
@@ -355,7 +355,7 @@ export async function fetchReports(studentId: string): Promise<{ success: boolea
 						ending_month: new Date(),
 						year: new Date(2022, 11),
 						type: "Final",
-						passed: true,
+						passed: ReportApprovalState.Pending,
 						report_url: "",
 					},
 				],
@@ -407,6 +407,40 @@ export async function deleteReport(studentId: string, reportId: number): Promise
 			success: true,
 		};
 
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	} catch (error: any) {
+		return {
+			success: false,
+		};
+	}
+}
+
+export async function setReportApprovalState(studentId: string, reportId: number, approvalState: ReportApprovalState): Promise<{ success: boolean }> {
+	try {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		const config = {
+			...baseConfig,
+			method: "put",
+			url: `/api/reports/${studentId}`,
+			parameters: {
+				approvalState: approvalState,
+			},
+		};
+
+		// const response = await axios(config);
+
+		const response = {
+			status: 200,
+		};
+
+		if (![200, 304].includes(response.status))
+			return {
+				success: false,
+			};
+
+		return {
+			success: true,
+		};
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	} catch (error: any) {
 		return {

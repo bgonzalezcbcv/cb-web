@@ -12,6 +12,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import DownloadIcon from "@mui/icons-material/Download";
 import AddTaskIcon from "@mui/icons-material/AddTask";
 import { DeleteReportCardDialog, ReportDeletionSuccessDialog } from "./components/DeleteReportCardDialog";
+import { ApprovalReportCardDialog, ReportApprovalSuccessDialog } from "./components/ApprovalReportCardDialog";
 
 export const emptyReport: ReportCard = {
 	id: -1,
@@ -40,11 +41,15 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 
 	const [reports, setReports] = useState<ReportCardModel[]>(rows ?? []);
 	const [fetchState, setFetchState] = useState(FetchState.initial);
+
+	const [reportToDeleteId, setReportToDeleteId] = useState<number | null>(null);
 	const [showDeleteAlert, setShowDeleteAlert] = useState(false);
 	const [deletionSuccess, setDeletionSuccess] = useState(false);
 	const [showDeletionSuccessAlert, setShowDeletionSuccessAlert] = useState(false);
-	const [reportToDeleteId, setReportToDeleteId] = useState<number | null>(null);
+
+	const [reportStateId, setReportStateId] = useState<number | null>(null);
 	const [isGradingModalOpen, setIsGradingModalOpen] = useState(false);
+	const [showApprovalSuccesAlert, setShowApprovalSuccesAlert] = useState(false);
 
 	const getReports = useCallback(async (): Promise<void> => {
 		if (rows) return;
@@ -79,11 +84,19 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 		}
 	};
 
-	const handleGrading = (studentId: typeof student.id, grade: ReportApprovalState): void => {
-		alert("Not implemented!");
+	const handleGrading = async (setOpen: boolean, approved: boolean): Promise<void> => {
+		setIsGradingModalOpen(false);
+		let response;
+		if (approved) response = await API.setReportApprovalState(student.id, reportStateId as number, ReportApprovalState.Approved);
+		else response = await API.setReportApprovalState(student.id, reportStateId as number, ReportApprovalState.Failed);
+
+		if (response.success) {
+			setShowApprovalSuccesAlert(true);
+		}
 	};
 
-	const handleGradingModalOpen = (studentId: typeof student.id) => {
+	const handleGradingModalOpen = (reportId: number): void => {
+		setReportStateId(reportId);
 		setIsGradingModalOpen(true);
 	};
 
@@ -159,9 +172,11 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 			renderCell: (params): React.ReactElement => {
 				return (
 					<Box>
-						<IconButton disabled={!editable} onClick={() => handleGradingModalOpen("1")}>
-							<AddTaskIcon />
-						</IconButton>
+						{params.row.type === "Final" && (
+							<IconButton disabled={!editable} onClick={(): void => handleGradingModalOpen(params.row.id)}>
+								<AddTaskIcon />
+							</IconButton>
+						)}
 					</Box>
 				);
 			},
@@ -225,12 +240,28 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 						</IconButton>
 					)}
 				</Box>
-				<DataGrid style={{ height: 380, width: "100%" }} rows={reports} columns={columns} pageSize={5} rowsPerPageOptions={[5]} />;
+				<DataGrid
+					style={{ height: 380, width: "100%" }}
+					rows={reports}
+					columns={columns}
+					pageSize={5}
+					rowsPerPageOptions={[5]}
+					initialState={{
+						sorting: {
+							sortModel: [{ field: "starting_month", sort: "desc" }],
+						},
+					}}
+				/>
+				;
 			</Paper>
 
 			<DeleteReportCardDialog show={showDeleteAlert} setOpen={handleDeletion} />
 
 			<ReportDeletionSuccessDialog success={deletionSuccess} show={showDeletionSuccessAlert} setOpen={setShowDeletionSuccessAlert} />
+
+			<ApprovalReportCardDialog show={isGradingModalOpen} setOpen={handleGrading} />
+
+			<ReportApprovalSuccessDialog show={showApprovalSuccesAlert} setOpen={setShowApprovalSuccesAlert} />
 		</Box>
 	);
 }

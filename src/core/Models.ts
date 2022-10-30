@@ -246,6 +246,7 @@ export interface UserInfo extends User {
 }
 
 export enum ReportApprovalState {
+	NA = "na",
 	Pending = "pending",
 	Approved = "approved",
 	Failed = "failed",
