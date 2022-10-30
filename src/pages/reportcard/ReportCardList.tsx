@@ -3,9 +3,8 @@ import React, { useCallback, useEffect, useState } from "react";
 
 import * as API from "../../core/ApiStore";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { normalizeText } from "../../core/CoreHelper";
 import { ReportCard, ReportCard as ReportCardModel, Student } from "../../core/Models";
-import { Alert, Box, CircularProgress, IconButton, Input, Paper } from "@mui/material";
+import { Alert, Box, CircularProgress, IconButton, Paper } from "@mui/material";
 import { FetchState } from "../../core/interfaces";
 
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -37,11 +36,29 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 
 	const [reports, setReports] = useState<ReportCardModel[]>(rows ?? []);
 	const [fetchState, setFetchState] = useState(FetchState.initial);
-	const [searchText, setSearchText] = useState("");
 	const [showDeleteAlert, setShowDeleteAlert] = useState(false);
 	const [deletionSuccess, setDeletionSuccess] = useState(false);
 	const [showDeletionSuccessAlert, setShowDeletionSuccessAlert] = useState(false);
 	const [reportToDeleteId, setReportToDeleteId] = useState<number | null>(null);
+
+	const getReports = useCallback(async (): Promise<void> => {
+		if (rows) return;
+
+		setFetchState(FetchState.loading);
+
+		const response = await API.fetchReports(student.id);
+
+		if (response.success && response.data) {
+			setReports(_.merge(emptyReportList, response.data));
+			setFetchState(FetchState.initial);
+		} else {
+			setFetchState(FetchState.failure);
+		}
+	}, [rows, setFetchState, setReports]);
+
+	useEffect((): void => {
+		getReports();
+	}, []);
 
 	const handleDeleteAlert = (reportId: number): void => {
 		setShowDeleteAlert(true);
@@ -78,7 +95,7 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 			field: "ending_month",
 			headerName: "Fin de Periodo",
 			disableColumnMenu: false,
-			flex: 1,
+			flex: 2,
 			renderCell: (params): React.ReactElement => {
 				let period = "";
 
@@ -114,7 +131,7 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 			flex: 1,
 			renderCell: (): React.ReactElement => {
 				return (
-					<IconButton>
+					<IconButton onClick={(): void => alert("No implementado!")}>
 						<DownloadIcon />
 					</IconButton>
 				);
@@ -123,13 +140,13 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 		{
 			field: "delete",
 			headerName: "Borrar",
-			disableColumnMenu: editable,
+			disableColumnMenu: false,
 			flex: 1,
 			renderCell: (params): React.ReactElement => {
 				return (
 					<Box>
-						<IconButton>
-							<DeleteIcon onClick={(): void => handleDeleteAlert(params.row.id)} />
+						<IconButton disabled={!editable} onClick={(): void => handleDeleteAlert(params.row.id)}>
+							<DeleteIcon />
 						</IconButton>
 					</Box>
 				);
@@ -137,65 +154,34 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 		},
 	];
 
-	const getReports = useCallback(async (): Promise<void> => {
-		if (rows) return;
+	if (fetchState === FetchState.loading)
+		return (
+			<Box style={{ padding: "20px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+				<CircularProgress />
+			</Box>
+		);
 
-		setFetchState(FetchState.loading);
-
-		const response = await API.fetchReports(student.id);
-
-		if (response.success && response.data) {
-			setReports(_.merge(emptyReportList, response.data));
-			setFetchState(FetchState.initial);
-		} else {
-			setFetchState(FetchState.failure);
-		}
-	}, [rows, setFetchState, setReports]);
-
-	useEffect((): void => {
-		getReports();
-	}, []);
-
-	const printTable = useCallback((): JSX.Element | null => {
-		switch (fetchState) {
-			case "loading":
-				return (
-					<Box style={{ padding: "20px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-						<CircularProgress />
-					</Box>
-				);
-			case "failure":
-				return (
-					<Box style={{ padding: "20px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-						<Alert severity="error" variant="outlined">
-							Falló la carga de boletines.
-						</Alert>
-					</Box>
-				);
-			case "initial": {
-				const foundItems = reports.filter((report) =>
-					Object.values(report).some((value) => value && normalizeText(value.toString()).includes(normalizeText(searchText)))
-				);
-
-				return <DataGrid style={{ height: 380, width: "100%" }} rows={foundItems} columns={columns} pageSize={5} rowsPerPageOptions={[5]} />;
-			}
-			default:
-				return null;
-		}
-	}, [reports, fetchState, searchText]);
+	if (fetchState === FetchState.failure)
+		return (
+			<Box style={{ padding: "20px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+				<Alert severity="error" variant="outlined">
+					Falló la carga de boletines.
+				</Alert>
+			</Box>
+		);
 
 	return (
 		<Box>
-			<Box className="SearchAndGroupFilter">
-				<Input
-					style={{ flex: 1, marginRight: "10%" }}
-					id="search"
-					type="text"
-					placeholder="Buscar..."
-					value={searchText}
-					onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => setSearchText(e.target.value)}
-				/>
-			</Box>
+			{/*<Box className="SearchAndGroupFilter">*/}
+			{/*	<Input*/}
+			{/*		style={{ flex: 1, marginRight: "10%" }}*/}
+			{/*		id="search"*/}
+			{/*		type="text"*/}
+			{/*		placeholder="Buscar..."*/}
+			{/*		value={searchText}*/}
+			{/*		onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => setSearchText(e.target.value)}*/}
+			{/*	/>*/}
+			{/*</Box>*/}
 
 			<Paper>
 				<Box
@@ -208,9 +194,11 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 						<AddCircleOutlineIcon />
 					</IconButton>
 				</Box>
-				{printTable()}
+				<DataGrid style={{ height: 380, width: "100%" }} rows={reports} columns={columns} pageSize={5} rowsPerPageOptions={[5]} />;
 			</Paper>
+
 			<DeleteReportCardDialog show={showDeleteAlert} setOpen={handleDeletion} />
+
 			<ReportDeletionSuccessDialog success={deletionSuccess} show={showDeletionSuccessAlert} setOpen={setShowDeletionSuccessAlert} />
 		</Box>
 	);
