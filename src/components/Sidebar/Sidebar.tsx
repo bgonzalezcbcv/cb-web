@@ -9,8 +9,6 @@ import { DataStore } from "../../core/DataStore";
 import { SidebarSection } from "../../core/interfaces";
 
 import SvgLogo from "../../assets/logo_horizontal.svg";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 
 import "./Sidebar.scss";
 
