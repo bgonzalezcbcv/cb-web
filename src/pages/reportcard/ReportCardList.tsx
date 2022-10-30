@@ -6,13 +6,13 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { ReportApprovalState, ReportCard, ReportCard as ReportCardModel, Student } from "../../core/Models";
 import { Alert, Box, CircularProgress, IconButton, Paper } from "@mui/material";
 import { FetchState } from "../../core/interfaces";
+import { DeleteReportCardDialog, ReportDeletionSuccessDialog } from "./components/DeleteReportCardDialog";
+import { ApprovalReportCardDialog, ReportApprovalSuccessDialog } from "./components/ApprovalReportCardDialog";
 
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DownloadIcon from "@mui/icons-material/Download";
 import AddTaskIcon from "@mui/icons-material/AddTask";
-import { DeleteReportCardDialog, ReportDeletionSuccessDialog } from "./components/DeleteReportCardDialog";
-import { ApprovalReportCardDialog, ReportApprovalSuccessDialog } from "./components/ApprovalReportCardDialog";
 
 export const emptyReport: ReportCard = {
 	id: -1,
@@ -84,14 +84,16 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 		}
 	};
 
-	const handleGrading = async (setOpen: boolean, approved: boolean): Promise<void> => {
+	const handleGrading = async (setOpen: boolean, approved: boolean | null): Promise<void> => {
 		setIsGradingModalOpen(false);
 		let response;
-		if (approved) response = await API.setReportApprovalState(student.id, reportStateId as number, ReportApprovalState.Approved);
-		else response = await API.setReportApprovalState(student.id, reportStateId as number, ReportApprovalState.Failed);
+		if (approved != null) {
+			if (approved) response = await API.setReportApprovalState(student.id, reportStateId as number, ReportApprovalState.Approved);
+			else response = await API.setReportApprovalState(student.id, reportStateId as number, ReportApprovalState.Failed);
 
-		if (response.success) {
-			setShowApprovalSuccesAlert(true);
+			if (response.success) {
+				setShowApprovalSuccesAlert(true);
+			}
 		}
 	};
 
@@ -252,7 +254,6 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 						},
 					}}
 				/>
-				;
 			</Paper>
 
 			<DeleteReportCardDialog show={showDeleteAlert} setOpen={handleDeletion} />

@@ -1,10 +1,11 @@
 import React from "react";
 
-import { Alert, Button, Dialog, DialogActions, DialogContent } from "@mui/material";
+import { Alert, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 interface ApprovalReportCardDialogProps {
 	show: boolean;
-	setOpen: (isOpen: boolean, approved: boolean) => void;
+	setOpen: (isOpen: boolean, approved: boolean | null) => void;
 }
 
 interface ReportApprovalSuccessDialogProps {
@@ -16,9 +17,24 @@ export function ApprovalReportCardDialog(props: ApprovalReportCardDialogProps): 
 	const { show, setOpen } = props;
 
 	return (
-		<Dialog open={show} onClose={(): void => setOpen(false, false)}>
+		<Dialog open={show} onClose={(): void => setOpen(false, null)}>
+			<DialogTitle
+				sx={{
+					display: "flex",
+					flexDirection: "column-reverse",
+					alignItems: "flex-end",
+				}}>
+				<IconButton
+					aria-label="close"
+					onClick={(): void => setOpen(false, null)}
+					sx={{
+						color: (theme) => theme.palette.grey[500],
+					}}>
+					<CloseIcon />
+				</IconButton>
+			</DialogTitle>
 			<DialogContent>
-				<Alert severity="warning">¿Desea aprobar este boletin?</Alert>
+				<Alert severity="info">¿Desea aprobar este boletin?</Alert>
 			</DialogContent>
 			<DialogActions sx={{ display: "flex", justifyContent: "space-around" }}>
 				<Button variant="outlined" color="success" onClick={(): void => setOpen(false, true)}>
