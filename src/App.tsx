@@ -55,6 +55,7 @@ function App(): React.ReactElement {
 												<Route path="/teachers" element={<Teachers editable={false} />} />
 												<Route path="/teachers/edit" element={<Teachers editable={true} />} />
 												<Route path="/groups" element={<Groups />} />
+												<Route path="/groups/:id" element={<Groups />} />
 												<Route path="*" element={<Navigate to="/student" />} />
 											</>
 										) : (

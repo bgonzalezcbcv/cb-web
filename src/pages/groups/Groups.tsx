@@ -1,5 +1,5 @@
-/*eslint-disable*/
 import React, {useCallback, useEffect, useState} from "react";
+import {useParams} from "react-router-dom";
 // import {useNavigate} from "react-router-dom";
 import {JsonForms} from "@jsonforms/react";
 import {Translator} from "@jsonforms/core";
@@ -17,7 +17,7 @@ import {
     Typography
 } from "@mui/material";
 import {DataGrid, GridColDef} from "@mui/x-data-grid";
-import {Cycle, Grade, Group} from "../../core/Models";
+import {Grade, Group} from "../../core/Models";
 import * as APIStore from "../../core/ApiStore";
 import Modal from "../../components/modal/Modal";
 import NumericInputControl, {NumericInputControlTester} from "../../components/NumericInput/NumericInputControl";
@@ -31,7 +31,6 @@ import uischema from "./ui.json";
 import "./Groups.scss";
 
 type GroupData = {
-    cycle: Cycle;
     gradeId: string;
     name: string;
     year: string;
@@ -97,14 +96,6 @@ const columns: GridColDef[] = [
     //             <IconButton onClick={() => {}}><AddIcon /></IconButton>
     //         )
     //     }},
-    // {field: "students", headerName: "Cantidad de estudiantes", disableColumnMenu: true, align: "center", flex: 1,
-    //     renderCell: (params) => {
-    //         const amount = params.value.length;
-    //
-    //         return (
-    //             <Typography fontSize={14}>{`${amount} estudiantes`}</Typography>
-    //         )
-    //     }},
     // {
     //     field: "seeStudents",
     //     headerName: "Ver estudiantes",
@@ -140,43 +131,49 @@ const renderers = [...materialRenderers, { tester: NumericInputControlTester, re
 
 export default function Groups(props: GroupsProps): React.ReactElement {
     const { rows } = props;
+    const { id } = useParams();
 
     const [groups, setGroups] = useState<Group[]>(rows ?? []);
     const [fetchState, setFetchState] = React.useState(FetchState.initial);
     const [createGroupModalOpen, setCreateGroupModalOpen] = React.useState(false);
     const [groupData, setGroupData] = React.useState<GroupData>({} as GroupData);
     const [hasFormErrors, setHasFormErrors] = useState<boolean>(false);
-    const [grades, setGrades] = useState<Grade[] | undefined>(undefined)
+    const [grades, setGrades] = useState<Grade[] | undefined>(undefined);
 
     const translator = (id: string, defaultMessage: string): string => {
         if (id.includes("required")) return "Este campo es requerido.";
         else return defaultMessage;
     };
 
-    const getGroups = useCallback(async (): Promise<void> => {
-        if (rows) return;
+    const fetchGroups = useCallback(async () => {
+        if (!id) {
+            if (rows) return;
 
-        setFetchState(FetchState.loading);
+            setFetchState(FetchState.loading);
 
-        const response = await APIStore.fetchGroups();
+            const response = await APIStore.fetchGroups();
 
-        if (response.success && response.data) {
-            setGroups(response.data);
-            setFetchState(FetchState.initial);
-        } else setFetchState(FetchState.failure);
-    }, [rows, setFetchState, setGroups]);
+            if (response.success && response.data) {
+                setGroups(response.data);
+                setFetchState(FetchState.initial);
+            } else setFetchState(FetchState.failure);
+        } else {
+            //TODO: Fetch groups for current user
+        }
+    }, [id, rows, setFetchState, setGroups]);
 
     useEffect((): void => {
-        getGroups();
+        fetchGroups();
     }, []);
 
     const handleCreateGroupModalOpen = useCallback(async () => {
-        const response = await APIStore.fetchGrades();
+        const gradesResponse = await APIStore.fetchGrades();
 
-        if (response.success && response.data) {
-            setGrades(response.data);
+        if (gradesResponse.success && gradesResponse.data) {
+            setGrades(gradesResponse.data);
         }
-        setCreateGroupModalOpen(true)
+
+        setCreateGroupModalOpen(true);
     }, []);
 
     const handleCreateGroupModalAccept = useCallback(async () => {
@@ -196,7 +193,7 @@ export default function Groups(props: GroupsProps): React.ReactElement {
         setGroupData({} as GroupData);
     }, []);
 
-    function setData(data: any, hasErrors: boolean): void {
+    function setData(data: GroupData, hasErrors: boolean): void {
         setGroupData(data);
         setHasFormErrors(hasErrors);
     }
@@ -253,29 +250,32 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 
             <Modal show={createGroupModalOpen} title={"Crear grupo"} onClose={handleCreateGroupModalClose} onAccept={handleCreateGroupModalAccept} acceptEnabled={!hasFormErrors}>
                 <Box>
-                    <Box sx={{display: "flex", flexDirection: "row", marginBottom: 2}}>
-                        <Box sx={{display: "flex", flexDirection: "column", marginRight: 2}}>
-                            <InputLabel id="cycle">Ciclo</InputLabel>
-                            <Select
-                                labelId="cycle"
-                                variant="standard"
-                                value={groupData.cycle ?? ""}
-                                defaultValue={"Maternal"}
-                                style={{width: 218}}
-                                onChange={(e): void => {
-                                    const {value} = e.target;
-                                    const newCycle = { ...groupData, cycle: value };
-                                    setData(newCycle, value.length === 0);
-                                }}
-                            >
-                                <MenuItem key={"maternal"} value={Cycle.Nursery}>{"Maternal"}</MenuItem>
-                                <MenuItem key={"inicial"} value={Cycle.Preschool}>{"Inicial"}</MenuItem>
-                                <MenuItem key={"primaria"} value={Cycle.Primary}>{"Primaria"}</MenuItem>
-                                <MenuItem key={"secundaria"} value={Cycle.Secondary}>{"Secundaria"}</MenuItem>
-                            </Select>
-                        </Box>
+                    <Box display="flex" flexDirection="row" marginBottom="2px">
+                        {/*<Box sx={{display: "flex", flexDirection: "column", marginRight: 2}}>*/}
+                        {/*    <InputLabel id="cycle">Ciclo</InputLabel>*/}
+                        {/*    <Select*/}
+                        {/*        labelId="cycle"*/}
+                        {/*        variant="standard"*/}
+                        {/*        value={groupData.cycle ?? ""}*/}
+                        {/*        defaultValue={"Maternal"}*/}
+                        {/*        style={{width: 218}}*/}
+                        {/*        onChange={(e): void => {*/}
+                        {/*            const {value} = e.target;*/}
+                        {/*            const newCycle = { ...groupData, cycle: value };*/}
+                        {/*            setData(newCycle, value.length === 0);*/}
+                        {/*        }}*/}
+                        {/*    >*/}
+                        {/*        {cycles?.map((value, index) => {return (*/}
+                        {/*            <MenuItem key={index} value={value}>{value}</MenuItem>*/}
+                        {/*        )})}*/}
+                        {/*        /!*<MenuItem key={"maternal"} value={Cycle.Nursery}>{"Maternal"}</MenuItem>*!/*/}
+                        {/*        /!*<MenuItem key={"inicial"} value={Cycle.Preschool}>{"Inicial"}</MenuItem>*!/*/}
+                        {/*        /!*<MenuItem key={"primaria"} value={Cycle.Primary}>{"Primaria"}</MenuItem>*!/*/}
+                        {/*        /!*<MenuItem key={"secundaria"} value={Cycle.Secondary}>{"Secundaria"}</MenuItem>*!/*/}
+                        {/*    </Select>*/}
+                        {/*</Box>*/}
 
-                        <Box sx={{display: "flex", flexDirection: "column"}}>
+                        <Box display="flex" flexDirection="column">
                             <InputLabel id="grade">Clase</InputLabel>
                             <Select
                                 labelId="grade"
@@ -284,7 +284,6 @@ export default function Groups(props: GroupsProps): React.ReactElement {
                                 style={{width: 218}}
                                 onChange={(e): void => {
                                     const {value} = e.target;
-                                    console.log(value);
                                     const newGrade = { ...groupData, gradeId: value };
                                     setData(newGrade, false);
                                 }}

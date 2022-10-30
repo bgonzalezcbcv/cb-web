@@ -579,3 +579,34 @@ export async function fetchGrades(): Promise<{ success: boolean; data?: Grade[];
 	}
 }
 
+export async function fetchCycles(): Promise<{ success: boolean; data?: Cycle[]; err: string }> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: `/api/cycles`,
+		};
+
+		const response = await axios(config);
+
+		if (![200, 304].includes(response.status) || response.data.cicles === undefined)
+			return {
+				success: false,
+				err: "Unable to fetch cycles",
+			};
+
+		return {
+			success: true,
+			data: response.data.cicles,
+			err: "",
+		};
+
+		//eslint-disable-next-line
+	} catch (error: any) {
+		return {
+			success: false,
+			err: error.message,
+		};
+	}
+}
+

@@ -3,6 +3,10 @@
   "elements": [
     {
       "type": "Control",
+      "scope": "#/properties/name"
+    },
+    {
+      "type": "Control",
       "scope": "#/properties/year",
       "options": {
         "format": "date",
@@ -10,10 +14,6 @@
         "dateSaveFormat": "YYYY",
         "views": ["year"]
       }
-    },
-    {
-      "type": "Control",
-      "scope": "#/properties/name"
     }
   ]
 }
