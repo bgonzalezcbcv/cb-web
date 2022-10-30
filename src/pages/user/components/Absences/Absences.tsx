@@ -21,11 +21,13 @@ interface AbscencesProps {
 	user: UserInfo;
 	setUser: (newUser: UserInfo) => void;
 	editable: boolean;
+	canAdd: boolean;
+	canDelete: boolean;
 }
 
 //todo: usar date input de eva.
 function Absences(props: AbscencesProps): JSX.Element {
-	const { user, setUser, editable } = props;
+	const { user, setUser, editable, canAdd, canDelete } = props;
 	const { absences } = user;
 
 	const [selectedRows, setSelectedRows] = useState<GridRowId[]>([]);
@@ -87,13 +89,17 @@ function Absences(props: AbscencesProps): JSX.Element {
 			<Box display="flex" justifyContent="flex-end" width="100%">
 				{editable && (
 					<>
-						<Button onClick={handleDeleteAbsencesRows}>
-							<DeleteOutlineIcon />
-						</Button>
+						{canDelete && (
+							<Button onClick={handleDeleteAbsencesRows}>
+								<DeleteOutlineIcon />
+							</Button>
+						)}
 
-						<Button onClick={openAddDialog}>
-							<AddIcon />
-						</Button>
+						{canAdd && (
+							<Button onClick={openAddDialog}>
+								<AddIcon />
+							</Button>
+						)}
 					</>
 				)}
 

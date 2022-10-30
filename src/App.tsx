@@ -1,5 +1,4 @@
 // First we import the named libraries: React, lodash, react-router-dom, etc.
-import _ from "lodash";
 import React from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { observer } from "mobx-react-lite";
@@ -32,10 +31,11 @@ function App(): React.ReactElement {
 			<BrowserRouter>
 				<Box className="container">
 					<ThemeProvider theme={theme}>
+						<Box className="navbar">{loggedUser && <Navbar />}</Box>
+
 						<Box className="content" style={{ display: "flex", width: "100%" }}>
-							{!_.isNil(loggedUser?.role) && <Sidebar sections={sidebarSections} />}
-							<Box style={{ display: "flex", flexDirection: "column", width: "100%" }}>
-								<Box className="navbar">{loggedUser && <Navbar />}</Box>
+							<Box style={{ display: "flex", flexDirection: "row", width: "100%" }}>
+								<Sidebar sections={sidebarSections} />
 
 								<Box color={"primary"} className="page-container" sx={{ bgcolor: "primary.light", margin: "0" }}>
 									<Routes>

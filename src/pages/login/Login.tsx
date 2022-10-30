@@ -44,9 +44,9 @@ function Login(): JSX.Element {
 		const { success, data, error } = await login(loginInfo.email, loginInfo.password);
 
 		if (success && data) {
-			const { email, token, name, surname, role } = data;
+			const { id, email, token, name, surname, role } = data;
 
-			if (dataStore.logIn(email, token, name, surname, role)) navigate("/");
+			if (dataStore.logIn(id, email, token, name, surname, role)) navigate("/");
 			else setErrMsg("Error al iniciar sesión. Intentar nuevamente.");
 		} else {
 			setErrMsg(error);

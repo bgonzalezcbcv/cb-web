@@ -3,9 +3,10 @@ import * as ReactRouter from "react-router";
 import { render } from "@testing-library/react";
 
 import * as ApiStore from "../../core/ApiStore";
+import { StudentPageMode } from "../../core/interfaces";
+import { mockRestrictionsComponent } from "../../core/TestHelper";
 import Student from "./Student";
 import { defaultStudent } from "./DefaultStudent";
-import { StudentPageMode } from "../../core/interfaces";
 
 describe("Student", () => {
 	beforeEach(() => {
@@ -15,6 +16,7 @@ describe("Student", () => {
 			error: "",
 		});
 		jest.spyOn(ReactRouter, "useNavigate").mockImplementation(() => jest.fn);
+		mockRestrictionsComponent();
 	});
 
 	it("should render the create page on default", () => {

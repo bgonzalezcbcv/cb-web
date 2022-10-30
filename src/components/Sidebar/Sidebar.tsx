@@ -1,15 +1,16 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { observer } from "mobx-react-lite";
 
 import Drawer from "@mui/material/Drawer";
 import { Accordion, AccordionDetails, AccordionSummary, Box, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { DataStore } from "../../core/DataStore";
 import { SidebarSection } from "../../core/interfaces";
 
-import "./Sidebar.scss";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import SvgLogo from "../../assets/logo_horizontal.svg";
+
+import "./Sidebar.scss";
 
 export interface SidebarProps {
 	sections: SidebarSection[];
@@ -52,18 +53,23 @@ function renderSections(sections: SidebarSection[]): React.ReactElement {
 function Sidebar(props: SidebarProps): React.ReactElement {
 	const { sections } = props;
 
+	const navigate = useNavigate();
+
+	const isDrawerOpen = DataStore.getInstance().isDrawerOpen;
+
 	return (
 		<Box sx={{ boxShadow: 8, color: "primary" }}>
 			<Drawer //
-				className="sidebar-container"
-				variant="permanent"
+				className={`sidebar-container ${!isDrawerOpen && "sidebar-container-hidden"}`}
+				variant="persistent"
 				anchor="left"
-				sx={{ bgcolor: "primary", "& .MuiDrawer-paper": { boxSizing: "border-box" } }}>
-				<img className="logo" src={SvgLogo}></img>
+				sx={{ bgcolor: "primary", "& .MuiDrawer-paper": { boxSizing: "border-box" } }}
+				open={isDrawerOpen}>
+				<img className="logo" src={SvgLogo} alt="logo" onClick={(): void => navigate("/")} />
 				{renderSections(sections)}
 			</Drawer>
 		</Box>
 	);
 }
 
-export default Sidebar;
+export default observer(Sidebar);

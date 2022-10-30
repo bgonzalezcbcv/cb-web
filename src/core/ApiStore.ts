@@ -35,17 +35,6 @@ axios.interceptors.response.use(
 	}
 );
 
-interface SignInResponseData {
-	id: number;
-	email: string;
-	ci: string;
-	name: string;
-	surname: string;
-	birthdate: string;
-	address: string;
-	role?: UserRole;
-}
-
 function defaultResponse<DataType>(data: DataType, error = ""): DefaultApiResponse<DataType> {
 	return {
 		success: true,
@@ -85,13 +74,13 @@ export async function login(email: string, password: string): Promise<DefaultApi
 
 		if (!(response.data && response.headers)) return errObject;
 
-		const { name, surname }: SignInResponseData = response.data;
+		const { id, name, surname, role } = response.data.user;
 
 		const [bearer, token] = (response.headers["authorization"] ?? "").split(" ");
 
 		if (bearer !== "Bearer") return errObject;
 
-		return defaultResponse({ email, token, name, surname, role: UserRole.Administrativo });
+		return defaultResponse({ id, email, token, name, surname, role });
 		// eslint-disable-next-line
 	} catch (error: any) {
 		let err = "";
@@ -277,6 +266,7 @@ export async function createUser(userToCreate: UserInfo): Promise<DefaultApiResp
 export async function fetchUser(id: string): Promise<DefaultApiResponse<UserInfo>> {
 	try {
 		return defaultResponse({
+			id: 1,
 			role: UserRole.Administrador,
 			email: "test@test.com",
 			name: "Testing",

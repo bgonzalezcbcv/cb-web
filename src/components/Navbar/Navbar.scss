@@ -30,12 +30,13 @@
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
+	gap: 6px;
 }
 
 .notifications-icon {
 	display: flex;
 	flex: 1;
-	height: 100px;
+	height: 50px;
 }
 #root > div > div > div.navbar > div > header {
 	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
