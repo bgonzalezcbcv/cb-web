@@ -3,13 +3,14 @@ import React, { useCallback, useEffect, useState } from "react";
 
 import * as API from "../../core/ApiStore";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { ReportCard, ReportCard as ReportCardModel, Student } from "../../core/Models";
+import { ReportApprovalState, ReportCard, ReportCard as ReportCardModel, Student } from "../../core/Models";
 import { Alert, Box, CircularProgress, IconButton, Paper } from "@mui/material";
 import { FetchState } from "../../core/interfaces";
 
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DownloadIcon from "@mui/icons-material/Download";
+import AddTaskIcon from "@mui/icons-material/AddTask";
 import { DeleteReportCardDialog, ReportDeletionSuccessDialog } from "./components/DeleteReportCardDialog";
 
 export const emptyReport: ReportCard = {
@@ -19,7 +20,7 @@ export const emptyReport: ReportCard = {
 	ending_month: new Date(),
 	year: new Date(),
 	type: "",
-	passed: false,
+	passed: ReportApprovalState.Pending,
 	report_url: "",
 };
 
@@ -29,10 +30,13 @@ interface ReportCardListProps {
 	student: Student;
 	rows?: ReportCard[];
 	editable: boolean;
+	canAdd: boolean;
+	canDelete: boolean;
+	canApprove: boolean;
 }
 
 export default function ReportCardList(props: ReportCardListProps): React.ReactElement {
-	const { student, rows, editable } = props;
+	const { student, rows, editable, canAdd, canDelete, canApprove } = props;
 
 	const [reports, setReports] = useState<ReportCardModel[]>(rows ?? []);
 	const [fetchState, setFetchState] = useState(FetchState.initial);
@@ -40,6 +44,7 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 	const [deletionSuccess, setDeletionSuccess] = useState(false);
 	const [showDeletionSuccessAlert, setShowDeletionSuccessAlert] = useState(false);
 	const [reportToDeleteId, setReportToDeleteId] = useState<number | null>(null);
+	const [isGradingModalOpen, setIsGradingModalOpen] = useState(false);
 
 	const getReports = useCallback(async (): Promise<void> => {
 		if (rows) return;
@@ -49,7 +54,7 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 		const response = await API.fetchReports(student.id);
 
 		if (response.success && response.data) {
-			setReports(_.merge(emptyReportList, response.data));
+			setReports(_.merge(emptyReportList, response.data)); // TODO: see if the merge is necessary when the endpoint is functional
 			setFetchState(FetchState.initial);
 		} else {
 			setFetchState(FetchState.failure);
@@ -72,6 +77,14 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 			setDeletionSuccess(response.success);
 			setShowDeletionSuccessAlert(true);
 		}
+	};
+
+	const handleGrading = (studentId: typeof student.id, grade: ReportApprovalState): void => {
+		alert("Not implemented!");
+	};
+
+	const handleGradingModalOpen = (studentId: typeof student.id) => {
+		setIsGradingModalOpen(true);
 	};
 
 	const columns: GridColDef[] = [
@@ -138,6 +151,22 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 			},
 		},
 		{
+			field: "approval",
+			headerName: "Aprobar",
+			hide: !canApprove,
+			disableColumnMenu: false,
+			flex: 1,
+			renderCell: (params): React.ReactElement => {
+				return (
+					<Box>
+						<IconButton disabled={!editable} onClick={() => handleGradingModalOpen("1")}>
+							<AddTaskIcon />
+						</IconButton>
+					</Box>
+				);
+			},
+		},
+		{
 			field: "delete",
 			headerName: "Borrar",
 			disableColumnMenu: false,
@@ -145,7 +174,7 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 			renderCell: (params): React.ReactElement => {
 				return (
 					<Box>
-						<IconButton disabled={!editable} onClick={(): void => handleDeleteAlert(params.row.id)}>
+						<IconButton disabled={!editable && !canDelete} onClick={(): void => handleDeleteAlert(params.row.id)}>
 							<DeleteIcon />
 						</IconButton>
 					</Box>
@@ -190,9 +219,11 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 						flexDirection: "column-reverse",
 						alignItems: "flex-end",
 					}}>
-					<IconButton disabled={!editable} color="secondary">
-						<AddCircleOutlineIcon />
-					</IconButton>
+					{canAdd && (
+						<IconButton disabled={!editable} color="secondary">
+							<AddCircleOutlineIcon />
+						</IconButton>
+					)}
 				</Box>
 				<DataGrid style={{ height: 380, width: "100%" }} rows={reports} columns={columns} pageSize={5} rowsPerPageOptions={[5]} />;
 			</Paper>

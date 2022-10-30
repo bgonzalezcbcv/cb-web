@@ -15,6 +15,7 @@ import Restrict from "../../components/Restrict/Restrict";
 import { defaultStudent, emptyStudent } from "./DefaultStudent";
 
 import "./Student.scss";
+import ReportCardList from "../reportcard/ReportCardList";
 
 const { FamilyForm, StudentInfo, AdministrativeInfo, CreateStudentDialog, TabPanel, StudentPageHeader, StudentPageTabs, EnrollmentQuestions } =
 	StudentComponents;
@@ -135,6 +136,27 @@ export default function Student(props: StudentProps): React.ReactElement {
 							newWarnings[3] = warning;
 							setWarnings(newWarnings);
 						}}
+					/>
+				</Restrict>
+			),
+		},
+		{
+			label: "Boletines",
+			dataCY: "reportCardListTab",
+			panel: (
+				<Restrict
+					to={[UserRole.Docente, UserRole.Adscripto, UserRole.Director, UserRole.Administrador]}
+					fallback={
+						<Alert severity="info" variant="outlined">
+							<Typography variant="body1">No tiene permisos para ver esta información.</Typography>
+						</Alert>
+					}>
+					<ReportCardList //
+						student={student}
+						editable={isEditable}
+						canAdd={isEditable}
+						canDelete={restrictEditionTo([UserRole.Director, UserRole.Administrador], isEditable)}
+						canApprove={restrictEditionTo([UserRole.Director, UserRole.Administrador], isEditable)}
 					/>
 				</Restrict>
 			),

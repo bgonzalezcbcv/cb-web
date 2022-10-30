@@ -245,6 +245,12 @@ export interface UserInfo extends User {
 	}[];
 }
 
+export enum ReportApprovalState {
+	Pending = "pending",
+	Approved = "approved",
+	Failed = "failed",
+}
+
 export interface ReportCard {
 	id: number;
 	group: string;
@@ -252,6 +258,6 @@ export interface ReportCard {
 	ending_month: Date;
 	year: Date;
 	type: string;
-	passed: boolean;
+	passed: ReportApprovalState;
 	report_url: string;
 }
