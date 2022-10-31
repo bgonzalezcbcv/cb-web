@@ -6,17 +6,12 @@ import { useNavigate } from "react-router-dom";
 import { DataGrid, GridApi, GridCellValue, GridColDef } from "@mui/x-data-grid";
 import { Alert, Autocomplete, Box, Button, Card, CircularProgress, Input, Paper, TextField, Typography } from "@mui/material";
 import * as APIStore from "../../core/ApiStore";
+import { FetchState } from "../../core/interfaces";
+import { normalizeText } from "../../core/CoreHelper";
 import { Student as StudentModel } from "../../core/Models";
 import { emptyStudents } from "../student/DefaultStudent";
 
 import "./Students.scss";
-
-enum FetchState {
-	initial = "initial",
-	loading = "loading",
-	failure = "failure",
-}
-
 const columns: GridColDef[] = [
 	{ field: "id", headerName: "ID", disableColumnMenu: false, flex: 1 },
 	{ field: "ci", headerName: "CI", disableColumnMenu: false, flex: 2 },
@@ -97,7 +92,9 @@ export default function Students(props: StudentsProps) {
 					</Box>
 				);
 			case "initial":
-				const foundItems = students.filter((student) => Object.values(student).some((value) => value && value.toString().includes(searchText)));
+				const foundItems = students.filter((student) =>
+					Object.values(student).some((value) => value && normalizeText(value.toString()).includes(normalizeText(searchText)))
+				);
 
 				return (
 					<DataGrid //

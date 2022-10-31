@@ -83,3 +83,10 @@ export function dateBeforeOrEqualThan(date1: string, date2: string, separator = 
 
 	return y2 >= y1 && m2 >= m1 && d2 >= d1;
 }
+
+export function normalizeText(str: string): string {
+	return str
+		.normalize("NFD")
+		.replace(/[\u0300-\u036f]/g, "")
+		.toLowerCase();
+}

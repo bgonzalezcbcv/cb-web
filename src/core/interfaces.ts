@@ -66,3 +66,9 @@ export interface DefaultApiResponse<DataType> {
 	data?: DataType | undefined;
 	error: string;
 }
+
+export enum FetchState {
+	initial = "initial",
+	loading = "loading",
+	failure = "failure",
+}

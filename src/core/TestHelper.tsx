@@ -14,7 +14,7 @@ export function mockRestrictEditionTo(): jest.SpyInstance<unknown> {
 	);
 }
 
-export function mockUseIsAuthenticated() {
+export function mockUseIsAuthenticated(): void {
 	jest.mock("../hooks/useIsAuthenticated", () => ({
 		default: (): boolean => true,
 	}));

@@ -244,3 +244,21 @@ export interface UserInfo extends User {
 		upload_date: string;
 	}[];
 }
+
+export enum ReportApprovalState {
+	NA = "na",
+	Pending = "pending",
+	Approved = "approved",
+	Failed = "failed",
+}
+
+export interface ReportCard {
+	id: number;
+	group: string;
+	starting_month: Date;
+	ending_month: Date;
+	year: Date;
+	type: string;
+	passed: ReportApprovalState;
+	report_url: string;
+}

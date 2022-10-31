@@ -2,7 +2,7 @@ import _ from "lodash";
 import axios from "axios";
 import { reaction } from "mobx";
 
-import { DocumentType, FamilyMember, Student, User, UserInfo } from "./Models";
+import { DocumentType, FamilyMember, ReportApprovalState, ReportCard, Student, User, UserInfo } from "./Models";
 import { DefaultApiResponse, UserRole } from "./interfaces";
 
 import { DataStore } from "./DataStore";
@@ -320,5 +320,115 @@ export async function fetchUser(id: string): Promise<DefaultApiResponse<UserInfo
 		//eslint-disable-next-line
 	} catch (error: any) {
 		return defaultErrorResponse(error.message);
+	}
+}
+
+export async function fetchReports(studentId: string): Promise<{ success: boolean; data?: ReportCard[]; err: string }> {
+	try {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: `/api/reports/${studentId}`,
+		};
+
+		// const response = await axios(config);
+
+		const response = {
+			status: 200,
+			data: {
+				reports: [
+					{
+						id: 1,
+						group: "Primero",
+						starting_month: new Date(2022, 4),
+						ending_month: new Date(2022, 5),
+						year: new Date(),
+						type: "Intermedio",
+						passed: ReportApprovalState.NA,
+						report_url: "",
+					},
+					{
+						id: 2,
+						group: "Primero",
+						starting_month: new Date(),
+						ending_month: new Date(),
+						year: new Date(2022, 11),
+						type: "Final",
+						passed: ReportApprovalState.Pending,
+						report_url: "",
+					},
+				],
+			},
+		};
+
+		return {
+			success: true,
+			data: response.data.reports as ReportCard[],
+			err: "",
+		};
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	} catch (error: any) {
+		return {
+			success: false,
+			err: error?.message,
+		};
+	}
+}
+
+export async function deleteReport(studentId: string, reportId: number): Promise<{ success: boolean }> {
+	try {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		const config = {
+			...baseConfig,
+			method: "delete",
+			url: `/api/reports/${reportId}`,
+		};
+
+		// const response = await axios(config);
+
+		const response = {
+			status: 200,
+		};
+
+		return {
+			success: true,
+		};
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	} catch (error: any) {
+		return {
+			success: false,
+		};
+	}
+}
+
+export async function setReportApprovalState(studentId: string, reportId: number, approvalState: ReportApprovalState): Promise<{ success: boolean }> {
+	try {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		const config = {
+			...baseConfig,
+			method: "put",
+			url: `/api/reports/${studentId}`,
+			parameters: {
+				approvalState: approvalState,
+			},
+		};
+
+		// const response = await axios(config);
+
+		const response = {
+			status: 200,
+		};
+
+		return {
+			success: true,
+		};
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	} catch (error: any) {
+		return {
+			success: false,
+		};
 	}
 }
