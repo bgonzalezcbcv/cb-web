@@ -41,7 +41,6 @@ function App(): React.ReactElement {
 									<Routes>
 										{loggedUser ? (
 											<>
-												<Route path="/login" element={<Login />} />
 												<Route path="/student" element={<Student mode={StudentPageMode.create} />} />
 												<Route path="/student/:id" element={<Student mode={StudentPageMode.view} />} />
 												<Route path="/student/:id/edit" element={<Student mode={StudentPageMode.edit} />} />
