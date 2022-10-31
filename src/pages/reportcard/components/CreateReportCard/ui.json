@@ -1,0 +1,25 @@
+{
+	"type": "HorizontalLayout",
+	"elements": [
+		{
+			"type": "Control",
+			"scope": "properties/start_period",
+			"options": {
+				"format": "date",
+				"views": ["month", "year"],
+				"dateFormat": "MM/YYYY",
+				"dateSaveFormat": "MM-YYYY"
+			}
+		},
+		{
+			"type": "Control",
+			"scope": "properties/end_period",
+			"options": {
+				"format": "date",
+				"views": ["month", "year"],
+				"dateFormat": "MM/YYYY",
+				"dateSaveFormat": "MM-YYYY"
+			}
+		}
+	]
+}

@@ -1,0 +1,18 @@
+{
+	"type": "object",
+	"properties": {
+		"start_period": {
+			"type": "string",
+			"title": "Comienzo del período",
+			"minLength": 1,
+			"errorMessage": "Debe ser una fecha válida."
+		},
+		"end_period": {
+			"type": "string",
+			"title": "Fin del período",
+			"minLength": 1,
+			"errorMessage": "Debe ser una fecha válida."
+		}
+	},
+	"required": ["start_period", "end_period"]
+}

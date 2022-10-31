@@ -2,7 +2,19 @@ import _ from "lodash";
 import axios from "axios";
 import { reaction } from "mobx";
 
-import { DocumentType, FamilyMember, FinalEvaluation, IntermediateEvaluation, ReportApprovalState, ReportCard, Student, User, UserInfo } from "./Models";
+import {
+	DocumentType,
+	FamilyMember,
+	FinalReportCardRequest,
+	FinalReportCardResponse,
+	IntermediateReportCardRequest,
+	IntermediateReportCardResponse,
+	ReportApprovalState,
+	ReportCard,
+	Student,
+	User,
+	UserInfo,
+} from "./Models";
 import { DefaultApiResponse, UserRole } from "./interfaces";
 
 import { DataStore } from "./DataStore";
@@ -411,6 +423,44 @@ export async function setReportApprovalState(studentId: string, reportId: number
 		return {
 			success: false,
 		};
+	}
+}
+export async function createFinalReportCard(finalReport: FinalReportCardRequest, studentId: string): Promise<DefaultApiResponse<FinalReportCardResponse>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "post",
+			url: `/api/students/${studentId}/final_evaluation`,
+			data: JSON.stringify({
+				final_evaluation: finalReport,
+			}),
+		};
+
+		const response = await axios(config);
+		return defaultResponse(response.data.final_evaluation);
+	} catch (e) {
+		return defaultErrorResponse("No se ha podido crear el boletín.");
+	}
+}
+
+export async function createIntermediateReportCard(
+	finalReport: IntermediateReportCardRequest,
+	studentId: string
+): Promise<DefaultApiResponse<IntermediateReportCardResponse>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "post",
+			url: `/api/students/${studentId}/intermediate_evaluation`,
+			data: JSON.stringify({
+				intermediate_evaluation: finalReport,
+			}),
+		};
+
+		const response = await axios(config);
+		return defaultResponse(response.data.intermediate_evaluation);
+	} catch (e) {
+		return defaultErrorResponse("No se ha podido crear el boletín.");
 	}
 }
 

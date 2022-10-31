@@ -13,6 +13,7 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DownloadIcon from "@mui/icons-material/Download";
 import AddTaskIcon from "@mui/icons-material/AddTask";
+import CreateReportCardModal from "./components/CreateReportCard/CreateReportCard";
 
 export const emptyReport: ReportCard = {
 	id: -1,
@@ -50,6 +51,8 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 	const [reportStateId, setReportStateId] = useState<number | null>(null);
 	const [isGradingModalOpen, setIsGradingModalOpen] = useState(false);
 	const [showApprovalSuccesAlert, setShowApprovalSuccesAlert] = useState(false);
+
+	const [showCreateReport, setShowCreateReport] = useState<boolean>(false);
 
 	const getReports = useCallback(async (): Promise<void> => {
 		if (rows) return;
@@ -236,7 +239,7 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 					alignItems: "flex-end",
 				}}>
 				{canAdd && (
-					<IconButton disabled={!editable} color="secondary">
+					<IconButton disabled={!editable} color="secondary" onClick={(): void => setShowCreateReport(true)}>
 						<AddCircleOutlineIcon />
 					</IconButton>
 				)}
@@ -261,6 +264,7 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 			<ApprovalReportCardDialog show={isGradingModalOpen} setOpen={handleGrading} />
 
 			<ReportApprovalSuccessDialog show={showApprovalSuccesAlert} setOpen={setShowApprovalSuccesAlert} />
+			{showCreateReport ? <CreateReportCardModal show={true} onClose={(): void => setShowCreateReport(false)} student={student} /> : null}
 		</Box>
 	);
 }
