@@ -158,26 +158,59 @@ Cypress.Commands.add("testInput", (inputID: string, errorLabelID: string, incorr
 	cy.wait(100);
 });
 
-Cypress.Commands.add("testUserCanNavigateByRole", (userRole: UserRole) => {
+Cypress.Commands.add("testUserCanNavigateByRole", (userRole: string) => {
 	/*TODO: Get the routes from a better source, as this only includes routes that are available in the apps' sidebar.*/
-	const routesByRole: string[] = getSidebarSectionsByUser({ email: "", name: "", role: userRole, surname: "", token: "" })
-		.map((sidebarSection: SidebarSection) => {
-			return sidebarSection.items.map((sidebarSectionItem: SidebarItem) => {
-				return sidebarSectionItem.navigationRoute;
-			});
-		})
-		.flat();
 
-	const routesByRoleNoDuplicates = routesByRole.filter((route: string, index: number) => {
-		return routesByRole.indexOf(route) === index;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const loggedUser = JSON.parse(sessionStorage.getItem("store") as any).loggedUser;
+
+	const loggedUserId = loggedUser.id;
+
+	cy.fixture("routesByUserRole").then((json) => {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const selectedRoleRoutes = json.routesByRole.find((routes: any) => {
+			return routes.role === userRole;
+		});
+
+		const { allRoutes, ownRoutes, personalRoutes } = selectedRoleRoutes;
+
+		cy.log("testing personalRoutes");
+		let routesToTest: string[] = personalRoutes;
+		cy.log(personalRoutes);
+		cy.log(routesToTest.toString());
+
+		cy.log(routesToTest.toString());
+
+		for (const route of routesToTest) {
+			const routeWithId = route.replace("$id", loggedUserId);
+
+			cy.log(`visiting ${routeWithId}`);
+			cy.visit(routeWithId);
+			cy.url().should("eq", Cypress.config().baseUrl + routeWithId);
+		}
+
+		cy.log("testing ownRoutes");
+		routesToTest = routesToTest.concat(ownRoutes);
+
+		for (const route of routesToTest) {
+			const routeWithId = route.replace("$id", loggedUserId);
+
+			cy.log(`visiting ${routeWithId}`);
+			cy.visit(routeWithId);
+			cy.url().should("eq", Cypress.config().baseUrl + routeWithId);
+		}
+
+		cy.log("testing allRoutes");
+		routesToTest = routesToTest.concat(allRoutes);
+
+		for (const route of routesToTest) {
+			const routeWithId = route.replace("$id", loggedUserId);
+
+			cy.log(`visiting ${routeWithId}`);
+			cy.visit(routeWithId);
+			cy.url().should("eq", Cypress.config().baseUrl + routeWithId);
+		}
 	});
-
-	cy.log(`routes that will be tested: ${routesByRoleNoDuplicates.toString()}`);
-
-	for (const route of routesByRoleNoDuplicates) {
-		cy.visit(route);
-		cy.url().should("eq", Cypress.config().baseUrl + route);
-	}
 });
 
 Cypress.Commands.add("testUserShouldNotNavigateByRole", (userRole: UserRole) => {
@@ -251,7 +284,7 @@ declare global {
 			fillStudentFamilyInfo(): Chainable<void>;
 			testInput(inputID: string, errorLabelID: string, incorrectInput: string, correctInput: string, errorMessage?: string): Chainable<void>;
 			typeAndWait(input: string): Chainable<Element>;
-			testUserCanNavigateByRole(userRole: UserRole): Chainable<void>;
+			testUserCanNavigateByRole(userRole: string): Chainable<void>;
 			testUserShouldNotNavigateByRole(userRole: UserRole): Chainable<void>;
 			/* drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
 			dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
@@ -259,4 +292,4 @@ declare global {
 		}
 	}
 }
-export { };
+export {};

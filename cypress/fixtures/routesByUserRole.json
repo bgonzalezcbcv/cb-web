@@ -1,0 +1,101 @@
+{
+	"routesByRole": [
+		{
+			"role": "administrative",
+			"allRoutes": [
+				"/user/$id",
+				"/user/$id/edit",
+				"/users",
+				"/teachers",
+				"/creategroup",
+				"/groups",
+				"/group/$id",
+				"/group/$id/edit",
+				"/createstudent",
+				"/student/$id",
+				"/student/$id/edit",
+				"/students/active",
+				"/students/pending",
+				"/students/inactive"
+			],
+			"ownRoutes": [],
+			"personalRoutes": []
+		},
+		{
+			"role": "support teacher",
+
+			"allRoutes": [],
+			"ownRoutes": [
+				"/user/$id/edit",
+				"/teachers/$id",
+				"/groups/$id",
+				"/group/$id",
+				"/student/$id",
+				"/student/$id/edit",
+				"/students/pending",
+				"/students/$id",
+				"/students/$id/active",
+				"/students/$id/pending"
+			],
+			"personalRoutes": []
+		},
+		{
+			"role": "principal",
+			"allRoutes": ["/students/$id/pending"],
+			"ownRoutes": [
+				"/user/$id",
+				"/user/$id/edit",
+				"/groups/$id",
+				"/group/$id",
+				"/group/$id/edit",
+				"/student/$id",
+				"/student/$id/edit",
+				"/students/pending",
+				"/students/$id",
+				"/students/$id/active"
+			],
+			"personalRoutes": ["/user/$id", "/user/$id/edit"]
+		},
+		{
+			"role": "teacher",
+			"allRoutes": [],
+			"ownRoutes": ["/groups/$id", "/group/$id", "/student/$id", "/student/$id/edit", "/students/$id", "/students/$id/active"],
+			"personalRoutes": ["/user/$id", "/user/$id/edit"]
+		},
+		{
+			"role": "recepcionist",
+			"allRoutes": ["/teachers", "/groups", "/group/$id", "/student/$id", "/student/$id/edit", "/students/active", "/students/pending"],
+			"ownRoutes": ["/user/$id"],
+			"personalRoutes": ["/user/$id/edit"]
+		},
+		{
+			"role": "administrator",
+			"allRoutes": [
+				"/createuser",
+				"/user/$id",
+				"/user/$id/edit",
+				"/users",
+				"/teachers",
+				"/teachers/$id",
+				"/creategroup",
+				"/groups",
+				"/groups/$id",
+				"/group/$id",
+				"/group/$id/edit",
+				"/createstudent",
+				"/student/$id",
+				"/student/$id/edit",
+				"/students/active",
+				"/students/pending",
+				"/students/inactive",
+				"/students/$id",
+				"/students/$id/active",
+				"/students/$id/pending",
+				"/students/$id/inactive",
+				"/login"
+			],
+			"ownRoutes": [],
+			"personalRoutes": []
+		}
+	]
+}

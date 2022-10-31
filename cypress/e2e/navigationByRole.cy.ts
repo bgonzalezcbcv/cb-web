@@ -1,11 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { UserRole } from "../../src/core/interfaces";
 
 describe("navigationByRole", () => {
-	it("allows Administrador to navigate where they need", () => {
-		//TODO: Provide user login credentials for each of the roles
-		cy.login();
+	it("allows Administrador to navigate where they need to", () => {
+		cy.fixture("loginUsers").then((json) => {
+			const userCredentials = json.users.find((user: any) => {
+				return user.role === "administrator";
+			});
 
-		cy.testUserCanNavigateByRole(UserRole.Administrador);
+			cy.login(userCredentials.email, userCredentials.password);
+			cy.testUserCanNavigateByRole(userCredentials.role);
+		});
 	});
 
 	it("does not allow Administrador to navigate where they should not", () => {
@@ -15,10 +20,14 @@ describe("navigationByRole", () => {
 	});
 
 	it("allows Administrativo to navigate where they need", () => {
-		//TODO: Provide user login credentials for each of the roles
-		cy.login();
+		cy.fixture("loginUsers").then((json) => {
+			const userCredentials = json.users.find((user: any) => {
+				return user.role === "administrative";
+			});
 
-		cy.testUserCanNavigateByRole(UserRole.Administrativo);
+			cy.login(userCredentials.email, userCredentials.password);
+			cy.testUserCanNavigateByRole(userCredentials.role);
+		});
 	});
 
 	it("does not allow Administrativo to navigate where they should not", () => {
@@ -28,10 +37,14 @@ describe("navigationByRole", () => {
 	});
 
 	it("allows Adscripto to navigate where they need", () => {
-		//TODO: Provide user login credentials for each of the roles
-		cy.login();
+		cy.fixture("loginUsers").then((json) => {
+			const userCredentials = json.users.find((user: any) => {
+				return user.role === "support teacher";
+			});
 
-		cy.testUserCanNavigateByRole(UserRole.Adscripto);
+			cy.login(userCredentials.email, userCredentials.password);
+			cy.testUserCanNavigateByRole(userCredentials.role);
+		});
 	});
 
 	it("does not allow Adscripto to navigate where they should not", () => {
@@ -41,10 +54,14 @@ describe("navigationByRole", () => {
 	});
 
 	it("allows Director to navigate where they need", () => {
-		//TODO: Provide user login credentials for each of the roles
-		cy.login();
+		cy.fixture("loginUsers").then((json) => {
+			const userCredentials = json.users.find((user: any) => {
+				return user.role === "principal";
+			});
 
-		cy.testUserCanNavigateByRole(UserRole.Director);
+			cy.login(userCredentials.email, userCredentials.password);
+			cy.testUserCanNavigateByRole(userCredentials.role);
+		});
 	});
 
 	it("does not allow Director to navigate where they should not", () => {
@@ -54,10 +71,14 @@ describe("navigationByRole", () => {
 	});
 
 	it("allows Docente to navigate where they need", () => {
-		//TODO: Provide user login credentials for each of the roles
-		cy.login();
+		cy.fixture("loginUsers").then((json) => {
+			const userCredentials = json.users.find((user: any) => {
+				return user.role === "teacher";
+			});
 
-		cy.testUserCanNavigateByRole(UserRole.Docente);
+			cy.login(userCredentials.email, userCredentials.password);
+			cy.testUserCanNavigateByRole(userCredentials.role);
+		});
 	});
 
 	it("does not allow Docente to navigate where they should not", () => {
@@ -67,10 +88,14 @@ describe("navigationByRole", () => {
 	});
 
 	it("allows Recepcion to navigate where they need", () => {
-		//TODO: Provide user login credentials for each of the roles
-		cy.login();
+		cy.fixture("loginUsers").then((json) => {
+			const userCredentials = json.users.find((user: any) => {
+				return user.role === "recepcionist";
+			});
 
-		cy.testUserCanNavigateByRole(UserRole.Recepcion);
+			cy.login(userCredentials.email, userCredentials.password);
+			cy.testUserCanNavigateByRole(userCredentials.role);
+		});
 	});
 
 	it("does not allow Recepcion to navigate where they should not", () => {

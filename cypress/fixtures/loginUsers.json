@@ -19,6 +19,16 @@
 			"role": "teacher",
 			"email": "testdocente@test.com",
 			"password": "password"
+		},
+		{
+			"role": "recepcionist",
+			"email": "recepcionista1@test.com",
+			"password": "password"
+		},
+		{
+			"role": "administrator",
+			"email": "administrator1@test.com",
+			"password": "password"
 		}
 	]
 }
