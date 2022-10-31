@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect } from "react";
+import { DefaultApiResponse } from "../core/interfaces";
 
 export enum FetchStatus {
 	Initial,
@@ -13,7 +14,7 @@ export enum FetchStatus {
  * @param onFetch: this is the setter that will be used when the fetch was correct to save the data.
  */
 function useFetchFromAPI<Type>(
-	fetchFunction: (...params: unknown[]) => Promise<{ success: boolean; data?: Type; err: string }>,
+	fetchFunction: (...params: unknown[]) => Promise<DefaultApiResponse<Type>>,
 	onFetch: (data: Type) => void
 ): { fetchStatus: FetchStatus; refetch: () => void } {
 	const [fetchStatus, setFetchStatus] = React.useState(FetchStatus.Fetching);

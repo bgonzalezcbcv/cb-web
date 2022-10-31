@@ -1,6 +1,8 @@
+import _ from "lodash";
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 
-import { Alert, Box, Button, Card, CircularProgress, Link, Typography } from "@mui/material";
+import { Alert, Box, Button, Card, Chip, CircularProgress, Link, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
@@ -10,7 +12,6 @@ import { Group, UserInfo } from "../../core/Models";
 import { fetchTeachers } from "../../core/ApiStore";
 import useFetchFromAPI, { FetchStatus } from "../../hooks/useFetchFromAPI";
 import SearchFilter from "../../components/SearchFilter/SearchFilter";
-import _ from "lodash";
 
 interface TeachersProps {
 	teachers?: UserInfo[];
@@ -19,12 +20,13 @@ interface TeachersProps {
 
 function Teachers(props: TeachersProps): JSX.Element {
 	const { teachers: teachersProps, editable } = props;
+	const { id } = useParams();
 
 	const [teachers, setTeachers] = useState(teachersProps);
 	const [filteredTeachers, setFilteredTeachers] = useState(teachers);
 
 	const { fetchStatus, refetch } = useFetchFromAPI<UserInfo[]>(
-		() => fetchTeachers(true),
+		() => fetchTeachers(Number(id)),
 		(fetchedTeachers) => {
 			setTeachers(fetchedTeachers);
 			setFilteredTeachers(fetchedTeachers);
@@ -56,7 +58,7 @@ function Teachers(props: TeachersProps): JSX.Element {
 				boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
 				overflow: "auto",
 			}}>
-			<Box display="flex" flexDirection="column" width="fit-content" maxWidth="100%" height="fit-content" maxHeight="100%">
+			<Box display="flex" flexDirection="column" width="100%" maxWidth="100%" height="fit-content" maxHeight="100%">
 				<Box alignSelf="flex-start">
 					<Typography variant="h4">Docentes</Typography>
 				</Box>
@@ -67,7 +69,15 @@ function Teachers(props: TeachersProps): JSX.Element {
 							items={teachers}
 							setItems={setFilteredTeachers}
 							filterFunction={(teachers: UserInfo[], filter): UserInfo[] =>
-								teachers.filter((teacher) => Object.values(teacher).some((value) => _.isString(value) && value.includes(filter)))
+								teachers.filter((teacher) =>
+									Object.values(teacher).some((value) => {
+										if (_.isString(value)) return value.toUpperCase().includes(filter.toUpperCase());
+
+										if (_.isArray(value) && value[0].name) {
+											return value.map((item) => item.name.toUpperCase()).includes(filter.toUpperCase());
+										}
+									})
+								)
 							}
 						/>
 					</Box>
@@ -87,20 +97,20 @@ function Teachers(props: TeachersProps): JSX.Element {
 					</Box>
 				</Box>
 
-				<Box height="650px" width="1110px" paddingTop="12px">
+				<Box height="650px" width="100%" paddingTop="12px">
 					<DataGrid
 						columns={[
-							{ field: "name", headerName: "Nombres", width: 250 },
-							{ field: "surname", headerName: "Apellidos", width: 250 },
+							{ field: "name", headerName: "Nombres", flex: 2 },
+							{ field: "surname", headerName: "Apellidos", flex: 2 },
 							{
 								field: "groups",
 								headerName: "Grupos",
-								width: 400,
+								flex: 1,
 								renderCell: (cell) => (
 									<Box>
 										{cell.value?.map((group: Group, index: number) => (
 											<Box key={`${group}-${index}`} display="inline-block" paddingLeft="6px">
-												<Link href={`/group/${group.id}`}>{group.name}</Link>
+												<Chip label={group.name} variant="outlined" />
 											</Box>
 										))}
 									</Box>
@@ -109,7 +119,7 @@ function Teachers(props: TeachersProps): JSX.Element {
 							{
 								field: "profile",
 								headerName: "Perfil",
-								width: 150,
+								flex: 1,
 								renderCell: (cell) => (
 									<Box display="flex" width="100%" justifyContent="center">
 										<Link href={cell.value}>

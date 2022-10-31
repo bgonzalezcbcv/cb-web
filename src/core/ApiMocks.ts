@@ -1,8 +1,8 @@
 import { UserRole } from "./interfaces";
 import { DocumentType, UserInfo } from "./Models";
 
-export const mockUser = {
-	id: "1",
+export const mockUser: UserInfo = {
+	id: 1,
 	role: UserRole.Administrador,
 	email: "test@test.com",
 	name: "Testing",
@@ -38,7 +38,7 @@ export const teachersMock = new Array<UserInfo>(10) //
 	.map(
 		(user, id): UserInfo => ({
 			...user,
-			id: id.toString(),
+			id: id,
 			groups: [
 				{ id: "1", name: "3A" },
 				{ id: "2", name: "4B" },

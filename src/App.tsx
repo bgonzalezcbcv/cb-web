@@ -49,6 +49,8 @@ function App(): React.ReactElement {
 												<Route path="/createuser" element={<CreateUser />} />
 												<Route path="/user/:id" element={<User editable={false} />} />
 												<Route path="/user/:id/edit" element={<User editable />} />
+												<Route path="/teachers/:id" element={<Teachers editable={false} />} />
+												<Route path="/teachers/:id/edit" element={<Teachers editable />} />
 												<Route path="/teachers" element={<Teachers editable={false} />} />
 												<Route path="/teachers/edit" element={<Teachers editable={true} />} />
 												<Route path="*" element={<Navigate to="/student" />} />

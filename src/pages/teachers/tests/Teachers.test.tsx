@@ -11,7 +11,7 @@ describe("Teachers", () => {
 		jest.spyOn(API, "fetchTeachers").mockResolvedValue({
 			success: true,
 			data: teachersMock,
-			err: "",
+			error: "",
 		});
 
 		const wrapper = render(
@@ -31,7 +31,7 @@ describe("Teachers", () => {
 		jest.spyOn(API, "fetchTeachers").mockResolvedValue({
 			success: true,
 			data: teachersMock,
-			err: "",
+			error: "",
 		});
 
 		const wrapper = render(
@@ -50,7 +50,7 @@ describe("Teachers", () => {
 		jest.spyOn(API, "fetchTeachers").mockResolvedValue({
 			success: false,
 			data: teachersMock,
-			err: "",
+			error: "",
 		});
 
 		const wrapper = render(

@@ -132,7 +132,7 @@ Object {
         class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-10fa4ys-MuiPaper-root-MuiCard-root"
       >
         <div
-          class="MuiBox-root css-9f11mw"
+          class="MuiBox-root css-idqfmi"
         >
           <div
             class="MuiBox-root css-1bf7e4w"
@@ -170,7 +170,7 @@ Object {
             />
           </div>
           <div
-            class="MuiBox-root css-1o5n4wk"
+            class="MuiBox-root css-14vgk0c"
           >
             <div
               aria-colcount="4"
@@ -190,7 +190,7 @@ Object {
                   style="min-height: 56px; max-height: 56px; line-height: 56px;"
                 >
                   <div
-                    class="MuiDataGrid-columnHeadersInner MuiDataGrid-columnHeadersInner--scrollable css-gl260s-MuiDataGrid-columnHeadersInner"
+                    class="MuiDataGrid-columnHeadersInner css-gl260s-MuiDataGrid-columnHeadersInner"
                     role="rowgroup"
                   />
                 </div>
@@ -304,7 +304,7 @@ Object {
       class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-10fa4ys-MuiPaper-root-MuiCard-root"
     >
       <div
-        class="MuiBox-root css-9f11mw"
+        class="MuiBox-root css-idqfmi"
       >
         <div
           class="MuiBox-root css-1bf7e4w"
@@ -342,7 +342,7 @@ Object {
           />
         </div>
         <div
-          class="MuiBox-root css-1o5n4wk"
+          class="MuiBox-root css-14vgk0c"
         >
           <div
             aria-colcount="4"
@@ -362,7 +362,7 @@ Object {
                 style="min-height: 56px; max-height: 56px; line-height: 56px;"
               >
                 <div
-                  class="MuiDataGrid-columnHeadersInner MuiDataGrid-columnHeadersInner--scrollable css-gl260s-MuiDataGrid-columnHeadersInner"
+                  class="MuiDataGrid-columnHeadersInner css-gl260s-MuiDataGrid-columnHeadersInner"
                   role="rowgroup"
                 />
               </div>
@@ -533,7 +533,7 @@ Object {
         class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-10fa4ys-MuiPaper-root-MuiCard-root"
       >
         <div
-          class="MuiBox-root css-9f11mw"
+          class="MuiBox-root css-idqfmi"
         >
           <div
             class="MuiBox-root css-1bf7e4w"
@@ -606,7 +606,7 @@ Object {
             </div>
           </div>
           <div
-            class="MuiBox-root css-1o5n4wk"
+            class="MuiBox-root css-14vgk0c"
           >
             <div
               aria-colcount="5"
@@ -740,7 +740,7 @@ Object {
       class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-10fa4ys-MuiPaper-root-MuiCard-root"
     >
       <div
-        class="MuiBox-root css-9f11mw"
+        class="MuiBox-root css-idqfmi"
       >
         <div
           class="MuiBox-root css-1bf7e4w"
@@ -813,7 +813,7 @@ Object {
           </div>
         </div>
         <div
-          class="MuiBox-root css-1o5n4wk"
+          class="MuiBox-root css-14vgk0c"
         >
           <div
             aria-colcount="5"
