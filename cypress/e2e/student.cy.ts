@@ -50,6 +50,8 @@ describe("student", () => {
 	// });
 
 	it("loads page on complementary info button click", () => {
+		cy.login("testdirector@test.com", "password");
+		cy.visit("/student");
 		cy.get(complementaryInfoButtonID).click();
 
 		cy.get(".panel-item").should("contain.text", "Respuesta");
