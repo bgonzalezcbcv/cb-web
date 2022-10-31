@@ -84,10 +84,19 @@
 				{
 					"type": "Control",
 					"scope": "#/properties/address"
-				},
+				}
+			]
+		},
+		{
+			"type": "HorizontalLayout",
+			"elements": [
 				{
 					"type": "Control",
 					"scope": "#/properties/phone_number"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/contact_phone"
 				}
 			]
 		},

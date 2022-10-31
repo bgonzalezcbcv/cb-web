@@ -13,7 +13,8 @@ import { emptyStudents } from "../student/DefaultStudent";
 
 import "./Students.scss";
 const columns: GridColDef[] = [
-	{ field: "id", headerName: "ID", disableColumnMenu: false, flex: 1 },
+	{ field: "id", headerName: "ID", disableColumnMenu: false, flex: 1, hide: true },
+	{ field: "reference_number", headerName: "Nº de referencia", disableColumnMenu: false, flex: 1 },
 	{ field: "ci", headerName: "CI", disableColumnMenu: false, flex: 2 },
 	{ field: "name", headerName: "Nombres", disableColumnMenu: false, flex: 2 },
 	{ field: "surname", headerName: "Apellidos", disableColumnMenu: false, flex: 2 },
@@ -96,6 +97,7 @@ export default function Students(props: StudentsProps) {
 					Object.values(student).some((value) => value && normalizeText(value.toString()).includes(normalizeText(searchText)))
 				);
 
+				console.log(foundItems);
 				return (
 					<DataGrid //
 						style={{ height: 380, width: "100%" }}
