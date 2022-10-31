@@ -362,12 +362,6 @@ export async function fetchReports(studentId: string): Promise<{ success: boolea
 			},
 		};
 
-		if (![200, 304].includes(response.status) || response.data.reports === undefined)
-			return {
-				success: false,
-				err: "Unabled to fetch reports",
-			};
-
 		return {
 			success: true,
 			data: response.data.reports as ReportCard[],
@@ -378,7 +372,7 @@ export async function fetchReports(studentId: string): Promise<{ success: boolea
 	} catch (error: any) {
 		return {
 			success: false,
-			err: error.message,
+			err: error?.message,
 		};
 	}
 }
@@ -397,11 +391,6 @@ export async function deleteReport(studentId: string, reportId: number): Promise
 		const response = {
 			status: 200,
 		};
-
-		if (![200, 304].includes(response.status))
-			return {
-				success: false,
-			};
 
 		return {
 			success: true,
@@ -432,11 +421,6 @@ export async function setReportApprovalState(studentId: string, reportId: number
 		const response = {
 			status: 200,
 		};
-
-		if (![200, 304].includes(response.status))
-			return {
-				success: false,
-			};
 
 		return {
 			success: true,

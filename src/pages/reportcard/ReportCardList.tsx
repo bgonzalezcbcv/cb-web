@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import * as API from "../../core/ApiStore";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { ReportApprovalState, ReportCard, ReportCard as ReportCardModel, Student } from "../../core/Models";
-import { Alert, Box, CircularProgress, IconButton, Paper } from "@mui/material";
+import { Alert, Box, CircularProgress, IconButton } from "@mui/material";
 import { FetchState } from "../../core/interfaces";
 import { DeleteReportCardDialog, ReportDeletionSuccessDialog } from "./components/DeleteReportCardDialog";
 import { ApprovalReportCardDialog, ReportApprovalSuccessDialog } from "./components/ApprovalReportCardDialog";
@@ -108,7 +108,7 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 			field: "starting_month",
 			headerName: "Inicio de Periodo",
 			disableColumnMenu: false,
-			flex: 1,
+			flex: 2,
 			renderCell: (params): React.ReactElement => {
 				let period = "";
 
@@ -229,32 +229,30 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 			{/*	/>*/}
 			{/*</Box>*/}
 
-			<Paper>
-				<Box
-					sx={{
-						display: "flex",
-						flexDirection: "column-reverse",
-						alignItems: "flex-end",
-					}}>
-					{canAdd && (
-						<IconButton disabled={!editable} color="secondary">
-							<AddCircleOutlineIcon />
-						</IconButton>
-					)}
-				</Box>
-				<DataGrid
-					style={{ height: 380, width: "100%" }}
-					rows={reports}
-					columns={columns}
-					pageSize={5}
-					rowsPerPageOptions={[5]}
-					initialState={{
-						sorting: {
-							sortModel: [{ field: "starting_month", sort: "desc" }],
-						},
-					}}
-				/>
-			</Paper>
+			<Box
+				sx={{
+					display: "flex",
+					flexDirection: "column-reverse",
+					alignItems: "flex-end",
+				}}>
+				{canAdd && (
+					<IconButton disabled={!editable} color="secondary">
+						<AddCircleOutlineIcon />
+					</IconButton>
+				)}
+			</Box>
+			<DataGrid
+				style={{ height: 380, width: "100%" }}
+				rows={reports}
+				columns={columns}
+				pageSize={5}
+				rowsPerPageOptions={[5]}
+				initialState={{
+					sorting: {
+						sortModel: [{ field: "starting_month", sort: "desc" }],
+					},
+				}}
+			/>
 
 			<DeleteReportCardDialog show={showDeleteAlert} setOpen={handleDeletion} />
 

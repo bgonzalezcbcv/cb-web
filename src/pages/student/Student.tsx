@@ -12,10 +12,10 @@ import { Student as StudentModel } from "../../core/Models";
 import * as StudentComponents from "./components/index";
 import { TabData } from "./components/StudentPageTabs/StudentPageTabs";
 import Restrict from "../../components/Restrict/Restrict";
+import ReportCardList from "../reportcard/ReportCardList";
 import { defaultStudent, emptyStudent } from "./DefaultStudent";
 
 import "./Student.scss";
-import ReportCardList from "../reportcard/ReportCardList";
 
 const { FamilyForm, StudentInfo, AdministrativeInfo, CreateStudentDialog, TabPanel, StudentPageHeader, StudentPageTabs, EnrollmentQuestions } =
 	StudentComponents;
