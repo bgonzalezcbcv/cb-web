@@ -100,15 +100,6 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					],
 				},
 				{
-					sectionTitle: "Grupos",
-					items: [
-						{
-							title: "Ver todos",
-							navigationRoute: `/groups`,
-						},
-					],
-				},
-				{
 					sectionTitle: "Docentes",
 					items: [
 						{
@@ -143,20 +134,20 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					],
 				},
 				{
-					sectionTitle: "Grupos",
-					items: [
-						{
-							title: "Mis grupos",
-							navigationRoute: `/groups/${id}`,
-						},
-					],
-				},
-				{
 					sectionTitle: "Docentes",
 					items: [
 						{
 							title: "Mis docentes",
 							navigationRoute: `/teachers/${id}`,
+						},
+					],
+				},
+				{
+					sectionTitle: "Grupos",
+					items: [
+						{
+							title: "Mis grupos",
+							navigationRoute: `/groups/${id}`,
 						},
 					],
 				},
@@ -177,20 +168,20 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					],
 				},
 				{
+					sectionTitle: "Docentes",
+					items: [
+						{
+							title: "Mis docentes",
+							navigationRoute: `/teachers/${id}`,
+						},
+					],
+				},
+				{
 					sectionTitle: "Grupos",
 					items: [
 						{
 							title: "Mis grupos",
 							navigationRoute: `/groups/${id}`,
-						},
-					],
-				},
-				{
-					sectionTitle: "Docentes",
-					items: [
-						{
-							title: "Ver mis docentes",
-							navigationRoute: `/teachers/${id}`,
 						},
 					],
 				},
@@ -232,20 +223,20 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					],
 				},
 				{
-					sectionTitle: "Grupos",
-					items: [
-						{
-							title: "Ver todos",
-							navigationRoute: "/groups",
-						},
-					],
-				},
-				{
 					sectionTitle: "Docentes",
 					items: [
 						{
 							title: "Ver todos",
 							navigationRoute: `/teachers`,
+						},
+					],
+				},
+				{
+					sectionTitle: "Grupos",
+					items: [
+						{
+							title: "Ver todos",
+							navigationRoute: "/groups",
 						},
 					],
 				},
