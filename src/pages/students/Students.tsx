@@ -97,7 +97,6 @@ export default function Students(props: StudentsProps) {
 					Object.values(student).some((value) => value && normalizeText(value.toString()).includes(normalizeText(searchText)))
 				);
 
-				console.log(foundItems);
 				return (
 					<DataGrid //
 						style={{ height: 380, width: "100%" }}
