@@ -17,7 +17,7 @@ describe("Teachers", () => {
 		const wrapper = render(
 			<MemoryRouter initialEntries={["/user/1"]}>
 				<Routes>
-					<Route path="/user/:id" element={<Teachers editable={true} />} />
+					<Route path="/user/:id" element={<Teachers editable={true} canAdd canDelete />} />
 				</Routes>
 			</MemoryRouter>
 		);
@@ -37,7 +37,7 @@ describe("Teachers", () => {
 		const wrapper = render(
 			<MemoryRouter initialEntries={["/user/1"]}>
 				<Routes>
-					<Route path="/user/:id" element={<Teachers editable={false} />} />
+					<Route path="/user/:id" element={<Teachers editable={false} canAdd canDelete />} />
 				</Routes>
 			</MemoryRouter>
 		);
@@ -56,7 +56,7 @@ describe("Teachers", () => {
 		const wrapper = render(
 			<MemoryRouter initialEntries={["/user/1"]}>
 				<Routes>
-					<Route path="/user/:id" element={<Teachers editable={false} />} />
+					<Route path="/user/:id" element={<Teachers editable={false} canAdd canDelete />} />
 				</Routes>
 			</MemoryRouter>
 		);

@@ -14,12 +14,14 @@ import useFetchFromAPI, { FetchStatus } from "../../hooks/useFetchFromAPI";
 import SearchFilter from "../../components/SearchFilter/SearchFilter";
 
 interface TeachersProps {
-	teachers?: UserInfo[];
 	editable: boolean;
+	canAdd?: boolean;
+	canDelete?: boolean;
+	teachers?: UserInfo[];
 }
 
 function Teachers(props: TeachersProps): JSX.Element {
-	const { teachers: teachersProps, editable } = props;
+	const { teachers: teachersProps, editable, canAdd, canDelete } = props;
 	const { id } = useParams();
 
 	const [teachers, setTeachers] = useState(teachersProps);
@@ -85,13 +87,17 @@ function Teachers(props: TeachersProps): JSX.Element {
 					<Box display="flex" justifyContent="flex-end" width="100%">
 						{editable && (
 							<>
-								<Button>
-									<DeleteOutlineIcon />
-								</Button>
+								{(canDelete ?? false) && (
+									<Button>
+										<DeleteOutlineIcon />
+									</Button>
+								)}
 
-								<Button>
-									<AddIcon />
-								</Button>
+								{(canAdd ?? false) && (
+									<Button>
+										<AddIcon />
+									</Button>
+								)}
 							</>
 						)}
 					</Box>
