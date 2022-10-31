@@ -46,13 +46,6 @@ const columns: GridColDef[] = [
     // { field: "class", headerName: "Clase", disableColumnMenu: false, width: 130, align: "center" },
     { field: "name", headerName: "Subgrupo", disableColumnMenu: false, width: 130, align: "center" },
     { field: "year", headerName: "Año", disableColumnMenu: false, width: 130, align: "center" },
-    // { field: "cycle", headerName: "Ciclo", disableColumnMenu: false, width: 150, align: "center",
-    //     renderCell: (params) => {
-    //     const capitalizedCycle = params.value[0].toUpperCase() + params.value.slice(1);
-    //         return (
-    //             <Typography fontSize={14}>{capitalizedCycle}</Typography>
-    //         );
-    //     }},
     // {
     //     field: "teachers",
     //     headerName: "Docentes",
@@ -61,7 +54,7 @@ const columns: GridColDef[] = [
     //     disableColumnMenu: true,
     //     width: 250,
     //     renderCell: (params) => {
-    //         const teachers: Teacher[] = params.value.map((teacher: UserData) => {return {name: teacher.name, surname: teacher.surname}}).sort((a: Teacher, b: Teacher) => (a.surname > b.surname) ? 1 : ((b.surname > a.surname) ? -1 : 0));
+    //         const teachers: User[] = params.value.map((teacher: User) => {return {name: teacher.name, surname: teacher.surname}}).sort((a: User, b: User) => (a.surname > b.surname) ? 1 : ((b.surname > a.surname) ? -1 : 0));
     //         const teachersToShow = teachers.length > 3 ? teachers.slice(0, 3) : teachers;
     //
     //         const tooltipText = <div>
@@ -93,9 +86,18 @@ const columns: GridColDef[] = [
     // { field: "addTeachers", headerName: "Agregar docentes", disableColumnMenu: true, flex: 1, align: "center",
     //     renderCell: () => {
     //         return (
-    //             <IconButton onClick={() => {}}><AddIcon /></IconButton>
+    //             <IconButton onClick={() => {return null}}><AddIcon /></IconButton>
     //         )
-    //     }},
+    //     }
+    //     },
+    // {   field: "director", headerName: "Director", disableColumnMenu: false, width: 220 },
+    // {   field: "addDirector", headerName: "Agregar director", disableColumnMenu: true, flex: 1, align: "center",
+    //     renderCell: () => {
+    //         return (
+    //             <IconButton onClick={() => {return null}}><AddIcon /></IconButton>
+    //         )
+    //     }
+    // },
     // {
     //     field: "seeStudents",
     //     headerName: "Ver estudiantes",
@@ -106,6 +108,7 @@ const columns: GridColDef[] = [
     //     renderCell: (params) => {
     //         const navigate = useNavigate();
     //
+    //         /* eslint-disable-next-line @typescript-eslint/no-explicit-any*/
     //         const onClick = (e: any) => {
     //             e.stopPropagation();
     //

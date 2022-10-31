@@ -584,7 +584,7 @@ export async function fetchCycles(): Promise<{ success: boolean; data?: Cycle[];
 		const config = {
 			...baseConfig,
 			method: "get",
-			url: `/api/cycles`,
+			url: `/api/cicles`,
 		};
 
 		const response = await axios(config);
