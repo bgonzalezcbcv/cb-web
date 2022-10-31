@@ -388,9 +388,9 @@ export async function deleteReport(studentId: string, reportId: number): Promise
 
 		// const response = await axios(config);
 
-		const response = {
-			status: 200,
-		};
+		// const response = {
+		// 	status: 200,
+		// };
 
 		return {
 			success: true,
@@ -418,9 +418,9 @@ export async function setReportApprovalState(studentId: string, reportId: number
 
 		// const response = await axios(config);
 
-		const response = {
-			status: 200,
-		};
+		// const response = {
+		// 	status: 200,
+		// };
 
 		return {
 			success: true,
