@@ -65,7 +65,7 @@ export default function CreateReportCardModal(props: CreateReportCardModalProps)
 		let response;
 		if (isFinalReport) {
 			const finalReportCard = {
-				group_id: "1", //should be student.group.id or something similar
+				group_id: "2", //should be student.group.id or something similar
 				student_id: student.id,
 				report_card: file,
 			} as FinalReportCardRequest;
@@ -73,7 +73,7 @@ export default function CreateReportCardModal(props: CreateReportCardModalProps)
 			response = await createFinalReportCard(finalReportCard, student.id);
 		} else {
 			const intermediateReportCard = {
-				group_id: "1", //should be student.group.id or something similar
+				group_id: "2", //should be student.group.id or something similar
 				starting_month: `01-${startPeriod}`,
 				ending_month: `01-${endPeriod}`,
 				report_card: file,
