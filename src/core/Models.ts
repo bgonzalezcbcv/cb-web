@@ -203,6 +203,11 @@ export interface StudentCreationForm {
 	"Detalle aquí otra información que crea importante y que pueda contribuir a una atención eficiente e integral del alumno/a:": string;
 }
 
+export interface Group {
+	id: string;
+	name: string;
+}
+
 export interface User {
 	id: number;
 	email: string;
@@ -243,6 +248,7 @@ export interface UserInfo extends User {
 		attachment: string;
 		upload_date: string;
 	}[];
+	groups?: Group[];
 }
 
 export enum ReportApprovalState {

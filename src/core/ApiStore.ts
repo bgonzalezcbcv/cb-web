@@ -6,6 +6,7 @@ import { DocumentType, FamilyMember, ReportApprovalState, ReportCard, Student, U
 import { DefaultApiResponse, UserRole } from "./interfaces";
 
 import { DataStore } from "./DataStore";
+import { mockUser } from "./ApiMocks";
 
 const dataStore = DataStore.getInstance();
 
@@ -265,7 +266,7 @@ export async function createUser(userToCreate: UserInfo): Promise<DefaultApiResp
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function fetchUser(id: string): Promise<DefaultApiResponse<UserInfo>> {
 	try {
-		return defaultResponse({
+		const fetchUserMockResponse: UserInfo = {
 			id: 1,
 			role: UserRole.Administrador,
 			email: "test@test.com",
@@ -295,7 +296,11 @@ export async function fetchUser(id: string): Promise<DefaultApiResponse<UserInfo
 					upload_date: "01-05-2022",
 				},
 			],
-		});
+			groups: [],
+			password: "",
+		};
+
+		return defaultResponse(fetchUserMockResponse);
 		//
 		// const config = {
 		// 	...baseConfig,
@@ -430,5 +435,18 @@ export async function setReportApprovalState(studentId: string, reportId: number
 		return {
 			success: false,
 		};
+	}
+}
+
+// TODO: Connect to the endpoint when ready.
+export async function fetchTeachers(id?: number): Promise<DefaultApiResponse<UserInfo[]>> {
+	try {
+		const teachersMock: UserInfo[] = new Array(3) //
+			.fill(mockUser)
+			.map((user, index) => ({ ...user, name: user.name + index, id: index, groups: [{ id: 1, name: "3 A" }] }));
+
+		return defaultResponse(teachersMock);
+	} catch (e) {
+		return defaultErrorResponse("No se pudieron obtener los docentes.");
 	}
 }
