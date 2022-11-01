@@ -439,7 +439,7 @@ export async function setReportApprovalState(studentId: string, reportId: number
 }
 
 // TODO: Connect to the endpoint when ready.
-export async function fetchTeachers(id?: number): Promise<DefaultApiResponse<UserInfo[]>> {
+export async function fetchTeachers(): Promise<DefaultApiResponse<UserInfo[]>> {
 	try {
 		const teachersMock: UserInfo[] = new Array(3) //
 			.fill(mockUser)
