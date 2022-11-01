@@ -127,7 +127,7 @@ describe("studentsBasicInfo", () => {
 		//cy.get(referenceNumberFieldID).clear().typeAndWait("42");
 		cy.get(placeOfBirthFieldID).clear().typeAndWait("Asociacion Española");
 		//cy.get(dateOfBirthInputID).clear().typeAndWait("01/09/2000");
-		cy.get(dateOfBirthButton).click().wait(200).get(dateOfBirthToday).click().wait(200);
+		cy.get(dateOfBirthButton).click().wait(1000).get(dateOfBirthToday).click().wait(500);
 		cy.get(nationalityFieldID).clear().typeAndWait("Uruguayo");
 		cy.get(firstLanguageFieldID).clear().typeAndWait("Español");
 		cy.get(neighborhoodFieldID).clear().typeAndWait("Cordon");
@@ -136,7 +136,7 @@ describe("studentsBasicInfo", () => {
 		cy.get(medicalAssuranceFieldID).clear().typeAndWait("Si tiene es la A23BVJ");
 		cy.get(emergencyFieldID).clear().typeAndWait("Cooperativa ABC123XYZ");
 		//cy.get(vaccineExpirationInputID).clear().typeAndWait("03/03/2019");
-		cy.get(vaccineExpirationButton).click().wait(200).get(vaccineExpirationToday).click().wait(200);
+		cy.get(vaccineExpirationButton).click().wait(1000).get(vaccineExpirationToday).click().wait(500);
 
 		cy.fillStudentFamilyInfo();
 

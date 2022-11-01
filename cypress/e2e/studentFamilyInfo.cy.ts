@@ -100,12 +100,12 @@ describe("studentFamilyInfo", () => {
 		cy.get(familyInfoButtonID).click();
 
 		//check first family member
-		cy.get(roleInputID).click().wait(500).get(`#properties\\/role2-option-0`).click().wait(200);
+		cy.get(roleInputID).click().wait(1000).get(`#properties\\/role2-option-0`).click().wait(500);
 		cy.get(roleErrorID).should("not.be.visible");
 		cy.testInput(fullNameInputID, fullNameErrorID, "", "José", "Este campo es requerido.");
 		cy.testInput(CIInputID, CIErrorID, "", "50137758", "Este campo es requerido.");
 		//cy.testInput(dateOfBirthInputID, dateOfBirthErrorID, "incorrecto", "10/05/1990", "Este campo es requerido.");
-		cy.get(dateOfBirthButton).click().wait(200).get(dateOfBirthToday).click().wait(200);
+		cy.get(dateOfBirthButton).click().wait(1000).get(dateOfBirthToday).click().wait(500);
 		cy.get(dateOfBirthErrorID).should("not.be.visible");
 		cy.testInput(maritalStatusInputID, maritalStatusErrorID, "", "Abigeato", "Este campo es requerido.");
 		cy.testInput(cellphoneInputID, cellphoneErrorID, "error", "099099990", "Debe ingresar un número de 9 dígitos.");
@@ -115,7 +115,7 @@ describe("studentFamilyInfo", () => {
 		cy.testInput(emailInputID, emailErrorID, "error", "correcto@gmail.com", "Debe ingresar un e-mail válido.");
 		cy.testInput(addressInputID, addressErrorID, "", "Iglú nº 5", "Este campo es requerido.");
 		cy.testInput(neighborhoodInputID, neighborhoodErrorID, "", "Punta Nieve", "Este campo es requerido.");
-		cy.get(educationLevelInputID).click().wait(500).get(`#properties\\/education_level2-option-1`).click();
+		cy.get(educationLevelInputID).click().wait(1000).get(`#properties\\/education_level2-option-1`).click().wait(500);
 		cy.get(educationLevelErrorID).should("not.be.visible");
 		cy.testInput(occupationFieldID, occupationErrorID, "", "Catador de helados", "Este campo es requerido.");
 		cy.testInput(workplaceFieldID, workplaceErrorID, "", "CRUFI", "Este campo es requerido.");
@@ -126,12 +126,12 @@ describe("studentFamilyInfo", () => {
 		cy.get("#addFamilyMember").click();
 		cy.wait(200);
 
-		cy.get(roleInputID).click().wait(500).get(`#properties\\/role2-option-0`).click().wait(200);
+		cy.get(roleInputID).click().wait(1000).get(`#properties\\/role2-option-0`).click().wait(500);
 		cy.get(roleErrorID).should("not.be.visible");
 		cy.testInput(fullNameInputID, fullNameErrorID, "", "José", "Este campo es requerido.");
 		cy.testInput(CIInputID, CIErrorID, "", "50137758", "Este campo es requerido.");
 		//cy.testInput(dateOfBirthInputID, dateOfBirthErrorID, "incorrecto", "10/05/1990", "Este campo es requerido.");
-		cy.get(dateOfBirthButton).click().wait(200).get(dateOfBirthToday).click().wait(200);
+		cy.get(dateOfBirthButton).click().wait(1000).get(dateOfBirthToday).click().wait(500);
 		cy.get(dateOfBirthErrorID).should("not.be.visible");
 		cy.testInput(maritalStatusInputID, maritalStatusErrorID, "", "Abigeato", "Este campo es requerido.");
 		cy.testInput(cellphoneInputID, cellphoneErrorID, "error", "099099990", "Debe ingresar un número de 9 dígitos.");
@@ -141,7 +141,7 @@ describe("studentFamilyInfo", () => {
 		cy.testInput(emailInputID, emailErrorID, "error", "correcto@gmail.com", "Debe ingresar un e-mail válido.");
 		cy.testInput(addressInputID, addressErrorID, "", "Iglú nº 5", "Este campo es requerido.");
 		cy.testInput(neighborhoodInputID, neighborhoodErrorID, "", "Punta Nieve", "Este campo es requerido.");
-		cy.get(educationLevelInputID).click().wait(500).get(`#properties\\/education_level2-option-1`).click();
+		cy.get(educationLevelInputID).click().wait(1000).get(`#properties\\/education_level2-option-1`).click().wait(500);
 		cy.get(educationLevelErrorID).should("not.be.visible");
 		cy.testInput(occupationFieldID, occupationErrorID, "", "Catador de helados", "Este campo es requerido.");
 		cy.testInput(workplaceFieldID, workplaceErrorID, "", "CRUFI", "Este campo es requerido.");
@@ -171,9 +171,9 @@ describe("studentFamilyInfo", () => {
 
 		cy.get(fullNameInputID).clear().typeAndWait("Pedro");
 		cy.get(CIInputID).clear().typeAndWait("50137758");
-		cy.get(roleInputID).click().wait(500).get(`#properties\\/role2-option-0`).click().wait(200);
+		cy.get(roleInputID).click().wait(1000).get(`#properties\\/role2-option-0`).click().wait(500);
 		//cy.get(dateOfBirthInputID).clear().typeAndWait("01/01/1990");
-		cy.get(dateOfBirthButton).click().wait(200).get(dateOfBirthToday).click().wait(200);
+		cy.get(dateOfBirthButton).click().wait(1000).get(dateOfBirthToday).click().wait(500);
 		cy.get(maritalStatusInputID).clear().typeAndWait("Casado");
 		cy.get(cellphoneInputID).clear().typeAndWait("099099099");
 		cy.get(placeOfBirthInputID).clear().typeAndWait("Uruguay");
@@ -182,7 +182,7 @@ describe("studentFamilyInfo", () => {
 		cy.get(emailInputID).clear().typeAndWait("correcto@gmail.com");
 		cy.get(addressInputID).clear().typeAndWait("Calle Falsa 2323");
 		cy.get(neighborhoodInputID).clear().typeAndWait("Cerrito");
-		cy.get(educationLevelInputID).click().wait(500).get(`#properties\\/education_level2-option-1`).click().wait(200);
+		cy.get(educationLevelInputID).click().wait(1000).get(`#properties\\/education_level2-option-1`).click().wait(500);
 		cy.get(occupationFieldID).clear().typeAndWait("Panadero");
 		cy.get(workplaceFieldID).clear().typeAndWait("Panadería");
 		cy.get(workplaceAddressFieldID).clear().typeAndWait("Calle Panadera 2222");
