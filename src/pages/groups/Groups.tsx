@@ -9,7 +9,7 @@ import {
     Box,
     Button,
     Card,
-    CircularProgress,
+    CircularProgress, FormControl,
     // IconButton,
     InputLabel, MenuItem,
     Paper, Select,
@@ -252,49 +252,25 @@ export default function Groups(props: GroupsProps): React.ReactElement {
             <Paper>{printTable()}</Paper>
 
             <Modal show={createGroupModalOpen} title={"Crear grupo"} onClose={handleCreateGroupModalClose} onAccept={handleCreateGroupModalAccept} acceptEnabled={!hasFormErrors}>
-                <Box>
-                    <Box display="flex" flexDirection="row" marginBottom="2px">
-                        {/*<Box sx={{display: "flex", flexDirection: "column", marginRight: 2}}>*/}
-                        {/*    <InputLabel id="cycle">Ciclo</InputLabel>*/}
-                        {/*    <Select*/}
-                        {/*        labelId="cycle"*/}
-                        {/*        variant="standard"*/}
-                        {/*        value={groupData.cycle ?? ""}*/}
-                        {/*        defaultValue={"Maternal"}*/}
-                        {/*        style={{width: 218}}*/}
-                        {/*        onChange={(e): void => {*/}
-                        {/*            const {value} = e.target;*/}
-                        {/*            const newCycle = { ...groupData, cycle: value };*/}
-                        {/*            setData(newCycle, value.length === 0);*/}
-                        {/*        }}*/}
-                        {/*    >*/}
-                        {/*        {cycles?.map((value, index) => {return (*/}
-                        {/*            <MenuItem key={index} value={value}>{value}</MenuItem>*/}
-                        {/*        )})}*/}
-                        {/*        /!*<MenuItem key={"maternal"} value={Cycle.Nursery}>{"Maternal"}</MenuItem>*!/*/}
-                        {/*        /!*<MenuItem key={"inicial"} value={Cycle.Preschool}>{"Inicial"}</MenuItem>*!/*/}
-                        {/*        /!*<MenuItem key={"primaria"} value={Cycle.Primary}>{"Primaria"}</MenuItem>*!/*/}
-                        {/*        /!*<MenuItem key={"secundaria"} value={Cycle.Secondary}>{"Secundaria"}</MenuItem>*!/*/}
-                        {/*    </Select>*/}
-                        {/*</Box>*/}
+                <Box display="flex" flexDirection="row">
+                    <FormControl variant="standard" sx={{marginRight: 9}}>
+                        <InputLabel id="grade">Clase</InputLabel>
 
-                        <Box display="flex" flexDirection="column">
-                            <InputLabel id="grade">Clase</InputLabel>
-                            <Select
-                                labelId="grade"
-                                variant="standard"
-                                value={groupData.gradeId}
-                                style={{width: 218}}
-                                onChange={(e): void => {
-                                    const {value} = e.target;
-                                    const newGrade = { ...groupData, gradeId: value };
-                                    setData(newGrade, false);
-                                }}
-                            >
-                                {grades && grades?.map((grade) => {return <MenuItem key={grade.id} value={grade.id}>{grade.name}</MenuItem>})}
-                            </Select>
-                        </Box>
-                    </Box>
+                        <Select
+                            labelId="grade"
+                            variant="standard"
+                            label="Clase"
+                            value={groupData.gradeId}
+                            style={{width: 150}}
+                            onChange={(e): void => {
+                                const {value} = e.target;
+                                const newGrade = { ...groupData, gradeId: value };
+                                setData(newGrade, false);
+                            }}
+                        >
+                            {grades && grades?.map((grade) => {return <MenuItem key={grade.id} value={grade.id}>{grade.name}</MenuItem>})}
+                        </Select>
+                    </FormControl>
 
                     <JsonForms
                         i18n={{ translate: translator as Translator }}
