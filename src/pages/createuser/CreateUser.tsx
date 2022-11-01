@@ -35,7 +35,10 @@ export default function CreateUser(): React.ReactElement {
 		const successfulCreation = await API.createUser(data as Models.User);
 		setUserCreationState(successfulCreation);
 		setShowDialog(true);
-		if (successfulCreation.success) setData({} as Models.UserInfo);
+		if (successfulCreation.success) {
+			setData({} as Models.UserInfo);
+			setValidationMode("ValidateAndHide");
+		}
 	}, [data, errors]);
 
 	const translator = (id: string, defaultMessage: string): string => {

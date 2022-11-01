@@ -57,7 +57,7 @@
 		"role": {
 			"oneOf": [
 				{
-					"const": "system_admin",
+					"const": "administrator",
 					"title": "Administrador del sistema"
 				},
 				{
@@ -65,7 +65,7 @@
 					"title": "Administrativo"
 				},
 				{
-					"const": "associate",
+					"const": "support_teacher",
 					"title": "Adscripto"
 				},
 				{
@@ -77,7 +77,7 @@
 					"title": "Docente"
 				},
 				{
-					"const": "receptionist",
+					"const": "reception",
 					"title": "Recepcionista"
 				}
 			],
