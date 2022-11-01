@@ -34,6 +34,16 @@ describe("Login", () => {
 
 		cy.url().should("include", "/login");
 	});
+
+	it("can login as all the test users", () => {
+		cy.fixture("loginUsers").then((json) => {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			json.users.forEach((user: any) => {
+				cy.log(`Testing login for ${user.role}`);
+				cy.login(user.email, user.password);
+			});
+		});
+	});
 });
 
 export {};

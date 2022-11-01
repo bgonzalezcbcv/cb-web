@@ -1,0 +1,34 @@
+{
+	"users": [
+		{
+			"role": "administrative",
+			"email": "testadministrativo@test.com",
+			"password": "password"
+		},
+		{
+			"role": "support teacher",
+			"email": "testadscripto@test.com",
+			"password": "password"
+		},
+		{
+			"role": "principal",
+			"email": "testdirector@test.com",
+			"password": "password"
+		},
+		{
+			"role": "teacher",
+			"email": "testdocente@test.com",
+			"password": "password"
+		},
+		{
+			"role": "recepcionist",
+			"email": "recepcionista1@test.com",
+			"password": "password"
+		},
+		{
+			"role": "administrator",
+			"email": "administrator1@test.com",
+			"password": "password"
+		}
+	]
+}
