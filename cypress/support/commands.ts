@@ -159,8 +159,6 @@ Cypress.Commands.add("testInput", (inputID: string, errorLabelID: string, incorr
 });
 
 Cypress.Commands.add("testUserCanNavigateByRole", (userRole: string) => {
-	/*TODO: Get the routes from a better source, as this only includes routes that are available in the apps' sidebar.*/
-
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const loggedUser = JSON.parse(sessionStorage.getItem("store") as any).loggedUser;
 
@@ -186,6 +184,8 @@ Cypress.Commands.add("testUserCanNavigateByRole", (userRole: string) => {
 
 			cy.log(`visiting ${routeWithId}`);
 			cy.visit(routeWithId);
+			cy.wait(1000);
+
 			cy.url().should("eq", Cypress.config().baseUrl + routeWithId);
 		}
 
@@ -197,6 +197,8 @@ Cypress.Commands.add("testUserCanNavigateByRole", (userRole: string) => {
 
 			cy.log(`visiting ${routeWithId}`);
 			cy.visit(routeWithId);
+			cy.wait(1000);
+
 			cy.url().should("eq", Cypress.config().baseUrl + routeWithId);
 		}
 
@@ -208,56 +210,11 @@ Cypress.Commands.add("testUserCanNavigateByRole", (userRole: string) => {
 
 			cy.log(`visiting ${routeWithId}`);
 			cy.visit(routeWithId);
+			cy.wait(1000);
+
 			cy.url().should("eq", Cypress.config().baseUrl + routeWithId);
 		}
 	});
-});
-
-Cypress.Commands.add("testUserShouldNotNavigateByRole", (userRole: UserRole) => {
-	/*TODO: Get the routes from a better source, as this only includes routes that are available in the apps' sidebar.*/
-	let allRoutesByRole: string[] = [];
-	for (const role of Object.values(UserRole).filter((a) => !isNaN(Number(a)))) {
-		cy.log(role.toString());
-		const routesByRole: string[] = getSidebarSectionsByUser({ email: "", name: "", role: role as UserRole, surname: "", token: "" })
-			.map((sidebarSection: SidebarSection) => {
-				return sidebarSection.items.map((sidebarSectionItem: SidebarItem) => {
-					return sidebarSectionItem.navigationRoute;
-				});
-			})
-			.flat();
-		allRoutesByRole = allRoutesByRole.concat(routesByRole);
-	}
-
-	allRoutesByRole = allRoutesByRole.filter((route: string, index: number) => {
-		return allRoutesByRole.indexOf(route) === index;
-	});
-
-	cy.log(allRoutesByRole.toString());
-
-	let userRoleRoutes: string[] = getSidebarSectionsByUser({ email: "", name: "", role: userRole, surname: "", token: "" })
-		.map((sidebarSection: SidebarSection) => {
-			return sidebarSection.items.map((sidebarSectionItem: SidebarItem) => {
-				return sidebarSectionItem.navigationRoute;
-			});
-		})
-		.flat();
-
-	userRoleRoutes = userRoleRoutes.filter((route: string, index: number) => {
-		return userRoleRoutes.indexOf(route) === index;
-	});
-
-	cy.log(userRoleRoutes.toString());
-
-	allRoutesByRole.filter((route) => {
-		return userRoleRoutes.indexOf(route) === -1;
-	});
-
-	cy.log(`routes that will be tested: ${allRoutesByRole.toString()}`);
-
-	for (const route of allRoutesByRole) {
-		cy.visit(route);
-		cy.url().should("not.include", route);
-	}
 });
 
 //
@@ -285,7 +242,6 @@ declare global {
 			testInput(inputID: string, errorLabelID: string, incorrectInput: string, correctInput: string, errorMessage?: string): Chainable<void>;
 			typeAndWait(input: string): Chainable<Element>;
 			testUserCanNavigateByRole(userRole: string): Chainable<void>;
-			testUserShouldNotNavigateByRole(userRole: UserRole): Chainable<void>;
 			/* drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
 			dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
 			visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element> */
