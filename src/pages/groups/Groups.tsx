@@ -9,7 +9,7 @@ import {
     Box,
     Button,
     Card,
-    CircularProgress, FormControl,
+    CircularProgress, FormControl, FormHelperText,
     // IconButton,
     InputLabel, MenuItem,
     Paper, Select,
@@ -253,7 +253,7 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 
             <Modal show={createGroupModalOpen} title={"Crear grupo"} onClose={handleCreateGroupModalClose} onAccept={handleCreateGroupModalAccept} acceptEnabled={!hasFormErrors}>
                 <Box display="flex" flexDirection="row">
-                    <FormControl variant="standard" sx={{marginRight: 9}}>
+                    <FormControl variant="standard" sx={{marginRight: 9}} error={groupData.gradeId === undefined}>
                         <InputLabel id="grade">Clase</InputLabel>
 
                         <Select
@@ -270,6 +270,7 @@ export default function Groups(props: GroupsProps): React.ReactElement {
                         >
                             {grades && grades?.map((grade) => {return <MenuItem key={grade.id} value={grade.id}>{grade.name}</MenuItem>})}
                         </Select>
+                        {groupData.gradeId === undefined && <FormHelperText>Este campo es requerido.</FormHelperText>}
                     </FormControl>
 
                     <JsonForms
