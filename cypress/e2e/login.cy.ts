@@ -2,6 +2,7 @@ describe("Login", () => {
 	const emailFieldID = "#\\#\\/properties\\/email2-input";
 	const passwordFieldID = "#\\#\\/properties\\/password2-input";
 	const loginButtonID = '[data-cy="loginButton"]';
+	const alertID = '[data-cy="alert"]';
 
 	beforeEach(() => {
 		cy.visit("/login");
@@ -22,7 +23,7 @@ describe("Login", () => {
 		cy.get(emailFieldID).type("@notEmail.com");
 		cy.get(passwordFieldID).type("password");
 		cy.wait(200);
-		cy.get(loginButtonID).click();
+		cy.get(loginButtonID).should("be.disabled");
 
 		cy.url().should("include", "/login");
 	});
@@ -30,9 +31,25 @@ describe("Login", () => {
 	it("cannot login without inputting password", () => {
 		cy.get(emailFieldID).type("@notEmail.com");
 		cy.wait(200);
-		cy.get(loginButtonID).click();
+		cy.get(loginButtonID).should("be.disabled");
+	});
 
-		cy.url().should("include", "/login");
+	it("cannot login with wrong credentials", () => {
+		cy.intercept(
+			{
+				method: "POST", // Route all POST requests
+				url: "/api/sign_in/", // that have a URL that matches '/students'
+			},
+			{ statusCode: 401 } // and force the response to have correct status
+		);
+
+		cy.get(emailFieldID).type("aaaaa@notEmail.com");
+		cy.get(passwordFieldID).type("password");
+		cy.wait(200);
+
+		cy.get(loginButtonID).should("be.enabled").click();
+
+		cy.get(alertID).should("be.visible").should("contain.text", "Usuario o contraseña inválidos");
 	});
 
 	it("can login as all the test users", () => {

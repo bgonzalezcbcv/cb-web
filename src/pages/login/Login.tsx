@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 
@@ -19,6 +19,8 @@ import logo from "../../assets/Vertical.svg";
 
 import styles from "./Login.module.scss";
 
+const debounceTime = 200;
+
 function Login(): JSX.Element {
 	const dataStore = DataStore.getInstance();
 
@@ -28,11 +30,11 @@ function Login(): JSX.Element {
 	const [errMsg, setErrMsg] = useState<string | undefined>(undefined);
 	const [isLoading, setIsLoading] = useState(false);
 
-	const debouncedSetLoginInfo = React.useCallback(_.debounce(setLoginInfo, 200), []);
+	const debouncedSetLoginInfo = React.useCallback(_.debounce(setLoginInfo, debounceTime), []);
 
 	const navigate = useNavigate();
 
-	const handleSubmit = async (): Promise<void> => {
+	const handleLogin = useCallback(async (): Promise<void> => {
 		setIsLoading(true);
 
 		setValidationMode("ValidateAndShow");
@@ -53,7 +55,27 @@ function Login(): JSX.Element {
 		}
 
 		setIsLoading(false);
-	};
+	}, [errors, loginInfo]);
+
+	const handleSubmit = useCallback((): void => {
+		handleLogin();
+	}, [handleLogin]);
+
+	const handleKeyDown = useCallback(
+		(event: KeyboardEvent): void => {
+			if (event.key === "Enter" && errors.length === 0) {
+				handleLogin();
+			}
+		},
+		[handleLogin, errors]
+	);
+
+	useEffect(() => {
+		window.addEventListener("keydown", handleKeyDown);
+		return () => {
+			window.removeEventListener("keydown", handleKeyDown);
+		};
+	}, [handleKeyDown]);
 
 	const translator = (id: string, defaultMessage: string): string => {
 		if (id.includes("required")) return "Este campo es requerido.";
@@ -86,7 +108,7 @@ function Login(): JSX.Element {
 						/>
 
 						{!isLoading ? (
-							<Button className={styles.loginButton} data-cy="loginButton" onClick={handleSubmit}>
+							<Button className={styles.loginButton} disabled={errors.length > 0} data-cy="loginButton" onClick={handleSubmit}>
 								Iniciar Sesión
 							</Button>
 						) : (
@@ -94,7 +116,7 @@ function Login(): JSX.Element {
 						)}
 
 						{errMsg ? (
-							<Alert severity="error" variant="outlined" onClose={(): void => setErrMsg(undefined)}>
+							<Alert severity="error" variant="outlined" data-cy="alert" onClose={(): void => setErrMsg(undefined)}>
 								{errMsg}
 							</Alert>
 						) : null}
