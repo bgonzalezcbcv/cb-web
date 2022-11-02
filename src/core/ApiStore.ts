@@ -345,7 +345,7 @@ function setFinalReports(final_evaluations: FinalEvaluation[], reports: ReportCa
 			group: ev.group ? ev.group.grade_name : "",
 			starting_month: new Date(),
 			ending_month: new Date(),
-			year: ev.year,
+			year: ev.group ? ev.group.year : "",
 			type: "Final",
 			passed: status,
 			report_url: ev.report_card_url,

@@ -279,7 +279,7 @@ export interface FinalEvaluation {
 	group: {
 		id: number;
 		name: string;
-		year: number;
+		year: string;
 		grade_name: string;
 	};
 }
