@@ -101,6 +101,14 @@
 	text-shadow: 1px 1px 1px black !important;
 	font-weight: bold !important;
 	color: white !important;
+
+	&:hover {
+		transform: scale(1.1);
+	}
+
+	&:disabled {
+		background: linear-gradient(to right, rgb(243, 222, 192), rgb(255, 166, 175));
+	}
 }
 
 .loginButton:hover {

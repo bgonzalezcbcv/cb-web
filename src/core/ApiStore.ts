@@ -13,6 +13,7 @@ const dataStore = DataStore.getInstance();
 let baseConfig = {
 	headers: {
 		Authorization: `Bearer ${dataStore.loggedUser?.token}`,
+		"access-control-allow-origin": "*",
 		"Content-Type": "application/json",
 	},
 	baseURL: process.env["REACT_APP_API_URL"],
@@ -32,7 +33,7 @@ axios.interceptors.response.use(
 	(error) => {
 		if (error.response.state === 403 && error.response.config.baseURL === baseConfig.baseURL) dataStore.logOut();
 
-		return Promise.reject();
+		return Promise.reject(error);
 	}
 );
 
@@ -84,17 +85,12 @@ export async function login(email: string, password: string): Promise<DefaultApi
 		return defaultResponse({ id, email, token, name, surname, role });
 		// eslint-disable-next-line
 	} catch (error: any) {
-		let err = "";
-		if (!error?.response) {
-			err = "El servidor no responde";
-		} else if (error.response?.status === 400) {
-			err = "Usuario o contraseña inválidos";
-		} else if (error.response?.status === 401) {
-			err = "No autorizado";
-		} else {
-			err = "Falló el inicio";
+		switch (error?.response?.status as number | undefined) {
+			case 401:
+				return defaultErrorResponse("Usuario o contraseña inválidos");
+			default:
+				return defaultErrorResponse("El servidor no responde");
 		}
-		return defaultErrorResponse(err);
 	}
 }
 
