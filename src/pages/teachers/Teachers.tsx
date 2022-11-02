@@ -28,7 +28,7 @@ function Teachers(props: TeachersProps): JSX.Element {
 	const [filteredTeachers, setFilteredTeachers] = useState(teachers);
 
 	const { fetchStatus, refetch } = useFetchFromAPI<UserInfo[]>(
-		() => fetchTeachers(Number(id)),
+		() => fetchTeachers(Number(id), true),
 		(fetchedTeachers) => {
 			setTeachers(fetchedTeachers);
 			setFilteredTeachers(fetchedTeachers);

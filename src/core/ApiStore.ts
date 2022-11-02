@@ -6,7 +6,7 @@ import { DocumentType, FamilyMember, ReportApprovalState, ReportCard, Student, U
 import { DefaultApiResponse, UserRole } from "./interfaces";
 
 import { DataStore } from "./DataStore";
-import { mockUser } from "./ApiMocks";
+import { teachersMock } from "./ApiMocks";
 
 const dataStore = DataStore.getInstance();
 
@@ -438,15 +438,19 @@ export async function setReportApprovalState(studentId: string, reportId: number
 	}
 }
 
-// TODO: Connect to the endpoint when ready.
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export async function fetchTeachers(id?: number): Promise<DefaultApiResponse<UserInfo[]>> {
+export async function fetchTeachers(id?: number, mock = false): Promise<DefaultApiResponse<UserInfo[]>> {
 	try {
-		const teachersMock: UserInfo[] = new Array(3) //
-			.fill(mockUser)
-			.map((user, index) => ({ ...user, name: user.name + index, id: index, groups: [{ id: 1, name: "3 A" }] }));
+		if (mock) return defaultResponse(teachersMock);
 
-		return defaultResponse(teachersMock);
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: id ? `/api/teachers/${id}` : "/api/teachers/",
+		};
+
+		const response = await axios(config);
+
+		return defaultResponse(response.data.students);
 	} catch (e) {
 		return defaultErrorResponse("No se pudieron obtener los docentes.");
 	}
