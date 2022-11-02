@@ -7,7 +7,6 @@ import { DefaultApiResponse, UserRole } from "./interfaces";
 
 import { DataStore } from "./DataStore";
 import { teachersMock } from "./ApiMocks";
-import { mockUser } from "./ApiMocks";
 
 const dataStore = DataStore.getInstance();
 
