@@ -2,7 +2,7 @@ import _ from "lodash";
 import axios from "axios";
 import { reaction } from "mobx";
 
-import { DocumentType, FamilyMember, ReportApprovalState, ReportCard, Student, User, UserInfo } from "./Models";
+import { DocumentType, FamilyMember, FinalEvaluation, IntermediateEvaluation, ReportApprovalState, ReportCard, Student, User, UserInfo } from "./Models";
 import { DefaultApiResponse, UserRole } from "./interfaces";
 
 import { DataStore } from "./DataStore";
@@ -324,48 +324,76 @@ export async function fetchUser(id: string): Promise<DefaultApiResponse<UserInfo
 	}
 }
 
+function setFinalReports(final_evaluations: FinalEvaluation[], reports: ReportCard[]): void {
+	for (const ev of final_evaluations) {
+		let status = ReportApprovalState.NA;
+
+		switch (ev.status) {
+			case "pending":
+				status = ReportApprovalState.Pending;
+				break;
+			case "passed":
+				status = ReportApprovalState.Approved;
+				break;
+			case "failed":
+				status = ReportApprovalState.Failed;
+				break;
+		}
+
+		const newReport: ReportCard = {
+			id: ev.id,
+			group: ev.group ? ev.group.grade_name : "",
+			starting_month: new Date(),
+			ending_month: new Date(),
+			year: ev.year,
+			type: "Final",
+			passed: status,
+			report_url: ev.report_card_url,
+		};
+		reports.push(newReport);
+	}
+}
+
+function setIntermediateReports(intermediate_evaluations: IntermediateEvaluation[], reports: ReportCard[]): void {
+	for (const ev of intermediate_evaluations) {
+		const start_month = ev.starting_month.replaceAll("-", "/");
+		const end_month = ev.ending_month.replaceAll("-", "/");
+
+		const newReport: ReportCard = {
+			id: ev.id,
+			group: ev.group ? ev.group.grade_name : "",
+			starting_month: new Date(start_month),
+			ending_month: new Date(end_month),
+			year: "",
+			type: "Intermedio",
+			passed: ReportApprovalState.NA,
+			report_url: ev.report_card_url,
+		};
+		reports.push(newReport);
+	}
+}
+
 export async function fetchReports(studentId: string): Promise<{ success: boolean; data?: ReportCard[]; err: string }> {
 	try {
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		const config = {
 			...baseConfig,
 			method: "get",
-			url: `/api/reports/${studentId}`,
+			url: `/api/students/${studentId}/evaluations`,
 		};
 
-		// const response = await axios(config);
+		const response = await axios(config);
 
-		const response = {
-			status: 200,
-			data: {
-				reports: [
-					{
-						id: 1,
-						group: "Primero",
-						starting_month: new Date(2022, 4),
-						ending_month: new Date(2022, 5),
-						year: new Date(),
-						type: "Intermedio",
-						passed: ReportApprovalState.NA,
-						report_url: "",
-					},
-					{
-						id: 2,
-						group: "Primero",
-						starting_month: new Date(),
-						ending_month: new Date(),
-						year: new Date(2022, 11),
-						type: "Final",
-						passed: ReportApprovalState.Pending,
-						report_url: "",
-					},
-				],
-			},
-		};
+		const data = response.data;
+		const final_evaluations: FinalEvaluation[] = data.student.final_evaluations;
+		const intermediate_evaluations: IntermediateEvaluation[] = data.student.intermediate_evaluations;
+		const reports: ReportCard[] = [];
+
+		setFinalReports(final_evaluations, reports);
+		setIntermediateReports(intermediate_evaluations, reports);
 
 		return {
 			success: true,
-			data: response.data.reports as ReportCard[],
+			data: reports,
 			err: "",
 		};
 

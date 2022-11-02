@@ -264,8 +264,36 @@ export interface ReportCard {
 	group: string;
 	starting_month: Date;
 	ending_month: Date;
-	year: Date;
+	year: string;
 	type: string;
 	passed: ReportApprovalState;
 	report_url: string;
+}
+
+export interface FinalEvaluation {
+	id: number;
+	student_id: string;
+	status: string;
+	report_card_url: string;
+	year: string;
+	group: {
+		id: number;
+		name: string;
+		year: number;
+		grade_name: string;
+	};
+}
+
+export interface IntermediateEvaluation {
+	id: number;
+	student_id: string;
+	starting_month: string;
+	ending_month: string;
+	report_card_url: string;
+	group: {
+		id: number;
+		name: string;
+		year: number;
+		grade_name: string;
+	};
 }
