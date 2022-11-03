@@ -1,6 +1,7 @@
 import _ from "lodash";
 import * as XLSX from "xlsx";
 import { JsonSchema7 } from "@jsonforms/core";
+import { FinalEvaluation, IntermediateEvaluation, ReportApprovalState, ReportCard } from "./Models";
 
 /**
  * @param xlsxFile Excel file with .xlsx format.
@@ -89,4 +90,61 @@ export function normalizeText(str: string): string {
 		.normalize("NFD")
 		.replace(/[\u0300-\u036f]/g, "")
 		.toLowerCase();
+}
+
+export function setFinalReports(final_evaluations: FinalEvaluation[]): ReportCard[] {
+	const reports: ReportCard[] = [];
+
+	for (const ev of final_evaluations) {
+		let status = ReportApprovalState.NA;
+
+		switch (ev.status) {
+			case "pending":
+				status = ReportApprovalState.Pending;
+				break;
+			case "passed":
+				status = ReportApprovalState.Approved;
+				break;
+			case "failed":
+				status = ReportApprovalState.Failed;
+				break;
+		}
+
+		const newReport: ReportCard = {
+			id: ev.id,
+			group: ev.group ? ev.group.grade_name : "",
+			starting_month: new Date(),
+			ending_month: new Date(),
+			year: ev.group ? ev.group.year : "",
+			type: "Final",
+			passed: status,
+			report_url: ev.report_card_url,
+		};
+		reports.push(newReport);
+	}
+
+	return reports;
+}
+
+export function setIntermediateReports(intermediate_evaluations: IntermediateEvaluation[]): ReportCard[] {
+	const reports: ReportCard[] = [];
+
+	for (const ev of intermediate_evaluations) {
+		const start_month = ev.starting_month.replaceAll("-", "/");
+		const end_month = ev.ending_month.replaceAll("-", "/");
+
+		const newReport: ReportCard = {
+			id: ev.id,
+			group: ev.group ? ev.group.grade_name : "",
+			starting_month: new Date(start_month),
+			ending_month: new Date(end_month),
+			year: "",
+			type: "Intermedio",
+			passed: ReportApprovalState.NA,
+			report_url: ev.report_card_url,
+		};
+		reports.push(newReport);
+	}
+
+	return reports;
 }

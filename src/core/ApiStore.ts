@@ -7,6 +7,7 @@ import { DefaultApiResponse, UserRole } from "./interfaces";
 
 import { DataStore } from "./DataStore";
 import { teachersMock } from "./ApiMocks";
+import { setFinalReports, setIntermediateReports } from "./CoreHelper";
 
 const dataStore = DataStore.getInstance();
 
@@ -324,55 +325,6 @@ export async function fetchUser(id: string): Promise<DefaultApiResponse<UserInfo
 	}
 }
 
-function setFinalReports(final_evaluations: FinalEvaluation[], reports: ReportCard[]): void {
-	for (const ev of final_evaluations) {
-		let status = ReportApprovalState.NA;
-
-		switch (ev.status) {
-			case "pending":
-				status = ReportApprovalState.Pending;
-				break;
-			case "passed":
-				status = ReportApprovalState.Approved;
-				break;
-			case "failed":
-				status = ReportApprovalState.Failed;
-				break;
-		}
-
-		const newReport: ReportCard = {
-			id: ev.id,
-			group: ev.group ? ev.group.grade_name : "",
-			starting_month: new Date(),
-			ending_month: new Date(),
-			year: ev.group ? ev.group.year : "",
-			type: "Final",
-			passed: status,
-			report_url: ev.report_card_url,
-		};
-		reports.push(newReport);
-	}
-}
-
-function setIntermediateReports(intermediate_evaluations: IntermediateEvaluation[], reports: ReportCard[]): void {
-	for (const ev of intermediate_evaluations) {
-		const start_month = ev.starting_month.replaceAll("-", "/");
-		const end_month = ev.ending_month.replaceAll("-", "/");
-
-		const newReport: ReportCard = {
-			id: ev.id,
-			group: ev.group ? ev.group.grade_name : "",
-			starting_month: new Date(start_month),
-			ending_month: new Date(end_month),
-			year: "",
-			type: "Intermedio",
-			passed: ReportApprovalState.NA,
-			report_url: ev.report_card_url,
-		};
-		reports.push(newReport);
-	}
-}
-
 export async function fetchReports(studentId: string): Promise<{ success: boolean; data?: ReportCard[]; err: string }> {
 	try {
 		const config = {
@@ -386,10 +338,10 @@ export async function fetchReports(studentId: string): Promise<{ success: boolea
 		const data = response.data;
 		const final_evaluations: FinalEvaluation[] = data.student.final_evaluations;
 		const intermediate_evaluations: IntermediateEvaluation[] = data.student.intermediate_evaluations;
-		const reports: ReportCard[] = [];
 
-		setFinalReports(final_evaluations, reports);
-		setIntermediateReports(intermediate_evaluations, reports);
+		const finalReports = setFinalReports(final_evaluations);
+		const intermediateReports = setIntermediateReports(intermediate_evaluations);
+		const reports = finalReports.concat(intermediateReports);
 
 		return {
 			success: true,
