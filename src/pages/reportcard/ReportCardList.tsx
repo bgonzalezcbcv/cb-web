@@ -160,9 +160,9 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 			headerName: "Descargar",
 			disableColumnMenu: false,
 			flex: 1,
-			renderCell: (): React.ReactElement => {
+			renderCell: (params): React.ReactElement => {
 				return (
-					<IconButton onClick={(): void => alert("No implementado!")}>
+					<IconButton onClick={(): void => alert("No implementado!")} href={params.row.report_card_url}>
 						<DownloadIcon />
 					</IconButton>
 				);

@@ -434,8 +434,9 @@ export async function createFinalReportCard(finalReport: FinalReportCardRequest,
 		formData.set("group_id", finalReport.group_id);
 
 		const config = {
+			...baseConfig,
 			headers: {
-				Authorization: `Bearer ${dataStore.loggedUser?.token}`,
+				...baseConfig.headers,
 				"Content-Type": "multipart/form-data",
 			},
 			method: "post",
@@ -463,12 +464,13 @@ export async function createIntermediateReportCard(
 		formData.set("group_id", finalReport.group_id);
 
 		const config = {
+			...baseConfig,
 			headers: {
-				Authorization: `Bearer ${dataStore.loggedUser?.token}`,
+				...baseConfig.headers,
 				"Content-Type": "multipart/form-data",
 			},
 			method: "post",
-			url: `/api/students/${studentId}/final_evaluation`,
+			url: `/api/students/${studentId}/intermediate_evaluation`,
 			data: finalReport,
 		};
 
