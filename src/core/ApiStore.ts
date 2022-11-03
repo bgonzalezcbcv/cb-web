@@ -427,13 +427,20 @@ export async function setReportApprovalState(studentId: string, reportId: number
 }
 export async function createFinalReportCard(finalReport: FinalReportCardRequest, studentId: string): Promise<DefaultApiResponse<FinalReportCardResponse>> {
 	try {
+		const formData = new FormData();
+
+		formData.set("student_id", finalReport.student_id);
+		formData.append("report_card", finalReport.report_card);
+		formData.set("group_id", finalReport.group_id);
+
 		const config = {
-			...baseConfig,
+			headers: {
+				Authorization: `Bearer ${dataStore.loggedUser?.token}`,
+				"Content-Type": "multipart/form-data",
+			},
 			method: "post",
 			url: `/api/students/${studentId}/final_evaluation`,
-			data: JSON.stringify({
-				final_evaluation: finalReport,
-			}),
+			data: finalReport,
 		};
 
 		const response = await axios(config);
@@ -448,13 +455,21 @@ export async function createIntermediateReportCard(
 	studentId: string
 ): Promise<DefaultApiResponse<IntermediateReportCardResponse>> {
 	try {
+		const formData = new FormData();
+
+		formData.set("ending_month", finalReport.ending_month);
+		formData.set("starting_month", finalReport.starting_month);
+		formData.append("report_card", finalReport.report_card);
+		formData.set("group_id", finalReport.group_id);
+
 		const config = {
-			...baseConfig,
+			headers: {
+				Authorization: `Bearer ${dataStore.loggedUser?.token}`,
+				"Content-Type": "multipart/form-data",
+			},
 			method: "post",
-			url: `/api/students/${studentId}/intermediate_evaluation`,
-			data: JSON.stringify({
-				intermediate_evaluation: finalReport,
-			}),
+			url: `/api/students/${studentId}/final_evaluation`,
+			data: finalReport,
 		};
 
 		const response = await axios(config);
