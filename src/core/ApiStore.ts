@@ -429,16 +429,13 @@ export async function createFinalReportCard(finalReport: FinalReportCardRequest,
 	try {
 		const formData = new FormData();
 
-		formData.set("student_id", finalReport.student_id);
-		formData.append("report_card", finalReport.report_card);
+		formData.set("report_card", finalReport.report_card);
 		formData.set("group_id", finalReport.group_id);
+		formData.set("student_id", finalReport.student_id);
+		formData.set("status", "pending");
 
 		const config = {
-			...baseConfig,
-			headers: {
-				...baseConfig.headers,
-				"Content-Type": "multipart/form-data",
-			},
+			..._.set(baseConfig, "headers.Content-Type", "multipart/form-data"),
 			method: "post",
 			url: `/api/students/${studentId}/final_evaluation`,
 			data: finalReport,
@@ -460,18 +457,14 @@ export async function createIntermediateReportCard(
 
 		formData.set("ending_month", finalReport.ending_month);
 		formData.set("starting_month", finalReport.starting_month);
-		formData.append("report_card", finalReport.report_card);
+		formData.set("report_card", finalReport.report_card);
 		formData.set("group_id", finalReport.group_id);
 
 		const config = {
-			...baseConfig,
-			headers: {
-				...baseConfig.headers,
-				"Content-Type": "multipart/form-data",
-			},
+			..._.set(baseConfig, "headers.Content-Type", "multipart/form-data"),
 			method: "post",
 			url: `/api/students/${studentId}/intermediate_evaluation`,
-			data: finalReport,
+			data: formData,
 		};
 
 		const response = await axios(config);
