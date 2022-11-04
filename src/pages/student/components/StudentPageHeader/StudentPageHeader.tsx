@@ -121,7 +121,7 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 				acceptEnabled={!hasErrors}>
 				<DeactivateStudent
 					deactivationInfo={(value: DeactivationInfo): void => setDeactivationInfo(value)}
-					onError={(value): void => {console.log("errores", value); setHasErrors(value)}}
+					onError={(value): void => setHasErrors(value)}
 				/>
 			</Modal>
 		</>
