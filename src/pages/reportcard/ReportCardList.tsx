@@ -1,4 +1,3 @@
-import _ from "lodash";
 import React, { useCallback, useEffect, useState } from "react";
 
 import * as API from "../../core/ApiStore";
@@ -267,7 +266,7 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 			{showCreateReport ? (
 				<CreateReportCardModal
 					show={true}
-					onClose={() => {
+					onClose={(): void => {
 						getReports().then();
 						setShowCreateReport(false);
 					}}
