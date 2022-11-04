@@ -2,7 +2,19 @@ import _ from "lodash";
 import axios from "axios";
 import { reaction } from "mobx";
 
-import { DocumentType, FamilyMember, FinalEvaluation, IntermediateEvaluation, ReportApprovalState, ReportCard, Student, User, UserInfo } from "./Models";
+import {
+	DocumentType,
+	FamilyMember,
+	FinalEvaluation,
+	FinalReportCardRequest,
+	IntermediateEvaluation,
+	IntermediateReportCardRequest,
+	ReportApprovalState,
+	ReportCard,
+	Student,
+	User,
+	UserInfo,
+} from "./Models";
 import { DefaultApiResponse, UserRole } from "./interfaces";
 
 import { DataStore } from "./DataStore";
@@ -411,6 +423,54 @@ export async function setReportApprovalState(studentId: string, reportId: number
 		return {
 			success: false,
 		};
+	}
+}
+export async function createFinalReportCard(finalReport: FinalReportCardRequest, studentId: string): Promise<DefaultApiResponse<FinalEvaluation>> {
+	try {
+		const formData = new FormData();
+
+		formData.set("report_card", finalReport.report_card);
+		formData.set("group_id", finalReport.group_id);
+		formData.set("student_id", finalReport.student_id);
+		formData.set("status", "pending");
+
+		const config = {
+			..._.set(baseConfig, "headers.Content-Type", "multipart/form-data"),
+			method: "post",
+			url: `/api/students/${studentId}/final_evaluation`,
+			data: finalReport,
+		};
+
+		const response = await axios(config);
+		return defaultResponse(response.data.final_evaluation);
+	} catch (e) {
+		return defaultErrorResponse("No se ha podido crear el boletín.");
+	}
+}
+
+export async function createIntermediateReportCard(
+	finalReport: IntermediateReportCardRequest,
+	studentId: string
+): Promise<DefaultApiResponse<IntermediateEvaluation>> {
+	try {
+		const formData = new FormData();
+
+		formData.set("ending_month", finalReport.ending_month);
+		formData.set("starting_month", finalReport.starting_month);
+		formData.set("report_card", finalReport.report_card);
+		formData.set("group_id", finalReport.group_id);
+
+		const config = {
+			..._.set(baseConfig, "headers.Content-Type", "multipart/form-data"),
+			method: "post",
+			url: `/api/students/${studentId}/intermediate_evaluation`,
+			data: formData,
+		};
+
+		const response = await axios(config);
+		return defaultResponse(response.data.intermediate_evaluation);
+	} catch (e) {
+		return defaultErrorResponse("No se ha podido crear el boletín.");
 	}
 }
 

@@ -22,11 +22,13 @@ export default function Modal(props: ModalProps): React.ReactElement {
 	return show ? (
 		<Dialog open={show} onClose={onClose}>
 			<Box className="modal">
-				<IconButton>
-					<CloseIcon onClick={onClose} />
+				<IconButton onClick={onClose}>
+					<CloseIcon />
 				</IconButton>
 				<Container className="wrapper">
-					<Typography variant={"h6"}>{title}</Typography>
+					<Typography variant={"h6"} sx={{ paddingLeft: "24px", paddingRight: "24px" }}>
+						{title}
+					</Typography>
 					{children}
 				</Container>
 

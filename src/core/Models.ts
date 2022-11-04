@@ -270,6 +270,33 @@ export interface ReportCard {
 	report_url: string;
 }
 
+export interface FinalReportCardRequest {
+	group_id: string;
+	student_id: string;
+	status?: string;
+	report_card: File;
+}
+
+export interface IntermediateReportCardRequest {
+	group_id: string;
+	starting_month: string;
+	ending_month: string;
+	report_card: File;
+}
+
+export interface FinalReportCardResponse {
+	group_id: string;
+	status: string;
+	report_card_url: string;
+}
+
+export interface IntermediateReportCardResponse {
+	group_id: string;
+	starting_month: string;
+	ending_month: string;
+	report_card_url: string;
+}
+
 export interface FinalEvaluation {
 	id: number;
 	student_id: string;

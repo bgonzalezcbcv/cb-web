@@ -1,4 +1,3 @@
-import _ from "lodash";
 import React, { useCallback, useEffect, useState } from "react";
 
 import * as API from "../../core/ApiStore";
@@ -13,6 +12,7 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DownloadIcon from "@mui/icons-material/Download";
 import AddTaskIcon from "@mui/icons-material/AddTask";
+import CreateReportCardModal from "./components/CreateReportCard/CreateReportCard";
 
 export const emptyReport: ReportCard = {
 	id: -1,
@@ -51,6 +51,8 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 	const [isGradingModalOpen, setIsGradingModalOpen] = useState(false);
 	const [showApprovalSuccesAlert, setShowApprovalSuccesAlert] = useState(false);
 
+	const [showCreateReport, setShowCreateReport] = useState<boolean>(false);
+
 	const getReports = useCallback(async (): Promise<void> => {
 		if (rows) return;
 
@@ -59,7 +61,7 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 		const response = await API.fetchReports(student.id);
 
 		if (response.success && response.data) {
-			setReports(_.merge(emptyReportList, response.data)); // TODO: see if the merge is necessary when the endpoint is functional
+			setReports(response.data); // TODO: see if the merge is necessary when the endpoint is functional
 			setFetchState(FetchState.initial);
 		} else {
 			setFetchState(FetchState.failure);
@@ -157,9 +159,9 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 			headerName: "Descargar",
 			disableColumnMenu: false,
 			flex: 1,
-			renderCell: (): React.ReactElement => {
+			renderCell: (params): React.ReactElement => {
 				return (
-					<IconButton onClick={(): void => alert("No implementado!")}>
+					<IconButton onClick={(): void => alert("No implementado!")} href={params.row.report_card_url}>
 						<DownloadIcon />
 					</IconButton>
 				);
@@ -236,7 +238,7 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 					alignItems: "flex-end",
 				}}>
 				{canAdd && (
-					<IconButton disabled={!editable} color="secondary">
+					<IconButton disabled={!editable} color="secondary" onClick={(): void => setShowCreateReport(true)}>
 						<AddCircleOutlineIcon />
 					</IconButton>
 				)}
@@ -261,6 +263,16 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 			<ApprovalReportCardDialog show={isGradingModalOpen} setOpen={handleGrading} />
 
 			<ReportApprovalSuccessDialog show={showApprovalSuccesAlert} setOpen={setShowApprovalSuccesAlert} />
+			{showCreateReport ? (
+				<CreateReportCardModal
+					show={true}
+					onClose={(): void => {
+						getReports().then();
+						setShowCreateReport(false);
+					}}
+					student={student}
+				/>
+			) : null}
 		</Box>
 	);
 }

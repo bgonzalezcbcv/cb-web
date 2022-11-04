@@ -10,7 +10,7 @@ import useDebounce from "../../hooks/useDebounce";
 
 dayjs.locale("es");
 
-function dateToString(date: Date): string {
+export function dateToString(date: Date): string {
 	try {
 		const year = new Intl.DateTimeFormat("en", { year: "numeric" }).format(date);
 		const month = new Intl.DateTimeFormat("en", { month: "2-digit" }).format(date);
