@@ -5,10 +5,10 @@ import { reaction } from "mobx";
 import {
 	DocumentType,
 	FamilyMember,
+	FinalEvaluation,
 	FinalReportCardRequest,
-	FinalReportCardResponse,
+	IntermediateEvaluation,
 	IntermediateReportCardRequest,
-	IntermediateReportCardResponse,
 	ReportApprovalState,
 	ReportCard,
 	Student,
@@ -425,7 +425,7 @@ export async function setReportApprovalState(studentId: string, reportId: number
 		};
 	}
 }
-export async function createFinalReportCard(finalReport: FinalReportCardRequest, studentId: string): Promise<DefaultApiResponse<FinalReportCardResponse>> {
+export async function createFinalReportCard(finalReport: FinalReportCardRequest, studentId: string): Promise<DefaultApiResponse<FinalEvaluation>> {
 	try {
 		const formData = new FormData();
 
@@ -451,7 +451,7 @@ export async function createFinalReportCard(finalReport: FinalReportCardRequest,
 export async function createIntermediateReportCard(
 	finalReport: IntermediateReportCardRequest,
 	studentId: string
-): Promise<DefaultApiResponse<IntermediateReportCardResponse>> {
+): Promise<DefaultApiResponse<IntermediateEvaluation>> {
 	try {
 		const formData = new FormData();
 
