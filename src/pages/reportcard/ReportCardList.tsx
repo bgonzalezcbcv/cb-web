@@ -62,7 +62,7 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 		const response = await API.fetchReports(student.id);
 
 		if (response.success && response.data) {
-			setReports(_.merge(emptyReportList, response.data)); // TODO: see if the merge is necessary when the endpoint is functional
+			setReports(response.data); // TODO: see if the merge is necessary when the endpoint is functional
 			setFetchState(FetchState.initial);
 		} else {
 			setFetchState(FetchState.failure);
@@ -264,7 +264,16 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 			<ApprovalReportCardDialog show={isGradingModalOpen} setOpen={handleGrading} />
 
 			<ReportApprovalSuccessDialog show={showApprovalSuccesAlert} setOpen={setShowApprovalSuccesAlert} />
-			{showCreateReport ? <CreateReportCardModal show={true} onClose={(): void => setShowCreateReport(false)} student={student} /> : null}
+			{showCreateReport ? (
+				<CreateReportCardModal
+					show={true}
+					onClose={() => {
+						getReports().then();
+						setShowCreateReport(false);
+					}}
+					student={student}
+				/>
+			) : null}
 		</Box>
 	);
 }
