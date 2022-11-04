@@ -1,4 +1,3 @@
-/* eslint-disable */
 import * as React from "react";
 
 import { Student } from "../../../../core/Models";
@@ -13,16 +12,10 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 
 import FormUploadDialog from "../FormUploadDialog/FormUploadDialog";
+import Modal from "../../../../components/modal/Modal";
+import DeactivateStudent, { DeactivationInfo } from "../DeactivateStudent/DeactivateStudent";
 
 import "./Student.scss";
-import Modal from "../../../../components/modal/Modal";
-import DatePickerToString from "../../../../components/datePicker/DatePicker";
-
-type DeactivationInfo = {
-	lastDay: string;
-	reason: string;
-	description: string;
-};
 
 interface StudentPageHeaderProps {
 	mode: StudentPageMode;
@@ -38,6 +31,7 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 	const [isFormUploadOpen, setIsFormUploadOpen] = React.useState(false);
 	const [isDeactivateStudentModalVisible, setIsDeactivateStudentModalVisible] = React.useState(false);
 	const [deactivationInfo, setDeactivationInfo] = React.useState<DeactivationInfo>({} as DeactivationInfo);
+	const [hasErrors, setHasErrors] = React.useState(true);
 
 	return (
 		<>
@@ -97,7 +91,7 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 					) : null}
 
 					{mode === StudentPageMode.edit ? (
-						<Button color={"secondary"} startIcon={<DeleteIcon />} onClick={() => setIsDeactivateStudentModalVisible(true)}>
+						<Button color={"secondary"} startIcon={<DeleteIcon />} onClick={(): void => setIsDeactivateStudentModalVisible(true)}>
 							Dar de baja
 						</Button>
 					) : (
@@ -120,50 +114,15 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 				show={isDeactivateStudentModalVisible}
 				title={"Dar de baja estudiante"}
 				acceptText={"Dar de baja"}
-				onClose={() => setIsDeactivateStudentModalVisible(false)}
-				onAccept={() => {}}
-				acceptEnabled={true}
-			>
-				<Box>
-					<DatePickerToString
-						date={deactivationInfo.lastDay}
-						label={"Último día"}
-						editable={true}
-						required={true}
-						onChange={(date: string): void => {
-						const newInfo = { ...deactivationInfo, lastDay: date };
-						setDeactivationInfo(newInfo);
-					}} />
-
-					<FormControl variant="standard" sx={{width: "100%", marginTop: "5px"}} required={true}>
-						<InputLabel id="reason-label">Motivo</InputLabel>
-
-						<Select
-							labelId="reason-label"
-							id="reason-select"
-							value={deactivationInfo.reason}
-							label="Motivo"
-							onChange={(event): void => {
-								const newInfo = { ...deactivationInfo, reason: event.target.value };
-								setDeactivationInfo(newInfo);
-							}}
-						>
-							<MenuItem value={10}>Motivo 1</MenuItem>
-							<MenuItem value={20}>Motivo 2</MenuItem>
-							<MenuItem value={30}>Motivo 3</MenuItem>
-						</Select>
-
-						<TextField
-							id="standard-multiline-static"
-							sx={{marginTop: "5px"}}
-							label="Descripción"
-							multiline
-							rows={4}
-							variant="standard"
-							required={true}
-						/>
-					</FormControl>
-				</Box>
+				onClose={(): void => setIsDeactivateStudentModalVisible(false)}
+				onAccept={(): void => {
+					console.log(deactivationInfo);
+				}} //TODO: Agregar el callback cuando este el backend
+				acceptEnabled={!hasErrors}>
+				<DeactivateStudent
+					deactivationInfo={(value: DeactivationInfo): void => setDeactivationInfo(value)}
+					onError={(value): void => {console.log("errores", value); setHasErrors(value)}}
+				/>
 			</Modal>
 		</>
 	);
