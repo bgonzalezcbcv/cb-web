@@ -19,7 +19,7 @@ export const emptyReport: ReportCard = {
 	group: "",
 	starting_month: new Date(),
 	ending_month: new Date(),
-	year: new Date(),
+	year: "",
 	type: "",
 	passed: ReportApprovalState.Pending,
 	report_url: "",
@@ -113,8 +113,8 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 				let period = "";
 
 				params.row.type === "Intermedio"
-					? (period = `${params.row.starting_month.getMonth()}/${params.row.starting_month.getFullYear()}`)
-					: (period = `12/${params.row.year.getFullYear()}`);
+					? (period = `${params.row.starting_month.getMonth() + 1}/${params.row.starting_month.getFullYear()}`)
+					: (period = `12/${params.row.year}`);
 
 				return <span>{period}</span>;
 			},
@@ -128,8 +128,8 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 				let period = "";
 
 				params.row.type === "Intermedio"
-					? (period = `${params.row.ending_month.getMonth()}/${params.row.ending_month.getFullYear()}`)
-					: (period = `12/${params.row.year.getFullYear()}`);
+					? (period = `${params.row.ending_month.getMonth() + 1}/${params.row.ending_month.getFullYear()}`)
+					: (period = `12/${params.row.year}`);
 
 				return <span>{period}</span>;
 			},

@@ -2,11 +2,12 @@ import _ from "lodash";
 import axios from "axios";
 import { reaction } from "mobx";
 
-import { DocumentType, FamilyMember, ReportApprovalState, ReportCard, Student, User, UserInfo } from "./Models";
+import { DocumentType, FamilyMember, FinalEvaluation, IntermediateEvaluation, ReportApprovalState, ReportCard, Student, User, UserInfo } from "./Models";
 import { DefaultApiResponse, UserRole } from "./interfaces";
 
 import { DataStore } from "./DataStore";
 import { teachersMock } from "./ApiMocks";
+import { setFinalReports, setIntermediateReports } from "./CoreHelper";
 
 const dataStore = DataStore.getInstance();
 
@@ -326,46 +327,25 @@ export async function fetchUser(id: string): Promise<DefaultApiResponse<UserInfo
 
 export async function fetchReports(studentId: string): Promise<{ success: boolean; data?: ReportCard[]; err: string }> {
 	try {
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		const config = {
 			...baseConfig,
 			method: "get",
-			url: `/api/reports/${studentId}`,
+			url: `/api/students/${studentId}/evaluations`,
 		};
 
-		// const response = await axios(config);
+		const response = await axios(config);
 
-		const response = {
-			status: 200,
-			data: {
-				reports: [
-					{
-						id: 1,
-						group: "Primero",
-						starting_month: new Date(2022, 4),
-						ending_month: new Date(2022, 5),
-						year: new Date(),
-						type: "Intermedio",
-						passed: ReportApprovalState.NA,
-						report_url: "",
-					},
-					{
-						id: 2,
-						group: "Primero",
-						starting_month: new Date(),
-						ending_month: new Date(),
-						year: new Date(2022, 11),
-						type: "Final",
-						passed: ReportApprovalState.Pending,
-						report_url: "",
-					},
-				],
-			},
-		};
+		const data = response.data;
+		const final_evaluations: FinalEvaluation[] = data.student.final_evaluations;
+		const intermediate_evaluations: IntermediateEvaluation[] = data.student.intermediate_evaluations;
+
+		const finalReports = setFinalReports(final_evaluations);
+		const intermediateReports = setIntermediateReports(intermediate_evaluations);
+		const reports = finalReports.concat(intermediateReports);
 
 		return {
 			success: true,
-			data: response.data.reports as ReportCard[],
+			data: reports,
 			err: "",
 		};
 
