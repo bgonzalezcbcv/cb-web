@@ -40,8 +40,8 @@ export const teachersMock = new Array<UserInfo>(10) //
 			...user,
 			id: id,
 			groups: [
-				{ id: "1", name: "3A" },
-				{ id: "2", name: "4B" },
+				{ id: "1", name: "3A", year: "2022" },
+				{ id: "2", name: "4B", year: "2022" },
 			],
 		})
 	);
