@@ -169,6 +169,23 @@ export async function fetchStudents(): Promise<DefaultApiResponse<Student[]>> {
 	}
 }
 
+export async function fetchPendingStudents(): Promise<DefaultApiResponse<Student[]>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: `/api/pending/`,
+		};
+
+		const response = await axios(config);
+
+		return defaultResponse(response.data.students);
+		//eslint-disable-next-line
+	} catch (error: any) {
+		return defaultErrorResponse("No se pudieron listar los alumnos.");
+	}
+}
+
 export async function createFamilyMember(studentId: number, family_member: FamilyMember): Promise<DefaultApiResponse<FamilyMember>> {
 	try {
 		const config = {
