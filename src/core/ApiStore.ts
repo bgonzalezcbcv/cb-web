@@ -196,7 +196,6 @@ export async function createStudent(studentToCreate: Student): Promise<DefaultAp
 			url: "/api/students/",
 			data: JSON.stringify(studentToCreate),
 		};
-		console.log(config.data);
 		const { family: unfilteredFamily } = studentToCreate;
 		const familyCIs: string[] = [];
 
