@@ -19,7 +19,7 @@ export default function StudentActivationModal(props: {
 	const [showFailureMessage, setShowFailureMessage] = useState(false);
 
 	const handleActivation = async () => {
-		const student = await activateStudent(props.studentProp.id);
+		const student = await activateStudent(props.studentProp.id, calculatedReferenceNumber);
 
 		student.success && student.data && props.onAccept(student.data);
 

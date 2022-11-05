@@ -1248,13 +1248,13 @@ export async function adminChangePassword(userId: number, newPassword: string): 
 	}
 }
 
-export async function activateStudent(id: string): Promise<DefaultApiResponse<Student>> {
+export async function activateStudent(id: string, referenceNumber: string): Promise<DefaultApiResponse<Student>> {
 	try {
 		const config = {
 			...baseConfig,
 			method: "post",
-			url: `/api/students/${id}/activity_status`,
-			data: JSON.stringify({ status: "active" }),
+			url: `/api/students/${id}/activate`,
+			data: JSON.stringify({ student: { reference_number: referenceNumber } }),
 		};
 
 		const response = await axios(config);
