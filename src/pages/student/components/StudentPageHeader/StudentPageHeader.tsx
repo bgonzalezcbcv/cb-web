@@ -104,7 +104,6 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 							{"Subir formulario"}
 						</Button>
 					) : null}
-
 					{[StudentPageMode.edit].includes(mode) ? (
 						<Button
 							data-cy={"studentEditInfoButton"}
@@ -114,17 +113,19 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 							{"Editar"}
 						</Button>
 					) : null}
+					{
+						//TODO: add this to the condition: && student.status === "pending"
 
-					{[StudentPageMode.edit].includes(mode) ? (
-						<Button
-							data-cy={"studentActivateButton"}
-							color={"secondary"}
-							startIcon={<AddTaskIcon />}
-							onClick={(): void => setShowActivationModal(true)}>
-							{"Activar"}
-						</Button>
-					) : null}
-
+						[StudentPageMode.edit].includes(mode) ? (
+							<Button
+								data-cy={"studentActivateButton"}
+								color={"secondary"}
+								startIcon={<AddTaskIcon />}
+								onClick={(): void => setShowActivationModal(true)}>
+								{"Activar"}
+							</Button>
+						) : null
+					}
 					{mode === StudentPageMode.edit && student.status !== "inactive"? (
 						<Button color={"secondary"} startIcon={<DeleteIcon />} onClick={(): void => setIsDeactivateStudentModalVisible(true)}>
 							Dar de baja
@@ -150,7 +151,10 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 				onClose={() => {
 					setShowActivationModal(false);
 				}}
-				onAccept={() => {}}
+				onAccept={(newStudent: Student): void => {
+					setStudent(newStudent);
+					setIsFormUploadOpen(false);
+				}}
 				studentProp={student}
 			/>
 
