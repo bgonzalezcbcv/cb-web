@@ -74,6 +74,20 @@
 			"type": "string",
 			"title": "Estado",
 			"errorMessage": "Tiene que tener un estado correcto",
+			"oneOf": [
+				{
+					"const": "pending",
+					"title": "Pendiente"
+				},
+				{
+					"const": "inactive",
+					"title": "Inactivo"
+				},
+				{
+					"const": "active",
+					"title": "Activo"
+				}
+			],
 			"readOnly": true
 		},
 		"group": {
