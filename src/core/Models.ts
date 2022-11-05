@@ -91,7 +91,7 @@ export interface Student {
 	schedule_start: string;
 	schedule_end: string;
 	tuition: string;
-	reference_number: number;
+	reference_number: string;
 	birthplace: string;
 	birthdate: string;
 	nationality: string;

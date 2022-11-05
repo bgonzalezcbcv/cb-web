@@ -198,7 +198,7 @@ export async function createStudent(studentToCreate: Student): Promise<DefaultAp
 				student: studentToCreate,
 			}),
 		};
-
+		console.log(config.data);
 		const { family: unfilteredFamily } = studentToCreate;
 		const familyCIs: string[] = [];
 

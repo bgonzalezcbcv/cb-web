@@ -33,12 +33,14 @@
 		"tuition": {
 			"type": "string",
 			"title": "Matrícula",
-			"errorMessage": "Tiene que tener una matricula correcta."
+			"errorMessage": "Tiene que tener una matricula correcta.",
+			"readOnly": true
 		},
 		"reference_number": {
-			"type": "integer",
+			"type": "string",
 			"title": "Número de referencia",
-			"errorMessage": "Tiene que tener un número de referencia correcto."
+			"errorMessage": "Tiene que tener un número de referencia correcto.",
+			"readOnly": true
 		},
 		"birthplace": {
 			"type": "string",
@@ -71,7 +73,8 @@
 		"status": {
 			"type": "string",
 			"title": "Estado",
-			"errorMessage": "Tiene que tener un estado correcto"
+			"errorMessage": "Tiene que tener un estado correcto",
+			"readOnly": true
 		},
 		"group": {
 			"type": "string",
