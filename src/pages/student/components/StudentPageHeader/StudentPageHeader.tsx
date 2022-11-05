@@ -10,10 +10,12 @@ import EditOffIcon from "@mui/icons-material/EditOff";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
+import AddTaskIcon from "@mui/icons-material/AddTask";
 
 import FormUploadDialog from "../FormUploadDialog/FormUploadDialog";
 import Modal from "../../../../components/modal/Modal";
 import DeactivateStudent, { DeactivationInfo } from "../DeactivateStudent/DeactivateStudent";
+import StudentActivationModal from "../StudentActivationModal/StudentActivationModal";
 
 import "./Student.scss";
 import {useCallback} from "react";
@@ -54,6 +56,7 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 			deactivationResponse.data && setStudent(deactivationResponse.data);
 		}
 	}, [deactivationInfo, hasErrors, student]);
+	const [showActivationModal, setShowActivationModal] = React.useState(false);
 
 	return (
 		<>
@@ -112,6 +115,16 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 						</Button>
 					) : null}
 
+					{[StudentPageMode.edit].includes(mode) ? (
+						<Button
+							data-cy={"studentActivateButton"}
+							color={"secondary"}
+							startIcon={<AddTaskIcon />}
+							onClick={(): void => setShowActivationModal(true)}>
+							{"Activar"}
+						</Button>
+					) : null}
+
 					{mode === StudentPageMode.edit && student.status !== "inactive"? (
 						<Button color={"secondary"} startIcon={<DeleteIcon />} onClick={(): void => setIsDeactivateStudentModalVisible(true)}>
 							Dar de baja
@@ -130,6 +143,15 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 					setStudent(newStudent);
 					setIsFormUploadOpen(false);
 				}}
+			/>
+
+			<StudentActivationModal
+				open={showActivationModal}
+				onClose={() => {
+					setShowActivationModal(false);
+				}}
+				onAccept={() => {}}
+				studentProp={student}
 			/>
 
 			<Modal
