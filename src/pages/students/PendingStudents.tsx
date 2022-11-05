@@ -23,11 +23,9 @@ const columns: GridColDef[] = [
 		sortable: false,
 		disableColumnMenu: true,
 		flex: 1,
-		/* eslint-disable */
-		// return type functions
-		renderCell: (params) => {
+		renderCell: (params): JSX.Element => {
 			const navigate = useNavigate();
-			const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+			const onClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
 				e.stopPropagation();
 
 				const api: GridApi = params.api;
@@ -40,7 +38,6 @@ const columns: GridColDef[] = [
 			};
 			return <Button onClick={onClick}>Ir</Button>; //Link component
 		},
-		/* eslint-enable */
 	},
 ];
 
@@ -121,8 +118,7 @@ export default function Students(props: StudentsProps): JSX.Element {
 					type="text"
 					placeholder="Buscar..."
 					value={searchText}
-					// eslint-disable-next-line
-					onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchText(e.target.value)}
+					onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setSearchText(e.target.value)}
 				/>
 			</Box>
 
