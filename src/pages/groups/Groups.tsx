@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import React, { useCallback, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { JsonForms } from "@jsonforms/react";
 import { Translator } from "@jsonforms/core";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
@@ -21,30 +20,27 @@ import {
 	Typography,
 } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import AddIcon from "@mui/icons-material/Add";
+
 import { Grade, Group, User } from "../../core/Models";
 import * as APIStore from "../../core/ApiStore";
+import useFetchFromAPI, { FetchStatus } from "../../hooks/useFetchFromAPI";
 import Modal from "../../components/modal/Modal";
 import NumericInputControl, { NumericInputControlTester } from "../../components/NumericInput/NumericInputControl";
 
 import schema from "./schema.json";
 import uischema from "./ui.json";
 
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import AddIcon from "@mui/icons-material/Add";
-
 import "./Groups.scss";
+import { restrictEditionTo } from "../../core/userRoleHelper";
+import { UserRole } from "../../core/interfaces";
 
 type GroupData = {
 	gradeId: string;
 	name: string;
 	year: string;
 };
-
-enum FetchState {
-	initial = "initial",
-	loading = "loading",
-	failure = "failure",
-}
 
 const columns: GridColDef[] = [
 	{ field: "grade_name", headerName: "Clase", disableColumnMenu: false, width: 120, align: "center" },
@@ -59,11 +55,7 @@ const columns: GridColDef[] = [
 		disableColumnMenu: true,
 		renderCell: (params): React.ReactNode => {
 			if (params.value === undefined) {
-				return (
-					<Typography fontSize={12}>
-						Sin docentes asignados
-					</Typography>
-				);
+				return <Typography fontSize={12}>Sin docentes asignados</Typography>;
 			}
 
 			const teachers: User[] = params.value
@@ -106,9 +98,10 @@ const columns: GridColDef[] = [
 		},
 	},
 	{
-		field: "addTeachers",
+		field: "id",
 		headerName: "Agregar docentes",
 		disableColumnMenu: true,
+		hide: !restrictEditionTo([UserRole.Administrador, UserRole.Director], true),
 		flex: 1,
 		align: "center",
 		renderCell: (): React.ReactNode => {
@@ -122,25 +115,26 @@ const columns: GridColDef[] = [
 			);
 		},
 	},
-	{ field: "principal", headerName: "Director", disableColumnMenu: false, flex: 1, renderCell: (params): React.ReactNode => {
-		const principal: User = params.value;
-			return (
-				principal ? (
-					<Typography fontSize={12}>
-						{principal.name + " " + principal.surname}
-					</Typography>
-				) : (
-					<Typography fontSize={12}>
-						Sin director asignado
-					</Typography>
-				)
+	{
+		field: "principal",
+		headerName: "Director",
+		disableColumnMenu: false,
+		flex: 1,
+		renderCell: (params): React.ReactNode => {
+			const principal: User = params.value;
+			return principal ? (
+				<Typography fontSize={12}>{principal.name + " " + principal.surname}</Typography>
+			) : (
+				<Typography fontSize={12}>Sin director asignado</Typography>
 			);
-		}, },
+		},
+	},
 	{
 		field: "addPrincipal",
 		headerName: "Agregar director",
 		disableColumnMenu: true,
 		flex: 1,
+		hide: !restrictEditionTo([UserRole.Administrador], true),
 		align: "center",
 		renderCell: (): React.ReactNode => {
 			return (
@@ -153,25 +147,26 @@ const columns: GridColDef[] = [
 			);
 		},
 	},
-	{ field: "support_teacher", headerName: "Adscripto", disableColumnMenu: false, flex: 1, renderCell: (params): React.ReactNode => {
+	{
+		field: "support_teacher",
+		headerName: "Adscripto",
+		disableColumnMenu: false,
+		flex: 1,
+		renderCell: (params): React.ReactNode => {
 			const teacher: User = params.value;
-			return (
-				teacher ? (
-					<Typography fontSize={12}>
-						{teacher.name + " " + teacher.surname}
-					</Typography>
-				): (
-					<Typography fontSize={12}>
-						Sin adscripto asignado
-					</Typography>
-				)
+			return teacher ? (
+				<Typography fontSize={12}>{teacher.name + " " + teacher.surname}</Typography>
+			) : (
+				<Typography fontSize={12}>Sin adscripto asignado</Typography>
 			);
-		}, },
+		},
+	},
 	{
 		field: "addSupportTeacher",
 		headerName: "Agregar adscripto",
 		disableColumnMenu: true,
 		flex: 1,
+		hide: !restrictEditionTo([UserRole.Administrador, UserRole.Director], true),
 		align: "center",
 		renderCell: (): React.ReactNode => {
 			return (
@@ -219,39 +214,17 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 	const { id } = useParams();
 
 	const [groups, setGroups] = useState<Group[]>(rows ?? []);
-	const [fetchState, setFetchState] = React.useState(FetchState.initial);
 	const [createGroupModalOpen, setCreateGroupModalOpen] = React.useState(false);
 	const [groupData, setGroupData] = React.useState<GroupData>({} as GroupData);
 	const [hasFormErrors, setHasFormErrors] = useState<boolean>(false);
 	const [grades, setGrades] = useState<Grade[] | undefined>(undefined);
 
+	const { refetch, fetchStatus } = useFetchFromAPI(() => APIStore.fetchGroups(id), setGroups, !rows);
+
 	const translator = (id: string, defaultMessage: string): string => {
 		if (id.includes("required")) return "Este campo es requerido.";
 		else return defaultMessage;
 	};
-
-	const fetchGroups = useCallback(async () => {
-		if (!id) {
-			if (rows) return;
-
-			setFetchState(FetchState.loading);
-
-			const response = await APIStore.fetchGroups();
-
-			if (response.success && response.data) {
-				setGroups(response.data);
-				setFetchState(FetchState.initial);
-			} else setFetchState(FetchState.failure);
-		} else {
-			//TODO: Fetch groups for current user
-		}
-	}, [id, rows, setFetchState, setGroups]);
-
-	useEffect((): void => {
-		const getGroups = async () => await fetchGroups();
-
-		getGroups();
-	}, []);
 
 	const handleCreateGroupModalOpen = useCallback(async () => {
 		const gradesResponse = await APIStore.fetchGrades();
@@ -272,7 +245,7 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 
 		const response = await APIStore.createGroup(request);
 
-		await fetchGroups();
+		await refetch();
 
 		response && setCreateGroupModalOpen(false);
 		setGroupData({} as GroupData);
@@ -289,22 +262,22 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 	}
 
 	const printTable = useCallback((): JSX.Element | null => {
-		switch (fetchState) {
-			case "loading":
+		switch (fetchStatus) {
+			case FetchStatus.Fetching:
 				return (
 					<Box className="loading-container">
 						<CircularProgress />
 					</Box>
 				);
-			case "failure":
+			case FetchStatus.Error:
 				return (
 					<Box className="loading-container">
-						<Alert severity="error" variant="outlined">
-							Falló la carga de grupos.
+						<Alert variant="outlined" severity="error" style={{ cursor: "pointer" }} onClick={refetch}>
+							<Typography>No se pudieron obtener los grupos. Haga click aquí para reintentar.</Typography>
 						</Alert>
 					</Box>
 				);
-			case "initial":
+			case FetchStatus.Initial:
 				return (
 					<DataGrid //
 						style={{ height: 380, width: "100%" }}
@@ -318,7 +291,7 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 			default:
 				return null;
 		}
-	}, [fetchState, groups]);
+	}, [fetchStatus, groups]);
 
 	return (
 		<Card

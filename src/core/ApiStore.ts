@@ -489,33 +489,27 @@ export async function fetchTeachers(id?: number, mock = false): Promise<DefaultA
 	}
 }
 
-export async function fetchGroups(): Promise<{ success: boolean; data?: Group[]; err: string }> {
+export async function fetchGroups(id?: string): Promise<DefaultApiResponse<Group[]>> {
 	try {
 		const config = {
 			...baseConfig,
 			method: "get",
-			url: `/api/groups`,
+			url: id ? `/api/groups/${id}` : `/api/groups/`,
 		};
 
 		const response = await axios(config);
 
-		if (![200, 304].includes(response.status) || response.data.groups === undefined)
-			return {
-				success: false,
-				err: "Unable to fetch groups",
-			};
-
 		return {
 			success: true,
 			data: response.data.groups,
-			err: "",
+			error: "",
 		};
 
 		//eslint-disable-next-line
 	} catch (error: any) {
 		return {
 			success: false,
-			err: error.message,
+			error: error.message,
 		};
 	}
 }
