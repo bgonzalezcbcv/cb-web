@@ -51,6 +51,7 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 		if (deactivationResponse.success) {
 			setDeactivationInfo({} as DeactivationInfo);
 			setIsDeactivateStudentModalVisible(false);
+			deactivationResponse.data && setStudent(deactivationResponse.data);
 		}
 	}, [deactivationInfo, hasErrors, student]);
 
