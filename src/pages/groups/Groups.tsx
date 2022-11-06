@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-// import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { JsonForms } from "@jsonforms/react";
 import { Translator } from "@jsonforms/core";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
@@ -12,16 +12,16 @@ import {
 	CircularProgress,
 	FormControl,
 	FormHelperText,
-	// IconButton,
+	IconButton,
 	InputLabel,
 	MenuItem,
 	Paper,
 	Select,
-	// Tooltip,
+	Tooltip,
 	Typography,
 } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { Grade, Group } from "../../core/Models";
+import { Grade, Group, User } from "../../core/Models";
 import * as APIStore from "../../core/ApiStore";
 import Modal from "../../components/modal/Modal";
 import NumericInputControl, { NumericInputControlTester } from "../../components/NumericInput/NumericInputControl";
@@ -29,8 +29,8 @@ import NumericInputControl, { NumericInputControlTester } from "../../components
 import schema from "./schema.json";
 import uischema from "./ui.json";
 
-// import VisibilityIcon from '@mui/icons-material/Visibility';
-// import AddIcon from '@mui/icons-material/Add';
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import AddIcon from "@mui/icons-material/Add";
 
 import "./Groups.scss";
 
@@ -47,87 +47,165 @@ enum FetchState {
 }
 
 const columns: GridColDef[] = [
-	// { field: "class", headerName: "Clase", disableColumnMenu: false, width: 130, align: "center" },
-	{ field: "name", headerName: "Subgrupo", disableColumnMenu: false, width: 130, align: "center" },
-	{ field: "year", headerName: "Año", disableColumnMenu: false, width: 130, align: "center" },
-	// {
-	//     field: "teachers",
-	//     headerName: "Docentes",
-	//     align: "center",
-	//     sortable: false,
-	//     disableColumnMenu: true,
-	//     width: 250,
-	//     renderCell: (params) => {
-	//         const teachers: User[] = params.value.map((teacher: User) => {return {name: teacher.name, surname: teacher.surname}}).sort((a: User, b: User) => (a.surname > b.surname) ? 1 : ((b.surname > a.surname) ? -1 : 0));
-	//         const teachersToShow = teachers.length > 3 ? teachers.slice(0, 3) : teachers;
-	//
-	//         const tooltipText = <div>
-	//             <Box className="tooltip-text-container">
-	//                 {teachers.map((value: {name: string, surname: string}, index: number) => {
-	//                     return (
-	//                         <Typography key={index} fontSize={12}>{value.name + " " + value.surname}</Typography>
-	//                     )}
-	//                 )}
-	//             </Box>
-	//         </div>
-	//
-	//         return (
-	//             <Tooltip title={tooltipText} arrow>
-	//                 <Box className="teachers-wrapper">
-	//                     <Box className="teachers-container">
-	//                         {teachersToShow.map((value: {name: string, surname: string}, index: number) => {
-	//                             return (
-	//                                 <Typography key={index} fontSize={14}>{value.name + " " + value.surname}</Typography>
-	//                             )}
-	//                         )}
-	//                         {teachers.length > 3 && <Typography fontSize={12} sx={{marginTop: "5px"}}>{`(Ver ${teachers.length - 3} más)`}</Typography>}
-	//                     </Box>
-	//                 </Box>
-	//             </Tooltip>
-	//         );
-	//     },
-	// },
-	// { field: "addTeachers", headerName: "Agregar docentes", disableColumnMenu: true, flex: 1, align: "center",
-	//     renderCell: () => {
-	//         return (
-	//             <IconButton onClick={() => {return null}}><AddIcon /></IconButton>
-	//         )
-	//     }
-	//     },
-	// {   field: "director", headerName: "Director", disableColumnMenu: false, width: 220 },
-	// {   field: "addDirector", headerName: "Agregar director", disableColumnMenu: true, flex: 1, align: "center",
-	//     renderCell: () => {
-	//         return (
-	//             <IconButton onClick={() => {return null}}><AddIcon /></IconButton>
-	//         )
-	//     }
-	// },
-	// {
-	//     field: "seeStudents",
-	//     headerName: "Ver estudiantes",
-	//     align: "center",
-	//     sortable: false,
-	//     disableColumnMenu: true,
-	//     flex: 1,
-	//     renderCell: (params) => {
-	//         const navigate = useNavigate();
-	//
-	//         /* eslint-disable-next-line @typescript-eslint/no-explicit-any*/
-	//         const onClick = (e: any) => {
-	//             e.stopPropagation();
-	//
-	//             const api: GridApi = params.api;
-	//             const thisRow: Record<string, GridCellValue> = {};
-	//
-	//             api.getAllColumns()
-	//                 .filter((c) => c.field !== "__check__" && !!c)
-	//                 .forEach((c) => (thisRow[c.field] = params.row(params.id, c.field)));
-	//             //navigate("/students/" + thisRow.id); //TODO: use this line
-	//             navigate("/students");
-	//         };
-	//         return <IconButton onClick={onClick}><VisibilityIcon /></IconButton>;
-	//     },
-	// }
+	{ field: "grade_name", headerName: "Clase", disableColumnMenu: false, width: 120, align: "center" },
+	{ field: "name", headerName: "Subgrupo", disableColumnMenu: false, width: 120, align: "center" },
+	{ field: "year", headerName: "Año", disableColumnMenu: false, width: 120, align: "center" },
+	{
+		field: "teachers",
+		headerName: "Docentes",
+		flex: 1,
+		align: "center",
+		sortable: false,
+		disableColumnMenu: true,
+		renderCell: (params): React.ReactNode => {
+			if (params.value === undefined) {
+				return (
+					<Typography fontSize={12}>
+						Sin docentes asignados
+					</Typography>
+				);
+			}
+
+			const teachers: User[] = params.value
+				.map((teacher: User) => {
+					return { name: teacher.name, surname: teacher.surname };
+				})
+				.sort((a: User, b: User) => (a.surname > b.surname ? 1 : b.surname > a.surname ? -1 : 0));
+			const teachersToShow = teachers.length > 3 ? teachers.slice(0, 3) : teachers;
+
+			const tooltipText = (
+				<div>
+					<Box className="tooltip-text-container">
+						{teachers.map((value: { name: string; surname: string }, index: number) => {
+							return (
+								<Typography key={index} fontSize={12}>
+									{value.name + " " + value.surname}
+								</Typography>
+							);
+						})}
+					</Box>
+				</div>
+			);
+
+			return (
+				<Tooltip title={tooltipText} arrow>
+					<Box className="teachers-wrapper">
+						<Box className="teachers-container">
+							{teachersToShow.map((value: { name: string; surname: string }, index: number) => {
+								return (
+									<Typography key={index} fontSize={14}>
+										{value.name + " " + value.surname}
+									</Typography>
+								);
+							})}
+							{teachers.length > 3 && <Typography fontSize={12} sx={{ marginTop: "5px" }}>{`(Ver ${teachers.length - 3} más)`}</Typography>}
+						</Box>
+					</Box>
+				</Tooltip>
+			);
+		},
+	},
+	{
+		field: "addTeachers",
+		headerName: "Agregar docentes",
+		disableColumnMenu: true,
+		flex: 1,
+		align: "center",
+		renderCell: (): React.ReactNode => {
+			return (
+				<IconButton
+					onClick={(): null => {
+						return null;
+					}}>
+					<AddIcon />
+				</IconButton>
+			);
+		},
+	},
+	{ field: "principal", headerName: "Director", disableColumnMenu: false, flex: 1, renderCell: (params): React.ReactNode => {
+		const principal: User = params.value;
+			return (
+				principal ? (
+					<Typography fontSize={12}>
+						{principal.name + " " + principal.surname}
+					</Typography>
+				) : (
+					<Typography fontSize={12}>
+						Sin director asignado
+					</Typography>
+				)
+			);
+		}, },
+	{
+		field: "addPrincipal",
+		headerName: "Agregar director",
+		disableColumnMenu: true,
+		flex: 1,
+		align: "center",
+		renderCell: (): React.ReactNode => {
+			return (
+				<IconButton
+					onClick={(): null => {
+						return null;
+					}}>
+					<AddIcon />
+				</IconButton>
+			);
+		},
+	},
+	{ field: "support_teacher", headerName: "Adscripto", disableColumnMenu: false, flex: 1, renderCell: (params): React.ReactNode => {
+			const teacher: User = params.value;
+			return (
+				teacher ? (
+					<Typography fontSize={12}>
+						{teacher.name + " " + teacher.surname}
+					</Typography>
+				): (
+					<Typography fontSize={12}>
+						Sin adscripto asignado
+					</Typography>
+				)
+			);
+		}, },
+	{
+		field: "addSupportTeacher",
+		headerName: "Agregar adscripto",
+		disableColumnMenu: true,
+		flex: 1,
+		align: "center",
+		renderCell: (): React.ReactNode => {
+			return (
+				<IconButton
+					onClick={(): null => {
+						return null;
+					}}>
+					<AddIcon />
+				</IconButton>
+			);
+		},
+	},
+	{
+		field: "id",
+		headerName: "Ver estudiantes",
+		align: "center",
+		sortable: false,
+		flex: 1,
+		disableColumnMenu: true,
+		renderCell: (params): React.ReactNode => {
+			const navigate = useNavigate();
+			const id: string = params.value;
+
+			const onClick = (): void => {
+				navigate(`/students/`);
+				// navigate(`/students/${id}`); //TODO: Use this line when navigation to group is implemented
+			};
+			return (
+				<IconButton onClick={onClick}>
+					<VisibilityIcon />
+				</IconButton>
+			);
+		},
+	},
 ];
 
 interface GroupsProps {
