@@ -275,6 +275,7 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 		await fetchGroups();
 
 		response && setCreateGroupModalOpen(false);
+		setGroupData({} as GroupData);
 	}, [groupData, grades]);
 
 	const handleCreateGroupModalClose = useCallback(() => {
