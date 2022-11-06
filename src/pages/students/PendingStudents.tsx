@@ -108,7 +108,7 @@ export default function Students(props: StudentsProps): JSX.Element {
 				boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
 			}}>
 			<Box display="flex" justifyContent="flex-start" width="100%">
-				<Typography variant="h4">Alumnos</Typography>
+				<Typography variant="h4">Alumnos Pendientes</Typography>
 			</Box>
 
 			<Box className="SearchAndGroupFilter">
