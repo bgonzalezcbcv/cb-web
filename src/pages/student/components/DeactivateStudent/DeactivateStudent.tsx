@@ -53,9 +53,12 @@ export default function DeactivateStudent(props: DeactivateStudentProps): React.
                         props.deactivationInfo(newInfo);
                     }}
                 >
-                    <MenuItem value={10}>Motivo 1</MenuItem>
-                    <MenuItem value={20}>Motivo 2</MenuItem>
-                    <MenuItem value={30}>Motivo 3</MenuItem>
+                    <MenuItem value={"Económico"}>Económico</MenuItem>
+                    <MenuItem value={"Cambios familiares"}>Cambios familiares</MenuItem>
+                    <MenuItem value={"Decisión administrativa"}>Decisión administrativa</MenuItem>
+                    <MenuItem value={"Fin de ciclo"}>Fin de ciclo</MenuItem>
+                    <MenuItem value={"Desconformidad con la propuesta"}>Desconformidad con la propuesta</MenuItem>
+                    <MenuItem value={"Otro"}>Otro</MenuItem>
                 </Select>
                 {reasonHasError && <FormHelperText>{"El campo motivo es requerido."}</FormHelperText>}
 
