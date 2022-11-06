@@ -86,6 +86,10 @@
 				{
 					"const": "active",
 					"title": "Activo"
+				},
+				{
+					"const": "",
+					"title": ""
 				}
 			],
 			"readOnly": true
