@@ -19,7 +19,7 @@ import {
 	Tooltip,
 	Typography,
 } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import {DataGrid, GridApi, GridCellValue, GridColDef} from "@mui/x-data-grid";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import AddIcon from "@mui/icons-material/Add";
 
@@ -98,17 +98,25 @@ const columns: GridColDef[] = [
 		},
 	},
 	{
-		field: "id",
+		field: "addTeachers",
 		headerName: "Agregar docentes",
 		disableColumnMenu: true,
 		hide: !restrictEditionTo([UserRole.Administrador, UserRole.Director], true),
 		flex: 1,
 		align: "center",
-		renderCell: (): React.ReactNode => {
+		renderCell: (params): React.ReactNode => {
+			const navigate = useNavigate();
+
 			return (
 				<IconButton
-					onClick={(): null => {
-						return null;
+					onClick={(): void => {
+						const api: GridApi = params.api;
+						const thisRow: Record<string, GridCellValue> = {};
+
+						api.getAllColumns()
+							.filter((c) => c.field !== "__check__" && !!c)
+							.forEach((c) => (thisRow[c.field] = params.getValue(params.id, c.field)));
+						navigate(`/addTeachers/${thisRow.id}`);
 					}}>
 					<AddIcon />
 				</IconButton>
