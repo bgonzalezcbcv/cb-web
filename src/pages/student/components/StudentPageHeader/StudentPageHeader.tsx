@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { Student } from "../../../../core/Models";
-import { StudentPageMode } from "../../../../core/interfaces";
+import {DefaultApiResponse, StudentPageMode} from "../../../../core/interfaces";
 
 import {Box, Button, Chip, FormControl, InputLabel, MenuItem, Select, TextField, Typography} from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
@@ -16,6 +16,9 @@ import Modal from "../../../../components/modal/Modal";
 import DeactivateStudent, { DeactivationInfo } from "../DeactivateStudent/DeactivateStudent";
 
 import "./Student.scss";
+import {useCallback} from "react";
+import * as API from "../../../../core/ApiStore";
+import DeactivateStudentDialog from "./DeactivateStudent/DeactivateStudentDialog";
 
 interface StudentPageHeaderProps {
 	mode: StudentPageMode;
@@ -32,6 +35,24 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 	const [isDeactivateStudentModalVisible, setIsDeactivateStudentModalVisible] = React.useState(false);
 	const [deactivationInfo, setDeactivationInfo] = React.useState<DeactivationInfo>({} as DeactivationInfo);
 	const [hasErrors, setHasErrors] = React.useState(true);
+	const [studentDeactivationState, setStudentDeactivationState] = React.useState<DefaultApiResponse<Student>>();
+	const [showDialog, setShowDialog] = React.useState(false);
+
+	const handleDeactivateStudent = useCallback(async (): Promise<Student | void> => {
+		if (hasErrors) return;
+
+		setStudentDeactivationState({} as DefaultApiResponse<Student>);
+
+		const deactivationResponse = await API.deactivateStudent(student, deactivationInfo.reason, deactivationInfo.lastDay, deactivationInfo.description);
+
+		setStudentDeactivationState(deactivationResponse);
+		setShowDialog(true);
+
+		if (deactivationResponse.success) {
+			setDeactivationInfo({} as DeactivationInfo);
+			setIsDeactivateStudentModalVisible(false);
+		}
+	}, [deactivationInfo, hasErrors, student]);
 
 	return (
 		<>
@@ -115,15 +136,15 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 				title={"Dar de baja estudiante"}
 				acceptText={"Dar de baja"}
 				onClose={(): void => setIsDeactivateStudentModalVisible(false)}
-				onAccept={(): void => {
-					console.log(deactivationInfo);
-				}} //TODO: Agregar el callback cuando este el backend
+				onAccept={handleDeactivateStudent}
 				acceptEnabled={!hasErrors}>
 				<DeactivateStudent
 					deactivationInfo={(value: DeactivationInfo): void => setDeactivationInfo(value)}
 					onError={(value): void => setHasErrors(value)}
 				/>
 			</Modal>
+
+			{showDialog && studentDeactivationState && <DeactivateStudentDialog apiResponse={studentDeactivationState} show={(value): void => setShowDialog(value)} />}
 		</>
 	);
 }
