@@ -10,7 +10,7 @@ import {
 	ReportCard,
 	Student,
 	User,
-	UserInfo,
+	UserInfo, Cycle,
 } from "./Models";
 import { DefaultApiResponse, UserRole } from "./interfaces";
 
@@ -53,12 +53,6 @@ function defaultResponse<DataType>(data: DataType, error = ""): DefaultApiRespon
 		data,
 		error,
 	};
-}
-
-interface CreateGroupRequest {
-	gradeId: string;
-	groupName: string;
-	groupYear: string;
 }
 
 function defaultErrorResponse<DataType>(error: string): DefaultApiResponse<DataType> {
@@ -526,7 +520,7 @@ export async function fetchGroups(): Promise<{ success: boolean; data?: Group[];
 	}
 }
 
-export async function createGroup(groupToCreate: CreateGroupRequest): Promise<boolean> {
+export async function createGroup(groupToCreate: {gradeId: string, groupName: string, groupYear: string}): Promise<boolean> {
 	try {
 		const config = {
 			...baseConfig,
