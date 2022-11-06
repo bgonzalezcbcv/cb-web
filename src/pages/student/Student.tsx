@@ -79,7 +79,15 @@ export default function Student(props: StudentProps): React.ReactElement {
 		{
 			label: "Básica",
 			dataCY: "basicInfoTab",
-			panel: <StudentInfo student={student} onChange={debouncedSetStudent} editable={isEditable} translator={translator} />,
+			panel: (
+				<StudentInfo
+					student={student}
+					onChange={debouncedSetStudent}
+					editable={isEditable}
+					translator={translator}
+					isCreating={[StudentPageMode.create].includes(mode)}
+				/>
+			),
 		},
 		{
 			label: "Familiar",

@@ -9,6 +9,7 @@ import NumericInputControl, { NumericInputControlTester } from "../../../../comp
 import { ajv as studentAjv } from "../../../../core/AJVHelper";
 
 import uischema from "./ui.json";
+import uischemaCreate from "./uiCreate.json";
 import schema from "../../schema.json";
 
 import "./StudentInfo.scss";
@@ -18,12 +19,13 @@ export type StudentInfoProps = {
 	onChange: (data: Student, debounce?: boolean) => void;
 	editable: boolean;
 	translator?: (id: string, defaultMessage: string) => string;
+	isCreating: boolean;
 };
 
 const renderers = [...materialRenderers, { tester: NumericInputControlTester, renderer: NumericInputControl }];
 
 export default function StudentInfo(props: StudentInfoProps): React.ReactElement {
-	const { editable, student, translator, onChange } = props;
+	const { editable, student, translator, onChange, isCreating } = props;
 
 	return (
 		<div style={{ paddingTop: "30px" }}>
@@ -31,7 +33,7 @@ export default function StudentInfo(props: StudentInfoProps): React.ReactElement
 				i18n={{ translate: translator as Translator }}
 				ajv={studentAjv}
 				schema={schema}
-				uischema={uischema}
+				uischema={isCreating ? uischemaCreate : uischema}
 				data={student}
 				renderers={renderers}
 				onChange={({ data }): void => {
