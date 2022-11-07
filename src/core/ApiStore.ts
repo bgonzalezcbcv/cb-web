@@ -174,7 +174,7 @@ export async function fetchPendingStudents(): Promise<DefaultApiResponse<Student
 		const config = {
 			...baseConfig,
 			method: "get",
-			url: `/api/pending/`,
+			url: `/api/students/pending/`,
 		};
 
 		const response = await axios(config);
