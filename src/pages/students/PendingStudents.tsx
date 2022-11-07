@@ -89,7 +89,7 @@ export default function Students(props: StudentsProps): JSX.Element {
 					Object.values(student).some((value) => value && normalizeText(value.toString()).includes(normalizeText(searchText)))
 				);
 
-				return <DataGrid style={{ height: 380, width: "100%" }} rows={foundItems} columns={columns} pageSize={5} rowsPerPageOptions={[5]} />;
+				return <DataGrid style={{ width: "100%" }} rows={foundItems} columns={columns} pageSize={5} rowsPerPageOptions={[10]} />;
 			}
 			default:
 				return null;
@@ -105,6 +105,7 @@ export default function Students(props: StudentsProps): JSX.Element {
 				marginTop: "20px",
 				display: "flex",
 				flexDirection: "column",
+				height: "75vh",
 				boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
 			}}>
 			<Box display="flex" justifyContent="flex-start" width="100%">
@@ -122,7 +123,7 @@ export default function Students(props: StudentsProps): JSX.Element {
 				/>
 			</Box>
 
-			<Paper>{printTable()}</Paper>
+			<Paper style={{ height: "100%" }}>{printTable()}</Paper>
 		</Card>
 	);
 }

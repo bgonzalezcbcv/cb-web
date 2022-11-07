@@ -206,9 +206,9 @@ const columns: GridColDef[] = [
 		sortable: false,
 		flex: 1,
 		disableColumnMenu: true,
-		renderCell: (params): React.ReactNode => {
+		renderCell: (): React.ReactNode => {
 			const navigate = useNavigate();
-			const id: string = params.value;
+			// const id: string = params.value;
 
 			const onClick = (): void => {
 				navigate(`/students/`);
