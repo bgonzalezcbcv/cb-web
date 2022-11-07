@@ -13,7 +13,8 @@ import { emptyStudents } from "../student/DefaultStudent";
 
 import "./Students.scss";
 const columns: GridColDef[] = [
-	{ field: "id", headerName: "ID", disableColumnMenu: false, flex: 1 },
+	{ field: "id", headerName: "ID", disableColumnMenu: false, flex: 1, hide: true },
+	{ field: "reference_number", headerName: "Nº de referencia", disableColumnMenu: false, flex: 1 },
 	{ field: "ci", headerName: "CI", disableColumnMenu: false, flex: 2 },
 	{ field: "name", headerName: "Nombres", disableColumnMenu: false, flex: 2 },
 	{ field: "surname", headerName: "Apellidos", disableColumnMenu: false, flex: 2 },
