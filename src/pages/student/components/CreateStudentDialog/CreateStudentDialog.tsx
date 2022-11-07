@@ -51,7 +51,7 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 	const dismissCreation = (): void => {
 		setIsOpen(false);
 		setStudentCreationState("idle");
-		navigate(`/student/${newStudentId}/edit`);
+		mode === StudentPageMode.create ? navigate(`/student/${newStudentId}/edit`) : navigate(`/student/${student.id}/edit`);
 	};
 
 	const handleStudentEdition = async (): Promise<void> => {
@@ -151,7 +151,9 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 
 			{studentCreationState === "success" ? (
 				<Dialog open={studentCreationState === "success"} onClose={dismissCreation}>
-					<DialogTitle data-cy="successAlertTitle">¡Estudiante creado correctamente!</DialogTitle>
+					<DialogTitle data-cy="successAlertTitle">
+						{mode === StudentPageMode.create ? "¡Estudiante creado correctamente!" : "¡Estudiante editado correctamente!"}
+					</DialogTitle>
 
 					<DialogActions>
 						<Button variant="outlined" onClick={dismissCreation}>
