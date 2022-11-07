@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 
 import { JsonForms } from "@jsonforms/react";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
 import { Translator } from "@jsonforms/core";
-import { Student } from "../../../../core/Models";
+import { Group, Student } from "../../../../core/Models";
 import NumericInputControl, { NumericInputControlTester } from "../../../../components/NumericInput/NumericInputControl";
+import { Container, FormControl, InputLabel, Select, MenuItem, Box, CircularProgress, Alert, Typography } from "@mui/material";
+import useFetchFromAPI, { FetchStatus } from "../../../../hooks/useFetchFromAPI";
+import * as APIStore from "../../../../core/ApiStore";
 
 import { ajv as studentAjv } from "../../../../core/AJVHelper";
 
@@ -26,9 +29,54 @@ const renderers = [...materialRenderers, { tester: NumericInputControlTester, re
 
 export default function StudentInfo(props: StudentInfoProps): React.ReactElement {
 	const { editable, student, translator, onChange, isCreating } = props;
+	const [groups, setGroups] = useState<Group[]>([]);
+
+	const { refetch, fetchStatus } = useFetchFromAPI(() => APIStore.fetchGroups(), setGroups, true);
+
+	const printTable = useCallback((): JSX.Element | null => {
+		switch (fetchStatus) {
+			case FetchStatus.Fetching:
+				return (
+					<Box className="loading-container">
+						<CircularProgress />
+					</Box>
+				);
+			case FetchStatus.Error:
+				return (
+					<Box className="loading-container">
+						<Alert variant="outlined" severity="error" style={{ cursor: "pointer" }} onClick={refetch}>
+							<Typography>No se pudieron obtener los grupos. Haga click aquí para reintentar.</Typography>
+						</Alert>
+					</Box>
+				);
+			case FetchStatus.Initial:
+				return (
+					<Select
+						labelId="group"
+						id="group"
+						label="Grupo"
+						value={0 /*student.group_id*/}
+						disabled={!editable}
+						onChange={(event): void => {
+							const newStudent = { ...student, group_id: event.target.value };
+							onChange(newStudent, false);
+						}}>
+						{groups.map((value, index) => {
+							return (
+								<MenuItem key={index} value={value.id}>
+									{/*`${value.grade_name} ${value.name} (${value.year})`*/}
+								</MenuItem>
+							);
+						})}
+					</Select>
+				);
+			default:
+				return null;
+		}
+	}, [fetchStatus, groups, editable, student]);
 
 	return (
-		<div style={{ paddingTop: "30px" }}>
+		<Container style={{ paddingTop: "30px" }}>
 			<JsonForms
 				i18n={{ translate: translator as Translator }}
 				ajv={studentAjv}
@@ -42,6 +90,10 @@ export default function StudentInfo(props: StudentInfoProps): React.ReactElement
 				readonly={!editable}
 				cells={materialCells}
 			/>
-		</div>
+			<FormControl variant="standard" sx={{ width: "100%" }}>
+				<InputLabel id="group-label">Grupo</InputLabel>
+				{printTable()}
+			</FormControl>
+		</Container>
 	);
 }

@@ -40,21 +40,8 @@
 			"elements": [
 				{
 					"type": "Control",
-					"scope": "#/properties/group"
-				},
-				{
-					"type": "Control",
-					"scope": "#/properties/subgroup"
-				},
-				{
-					"type": "Control",
 					"scope": "#/properties/birthplace"
-				}
-			]
-		},
-		{
-			"type": "HorizontalLayout",
-			"elements": [
+				},
 				{
 					"type": "Control",
 					"scope": "#/properties/birthdate",
@@ -63,7 +50,12 @@
 						"dateFormat": "DD/MM/YYYY",
 						"dateSaveFormat": "DD-MM-YYYY"
 					}
-				},
+				}
+			]
+		},
+		{
+			"type": "HorizontalLayout",
+			"elements": [
 				{
 					"type": "Control",
 					"scope": "#/properties/nationality"
