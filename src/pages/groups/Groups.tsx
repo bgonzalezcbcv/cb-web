@@ -235,7 +235,7 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 
 	const [groups, setGroups] = useState<Group[]>(rows ?? []);
 	const [createGroupModalOpen, setCreateGroupModalOpen] = React.useState(false);
-	const [groupData, setGroupData] = React.useState<GroupData>({} as GroupData);
+	const [groupData, setGroupData] = React.useState<GroupData>({ name: "A" } as GroupData);
 	const [hasFormErrors, setHasFormErrors] = useState<boolean>(false);
 	const [grades, setGrades] = useState<Grade[] | undefined>(undefined);
 
@@ -243,6 +243,7 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 
 	const translator = (id: string, defaultMessage: string): string => {
 		if (id.includes("required")) return "Este campo es requerido.";
+		if (id.includes("[A-Z]")) return "Debe ser una letra mayúscula.";
 		else return defaultMessage;
 	};
 
@@ -273,7 +274,7 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 
 	const handleCreateGroupModalClose = useCallback(() => {
 		setCreateGroupModalOpen(false);
-		setGroupData({} as GroupData);
+		setGroupData({ name: "A" } as GroupData);
 	}, []);
 
 	function setData(data: GroupData, hasErrors: boolean): void {
@@ -300,10 +301,10 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 			case FetchStatus.Initial:
 				return (
 					<DataGrid //
-						style={{ height: 380, width: "100%" }}
+						style={{ width: "100%" }}
 						rows={groups}
 						columns={columns}
-						pageSize={5}
+						pageSize={10}
 						rowsPerPageOptions={[5]}
 						rowHeight={100}
 					/>
@@ -331,7 +332,7 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 				</Button>
 			</Box>
 
-			<Paper>{printTable()}</Paper>
+			<Paper sx={{ height: "75vh" }}>{printTable()}</Paper>
 
 			<Modal
 				show={createGroupModalOpen}

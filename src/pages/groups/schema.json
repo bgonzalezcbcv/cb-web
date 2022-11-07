@@ -1,19 +1,20 @@
 {
-  "type": "object",
-  "properties": {
-	"name": {
-	  "type": "string",
-	  "title": "Subgrupo",
-	  "minLength": 1,
-	  "pattern": "[A-Z]",
-	  "errorMessage": "Este campo es requerido y debe tener como máximo una letra."
+	"type": "object",
+	"properties": {
+		"name": {
+			"type": "string",
+			"title": "Subgrupo",
+			"minLength": 1,
+			"default": "A",
+			"pattern": "[A-Z]",
+			"errorMessage": "Este campo es requerido y debe tener como máximo una letra."
+		},
+		"year": {
+			"type": "string",
+			"title": "Año",
+			"minLength": 1,
+			"errorMessage": "Este campo es requerido."
+		}
 	},
-	"year": {
-	  "type": "string",
-	  "title": "Año",
-	  "minLength": 1,
-	  "errorMessage": "Este campo es requerido."
-	}
-  },
-  "required": ["name", "year"]
+	"required": ["name", "year"]
 }
