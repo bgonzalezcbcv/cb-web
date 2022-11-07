@@ -112,6 +112,7 @@ export interface Student {
 	family: FamilyMember[];
 	question_categories: QuestionCategories[];
 	administrative_info: AdministrativeInfo;
+	group_id: string;
 }
 
 export interface StudentCreationForm {
@@ -334,5 +335,5 @@ export interface Group {
 	id: string;
 	name: string;
 	year: string;
-	grade: string;
+	grade: Grade;
 }

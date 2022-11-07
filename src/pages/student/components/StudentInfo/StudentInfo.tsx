@@ -55,7 +55,7 @@ export default function StudentInfo(props: StudentInfoProps): React.ReactElement
 						labelId="group"
 						id="group"
 						label="Grupo"
-						value={0 /*student.group_id*/}
+						value={student.group_id}
 						disabled={!editable}
 						onChange={(event): void => {
 							const newStudent = { ...student, group_id: event.target.value };
@@ -64,7 +64,7 @@ export default function StudentInfo(props: StudentInfoProps): React.ReactElement
 						{groups.map((value, index) => {
 							return (
 								<MenuItem key={index} value={value.id}>
-									{/*`${value.grade_name} ${value.name} (${value.year})`*/}
+									{`${value.grade.name} ${value.name} (${value.year})`}
 								</MenuItem>
 							);
 						})}

@@ -112,6 +112,7 @@ export const defaultStudent: Student = {
 			},
 		],
 	},
+	group_id: "",
 };
 
 export const defaultStudents: [Student] = [defaultStudent];
@@ -154,6 +155,7 @@ export const emptyStudent: Student = {
 	surname: "",
 	tuition: "",
 	vaccine_expiration: "",
+	group_id: "",
 };
 
 export const emptyStudents: [Student] = [emptyStudent];
