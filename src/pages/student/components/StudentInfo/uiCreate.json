@@ -23,11 +23,12 @@
 			"elements": [
 				{
 					"type": "Control",
-					"scope": "#/properties/group"
-				},
-				{
-					"type": "Control",
-					"scope": "#/properties/subgroup"
+					"scope": "#/properties/birthdate",
+					"options": {
+						"format": "date",
+						"dateFormat": "DD/MM/YYYY",
+						"dateSaveFormat": "DD-MM-YYYY"
+					}
 				},
 				{
 					"type": "Control",
@@ -38,15 +39,6 @@
 		{
 			"type": "HorizontalLayout",
 			"elements": [
-				{
-					"type": "Control",
-					"scope": "#/properties/birthdate",
-					"options": {
-						"format": "date",
-						"dateFormat": "DD/MM/YYYY",
-						"dateSaveFormat": "DD-MM-YYYY"
-					}
-				},
 				{
 					"type": "Control",
 					"scope": "#/properties/nationality"
