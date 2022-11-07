@@ -28,7 +28,7 @@ function Teachers(props: TeachersProps): JSX.Element {
 	const [filteredTeachers, setFilteredTeachers] = useState(teachers);
 
 	const { fetchStatus, refetch } = useFetchFromAPI<UserInfo[]>(
-		() => fetchTeachers(Number(id), true),
+		() => fetchTeachers(id ? Number(id) : undefined),
 		(fetchedTeachers) => {
 			setTeachers(fetchedTeachers);
 			setFilteredTeachers(fetchedTeachers);
@@ -48,7 +48,7 @@ function Teachers(props: TeachersProps): JSX.Element {
 		<Card
 			sx={{
 				width: "90%",
-				height: "85vh",
+				height: "75vh",
 				minHeight: "fit-content",
 				padding: "20px",
 				alignSelf: "flex-start",
@@ -75,7 +75,7 @@ function Teachers(props: TeachersProps): JSX.Element {
 									Object.values(teacher).some((value) => {
 										if (_.isString(value)) return value.toUpperCase().includes(filter.toUpperCase());
 
-										if (_.isArray(value) && value[0].name) {
+										if (_.isArray(value) && value.length != 0 && value[0].name) {
 											return value.map((item) => item.name.toUpperCase()).includes(filter.toUpperCase());
 										}
 									})

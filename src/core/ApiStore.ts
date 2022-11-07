@@ -18,7 +18,6 @@ import {
 import { DefaultApiResponse, UserRole } from "./interfaces";
 
 import { DataStore } from "./DataStore";
-import { teachersMock } from "./ApiMocks";
 import { setFinalReports, setIntermediateReports } from "./CoreHelper";
 
 const dataStore = DataStore.getInstance();
@@ -488,10 +487,8 @@ export async function createIntermediateReportCard(
 	}
 }
 
-export async function fetchTeachers(id?: number, mock = false): Promise<DefaultApiResponse<UserInfo[]>> {
+export async function fetchTeachers(id?: number): Promise<DefaultApiResponse<UserInfo[]>> {
 	try {
-		if (mock) return defaultResponse(teachersMock);
-
 		const config = {
 			...baseConfig,
 			method: "get",
@@ -500,7 +497,7 @@ export async function fetchTeachers(id?: number, mock = false): Promise<DefaultA
 
 		const response = await axios(config);
 
-		return defaultResponse(response.data.students);
+		return defaultResponse(response.data.teachers);
 	} catch (e) {
 		return defaultErrorResponse("No se pudieron obtener los docentes.");
 	}

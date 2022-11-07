@@ -18,7 +18,7 @@ export default function AddTeacher(props: TeachersProps) {
 	const [teachers, setTeachers] = useState<UserInfo[]>(rows ?? []);
 	const [searchText, setSearchText] = React.useState("");
 
-	const { fetchStatus, refetch } = useFetchFromAPI(() => APIStore.fetchTeachers(undefined, true), setTeachers, !rows);
+	const { fetchStatus, refetch } = useFetchFromAPI(() => APIStore.fetchTeachers(undefined), setTeachers, !rows);
 
 	const onClickAdd = (params: any) => {
 		const api: GridApi = params.api;
