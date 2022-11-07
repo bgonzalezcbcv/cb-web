@@ -9,7 +9,7 @@ import { Group, UserInfo } from "../../core/Models";
 
 interface TeachersProps {
 	rows?: UserInfo[];
-	groupName: string; //por ahora, luego se cambia el tipo
+	groupName?: string; //por ahora, luego se cambia el tipo
 }
 
 export default function AddTeacher(props: TeachersProps) {

@@ -19,7 +19,7 @@ import {
 	Tooltip,
 	Typography,
 } from "@mui/material";
-import {DataGrid, GridApi, GridCellValue, GridColDef} from "@mui/x-data-grid";
+import { DataGrid, GridApi, GridCellValue, GridColDef } from "@mui/x-data-grid";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import AddIcon from "@mui/icons-material/Add";
 
@@ -43,7 +43,19 @@ type GroupData = {
 };
 
 const columns: GridColDef[] = [
-	{ field: "grade_name", headerName: "Clase", disableColumnMenu: false, width: 120, align: "center" },
+	{
+		field: "grade",
+		headerName: "Clase",
+		disableColumnMenu: false,
+		width: 120,
+		align: "center",
+		renderCell: (params): React.ReactNode => {
+			const grade = params.value;
+			if (grade === undefined) return;
+
+			return <Typography fontSize={12}>{grade.name}</Typography>;
+		},
+	},
 	{ field: "name", headerName: "Subgrupo", disableColumnMenu: false, width: 120, align: "center" },
 	{ field: "year", headerName: "Año", disableColumnMenu: false, width: 120, align: "center" },
 	{
@@ -54,7 +66,7 @@ const columns: GridColDef[] = [
 		sortable: false,
 		disableColumnMenu: true,
 		renderCell: (params): React.ReactNode => {
-			if (params.value === undefined) {
+			if (params.value?.length === 0) {
 				return <Typography fontSize={12}>Sin docentes asignados</Typography>;
 			}
 
