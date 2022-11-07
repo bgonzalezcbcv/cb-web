@@ -56,6 +56,10 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 							title: "Crear grupo",
 							navigationRoute: "/group",
 						},
+						{
+							title: "Asignar director",
+							navigationRoute: "/teachers",
+						},
 					],
 				},
 				{
@@ -96,20 +100,20 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					],
 				},
 				{
-					sectionTitle: "Grupos",
-					items: [
-						{
-							title: "Ver todos",
-							navigationRoute: `/groups`,
-						},
-					],
-				},
-				{
 					sectionTitle: "Docentes",
 					items: [
 						{
 							title: "Ver todos",
 							navigationRoute: `/teachers`,
+						},
+					],
+				},
+				{
+					sectionTitle: "Grupos",
+					items: [
+						{
+							title: "Ver Todos",
+							navigationRoute: "/groups",
 						},
 					],
 				},
@@ -130,20 +134,20 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					],
 				},
 				{
-					sectionTitle: "Grupos",
+					sectionTitle: "Docentes",
 					items: [
 						{
-							title: "Ver mis grupos",
-							navigationRoute: `/groups/${id}`,
+							title: "Mis docentes",
+							navigationRoute: `/teachers/${id}`,
 						},
 					],
 				},
 				{
-					sectionTitle: "Docentes",
+					sectionTitle: "Grupos",
 					items: [
 						{
-							title: "Ver mis docentes",
-							navigationRoute: `/teachers/${id}`,
+							title: "Mis grupos",
+							navigationRoute: `/groups/${id}`,
 						},
 					],
 				},
@@ -154,7 +158,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					sectionTitle: "Alumnos",
 					items: [
 						{
-							title: "Ver mis alumnos",
+							title: "Mis alumnos",
 							navigationRoute: `/students/${id}`,
 						},
 						{
@@ -164,20 +168,20 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					],
 				},
 				{
-					sectionTitle: "Grupos",
+					sectionTitle: "Docentes",
 					items: [
 						{
-							title: "Ver mis grupos",
-							navigationRoute: `/groups/${id}`,
+							title: "Mis docentes",
+							navigationRoute: `/teachers/${id}`,
 						},
 					],
 				},
 				{
-					sectionTitle: "Docentes",
+					sectionTitle: "Grupos",
 					items: [
 						{
-							title: "Ver mis docentes",
-							navigationRoute: `/teachers/${id}`,
+							title: "Mis grupos",
+							navigationRoute: `/groups/${id}`,
 						},
 					],
 				},
@@ -188,7 +192,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					sectionTitle: "Alumnos",
 					items: [
 						{
-							title: "Ver mis alumnos",
+							title: "Mis alumnos",
 							navigationRoute: `/students/${id}`,
 						},
 					],
@@ -197,7 +201,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					sectionTitle: "Grupos",
 					items: [
 						{
-							title: "Ver mis grupos",
+							title: "Mis grupos",
 							navigationRoute: `/groups/${id}`,
 						},
 					],
@@ -219,20 +223,20 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					],
 				},
 				{
-					sectionTitle: "Grupos",
-					items: [
-						{
-							title: "Ver todos",
-							navigationRoute: `/groups`,
-						},
-					],
-				},
-				{
 					sectionTitle: "Docentes",
 					items: [
 						{
 							title: "Ver todos",
 							navigationRoute: `/teachers`,
+						},
+					],
+				},
+				{
+					sectionTitle: "Grupos",
+					items: [
+						{
+							title: "Ver todos",
+							navigationRoute: "/groups",
 						},
 					],
 				},

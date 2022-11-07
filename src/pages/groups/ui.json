@@ -1,0 +1,19 @@
+{
+  "type": "HorizontalLayout",
+  "elements": [
+    {
+      "type": "Control",
+      "scope": "#/properties/name"
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/year",
+      "options": {
+        "format": "date",
+        "dateFormat": "YYYY",
+        "dateSaveFormat": "YYYY",
+        "views": ["year"]
+      }
+    }
+  ]
+}

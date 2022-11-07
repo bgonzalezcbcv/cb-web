@@ -203,11 +203,6 @@ export interface StudentCreationForm {
 	"Detalle aquí otra información que crea importante y que pueda contribuir a una atención eficiente e integral del alumno/a:": string;
 }
 
-export interface Group {
-	id: string;
-	name: string;
-}
-
 export interface User {
 	id: number;
 	email: string;
@@ -323,4 +318,21 @@ export interface IntermediateEvaluation {
 		year: number;
 		grade_name: string;
 	};
+}
+
+export interface Cycle {
+	id: string;
+	name: string;
+}
+
+export interface Grade {
+	id: string;
+	name: string;
+}
+
+export interface Group {
+	id: string;
+	name: string;
+	year: string;
+	grade: string;
 }

@@ -3,17 +3,14 @@ import axios from "axios";
 import { reaction } from "mobx";
 
 import {
-	DocumentType,
-	FamilyMember,
-	FinalEvaluation,
-	FinalReportCardRequest,
+	Grade, Group, DocumentType, FamilyMember, FinalEvaluation, FinalReportCardRequest,
 	IntermediateEvaluation,
 	IntermediateReportCardRequest,
 	ReportApprovalState,
 	ReportCard,
 	Student,
 	User,
-	UserInfo,
+	UserInfo, Cycle,
 } from "./Models";
 import { DefaultApiResponse, UserRole } from "./interfaces";
 
@@ -502,3 +499,113 @@ export async function fetchTeachers(id?: number): Promise<DefaultApiResponse<Use
 		return defaultErrorResponse("No se pudieron obtener los docentes.");
 	}
 }
+
+export async function fetchGroups(id?: string): Promise<DefaultApiResponse<Group[]>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: id ? `/api/groups/${id}` : `/api/groups/`,
+		};
+
+		const response = await axios(config);
+
+		return {
+			success: true,
+			data: response.data.groups,
+			error: "",
+		};
+
+		//eslint-disable-next-line
+	} catch (error: any) {
+		return {
+			success: false,
+			error: error.message,
+		};
+	}
+}
+
+export async function createGroup(groupToCreate: {gradeId: string, groupName: string, groupYear: string}): Promise<boolean> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "post",
+			url: `/api/grades/${groupToCreate.gradeId}/groups`,
+			data: JSON.stringify({
+				group: {
+					name: groupToCreate.groupName,
+					year: groupToCreate.groupYear,
+				}
+			}),
+		};
+
+		const response = await axios(config);
+
+		return response.status === 201;
+	} catch (e) {
+		return false;
+	}
+}
+
+export async function fetchGrades(): Promise<{ success: boolean; data?: Grade[]; err: string }> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: `/api/grades`,
+		};
+
+		const response = await axios(config);
+
+		if (![200, 304].includes(response.status) || response.data.grades === undefined)
+			return {
+				success: false,
+				err: "Unable to fetch grades",
+			};
+
+		return {
+			success: true,
+			data: response.data.grades as Grade[],
+			err: "",
+		};
+
+		//eslint-disable-next-line
+	} catch (error: any) {
+		return {
+			success: false,
+			err: error.message,
+		};
+	}
+}
+
+export async function fetchCycles(): Promise<{ success: boolean; data?: Cycle[]; err: string }> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: `/api/cicles`,
+		};
+
+		const response = await axios(config);
+
+		if (![200, 304].includes(response.status) || response.data.cicles === undefined)
+			return {
+				success: false,
+				err: "Unable to fetch cycles",
+			};
+
+		return {
+			success: true,
+			data: response.data.cicles,
+			err: "",
+		};
+
+		//eslint-disable-next-line
+	} catch (error: any) {
+		return {
+			success: false,
+			err: error.message,
+		};
+	}
+}
+
