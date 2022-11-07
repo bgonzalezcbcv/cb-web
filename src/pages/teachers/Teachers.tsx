@@ -48,7 +48,7 @@ function Teachers(props: TeachersProps): JSX.Element {
 		<Card
 			sx={{
 				width: "90%",
-				height: "85vh",
+				height: "75vh",
 				minHeight: "fit-content",
 				padding: "20px",
 				alignSelf: "flex-start",
