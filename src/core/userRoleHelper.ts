@@ -79,7 +79,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 						},
 						{
 							title: "Pendientes",
-							navigationRoute: `/students/pending`,
+							navigationRoute: `/pending`,
 						},
 						{
 							title: "Inactivos",
@@ -214,7 +214,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 						},
 						{
 							title: "Pendientes",
-							navigationRoute: `/students/pending`,
+							navigationRoute: `/pending`,
 						},
 					],
 				},

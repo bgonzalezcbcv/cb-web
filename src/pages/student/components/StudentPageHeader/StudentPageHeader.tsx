@@ -4,12 +4,13 @@ import * as React from "react";
 import { Student } from "../../../../core/Models";
 import { StudentPageMode } from "../../../../core/interfaces";
 
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Chip, Typography } from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import EditIcon from "@mui/icons-material/Edit";
 import EditOffIcon from "@mui/icons-material/EditOff";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 
 import FormUploadDialog from "../FormUploadDialog/FormUploadDialog";
 
@@ -44,6 +45,16 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 					<Typography component={"span"} sx={{ alignSelf: "center", paddingLeft: "10px" }}>
 						{[StudentPageMode.view, StudentPageMode.edit].includes(mode) ? `${student.name} ${student.surname}` : "Nuevo alumno"}
 					</Typography>
+					{student.status === "pending" ? (
+						<Chip
+							sx={{ alignSelf: "center", marginLeft: "10px" }}
+							icon={<PriorityHighIcon color="warning" />}
+							label="Alumno pendiente"
+							variant="outlined"
+						/>
+					) : (
+						""
+					)}
 				</Box>
 				<Box>
 					{mode === StudentPageMode.create ? (
