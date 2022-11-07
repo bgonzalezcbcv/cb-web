@@ -505,7 +505,7 @@ export async function fetchGroups(id?: string): Promise<DefaultApiResponse<Group
 		const config = {
 			...baseConfig,
 			method: "get",
-			url: id ? `/api/groups/${id}` : `/api/groups/`,
+			url: id ? `/api/me/groups/` : `/api/groups/`,
 		};
 
 		const response = await axios(config);
