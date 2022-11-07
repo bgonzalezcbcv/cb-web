@@ -33,7 +33,7 @@
 		"tuition": {
 			"type": "string",
 			"title": "Matrícula",
-			"errorMessage": "Tiene que tener una matricula correcta.",
+			"errorMessage": "Tiene que tener una matrícula correcta.",
 			"readOnly": true
 		},
 		"reference_number": {

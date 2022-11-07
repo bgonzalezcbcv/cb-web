@@ -112,7 +112,7 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 						</Button>
 					) : null}
 
-					{mode === StudentPageMode.edit ? (
+					{mode === StudentPageMode.edit && student.status !== "inactive"? (
 						<Button color={"secondary"} startIcon={<DeleteIcon />} onClick={(): void => setIsDeactivateStudentModalVisible(true)}>
 							Dar de baja
 						</Button>
