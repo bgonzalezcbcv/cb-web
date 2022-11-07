@@ -75,7 +75,7 @@ function Teachers(props: TeachersProps): JSX.Element {
 									Object.values(teacher).some((value) => {
 										if (_.isString(value)) return value.toUpperCase().includes(filter.toUpperCase());
 
-										if (_.isArray(value) && value[0].name) {
+										if (_.isArray(value) && value.length != 0 && value[0].name) {
 											return value.map((item) => item.name.toUpperCase()).includes(filter.toUpperCase());
 										}
 									})
