@@ -117,6 +117,7 @@ export default function StudentInfo(props: StudentInfoProps): React.ReactElement
 				uischema={isCreating ? uischemaCreate : uischema}
 				data={student}
 				renderers={renderers}
+				validationMode={editable ? "ValidateAndShow" : "ValidateAndHide"}
 				onChange={({ data }): void => {
 					onChange(data);
 				}}
