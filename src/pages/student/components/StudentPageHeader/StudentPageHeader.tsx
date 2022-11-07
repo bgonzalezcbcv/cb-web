@@ -3,7 +3,7 @@ import * as React from "react";
 import { Student } from "../../../../core/Models";
 import {DefaultApiResponse, StudentPageMode} from "../../../../core/interfaces";
 
-import {Box, Button, Chip, FormControl, InputLabel, MenuItem, Select, TextField, Typography} from "@mui/material";
+import {Box, Button, Chip, Typography} from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import EditIcon from "@mui/icons-material/Edit";
 import EditOffIcon from "@mui/icons-material/EditOff";
