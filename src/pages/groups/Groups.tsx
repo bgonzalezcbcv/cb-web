@@ -66,7 +66,7 @@ const columns: GridColDef[] = [
 		sortable: false,
 		disableColumnMenu: true,
 		renderCell: (params): React.ReactNode => {
-			if (params.value?.length === 0) {
+			if (params.value === undefined || params.value?.length === 0) {
 				return <Typography fontSize={12}>Sin docentes asignados</Typography>;
 			}
 
