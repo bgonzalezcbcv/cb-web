@@ -3,14 +3,20 @@ import axios from "axios";
 import { reaction } from "mobx";
 
 import {
-	Grade, Group, DocumentType, FamilyMember, FinalEvaluation, FinalReportCardRequest,
+	Grade,
+	Group,
+	DocumentType,
+	FamilyMember,
+	FinalEvaluation,
+	FinalReportCardRequest,
 	IntermediateEvaluation,
 	IntermediateReportCardRequest,
 	ReportApprovalState,
 	ReportCard,
 	Student,
 	User,
-	UserInfo, Cycle,
+	UserInfo,
+	Cycle,
 } from "./Models";
 import { DefaultApiResponse, UserRole } from "./interfaces";
 
@@ -207,7 +213,7 @@ export async function createStudent(studentToCreate: Student): Promise<DefaultAp
 			...baseConfig,
 			method: "post",
 			url: "/api/students/",
-			data: JSON.stringify(studentToCreate),
+			data: JSON.stringify({ ...studentToCreate, group_id: studentToCreate.group.id }),
 		};
 		const { family: unfilteredFamily } = studentToCreate;
 		const familyCIs: string[] = [];
@@ -241,9 +247,7 @@ export async function editStudent(studentToEdit: Student): Promise<DefaultApiRes
 			...baseConfig,
 			method: "patch",
 			url: `/api/students/${studentToEdit.id}`,
-			data: JSON.stringify({
-				student: studentToEdit,
-			}),
+			data: JSON.stringify({ ...studentToEdit, group_id: studentToEdit.group.id }),
 		};
 
 		const { id, family } = studentToEdit;
@@ -525,7 +529,7 @@ export async function fetchGroups(id?: string): Promise<DefaultApiResponse<Group
 	}
 }
 
-export async function createGroup(groupToCreate: {gradeId: string, groupName: string, groupYear: string}): Promise<boolean> {
+export async function createGroup(groupToCreate: { gradeId: string; groupName: string; groupYear: string }): Promise<boolean> {
 	try {
 		const config = {
 			...baseConfig,
@@ -535,7 +539,7 @@ export async function createGroup(groupToCreate: {gradeId: string, groupName: st
 				group: {
 					name: groupToCreate.groupName,
 					year: groupToCreate.groupYear,
-				}
+				},
 			}),
 		};
 
@@ -608,4 +612,3 @@ export async function fetchCycles(): Promise<{ success: boolean; data?: Cycle[];
 		};
 	}
 }
-

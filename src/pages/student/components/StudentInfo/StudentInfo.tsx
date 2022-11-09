@@ -3,7 +3,7 @@ import React, { useCallback, useState } from "react";
 import { JsonForms } from "@jsonforms/react";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
 import { Translator } from "@jsonforms/core";
-import { Group, Student } from "../../../../core/Models";
+import { Group, Student, StudentGroup } from "../../../../core/Models";
 import NumericInputControl, { NumericInputControlTester } from "../../../../components/NumericInput/NumericInputControl";
 import { Container, FormControl, InputLabel, Select, MenuItem, Box, CircularProgress, Alert, Typography } from "@mui/material";
 import useFetchFromAPI, { FetchStatus } from "../../../../hooks/useFetchFromAPI";
@@ -33,6 +33,28 @@ export default function StudentInfo(props: StudentInfoProps): React.ReactElement
 
 	const { refetch, fetchStatus } = useFetchFromAPI(() => APIStore.fetchGroups(), setGroups, true);
 
+	function generateStudentGroup(index: number): StudentGroup {
+		if (index < 0 || index >= groups.length) return {} as StudentGroup;
+		return {
+			id: groups[index].id,
+			name: groups[index].name,
+			year: groups[index].year,
+			grade_name: groups[index].grade.name,
+		} as StudentGroup;
+	}
+
+	function getIndexOfGroupWithId(studentGroup: StudentGroup): number | string {
+		let returnIndex = "" as number | string;
+		if (!studentGroup) return returnIndex;
+		groups.forEach((element, index) => {
+			if (element.id == studentGroup.id) {
+				returnIndex = index;
+				return;
+			}
+		});
+		return returnIndex;
+	}
+
 	const printTable = useCallback((): JSX.Element | null => {
 		switch (fetchStatus) {
 			case FetchStatus.Fetching:
@@ -55,15 +77,15 @@ export default function StudentInfo(props: StudentInfoProps): React.ReactElement
 						labelId="group"
 						id="group"
 						label="Grupo"
-						value={student.group_id}
+						value={getIndexOfGroupWithId(student.group)}
 						disabled={!editable}
 						onChange={(event): void => {
-							const newStudent = { ...student, group_id: event.target.value };
+							const newStudent = { ...student, group: generateStudentGroup(event.target.value as number) };
 							onChange(newStudent, false);
 						}}>
 						{groups.map((value, index) => {
 							return (
-								<MenuItem key={index} value={value.id}>
+								<MenuItem key={index} value={index}>
 									{`${value.grade.name} ${value.name} (${value.year})`}
 								</MenuItem>
 							);
