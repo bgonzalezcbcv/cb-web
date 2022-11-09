@@ -6,6 +6,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers";
 import { TextField } from "@mui/material";
+
+import { stringToDateString } from "../../core/CoreHelper";
 import useDebounce from "../../hooks/useDebounce";
 
 dayjs.locale("es");
@@ -19,12 +21,6 @@ export function dateToString(date: Date): string {
 	} catch {
 		return "";
 	}
-}
-
-export function stringToDateString(stringDate: string | undefined): string | null {
-	if (!stringDate || !/^(\d{2}-){2}\d{4}$/gm.test(stringDate)) return null;
-	const aux = stringDate.split("-");
-	return new Date(parseInt(aux[2]), parseInt(aux[1]) - 1, parseInt(aux[0])).toString();
 }
 
 export type DatePickerProps = {

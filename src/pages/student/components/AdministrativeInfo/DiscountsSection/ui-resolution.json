@@ -3,7 +3,7 @@
 	"elements": [
 		{
 			"type": "Control",
-			"scope": "#/properties/description"
+			"scope": "#/properties/resolution_description"
 		}
 	]
 }

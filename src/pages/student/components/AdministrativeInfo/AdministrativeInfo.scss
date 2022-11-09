@@ -1,39 +1,7 @@
 .administrative-info {
 	display: flex;
 	flex-direction: column;
+	width: 100%;
 	place-items: center;
 	justify-content: space-between;
-
-	.form-container {
-		width: 30%;
-		padding-left: 30px;
-	}
-
-	.file-uploader-container {
-		margin-top: 5px;
-	}
-
-	.comments {
-		width: 100%;
-		margin-top: 2px;
-	}
-
-	.document-download-container {
-		display: flex;
-		padding-top: 20px;
-		justify-content: space-between;
-		align-items: center;
-
-		.document-download {
-			color: rgba(0, 0, 0, 0.38);
-		}
-	}
-
-	.payment-details-wrapper {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		width: 100%;
-		margin-bottom: 1.5%;
-	}
 }

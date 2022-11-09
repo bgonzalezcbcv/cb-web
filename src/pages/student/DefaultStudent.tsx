@@ -1,4 +1,4 @@
-import { DiscountExplanation, DiscountType, StudentGroup, PaymentMethodOption, ScholarshipType, Student } from "../../core/Models";
+import { StudentGroup, Student } from "../../core/Models";
 
 export const defaultStudent: Student = {
 	id: "",
@@ -86,31 +86,10 @@ export const defaultStudent: Student = {
 		},
 	],
 	administrative_info: {
-		enrollment_date: "01/02/2022",
+		inscription_date: "01/02/2022",
 		starting_date: "01/03/2022",
-		registration_commitment_url: "",
-		scholarship_type: ScholarshipType.Subsidized,
+		enrollment_commitment_url: "",
 		agreement_type: "Ninguno",
-		comments: "",
-		payment_methods: [
-			{
-				year: 2022,
-				method: PaymentMethodOption.Cash,
-				yearly_payment_url: "",
-			},
-		],
-		discounts: [
-			{
-				percentage: 10,
-				starting_date: new Date("1/3/2022"),
-				ending_date: new Date("10/8/2022"),
-				type: DiscountType.Direction,
-				resolution_url: "",
-				explanation: DiscountExplanation.Sibling,
-				report_url: "",
-				description: "",
-			},
-		],
 	},
 	group: {} as StudentGroup,
 };
@@ -120,14 +99,10 @@ export const defaultStudents: [Student] = [defaultStudent];
 export const emptyStudent: Student = {
 	address: "",
 	administrative_info: {
-		enrollment_date: "",
+		inscription_date: "",
 		starting_date: "",
-		registration_commitment_url: "",
-		scholarship_type: ScholarshipType.Agreement,
+		enrollment_commitment_url: "",
 		agreement_type: "",
-		comments: "",
-		payment_methods: [],
-		discounts: [],
 	},
 	birthdate: "",
 	birthplace: "",
