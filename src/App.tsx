@@ -12,7 +12,7 @@ import CreateUser from "./pages/createuser/CreateUser";
 import Login from "./pages/login/Login";
 import User from "./pages/user/User";
 import Student from "./pages/student/Student";
-import AddTeachersToGroup from "./pages/addTeachersToGroup/AddTeachersToGroup";
+import AddTeachersToGroup from "./pages/addteacherstogroup/AddTeachersToGroup";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Students from "./pages/students/Students";

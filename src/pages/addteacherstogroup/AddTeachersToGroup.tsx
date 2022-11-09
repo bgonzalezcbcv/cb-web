@@ -1,45 +1,40 @@
 /*eslint-disable*/
 import React, { useCallback, useState } from "react";
 
-import { DataGrid, GridApi, GridCellValue, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import * as APIStore from "../../core/ApiStore";
 import { Alert, Box, Button, Card, CircularProgress, Input, Paper, Typography } from "@mui/material";
 import useFetchFromAPI, { FetchStatus } from "../../hooks/useFetchFromAPI";
 import { Group, UserInfo } from "../../core/Models";
+import { UserRole } from "../../core/interfaces";
+import { useParams } from "react-router-dom";
 
-interface TeachersProps {
-	rows?: UserInfo[];
-	groupName?: string; //por ahora, luego se cambia el tipo
-}
+export default function AddTeachersToGroup() {
+	const { id } = useParams();
 
-export default function AddTeacher(props: TeachersProps) {
-	const { rows, groupName } = props;
+	const groupId = id;
 
-	const [teachers, setTeachers] = useState<UserInfo[]>(rows ?? []);
+	const [teachers, setTeachers] = useState<UserInfo[]>([]);
 	const [searchText, setSearchText] = React.useState("");
 
-	const { fetchStatus, refetch } = useFetchFromAPI(() => APIStore.fetchTeachers(undefined), setTeachers, !rows);
+	const { fetchStatus, refetch } = useFetchFromAPI(() => APIStore.fetchTeachers(undefined), setTeachers);
 
-	const onClickAdd = (params: any) => {
-		const api: GridApi = params.api;
-		const thisRow: Record<string, GridCellValue> = {};
+	const onClickAdd = async (params: any) => {
+		if (!groupId) return;
 
-		api.getAllColumns()
-			.filter((c: any) => c.field !== "__check__" && !!c)
-			.forEach((c: any) => (thisRow[c.field] = params.getValue(params.id, c.field)));
-		//endpoint
-		alert("No implementado!");
+		const userId = params.row.id;
+
+		await APIStore.addUserToGroup(userId, groupId, UserRole.Docente);
+		refetch();
 	};
 
-	const onClickRemove = (params: any) => {
-		const api: GridApi = params.api;
-		const thisRow: Record<string, GridCellValue> = {};
+	const onClickRemove = async (params: any) => {
+		if (!groupId) return;
 
-		api.getAllColumns()
-			.filter((c: any) => c.field !== "__check__" && !!c)
-			.forEach((c: any) => (thisRow[c.field] = params.getValue(params.id, c.field)));
-		//endpoint
-		alert("No implementado!");
+		const userId = params.row.id;
+
+		await APIStore.removeUserFromGroup(userId, groupId, UserRole.Docente);
+		refetch();
 	};
 
 	const columns: GridColDef[] = [
@@ -54,21 +49,23 @@ export default function AddTeacher(props: TeachersProps) {
 			sortable: false,
 			flex: 1,
 			renderCell: (params) => {
-				return !((params.row.groups as Group[]) ?? []).find((group): boolean => group.name === groupName) ? (
-					<Button
-						variant="contained"
-						color="success"
-						style={{ maxWidth: "10px", maxHeight: "20px", minWidth: "10px", minHeight: "20px" }}
-						onClick={() => onClickAdd(params)}>
-						+
-					</Button>
-				) : (
+				const isInGroup = (params.row.groups as Group[]).find((group) => Number(group.id) === Number(groupId));
+
+				return isInGroup ? (
 					<Button
 						variant="contained"
 						color="error"
 						style={{ maxWidth: "10px", maxHeight: "20px", minWidth: "10px", minHeight: "20px" }}
 						onClick={() => onClickRemove(params)}>
 						-
+					</Button>
+				) : (
+					<Button
+						variant="contained"
+						color="success"
+						style={{ maxWidth: "10px", maxHeight: "20px", minWidth: "10px", minHeight: "20px" }}
+						onClick={() => onClickAdd(params)}>
+						+
 					</Button>
 				);
 			},
@@ -131,7 +128,7 @@ export default function AddTeacher(props: TeachersProps) {
 				boxShadow: "rgba(0, 0, 0, 0.25) 0px 3px 8px",
 			}}>
 			<Box display="flex" justifyContent="flex-start" width="100%">
-				<Typography variant="h4"> Grupo:{groupName}</Typography>
+				<Typography variant="h4">Agregar docentes</Typography>
 				<br></br>
 			</Box>
 			<Box
