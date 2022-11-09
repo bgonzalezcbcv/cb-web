@@ -55,6 +55,15 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 					) : (
 						""
 					)}
+					{student.group ? (
+						<Chip
+							sx={{ alignSelf: "center", marginLeft: "10px" }}
+							label={`${student.group.grade_name} ${student.group.name} (${student.group.year})`}
+							variant="outlined"
+						/>
+					) : (
+						""
+					)}
 				</Box>
 				<Box>
 					{mode === StudentPageMode.create ? (

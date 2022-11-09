@@ -20,6 +20,15 @@ Object {
             >
                
             </span>
+            <div
+              class="MuiChip-root MuiChip-outlined MuiChip-sizeMedium MuiChip-colorDefault MuiChip-outlinedDefault css-1k5rc20-MuiChip-root"
+            >
+              <span
+                class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+              >
+                undefined undefined (undefined)
+              </span>
+            </div>
           </div>
           <div
             class="MuiBox-root css-0"
@@ -322,6 +331,15 @@ Object {
           >
              
           </span>
+          <div
+            class="MuiChip-root MuiChip-outlined MuiChip-sizeMedium MuiChip-colorDefault MuiChip-outlinedDefault css-1k5rc20-MuiChip-root"
+          >
+            <span
+              class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+            >
+              undefined undefined (undefined)
+            </span>
+          </div>
         </div>
         <div
           class="MuiBox-root css-0"
@@ -692,6 +710,15 @@ Object {
             >
               Nuevo alumno
             </span>
+            <div
+              class="MuiChip-root MuiChip-outlined MuiChip-sizeMedium MuiChip-colorDefault MuiChip-outlinedDefault css-1k5rc20-MuiChip-root"
+            >
+              <span
+                class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+              >
+                undefined undefined (undefined)
+              </span>
+            </div>
           </div>
           <div
             class="MuiBox-root css-0"
@@ -961,6 +988,15 @@ Object {
           >
             Nuevo alumno
           </span>
+          <div
+            class="MuiChip-root MuiChip-outlined MuiChip-sizeMedium MuiChip-colorDefault MuiChip-outlinedDefault css-1k5rc20-MuiChip-root"
+          >
+            <span
+              class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+            >
+              undefined undefined (undefined)
+            </span>
+          </div>
         </div>
         <div
           class="MuiBox-root css-0"
@@ -1276,6 +1312,15 @@ Object {
             >
                
             </span>
+            <div
+              class="MuiChip-root MuiChip-outlined MuiChip-sizeMedium MuiChip-colorDefault MuiChip-outlinedDefault css-1k5rc20-MuiChip-root"
+            >
+              <span
+                class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+              >
+                undefined undefined (undefined)
+              </span>
+            </div>
           </div>
           <div
             class="MuiBox-root css-0"
@@ -1504,6 +1549,15 @@ Object {
           >
              
           </span>
+          <div
+            class="MuiChip-root MuiChip-outlined MuiChip-sizeMedium MuiChip-colorDefault MuiChip-outlinedDefault css-1k5rc20-MuiChip-root"
+          >
+            <span
+              class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+            >
+              undefined undefined (undefined)
+            </span>
+          </div>
         </div>
         <div
           class="MuiBox-root css-0"
