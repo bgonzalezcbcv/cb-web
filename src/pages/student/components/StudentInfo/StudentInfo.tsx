@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import { JsonForms } from "@jsonforms/react";
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
@@ -30,10 +30,21 @@ const renderers = [...materialRenderers, { tester: NumericInputControlTester, re
 export default function StudentInfo(props: StudentInfoProps): React.ReactElement {
 	const { editable, student, translator, onChange, isCreating } = props;
 	const [groups, setGroups] = useState<Group[]>([]);
+	const [filteredGroups, setFilteredGroups] = useState<Group[]>([]);
 
 	const { refetch, fetchStatus } = useFetchFromAPI(() => APIStore.fetchGroups(), setGroups, true);
 
-	function generateStudentGroup(index: number): StudentGroup {
+	useEffect(() => {
+		const newFiltered = [] as Group[];
+		const thisYear = new Date().getFullYear().toString();
+		const nextYear = (new Date().getFullYear() + 1).toString();
+		groups.forEach((group) => {
+			if (group.year == thisYear || group.year == nextYear || group.id == student.group?.id) newFiltered.push(group);
+		});
+		setFilteredGroups(newFiltered);
+	}, [groups]);
+
+	function generateStudentGroup(index: number, groups: Group[]): StudentGroup {
 		if (index < 0 || index >= groups.length) return {} as StudentGroup;
 		return {
 			id: groups[index].id,
@@ -43,7 +54,7 @@ export default function StudentInfo(props: StudentInfoProps): React.ReactElement
 		} as StudentGroup;
 	}
 
-	function getIndexOfGroupWithId(studentGroup: StudentGroup): number | string {
+	function getIndexOfGroupWithId(studentGroup: StudentGroup, groups: Group[]): number | string {
 		let returnIndex = "" as number | string;
 		if (!studentGroup) return returnIndex;
 		groups.forEach((element, index) => {
@@ -77,13 +88,13 @@ export default function StudentInfo(props: StudentInfoProps): React.ReactElement
 						labelId="group"
 						id="group"
 						label="Grupo"
-						value={getIndexOfGroupWithId(student.group)}
+						value={getIndexOfGroupWithId(student.group, filteredGroups)}
 						disabled={!editable}
 						onChange={(event): void => {
-							const newStudent = { ...student, group: generateStudentGroup(event.target.value as number) };
+							const newStudent = { ...student, group: generateStudentGroup(event.target.value as number, filteredGroups) };
 							onChange(newStudent, false);
 						}}>
-						{groups.map((value, index) => {
+						{filteredGroups.map((value, index) => {
 							return (
 								<MenuItem key={index} value={index}>
 									{`${value.grade.name} ${value.name} (${value.year})`}
