@@ -727,19 +727,6 @@ Object {
                     class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                   />
                 </button>
-                <button
-                  aria-selected="false"
-                  class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
-                  data-cy="administrativeInfoTab"
-                  role="tab"
-                  tabindex="-1"
-                  type="button"
-                >
-                  Administrativa
-                  <span
-                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                  />
-                </button>
               </div>
               <span
                 class="MuiTabs-indicator css-1aquho2-MuiTabs-indicator"
@@ -792,12 +779,6 @@ Object {
         <div
           hidden=""
           id="simple-tabpanel-2"
-          role="tabpanel"
-          style="height: 100vh; overflow: scroll;"
-        />
-        <div
-          hidden=""
-          id="simple-tabpanel-3"
           role="tabpanel"
           style="height: 100vh; overflow: scroll;"
         />
@@ -960,19 +941,6 @@ Object {
                   class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                 />
               </button>
-              <button
-                aria-selected="false"
-                class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
-                data-cy="administrativeInfoTab"
-                role="tab"
-                tabindex="-1"
-                type="button"
-              >
-                Administrativa
-                <span
-                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
-              </button>
             </div>
             <span
               class="MuiTabs-indicator css-1aquho2-MuiTabs-indicator"
@@ -1025,12 +993,6 @@ Object {
       <div
         hidden=""
         id="simple-tabpanel-2"
-        role="tabpanel"
-        style="height: 100vh; overflow: scroll;"
-      />
-      <div
-        hidden=""
-        id="simple-tabpanel-3"
         role="tabpanel"
         style="height: 100vh; overflow: scroll;"
       />

@@ -33,54 +33,92 @@ export interface FamilyMember {
 }
 
 export enum ScholarshipType {
-	Bidding = "licitación",
-	Subsidized = "bonificada",
-	Agreement = "convenio",
-	Special = "especial",
+	bidding = "Licitación",
+	subsidized = "Bonificada",
+	agreement = "Convenio",
+	special = "Especial",
 }
 
-export enum PaymentMethodOption {
-	Cash = "contado",
-	Financing = "financiacion",
-	Bidding = "licitacion",
+export interface TypeScholarship {
+	id: number;
+	description: string;
+	scholarship: string;
 }
 
-export enum DiscountType {
-	Direction = "dirección",
-	SocialAssistant = "asistente social",
+export interface StudentTypeScholarship {
+	id: number;
+	date: string;
+	student_id: number;
+	type_scholarship_id: number;
+	description: string;
+	scholarship: string;
 }
 
-export enum DiscountExplanation {
-	Sibling = "hermano",
-	Resolution = "resolución",
+export interface PaymentMethodOption {
+	id: number;
+	method: string;
 }
 
 export interface PaymentMethod {
-	year: number;
-	method: PaymentMethodOption;
-	yearly_payment_url: string;
+	id: number;
+	year: string;
+	method: string;
+	payment_method_id: PaymentMethodOption["id"];
+	annual_payment_url: string;
+}
+
+export interface PaymentMethodWithFile extends PaymentMethod {
+	annual_payment: File;
+}
+
+export enum DiscountType {
+	Direction = "direction",
+	SocialAssistant = "social_assistance",
+}
+
+export enum DiscountTypeName {
+	direction = "Dirección",
+	social_assistance = "Asistente social",
+}
+
+export enum DiscountExplanation {
+	Sibling = "sibling",
+	Resolution = "resolution",
+}
+
+export enum DiscountExplanationName {
+	resolution = "Resolución",
+	sibling = "Hermano",
 }
 
 export interface Discount {
+	id: number | null;
 	percentage: number;
-	starting_date: Date;
-	ending_date: Date;
-	type: DiscountType;
-	resolution_url: string;
+	start_date: string;
+	end_date: string;
+	resolution_description: string;
 	explanation: DiscountExplanation;
-	report_url: string;
-	description: string;
+	administrative_type: DiscountType;
+	resolution_url: string;
+	administrative_info_url: string;
+}
+
+export interface DiscountWithFiles extends Discount {
+	resolution?: File;
+	administrative_info?: File;
+}
+
+export interface Comment {
+	id: number;
+	text: string;
 }
 
 export interface AdministrativeInfo {
-	enrollment_date: string;
+	inscription_date: string;
 	starting_date: string;
-	registration_commitment_url: string;
-	scholarship_type: ScholarshipType;
+	enrollment_commitment_url: string;
+	enrollment_commitment?: File;
 	agreement_type: string;
-	comments: string;
-	payment_methods: PaymentMethod[];
-	discounts: Discount[];
 }
 
 export interface Student {

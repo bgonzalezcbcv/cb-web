@@ -1,21 +1,35 @@
 import _ from "lodash";
 import axios from "axios";
+import { AxiosError } from "axios";
 import { reaction } from "mobx";
 
 import {
-	Grade, Group, DocumentType, FamilyMember, FinalEvaluation, FinalReportCardRequest,
+	Grade,
+	Group,
+	DocumentType,
+	FamilyMember,
+	FinalEvaluation,
+	FinalReportCardRequest,
 	IntermediateEvaluation,
 	IntermediateReportCardRequest,
+	Discount,
+	DiscountWithFiles,
+	PaymentMethodOption,
+	PaymentMethod,
 	ReportApprovalState,
 	ReportCard,
 	Student,
 	User,
-	UserInfo, Cycle,
+	UserInfo,
+	PaymentMethodWithFile,
+	TypeScholarship,
+	StudentTypeScholarship,
+	Comment,
+	Cycle,
 } from "./Models";
 import { DefaultApiResponse, UserRole } from "./interfaces";
-
 import { DataStore } from "./DataStore";
-import { setFinalReports, setIntermediateReports } from "./CoreHelper";
+import { getFormDataFromObject, reverseDate, setFinalReports, setIntermediateReports } from "./CoreHelper";
 
 const dataStore = DataStore.getInstance();
 
@@ -41,6 +55,8 @@ axios.interceptors.response.use(
 	(response) => response,
 	(error) => {
 		if (error.response.state === 403 && error.response.config.baseURL === baseConfig.baseURL) dataStore.logOut();
+
+		console.error(error);
 
 		return Promise.reject(error);
 	}
@@ -103,7 +119,57 @@ export async function login(email: string, password: string): Promise<DefaultApi
 	}
 }
 
-// todo: will need the admin info and complementary info.
+export async function fetchDiscounts(studentId: number): Promise<DefaultApiResponse<Discount[]>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: `/api/students/${studentId}/discounts`,
+		};
+
+		const response = await axios(config);
+
+		return defaultResponse(response.data.student.discounts);
+		//eslint-disable-next-line
+	} catch (error: any) {
+		return defaultErrorResponse(error.message);
+	}
+}
+
+export async function fetchPaymentMethodList(): Promise<DefaultApiResponse<PaymentMethodOption[]>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: `/api/payment_methods/`,
+		};
+
+		const response = await axios(config);
+
+		return defaultResponse(response.data.payment_methods);
+		//eslint-disable-next-line
+	} catch (error: any) {
+		return defaultErrorResponse(error.message);
+	}
+}
+
+export async function fetchPaymentMethod(studentId: number | string): Promise<DefaultApiResponse<PaymentMethod[]>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: `/api/students/${studentId}/payment_methods/`,
+		};
+
+		const response = await axios(config);
+
+		return defaultResponse(response.data.student.payment_methods);
+		//eslint-disable-next-line
+	} catch (error: any) {
+		return defaultErrorResponse(error.message);
+	}
+}
+
 export async function fetchFamilyMembers(studentId: number): Promise<DefaultApiResponse<FamilyMember[]>> {
 	try {
 		const config = {
@@ -135,10 +201,18 @@ export async function fetchStudent(id: string): Promise<DefaultApiResponse<Stude
 
 		if (!fetchFamilySuccess) return defaultErrorResponse("No se pudo obtener el estudiante.");
 
-		const student = {
+		const student: Student = {
 			...response.data.student,
 			id: response.data.student.id.toString(),
 			family: _.uniqWith(familyMembers, _.isEqual),
+			administrative_info: {
+				inscription_date: reverseDate(response.data.student.inscription_date),
+				starting_date: reverseDate(response.data.student.starting_date),
+				scholarship_type: response.data.student.scholarship_type,
+				enrollment_commitment_url: response.data.student.enrollment_commitment_url,
+				comments: response.data.student.comments, //todo: And these?
+				agreement_type: response.data.student.agreement_type, //todo: And these?
+			},
 		};
 
 		return defaultResponse(student);
@@ -237,13 +311,20 @@ export async function createStudent(studentToCreate: Student): Promise<DefaultAp
 
 export async function editStudent(studentToEdit: Student): Promise<DefaultApiResponse<Student>> {
 	try {
+		const formDataFromStudent = getFormDataFromObject({
+			...studentToEdit,
+			...studentToEdit.administrative_info,
+		});
+
 		const config = {
 			...baseConfig,
 			method: "patch",
 			url: `/api/students/${studentToEdit.id}`,
-			data: JSON.stringify({
-				student: studentToEdit,
-			}),
+			headers: {
+				...baseConfig.headers,
+				"Content-Type": "multipart/form-data",
+			},
+			data: formDataFromStudent,
 		};
 
 		const { id, family } = studentToEdit;
@@ -435,6 +516,7 @@ export async function setReportApprovalState(studentId: string, reportId: number
 		};
 	}
 }
+
 export async function createFinalReportCard(finalReport: FinalReportCardRequest, studentId: string): Promise<DefaultApiResponse<FinalEvaluation>> {
 	try {
 		const formData = new FormData();
@@ -525,7 +607,7 @@ export async function fetchGroups(id?: string): Promise<DefaultApiResponse<Group
 	}
 }
 
-export async function createGroup(groupToCreate: {gradeId: string, groupName: string, groupYear: string}): Promise<boolean> {
+export async function createGroup(groupToCreate: { gradeId: string; groupName: string; groupYear: string }): Promise<boolean> {
 	try {
 		const config = {
 			...baseConfig,
@@ -535,7 +617,7 @@ export async function createGroup(groupToCreate: {gradeId: string, groupName: st
 				group: {
 					name: groupToCreate.groupName,
 					year: groupToCreate.groupYear,
-				}
+				},
 			}),
 		};
 
@@ -609,3 +691,155 @@ export async function fetchCycles(): Promise<{ success: boolean; data?: Cycle[];
 	}
 }
 
+export async function createDiscount(studentId: number, newDiscount: DiscountWithFiles): Promise<DefaultApiResponse<undefined>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "post",
+			url: `/api/students/${studentId}/discounts`,
+			headers: {
+				...baseConfig.headers,
+				"Content-Type": "multipart/form-data",
+			},
+			data: getFormDataFromObject(newDiscount),
+		};
+
+		await axios(config);
+
+		return defaultResponse(undefined);
+	} catch (error: unknown) {
+		return defaultErrorResponse((error as AxiosError).message ?? "");
+	}
+}
+
+export async function deleteDiscount(studentId: number, discountId: number): Promise<DefaultApiResponse<undefined>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "delete",
+			url: `/api/students/${studentId}/discounts/${discountId}`,
+			headers: {
+				...baseConfig.headers,
+				"Content-Type": "multipart/form-data",
+			},
+		};
+
+		await axios(config);
+
+		return defaultResponse(undefined);
+	} catch (error: unknown) {
+		return defaultErrorResponse((error as AxiosError).message ?? "");
+	}
+}
+
+export async function createPaymentMethod(studentId: number, paymentMethod: PaymentMethodWithFile): Promise<DefaultApiResponse<undefined>> {
+	try {
+		const preprocPaymentMethod = {
+			...paymentMethod,
+			student_id: studentId,
+		};
+
+		const config = {
+			...baseConfig,
+			method: "post",
+			url: `/api/student_payment_methods`,
+			headers: {
+				...baseConfig.headers,
+				"Content-Type": "multipart/form-data",
+			},
+			data: getFormDataFromObject(preprocPaymentMethod),
+		};
+
+		await axios(config);
+
+		return defaultResponse(undefined);
+	} catch (error: unknown) {
+		return defaultErrorResponse((error as AxiosError).message ?? "");
+	}
+}
+
+export async function fetchTypeScholarships(): Promise<DefaultApiResponse<TypeScholarship[]>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: "/api/type_scholarships",
+		};
+
+		const response = await axios(config);
+
+		return defaultResponse(response.data.type_scholarships);
+	} catch (e) {
+		return defaultErrorResponse("No se pudieron obtener los docentes.");
+	}
+}
+
+export async function fetchStudentTypeScholarships(id: number): Promise<DefaultApiResponse<StudentTypeScholarship[]>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: `/api/students/${id}/type_scholarships`,
+		};
+
+		const response = await axios(config);
+
+		return defaultResponse(response.data.student.student_type_scholarships);
+	} catch (e) {
+		return defaultErrorResponse("No se pudieron obtener los docentes.");
+	}
+}
+
+export async function createStudentTypeScholarship(studentTypeScholarship: StudentTypeScholarship): Promise<DefaultApiResponse<undefined>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "post",
+			url: `/api/student_type_scholarships`,
+			data: studentTypeScholarship,
+		};
+
+		await axios(config);
+
+		return defaultResponse(undefined);
+	} catch (error: unknown) {
+		return defaultErrorResponse((error as AxiosError).message ?? "");
+	}
+}
+
+export async function fetchComments(studentId: number): Promise<DefaultApiResponse<Comment[]>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: `/api/students/${studentId}/comments`,
+		};
+
+		const response = await axios(config);
+
+		return defaultResponse(response.data.student.comments);
+	} catch (e) {
+		return defaultErrorResponse("No se pudieron obtener los docentes.");
+	}
+}
+
+export async function createComment(studentId: number, text: string): Promise<DefaultApiResponse<Comment[]>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "post",
+			url: `/api/students/${studentId}/comments`,
+			data: JSON.stringify({
+				comment: {
+					text,
+				},
+			}),
+		};
+
+		await axios(config);
+
+		return defaultResponse([]);
+	} catch (e) {
+		return defaultErrorResponse("No se pudo crear el comentario.");
+	}
+}

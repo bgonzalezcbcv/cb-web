@@ -148,3 +148,34 @@ export function setIntermediateReports(intermediate_evaluations: IntermediateEva
 
 	return reports;
 }
+
+export function getFormDataFromObject(object: unknown): FormData {
+	const formData = new FormData();
+
+	if (typeof object === "object")
+		Object.entries(object as object).forEach((entry) => {
+			const [key, value] = entry;
+
+			if (value instanceof File) return formData.append(key, value);
+
+			if (value === undefined || value === null || _.isArray(value)) return;
+
+			formData.append(key, value.toString());
+		});
+
+	return formData;
+}
+
+export function stringToDateString(stringDate: string | undefined): string | null {
+	if (!stringDate || !/^(\d{2}-){2}\d{4}$/gm.test(stringDate)) return null;
+	const aux = stringDate.split("-");
+	return new Date(parseInt(aux[2]), parseInt(aux[1]) - 1, parseInt(aux[0])).toString();
+}
+
+export function reverseDate(date: string | undefined | null): string | undefined | null {
+	if (!date) return date;
+
+	const [year, month, day] = date.split("-");
+
+	return `${day}-${month}-${year}`;
+}

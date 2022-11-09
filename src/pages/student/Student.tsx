@@ -71,7 +71,7 @@ export default function Student(props: StudentProps): React.ReactElement {
 		else return defaultMessage;
 	};
 
-	const createTabs = ["Básica", "Familiar", "Complementaria", "Administrativa"];
+	const createTabs = ["Básica", "Familiar", "Complementaria"];
 	const viewTabs = ["Básica", "Familiar", "Complementaria", "Administrativa", "Boletines"];
 	const editableTabs = ["Básica", "Familiar", "Complementaria", "Administrativa", "Boletines"];
 

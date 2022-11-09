@@ -376,13 +376,17 @@
 				"registration_commitment_url": {
 					"type": "string"
 				},
-				"enrollment_date": {
+				"inscription_date": {
 					"type": "string",
-					"title": "Fecha de inscripción"
+					"title": "Fecha de inscripción",
+					"pattern": "^(\\d\\d-){2}\\d{4}$",
+					"errorMessage": "Tiene que ser una fecha válida."
 				},
 				"starting_date": {
 					"type": "string",
-					"title": "Fecha de comienzo"
+					"title": "Fecha de comienzo",
+					"pattern": "^(\\d\\d-){2}\\d{4}$",
+					"errorMessage": "Tiene que ser una fecha válida."
 				},
 				"scholarship_type": {
 					"type": "string",
@@ -459,11 +463,11 @@
 							"explanation": {
 								"oneOf": [
 									{
-										"const": "hermano",
+										"const": "sibling",
 										"title": "Hermano"
 									},
 									{
-										"const": "resolución",
+										"const": "resolution",
 										"title": "Resolución"
 									}
 								],
@@ -473,16 +477,18 @@
 							},
 							"percentage": {
 								"title": "%",
-								"type": "integer"
+								"type": "integer",
+								"minimum": 0,
+								"maximum": 100
 							},
-							"type": {
+							"administrative_type": {
 								"oneOf": [
 									{
-										"const": "dirección",
+										"const": "direction",
 										"title": "Dirección"
 									},
 									{
-										"const": "asistente social",
+										"const": "social_assistance",
 										"title": "Asistente Social"
 									}
 								],
@@ -494,7 +500,7 @@
 								"title": "Informe administrativo",
 								"type": "string"
 							},
-							"description": {
+							"resolution_description": {
 								"title": "Descripción",
 								"type": "string"
 							},

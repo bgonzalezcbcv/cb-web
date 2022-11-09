@@ -15,6 +15,21 @@ describe("Student", () => {
 			data: defaultStudent,
 			error: "",
 		});
+		jest.spyOn(ApiStore, "fetchDiscounts").mockResolvedValue({
+			success: true,
+			data: [],
+			error: "",
+		});
+		jest.spyOn(ApiStore, "fetchPaymentMethod").mockResolvedValue({
+			success: true,
+			data: undefined,
+			error: "",
+		});
+		jest.spyOn(ApiStore, "fetchPaymentMethodList").mockResolvedValue({
+			success: true,
+			data: undefined,
+			error: "",
+		});
 		jest.spyOn(ReactRouter, "useNavigate").mockImplementation(() => jest.fn);
 		mockRestrictionsComponent();
 	});

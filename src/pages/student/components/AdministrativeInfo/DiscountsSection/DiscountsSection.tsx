@@ -1,119 +1,60 @@
-/* eslint-disable */
 import React, { useCallback, useState } from "react";
 
 import * as Models from "../../../../../core/Models";
+import { Discount } from "../../../../../core/Models";
 import { VisualComponent } from "../../../../../core/interfaces";
-import Modal from "../../../../../components/modal/Modal";
-import DiscountHistory from ".././historyTables/DiscountHistory";
-import FileUploader from "../../../../../components/fileUploader/FileUploader";
-import DatePickerToString, { stringToDateString } from "../../../../../components/datePicker/DatePicker";
-import { Card, CardContent, Divider, IconButton, Container, Typography, Box, Alert } from "@mui/material";
-import { JsonForms } from "@jsonforms/react";
-import { JsonSchema7, Translator } from "@jsonforms/core";
-import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
+import { fetchDiscounts, deleteDiscount } from "../../../../../core/ApiStore";
+import AddDiscount from "./AddDiscount";
+import DiscountHistory from "./DiscountHistory";
+import useFetchFromAPI, { FetchStatus } from "../../../../../hooks/useFetchFromAPI";
+
+import { Alert, Box, Card, CardContent, CircularProgress, Divider, IconButton, Typography } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-
-import schema from "../../../schema.json";
-import ui from "./ui.json";
-import uiResolution from "./ui-resolution.json";
-import NumericInputControl, { NumericInputControlTester } from "../../../../../components/NumericInput/NumericInputControl";
-
-import uiReport from "./ui-report.json";
 
 import "./DiscountsSection.scss";
 
 export type AdministrativeInfoProps = {
-	editable: boolean;
 	student: Models.Student;
-	onChange: (data: Models.Student) => void;
+	editable: boolean;
 };
-
-type DiscountData = {
-	percentage: number;
-	starting_date: string;
-	ending_date: string;
-	type: string;
-	resolution_url: string;
-	explanation: string;
-	report_url: string;
-	description: string;
-};
-
-const renderers = [...materialRenderers, { tester: NumericInputControlTester, renderer: NumericInputControl }];
 
 export default function DiscountsSection(props: VisualComponent & AdministrativeInfoProps): React.ReactElement {
-	const { editable, student, onChange } = props;
+	const { editable, student } = props;
 
 	const [discountModalOpen, setDiscountModalOpen] = useState(false);
 
-	const [discountData, setDiscountData] = useState<DiscountData>({} as DiscountData);
-	const [hasFormErrors, setHasFormErrors] = useState<boolean>(false);
-	const [hasDateErrors, setHasDateErrors] = useState<boolean>(false);
+	const [discounts, setDiscounts] = useState<Discount[]>([]);
+
+	const { fetchStatus, refetch } = useFetchFromAPI(() => fetchDiscounts(Number(student.id)), setDiscounts);
 
 	const handleDiscountModalOpen = useCallback(() => {
 		setDiscountModalOpen(true);
 	}, []);
 
-	const handleDiscountModalClose = useCallback(() => {
+	function handleDiscountAdd(creation = false): void {
 		setDiscountModalOpen(false);
-		setDiscountData({} as DiscountData);
-	}, []);
-
-	const translator = (id: string, defaultMessage: string | undefined): string => {
-		if (id.includes("percentage") && id.includes("error") && discountData.percentage) {
-			return "El valor debe estar entre 0 y 100";
+		if (creation) {
+			refetch();
 		}
-		if (id.includes("error")) return "Este campo es requerido";
-		return defaultMessage ?? "";
-	};
-
-	//TODO: Adjust this when file handling is defined
-	const handleAddNewDiscount = useCallback((discountData: DiscountData, student: Models.Student) => {
-		const startDate = stringToDateString(discountData.starting_date);
-		const endDate = stringToDateString(discountData.ending_date);
-		// Dates should be valid.
-		if (startDate === null || endDate === null) return;
-		const newDiscount: Models.Discount = {
-			percentage: discountData.percentage,
-			starting_date: new Date(startDate),
-			ending_date: new Date(endDate),
-			type: discountData.type as Models.DiscountType,
-			resolution_url: discountData.resolution_url,
-			explanation: discountData.explanation as Models.DiscountExplanation,
-			report_url: discountData.report_url,
-			description: discountData.description,
-		};
-
-		const updatedStudent = {
-			...student,
-			administrative_info: { ...student.administrative_info, discounts: [newDiscount, ...student.administrative_info.discounts] },
-		};
-		onChange(updatedStudent);
-		handleDiscountModalClose();
-	}, []);
-
-	function setResolutionFile(file: File | undefined): void {
-		//TODO
 	}
 
-	function setReportFile(file: File | undefined): void {
-		//TODO
-	}
+	async function handleDeletion(discount_id: number): Promise<void> {
+		if (window.confirm("¿Desea eliminar este descuento?")) {
+			const { success } = await deleteDiscount(Number(student.id), discount_id);
 
-	function setData(data: any, hasErrors: boolean): void {
-		setDiscountData(data);
-		const startDateString = stringToDateString(discountData.starting_date);
-		const endDateString = stringToDateString(discountData.ending_date);
-		// Dates should be valid.
-		if (startDateString === null || endDateString === null) {
-			setHasDateErrors(false);
-			return;
+			if (success) refetch();
+			else alert("No se pudo borrar el descuento.");
 		}
-		const startDate = new Date(startDateString);
-		const endDate = new Date(endDateString);
-		setHasDateErrors(data.starting_date && data.ending_date && startDate > endDate);
-		setHasFormErrors(hasErrors);
 	}
+
+	if (fetchStatus === FetchStatus.Fetching) return <CircularProgress />;
+
+	if (fetchStatus === FetchStatus.Error)
+		return (
+			<Alert variant="outlined" severity="error" style={{ cursor: "pointer" }} onClick={refetch}>
+				<Typography>No se pudieron obtener los descuentos. Haga click aquí para reintentar.</Typography>
+			</Alert>
+		);
 
 	return (
 		<Card color={"primary"} className="discount-wrapper">
@@ -128,100 +69,13 @@ export default function DiscountsSection(props: VisualComponent & Administrative
 							</IconButton>
 						)}
 
-						<Modal
-							show={discountModalOpen}
-							title={"Agregar un nuevo descuento"}
-							onClose={handleDiscountModalClose}
-							onAccept={(): void => {
-								handleAddNewDiscount(discountData, student);
-							}}
-							acceptEnabled={!hasFormErrors && !hasDateErrors}>
-							<Container>
-								<JsonForms
-									i18n={{ translate: translator as Translator }}
-									schema={schema.properties.administrative_info.properties.discounts.items as JsonSchema7}
-									uischema={ui}
-									data={discountData}
-									renderers={renderers}
-									cells={materialCells}
-									onChange={({ data, errors }): void => {
-										setData(data, errors?.length != 0);
-									}}
-								/>
-								{discountData.explanation == Models.DiscountExplanation.Resolution.valueOf() ? (
-									<Container style={{ paddingRight: "0px", paddingLeft: "0px", paddingTop: "15px" }}>
-										<Typography>{"Resolución"}</Typography>
-
-										<Box className="dates-container">
-											<DatePickerToString
-												width={"48%"}
-												editable={true}
-												date={discountData.starting_date}
-												onChange={(date: string): void => {
-													const newDiscount = { ...discountData, starting_date: date };
-													setDiscountData(newDiscount);
-												}}
-												label="Comienzo"
-												required={true}
-											/>
-
-											<DatePickerToString
-												width={"48%"}
-												editable={true}
-												date={discountData.ending_date}
-												onChange={(date: string): void => {
-													const newDiscount = { ...discountData, ending_date: date };
-													setDiscountData(newDiscount);
-												}}
-												label="Fin"
-												required={true}
-											/>
-										</Box>
-
-										<JsonForms
-											i18n={{ translate: translator as Translator }}
-											schema={schema.properties.administrative_info.properties.discounts.items as JsonSchema7}
-											uischema={uiResolution}
-											data={discountData}
-											renderers={renderers}
-											cells={materialCells}
-											onChange={({ data, errors }): void => {
-												setData(data, errors?.length != 0);
-											}}
-										/>
-										<FileUploader label={"Resolución"} width={"100%"} uploadedFile={(file): void => setResolutionFile(file)} />
-									</Container>
-								) : null}
-								{discountData.explanation == Models.DiscountExplanation.Resolution.valueOf() ? (
-									<Container style={{ paddingRight: "0px", paddingLeft: "0px", paddingTop: "15px" }}>
-										<Typography>{"Informe Administrativo"}</Typography>
-										<JsonForms
-											i18n={{ translate: translator as Translator }}
-											schema={schema.properties.administrative_info.properties.discounts.items as JsonSchema7}
-											uischema={uiReport}
-											data={discountData}
-											renderers={renderers}
-											cells={materialCells}
-											onChange={({ data, errors }): void => {
-												setData(data, errors?.length != 0);
-											}}
-										/>
-										<FileUploader label={"Informe"} width={"100%"} uploadedFile={(file): void => setReportFile(file)} />
-									</Container>
-								) : null}
-								{hasDateErrors ? (
-									<Alert severity="error" className="alert">
-										La fecha de fin debe ser posterior a la fecha de comienzo
-									</Alert>
-								) : null}
-							</Container>
-						</Modal>
+						<AddDiscount isOpen={discountModalOpen} studentId={Number(student.id)} onClose={handleDiscountAdd} />
 					</Box>
 				</Box>
 
 				<Divider />
 
-				<DiscountHistory rows={student?.administrative_info.discounts} />
+				<DiscountHistory rows={discounts ?? []} handleDeletion={handleDeletion} canDelete />
 			</CardContent>
 		</Card>
 	);
