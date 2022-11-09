@@ -112,6 +112,7 @@ const columns: GridColDef[] = [
 	{
 		field: "addTeachers",
 		headerName: "Agregar docentes",
+		sortable: false,
 		disableColumnMenu: true,
 		hide: !restrictEditionTo([UserRole.Administrador, UserRole.Director], true),
 		flex: 1,
@@ -136,22 +137,59 @@ const columns: GridColDef[] = [
 		},
 	},
 	{
-		field: "principal",
+		field: "principals",
 		headerName: "Director",
-		disableColumnMenu: false,
+		sortable: false,
+		disableColumnMenu: true,
 		flex: 1,
 		renderCell: (params): React.ReactNode => {
-			const principal: User = params.value;
-			return principal ? (
-				<Typography fontSize={12}>{principal.name + " " + principal.surname}</Typography>
-			) : (
-				<Typography fontSize={12}>Sin director asignado</Typography>
+			if (params.value === undefined || params.value?.length === 0) {
+				return <Typography fontSize={12}>Sin directores asignados</Typography>;
+			}
+
+			const principals: User[] = params.value
+				.map((principal: User) => {
+					return { name: principal.name, surname: principal.surname };
+				})
+				.sort((a: User, b: User) => (a.surname > b.surname ? 1 : b.surname > a.surname ? -1 : 0));
+			const principalsToShow = principals.length > 3 ? principals.slice(0, 3) : principals;
+
+			const tooltipText = (
+				<div>
+					<Box className="tooltip-text-container">
+						{principals.map((value: { name: string; surname: string }, index: number) => {
+							return (
+								<Typography key={index} fontSize={12}>
+									{value.name + " " + value.surname}
+								</Typography>
+							);
+						})}
+					</Box>
+				</div>
+			);
+
+			return (
+				<Tooltip title={tooltipText} arrow>
+					<Box className="teachers-wrapper">
+						<Box className="teachers-container">
+							{principalsToShow.map((value: { name: string; surname: string }, index: number) => {
+								return (
+									<Typography key={index} fontSize={14}>
+										{value.name + " " + value.surname}
+									</Typography>
+								);
+							})}
+							{principals.length > 3 && <Typography fontSize={12} sx={{ marginTop: "5px" }}>{`(Ver ${principals.length - 3} más)`}</Typography>}
+						</Box>
+					</Box>
+				</Tooltip>
 			);
 		},
 	},
 	{
 		field: "addPrincipal",
 		headerName: "Agregar director",
+		sortable: false,
 		disableColumnMenu: true,
 		flex: 1,
 		hide: !restrictEditionTo([UserRole.Administrador], true),
@@ -168,22 +206,59 @@ const columns: GridColDef[] = [
 		},
 	},
 	{
-		field: "support_teacher",
+		field: "support_teachers",
 		headerName: "Adscripto",
-		disableColumnMenu: false,
+		sortable: false,
+		disableColumnMenu: true,
 		flex: 1,
 		renderCell: (params): React.ReactNode => {
-			const teacher: User = params.value;
-			return teacher ? (
-				<Typography fontSize={12}>{teacher.name + " " + teacher.surname}</Typography>
-			) : (
-				<Typography fontSize={12}>Sin adscripto asignado</Typography>
+			if (params.value === undefined || params.value?.length === 0) {
+				return <Typography fontSize={12}>Sin adscriptos asignados</Typography>;
+			}
+
+			const supportTeachers: User[] = params.value
+				.map((teacher: User) => {
+					return { name: teacher.name, surname: teacher.surname };
+				})
+				.sort((a: User, b: User) => (a.surname > b.surname ? 1 : b.surname > a.surname ? -1 : 0));
+			const supportTeachersToShow = supportTeachers.length > 3 ? supportTeachers.slice(0, 3) : supportTeachers;
+
+			const tooltipText = (
+				<div>
+					<Box className="tooltip-text-container">
+						{supportTeachers.map((value: { name: string; surname: string }, index: number) => {
+							return (
+								<Typography key={index} fontSize={12}>
+									{value.name + " " + value.surname}
+								</Typography>
+							);
+						})}
+					</Box>
+				</div>
+			);
+
+			return (
+				<Tooltip title={tooltipText} arrow>
+					<Box className="teachers-wrapper">
+						<Box className="teachers-container">
+							{supportTeachersToShow.map((value: { name: string; surname: string }, index: number) => {
+								return (
+									<Typography key={index} fontSize={14}>
+										{value.name + " " + value.surname}
+									</Typography>
+								);
+							})}
+							{supportTeachers.length > 3 && <Typography fontSize={12} sx={{ marginTop: "5px" }}>{`(Ver ${supportTeachers.length - 3} más)`}</Typography>}
+						</Box>
+					</Box>
+				</Tooltip>
 			);
 		},
 	},
 	{
 		field: "addSupportTeacher",
 		headerName: "Agregar adscripto",
+		sortable: false,
 		disableColumnMenu: true,
 		flex: 1,
 		hide: !restrictEditionTo([UserRole.Administrador, UserRole.Director], true),
