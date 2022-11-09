@@ -98,7 +98,7 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 							api.getAllColumns()
 								.filter((c) => c.field !== "__check__" && !!c)
 								.forEach((c) => (thisRow[c.field] = params.getValue(params.id, c.field)));
-							navigate(`/addTeachers/${thisRow.id}`);
+							navigate(`/addUsers/teacher/${thisRow.id}`);
 						}}>
 						<AddIcon />
 					</IconButton>
@@ -127,11 +127,19 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 			flex: 1,
 			hide: !restrictEditionTo([UserRole.Administrador], true),
 			align: "center",
-			renderCell: (): React.ReactNode => {
-				return (
-					<IconButton
-						onClick={(): null => {
-							return null;
+			renderCell: (params): React.ReactNode => {
+				const navigate = useNavigate();
+
+			return (
+				<IconButton
+					onClick={(): void => {
+							const api: GridApi = params.api;
+						const thisRow: Record<string, GridCellValue> = {};
+
+						api.getAllColumns()
+							.filter((c) => c.field !== "__check__" && !!c)
+							.forEach((c) => (thisRow[c.field] = params.getValue(params.id, c.field)));
+						navigate(`/addUsers/principal/${thisRow.id}`);
 						}}>
 						<AddIcon />
 					</IconButton>
@@ -160,11 +168,19 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 			flex: 1,
 			hide: !restrictEditionTo([UserRole.Administrador, UserRole.Director], true),
 			align: "center",
-			renderCell: (): React.ReactNode => {
-				return (
-					<IconButton
-						onClick={(): null => {
-							return null;
+			renderCell: (params): React.ReactNode => {
+				const navigate = useNavigate();
+
+			return (
+				<IconButton
+					onClick={(): void => {
+							const api: GridApi = params.api;
+						const thisRow: Record<string, GridCellValue> = {};
+
+						api.getAllColumns()
+							.filter((c) => c.field !== "__check__" && !!c)
+							.forEach((c) => (thisRow[c.field] = params.getValue(params.id, c.field)));
+						navigate(`/addUsers/support_teacher/${thisRow.id}`);
 						}}>
 						<AddIcon />
 					</IconButton>

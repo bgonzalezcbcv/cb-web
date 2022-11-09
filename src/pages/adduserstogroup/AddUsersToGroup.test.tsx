@@ -4,7 +4,7 @@ import { render } from "@testing-library/react";
 
 import * as API from "../../core/ApiStore";
 import { teachersMock } from "../../core/ApiMocks";
-import AddTeachersToGroup from "./AddTeachersToGroup";
+import AddUsersToGroup from "./AddUsersToGroup";
 
 describe("Teachers", () => {
 	it("should render the list", async () => {
@@ -15,9 +15,9 @@ describe("Teachers", () => {
 		});
 
 		const wrapper = render(
-			<MemoryRouter initialEntries={["/addTeachers/1"]}>
+			<MemoryRouter initialEntries={["/addUsers/teacher/1"]}>
 				<Routes>
-					<Route path="/addTeachers/:id" element={<AddTeachersToGroup />} />
+					<Route path="/addUsers/:role/:id" element={<AddUsersToGroup />} />
 				</Routes>
 			</MemoryRouter>
 		);
@@ -35,9 +35,9 @@ describe("Teachers", () => {
 		});
 
 		const wrapper = render(
-			<MemoryRouter initialEntries={["/addTeachers/1"]}>
+			<MemoryRouter initialEntries={["/addUsers/teacher/1"]}>
 				<Routes>
-					<Route path="/addTeachers/:id" element={<AddTeachersToGroup />} />
+					<Route path="/addUsers/:role/:id" element={<AddUsersToGroup />} />
 				</Routes>
 			</MemoryRouter>
 		);

@@ -9,22 +9,28 @@ import { Group, UserInfo } from "../../core/Models";
 import { UserRole } from "../../core/interfaces";
 import { useParams } from "react-router-dom";
 
-export default function AddTeachersToGroup() {
-	const { id } = useParams();
+export default function AddUsersToGroup() {
+	const { role, id } = useParams();
 
 	const groupId = id;
 
-	const [teachers, setTeachers] = useState<UserInfo[]>([]);
+	const userRoleName = role === "support_teacher" ? "adscriptos" : role === "principal" ? "directores" : "docentes";
+
+	const [users, setUsers] = useState<UserInfo[]>([]);
 	const [searchText, setSearchText] = React.useState("");
 
-	const { fetchStatus, refetch } = useFetchFromAPI(() => APIStore.fetchTeachers(undefined), setTeachers);
+	const fetchFunction = role === "support_teacher" ? () => APIStore.fetchSupportTeachers() : role === "principal" ? () => APIStore.fetchPrincipals() : () => APIStore.fetchTeachers(undefined);
+
+	const { fetchStatus, refetch } = useFetchFromAPI(fetchFunction, setUsers);
 
 	const onClickAdd = async (params: any) => {
 		if (!groupId) return;
 
 		const userId = params.row.id;
 
-		await APIStore.addUserToGroup(userId, groupId, UserRole.Docente);
+		const userRole = role === "support_teacher" ? UserRole.Adscripto : role === "principal" ? UserRole.Director : UserRole.Docente;
+
+		await APIStore.addUserToGroup(userId, groupId, userRole);
 		refetch();
 	};
 
@@ -33,7 +39,9 @@ export default function AddTeachersToGroup() {
 
 		const userId = params.row.id;
 
-		await APIStore.removeUserFromGroup(userId, groupId, UserRole.Docente);
+		const userRole = role === "support_teacher" ? UserRole.Adscripto : role === "principal" ? UserRole.Director : UserRole.Docente;
+
+		await APIStore.removeUserFromGroup(userId, groupId, userRole);
 		refetch();
 	};
 
@@ -92,13 +100,13 @@ export default function AddTeachersToGroup() {
 				return (
 					<Box style={{ padding: "20px", display: "flex", justifyContent: "center", alignItems: "center" }}>
 						<Alert severity="error" variant="outlined" onClick={refetch}>
-							Falló la carga de docentes. Clickear aquí para reintentar.
+							{`Falló la carga de ${userRoleName}. Clickear aquí para reintentar.`}
 						</Alert>
 					</Box>
 				);
 			case FetchStatus.Initial:
-				const foundItems = teachers.filter((teacher) =>
-					Object.values(teacher).some((value) => value && toNoFormatText(value.toString()).includes(toNoFormatText(searchText)))
+				const foundItems = users.filter((user) =>
+					Object.values(user).some((value) => value && toNoFormatText(value.toString()).includes(toNoFormatText(searchText)))
 				);
 
 				return (
@@ -114,7 +122,7 @@ export default function AddTeachersToGroup() {
 			default:
 				return null;
 		}
-	}, [fetchStatus, teachers, searchText]);
+	}, [fetchStatus, users, searchText]);
 
 	return (
 		<Card
@@ -128,7 +136,7 @@ export default function AddTeachersToGroup() {
 				boxShadow: "rgba(0, 0, 0, 0.25) 0px 3px 8px",
 			}}>
 			<Box display="flex" justifyContent="flex-start" width="100%">
-				<Typography variant="h4">Agregar docentes</Typography>
+				<Typography variant="h4">{`Agregar ${userRoleName}`}</Typography>
 				<br></br>
 			</Box>
 			<Box
