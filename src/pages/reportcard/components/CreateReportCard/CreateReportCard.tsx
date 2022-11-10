@@ -60,7 +60,7 @@ export default function CreateReportCardModal(props: CreateReportCardModalProps)
 
 	async function createReportCard(): Promise<void> {
 		if (file === undefined) return;
-		if (student.group === null) return;
+		if (student.group === null || student.group === undefined) return;
 		setShowingResponse(true);
 		setResponse("Procesando...");
 		setAcceptEnabled(false);
