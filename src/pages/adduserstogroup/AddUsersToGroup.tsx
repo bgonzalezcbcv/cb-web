@@ -1,7 +1,7 @@
 /*eslint-disable*/
 import React, { useCallback, useState } from "react";
 
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import {DataGrid, GridColDef, GridRenderCellParams} from "@mui/x-data-grid";
 import * as APIStore from "../../core/ApiStore";
 import { Alert, Box, Button, Card, CircularProgress, Input, Paper, Typography } from "@mui/material";
 import useFetchFromAPI, { FetchStatus } from "../../hooks/useFetchFromAPI";
@@ -14,32 +14,32 @@ export default function AddUsersToGroup() {
 
 	const groupId = id;
 
-	const userRoleName = role === "support_teacher" ? "adscriptos" : role === "principal" ? "directores" : "docentes";
+	const userRoleName = role === "teacher" ? "docentes" : role === "principal" ? "directores" : "adscriptos";
 
 	const [users, setUsers] = useState<UserInfo[]>([]);
 	const [searchText, setSearchText] = React.useState("");
 
-	const fetchFunction = role === "support_teacher" ? () => APIStore.fetchSupportTeachers() : role === "principal" ? () => APIStore.fetchPrincipals() : () => APIStore.fetchTeachers(undefined);
+	const fetchFunction = role === "teacher" ? () => APIStore.fetchTeachers() : role === "principal" ? () => APIStore.fetchPrincipals() : () => APIStore.fetchSupportTeachers();
 
 	const { fetchStatus, refetch } = useFetchFromAPI(fetchFunction, setUsers);
 
-	const onClickAdd = async (params: any) => {
+	const onClickAdd = async (params: GridRenderCellParams) => {
 		if (!groupId) return;
 
 		const userId = params.row.id;
 
-		const userRole = role === "support_teacher" ? UserRole.Adscripto : role === "principal" ? UserRole.Director : UserRole.Docente;
+		const userRole = role === "teacher" ? UserRole.Docente : role === "principal" ? UserRole.Director : UserRole.Adscripto;
 
 		await APIStore.addUserToGroup(userId, groupId, userRole);
 		refetch();
 	};
 
-	const onClickRemove = async (params: any) => {
+	const onClickRemove = async (params: GridRenderCellParams) => {
 		if (!groupId) return;
 
 		const userId = params.row.id;
 
-		const userRole = role === "support_teacher" ? UserRole.Adscripto : role === "principal" ? UserRole.Director : UserRole.Docente;
+		const userRole = role === "teacher" ? UserRole.Docente : role === "principal" ? UserRole.Director : UserRole.Adscripto;
 
 		await APIStore.removeUserFromGroup(userId, groupId, userRole);
 		refetch();
@@ -56,7 +56,7 @@ export default function AddUsersToGroup() {
 			disableColumnMenu: true,
 			sortable: false,
 			flex: 1,
-			renderCell: (params) => {
+			renderCell: (params: GridRenderCellParams) => {
 				const isInGroup = (params.row.groups as Group[]).find((group) => Number(group.id) === Number(groupId));
 
 				return isInGroup ? (
