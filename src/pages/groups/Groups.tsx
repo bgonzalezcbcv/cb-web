@@ -18,22 +18,22 @@ import {
 	Select,
 	Typography,
 } from "@mui/material";
-import { DataGrid, GridApi, GridCellValue, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import AddIcon from "@mui/icons-material/Add";
 
 import { Grade, Group } from "../../core/Models";
 import * as APIStore from "../../core/ApiStore";
+import { restrictEditionTo } from "../../core/userRoleHelper";
+import { UserRole } from "../../core/interfaces";
 import useFetchFromAPI, { FetchStatus } from "../../hooks/useFetchFromAPI";
 import Modal from "../../components/modal/Modal";
+import AddUser from "../adduserstogroup/components/AddUser";
 import NumericInputControl, { NumericInputControlTester } from "../../components/NumericInput/NumericInputControl";
 
 import schema from "./schema.json";
 import uischema from "./ui.json";
 
 import "./Groups.scss";
-import { restrictEditionTo } from "../../core/userRoleHelper";
-import { UserRole } from "../../core/interfaces";
 import UserList from "./components/UserList";
 
 type GroupData = {
@@ -87,22 +87,7 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 			flex: 1,
 			align: "center",
 			renderCell: (params: GridRenderCellParams): React.ReactNode => {
-				const navigate = useNavigate();
-
-				return (
-					<IconButton
-						onClick={(): void => {
-							const api: GridApi = params.api;
-							const thisRow: Record<string, GridCellValue> = {};
-
-							api.getAllColumns()
-								.filter((c) => c.field !== "__check__" && !!c)
-								.forEach((c) => (thisRow[c.field] = params.getValue(params.id, c.field)));
-							navigate(`/addUsers/teacher/${thisRow.id}`);
-						}}>
-						<AddIcon />
-					</IconButton>
-				);
+				return <AddUser params={params} role={"teacher"} />
 			},
 		},
 		{
@@ -122,28 +107,12 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 		{
 			field: "addPrincipal",
 			headerName: "Agregar director",
-			sortable: false,
-			disableColumnMenu: true,
-			flex: 1,
-			hide: !restrictEditionTo([UserRole.Administrador], true),
-			align: "center",
-			renderCell: (params): React.ReactNode => {
-				const navigate = useNavigate();
-
-			return (
-				<IconButton
-					onClick={(): void => {
-							const api: GridApi = params.api;
-						const thisRow: Record<string, GridCellValue> = {};
-
-						api.getAllColumns()
-							.filter((c) => c.field !== "__check__" && !!c)
-							.forEach((c) => (thisRow[c.field] = params.getValue(params.id, c.field)));
-						navigate(`/addUsers/principal/${thisRow.id}`);
-						}}>
-						<AddIcon />
-					</IconButton>
-				);
+			sortable: false,disableColumnMenu: true,
+		flex: 1,
+		hide: !restrictEditionTo([UserRole.Administrador], true),
+		align: "center",
+		renderCell: (params): React.ReactNode => {
+			return <AddUser params={params} role={"principal"} />
 			},
 		},
 		{
@@ -164,27 +133,12 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 			field: "addSupportTeacher",
 			headerName: "Agregar adscripto",
 			sortable: false,
-			disableColumnMenu: true,
-			flex: 1,
-			hide: !restrictEditionTo([UserRole.Administrador, UserRole.Director], true),
-			align: "center",
-			renderCell: (params): React.ReactNode => {
-				const navigate = useNavigate();
-
-			return (
-				<IconButton
-					onClick={(): void => {
-							const api: GridApi = params.api;
-						const thisRow: Record<string, GridCellValue> = {};
-
-						api.getAllColumns()
-							.filter((c) => c.field !== "__check__" && !!c)
-							.forEach((c) => (thisRow[c.field] = params.getValue(params.id, c.field)));
-						navigate(`/addUsers/support_teacher/${thisRow.id}`);
-						}}>
-						<AddIcon />
-					</IconButton>
-				);
+		disableColumnMenu: true,
+		flex: 1,
+		hide: !restrictEditionTo([UserRole.Administrador, UserRole.Director], true),
+		align: "center",
+		renderCell: (params): React.ReactNode => {
+			return <AddUser params={params} role={"support_teacher"} />
 			},
 		},
 		{

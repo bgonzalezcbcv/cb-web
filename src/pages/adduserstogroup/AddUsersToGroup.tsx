@@ -15,6 +15,7 @@ export default function AddUsersToGroup() {
 	const groupId = id;
 
 	const userRoleName = role === "teacher" ? "docentes" : role === "principal" ? "directores" : "adscriptos";
+	const userRole = role === "teacher" ? UserRole.Docente : role === "principal" ? UserRole.Director : UserRole.Adscripto;
 
 	const [users, setUsers] = useState<UserInfo[]>([]);
 	const [searchText, setSearchText] = React.useState("");
@@ -28,8 +29,6 @@ export default function AddUsersToGroup() {
 
 		const userId = params.row.id;
 
-		const userRole = role === "teacher" ? UserRole.Docente : role === "principal" ? UserRole.Director : UserRole.Adscripto;
-
 		await APIStore.addUserToGroup(userId, groupId, userRole);
 		refetch();
 	};
@@ -38,8 +37,6 @@ export default function AddUsersToGroup() {
 		if (!groupId) return;
 
 		const userId = params.row.id;
-
-		const userRole = role === "teacher" ? UserRole.Docente : role === "principal" ? UserRole.Director : UserRole.Adscripto;
 
 		await APIStore.removeUserFromGroup(userId, groupId, userRole);
 		refetch();
@@ -148,7 +145,7 @@ export default function AddUsersToGroup() {
 					padding: "10px",
 				}}>
 				<Input
-					style={{ flex: 3, marginRight: "10%" }}
+					style={{ flex: 3, width: "100%" }}
 					id="search"
 					type="text"
 					placeholder="Buscar..."
