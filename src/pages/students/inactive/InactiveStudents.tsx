@@ -13,7 +13,7 @@ import { emptyStudents } from "../../student/DefaultStudent";
 
 import "../Students.scss";
 const columns: GridColDef[] = [
-	{ field: "id", headerName: "ID", disableColumnMenu: true, flex: 1, hide: true },
+	{ field: "reference_number", headerName: "Nº de referencia", disableColumnMenu: false, flex: 1 },
 	{ field: "ci", headerName: "CI", disableColumnMenu: false, flex: 1 },
 	{ field: "name", headerName: "Nombres", disableColumnMenu: false, flex: 2 },
 	{ field: "surname", headerName: "Apellidos", disableColumnMenu: false, flex: 2 },
@@ -44,7 +44,7 @@ const columns: GridColDef[] = [
 		valueGetter: (params) => (params.row.last_motive_inactivate ? params.row.last_motive_inactivate.description : ""),
 	},
 	{
-		field: "",
+		field: "id",
 		headerName: "Ir al alumno",
 		align: "center",
 		sortable: false,
@@ -56,13 +56,7 @@ const columns: GridColDef[] = [
 			const onClick = (e: any) => {
 				e.stopPropagation();
 
-				const api: GridApi = params.api;
-				const thisRow: Record<string, GridCellValue> = {};
-
-				api.getAllColumns()
-					.filter((c: any) => c.field !== "__check__" && !!c)
-					.forEach((c: any) => (thisRow[c.field] = params.getValue(params.id, c.field)));
-				navigate("/student/" + thisRow.id);
+				navigate("/student/" + params.value);
 			};
 			return <Button onClick={onClick}>Ir</Button>; //Link component
 		},
