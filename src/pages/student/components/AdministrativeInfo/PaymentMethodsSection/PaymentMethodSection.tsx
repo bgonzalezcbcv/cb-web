@@ -1,74 +1,52 @@
 /* eslint-disable */
 import React, { useCallback, useState } from "react";
 
-import * as Models from "../../../../../core/Models";
-import { VisualComponent } from "../../../../../core/interfaces";
-import Modal from "../../../../../components/modal/Modal";
-import PaymentMethodHistory from "../historyTables/PaymentMethodHistory";
-import FileUploader from "../../../../../components/fileUploader/FileUploader";
-import { Box, Card, CardContent, Divider, IconButton, Typography, Container } from "@mui/material";
-import { JsonForms } from "@jsonforms/react";
-import { JsonSchema7, Translator } from "@jsonforms/core";
-import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
+import { Box, Card, CardContent, Divider, IconButton, Typography, Container, CircularProgress, Alert } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
-import schema from "../../../schema.json";
-import NumericInputControl, { NumericInputControlTester } from "../../../../../components/NumericInput/NumericInputControl";
-
-import ui from "./ui.json";
+import * as Models from "../../../../../core/Models";
+import { PaymentMethod, PaymentMethodOption } from "../../../../../core/Models";
+import { fetchPaymentMethod, fetchPaymentMethodList } from "../../../../../core/ApiStore";
+import AddPaymentMethod from "./AddPaymentMethod";
+import PaymentMethodHistory from "./PaymentMethodHistory";
+import useFetchFromAPI, { FetchStatus } from "../../../../../hooks/useFetchFromAPI";
 
 import "./PaymentMethodSection.scss";
 
-export type PaymentMethodSectionProps = {
+type PaymentMethodSectionProps = {
 	editable: boolean;
 	student: Models.Student;
-	onChange: (data: Models.Student) => void;
 };
 
-const renderers = [...materialRenderers, { tester: NumericInputControlTester, renderer: NumericInputControl }];
+export default function PaymentMethodSection(props: PaymentMethodSectionProps): React.ReactElement {
+	const { editable, student } = props;
 
-export default function PaymentMethodSection(props: VisualComponent & PaymentMethodSectionProps): React.ReactElement {
-	const { editable, student, onChange } = props;
+	const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
+	const [paymentMethodsOptions, setPaymentMethodsOptions] = useState<PaymentMethodOption[]>([]);
+	const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
-	const [paymentMethodModalOpen, setPaymentMethodModalOpen] = React.useState(false);
-	const [paymentMethodData, setPaymentMethodData] = useState<Models.PaymentMethod>({} as Models.PaymentMethod);
-	const [hasFormErrors, setHasFormErrors] = useState<boolean>(false);
+	const { fetchStatus: fetchStatusPaymentMethods, refetch: refetchPaymentMethods } = useFetchFromAPI(() => fetchPaymentMethod(student.id), setPaymentMethods);
+	const { fetchStatus: fetchStatusPaymentMethodsOptions } = useFetchFromAPI(() => fetchPaymentMethodList(), setPaymentMethodsOptions);
 
 	const handlePaymentMethodModalOpen = useCallback(() => {
-		setPaymentMethodModalOpen(true);
+		setIsAddModalOpen(true);
 	}, []);
 
-	const handlePaymentMethodModalClose = useCallback(() => {
-		setPaymentMethodModalOpen(false);
-		setPaymentMethodData({} as Models.PaymentMethod);
+	const handlePaymentMethodModalClose = useCallback((methodAdded = false) => {
+		setIsAddModalOpen(false);
+
+		if (methodAdded) refetchPaymentMethods();
 	}, []);
 
-	//TODO: Adjust this when file handling is defined
-	const handleAddNewPaymentMethod = useCallback((paymentData: Models.PaymentMethod, student: Models.Student) => {
-		const newPaymentMethod: Models.PaymentMethod = {
-			year: paymentData.year,
-			method: paymentData.method as Models.PaymentMethodOption,
-			yearly_payment_url: paymentData.yearly_payment_url,
-		};
+	if (fetchStatusPaymentMethods === FetchStatus.Fetching || fetchStatusPaymentMethodsOptions === FetchStatus.Fetching) return <CircularProgress />;
 
-		const updatedStudent = {
-			...student,
-			administrative_info: { ...student.administrative_info, payment_methods: [newPaymentMethod, ...student.administrative_info.payment_methods] },
-		};
-		onChange(updatedStudent);
-		handlePaymentMethodModalClose();
-	}, []);
+	if (fetchStatusPaymentMethods === FetchStatus.Error || fetchStatusPaymentMethodsOptions === FetchStatus.Error)
+		return (
+			<Alert variant="outlined" severity="error" style={{ cursor: "pointer" }} onClick={refetchPaymentMethods}>
+				<Typography>No se pudieron obtener los métodos de pago. Haga click aquí para reintentar.</Typography>
+			</Alert>
+		);
 
-	const translator = (id: string, defaultMessage: string | undefined): string => {
-		if (id.includes("error")) return "Este campo es requerido";
-		return defaultMessage ?? "";
-	};
-
-	function setYearlyPaymentFile(file: File | undefined): void {
-		//TODO
-	}
-
-	// @ts-ignore
 	return (
 		<Card className="payment-method-container">
 			<CardContent className="payment-content">
@@ -80,39 +58,19 @@ export default function PaymentMethodSection(props: VisualComponent & PaymentMet
 								<AddCircleOutlineIcon />
 							</IconButton>
 						)}
-
-						<Modal
-							show={paymentMethodModalOpen}
-							title={"Agregar una nueva forma de pago"}
-							onClose={handlePaymentMethodModalClose}
-							onAccept={() => {
-								handleAddNewPaymentMethod(paymentMethodData, student);
-							}}
-							acceptEnabled={!hasFormErrors}>
-							<Container className="payment-method-modal-wrapper" sx={{ display: "flex" }}>
-								<JsonForms
-									i18n={{ translate: translator as Translator }}
-									schema={schema.properties.administrative_info.properties.payment_methods.items as JsonSchema7}
-									uischema={ui}
-									data={paymentMethodData}
-									renderers={renderers}
-									cells={materialCells}
-									onChange={({ data, errors }): void => {
-										setPaymentMethodData(data);
-										setHasFormErrors(errors?.length != 0);
-									}}
-								/>
-								{paymentMethodData.method == Models.PaymentMethodOption.Cash.valueOf() ? (
-									<FileUploader label={"Pago de anualidad firmado"} width={"100%"} uploadedFile={(file) => setYearlyPaymentFile(file)} />
-								) : null}
-							</Container>
-						</Modal>
 					</Box>
+
+					<AddPaymentMethod
+						isOpen={isAddModalOpen}
+						studentId={student.id}
+						onClose={handlePaymentMethodModalClose}
+						paymentMethodOptions={paymentMethodsOptions}
+					/>
 				</Container>
 
 				<Divider />
 
-				<PaymentMethodHistory rows={student!.administrative_info.payment_methods} height={210} />
+				<PaymentMethodHistory rows={paymentMethods ?? []} height={210} />
 			</CardContent>
 		</Card>
 	);
