@@ -148,12 +148,12 @@ export async function fetchStudent(id: string): Promise<DefaultApiResponse<Stude
 	}
 }
 
-export async function fetchStudents(): Promise<DefaultApiResponse<Student[]>> {
+export async function fetchStudents(id?: string): Promise<DefaultApiResponse<Student[]>> {
 	try {
 		const config = {
 			...baseConfig,
 			method: "get",
-			url: `/api/students/`,
+			url: id !== undefined ? `/api/groups/${id}/students`: `/api/students/`,
 		};
 
 		const response = await axios(config);

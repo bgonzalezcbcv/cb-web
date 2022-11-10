@@ -49,6 +49,7 @@ function App(): React.ReactElement {
 												<Route path="/student/:id" element={<Student mode={StudentPageMode.view} />} />
 												<Route path="/student/:id/edit" element={<Student mode={StudentPageMode.edit} />} />
 												<Route path="/students" element={<Students />} />
+												<Route path="/students/:id" element={<Students />} />
 												<Route path="/pending" element={<PendigStudents />} />
 												<Route path="/createuser" element={<CreateUser />} />
 												<Route path="/user/:id" element={<User editable={false} />} />

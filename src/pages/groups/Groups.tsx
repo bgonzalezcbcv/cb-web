@@ -180,13 +180,12 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 			sortable: false,
 			flex: 1,
 			disableColumnMenu: true,
-			renderCell: (): React.ReactNode => {
+			renderCell: (params): React.ReactNode => {
 				const navigate = useNavigate();
-				// const id: string = params.value;
+				const id: string = params.value;
 
 				const onClick = (): void => {
-					navigate(`/students/`);
-					// navigate(`/students/${id}`); //TODO: Use this line when navigation to group is implemented
+					navigate(`/students/${id}`);
 				};
 				return (
 					<IconButton onClick={onClick}>
