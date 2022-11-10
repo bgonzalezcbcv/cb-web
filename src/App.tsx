@@ -17,6 +17,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Students from "./pages/students/Students";
 import PendigStudents from "./pages/students/PendingStudents";
+import InactiveStudents from "./pages/students/inactive/InactiveStudents";
 import Teachers from "./pages/teachers/Teachers";
 import Groups from "./pages/groups/Groups";
 import { Box } from "@mui/material";
@@ -50,6 +51,7 @@ function App(): React.ReactElement {
 												<Route path="/student/:id/edit" element={<Student mode={StudentPageMode.edit} />} />
 												<Route path="/students" element={<Students />} />
 												<Route path="/pending" element={<PendigStudents />} />
+												<Route path="/students/inactive" element={<InactiveStudents />} />
 												<Route path="/createuser" element={<CreateUser />} />
 												<Route path="/user/:id" element={<User editable={false} />} />
 												<Route path="/user/:id/edit" element={<User editable />} />

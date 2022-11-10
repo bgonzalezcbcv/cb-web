@@ -78,6 +78,12 @@ export function decomposeDate(date: string, separator: string | RegExp = "-"): n
 	return date.split(separator).map(Number);
 }
 
+export function apiDateToDisplayDate(stringDate: string | undefined): string {
+	if (!stringDate || !/^\d{4}(-\d{2}){2}$/gm.test(stringDate)) return "";
+	const aux = stringDate.split("-");
+	return `${aux[2]}/${aux[1]}/${aux[0]}`;
+}
+
 export function dateBeforeOrEqualThan(date1: string, date2: string, separator = "-"): boolean {
 	const [d1, m1, y1] = decomposeDate(date1, separator).map(Number);
 	const [d2, m2, y2] = decomposeDate(date2, separator).map(Number);
