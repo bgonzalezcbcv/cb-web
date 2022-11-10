@@ -1,4 +1,4 @@
-import { DiscountExplanation, DiscountType, PaymentMethodOption, ScholarshipType, Student } from "../../core/Models";
+import { DiscountExplanation, DiscountType, StudentGroup, PaymentMethodOption, ScholarshipType, Student } from "../../core/Models";
 
 export const defaultStudent: Student = {
 	id: "",
@@ -112,6 +112,7 @@ export const defaultStudent: Student = {
 			},
 		],
 	},
+	group: {} as StudentGroup,
 };
 
 export const defaultStudents: [Student] = [defaultStudent];
@@ -154,6 +155,7 @@ export const emptyStudent: Student = {
 	surname: "",
 	tuition: "",
 	vaccine_expiration: "",
+	group: {} as StudentGroup,
 };
 
 export const emptyStudents: [Student] = [emptyStudent];

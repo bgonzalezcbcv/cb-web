@@ -94,14 +94,6 @@
 			],
 			"readOnly": true
 		},
-		"group": {
-			"type": "string",
-			"title": "Grupo"
-		},
-		"subgroup": {
-			"type": "string",
-			"title": "Sub Grupo"
-		},
 		"address": {
 			"type": "string",
 			"title": "Dirección",
