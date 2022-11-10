@@ -3,6 +3,11 @@ import {User} from "../../../core/Models";
 import {Box, Tooltip, Typography} from "@mui/material";
 import "../Groups.scss";
 
+type UserData = {
+    name: string;
+    surname: string;
+};
+
 interface UserListProps {
     users: User[];
 }
@@ -12,12 +17,9 @@ export default function UserList(props: UserListProps): React.ReactElement {
 
     if (!users) return <></>;
 
-    const usersNames: {name: string, surname: string}[] = users.map((user: User) => {
+    const usersNames: UserData[] = users.map((user: User) => {
         return { name: user.name, surname: user.surname };
-    })
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        .sort((a: User, b: User) => {return (a.surname > b.surname ? 1 : b.surname > a.surname ? -1 : 0);
+    }).sort((a: UserData, b: UserData) => {return (a.surname > b.surname ? 1 : b.surname > a.surname ? -1 : 0);
     });
 
     const usersToShow = usersNames.length > 3 ? usersNames.slice(0, 3) : usersNames;
