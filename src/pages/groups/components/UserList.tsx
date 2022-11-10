@@ -15,8 +15,6 @@ interface UserListProps {
 export default function UserList(props: UserListProps): React.ReactElement {
     const {users} = props;
 
-    if (!users) return <></>;
-
     const usersNames: UserData[] = users.map((user: User) => {
         return { name: user.name, surname: user.surname };
     }).sort((a: UserData, b: UserData) => {return (a.surname > b.surname ? 1 : b.surname > a.surname ? -1 : 0);
