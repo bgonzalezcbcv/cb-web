@@ -52,19 +52,18 @@ export default function FamilyForm(props: FamilyFormProps): React.ReactElement {
 		);
 	}
 
-	const toggleButtons = useCallback(
-		(): React.ReactElement[] =>
-			family.map((step, index) => {
-				let text = "Familiar " + (index + 1).toString();
-				if (step && step.full_name) text = step.full_name;
-				return (
-					<ToggleButton id={"family" + index.toString()} key={index} value={index}>
-						{text}
-					</ToggleButton>
-				);
-			}),
-		[student]
-	);
+	const toggleButtons = useCallback((): React.ReactElement[] => {
+		if (!family) return [];
+		return family.map((step, index) => {
+			let text = "Familiar " + (index + 1).toString();
+			if (step && step.full_name) text = step.full_name;
+			return (
+				<ToggleButton id={"family" + index.toString()} key={index} value={index}>
+					{text}
+				</ToggleButton>
+			);
+		});
+	}, [student]);
 
 	return (
 		<Box display="flex" flexDirection="column" width="100%" height="100%">
