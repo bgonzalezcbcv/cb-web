@@ -150,7 +150,7 @@ export interface Student {
 	family: FamilyMember[];
 	question_categories: QuestionCategories[];
 	administrative_info: AdministrativeInfo;
-	group: StudentGroup;
+	group?: StudentGroup;
 }
 
 export interface StudentCreationForm {

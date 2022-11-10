@@ -1,4 +1,4 @@
-import { StudentGroup, Student } from "../../core/Models";
+import { Student } from "../../core/Models";
 
 export const defaultStudent: Student = {
 	id: "",
@@ -91,7 +91,6 @@ export const defaultStudent: Student = {
 		enrollment_commitment_url: "",
 		agreement_type: "Ninguno",
 	},
-	group: {} as StudentGroup,
 };
 
 export const defaultStudents: [Student] = [defaultStudent];
@@ -130,7 +129,6 @@ export const emptyStudent: Student = {
 	surname: "",
 	tuition: "",
 	vaccine_expiration: "",
-	group: {} as StudentGroup,
 };
 
 export const emptyStudents: [Student] = [emptyStudent];

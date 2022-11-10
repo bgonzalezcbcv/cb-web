@@ -54,7 +54,7 @@ export default function StudentInfo(props: StudentInfoProps): React.ReactElement
 		} as StudentGroup;
 	}
 
-	function getIndexOfGroupWithId(studentGroup: StudentGroup, groups: Group[]): number | string {
+	function getIndexOfGroupWithId(studentGroup: StudentGroup | undefined, groups: Group[]): number | string {
 		let returnIndex = "" as number | string;
 		if (!studentGroup) return returnIndex;
 		groups.forEach((element, index) => {
