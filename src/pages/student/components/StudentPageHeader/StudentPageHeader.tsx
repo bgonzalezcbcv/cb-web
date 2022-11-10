@@ -45,20 +45,20 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 					<Typography component={"span"} sx={{ alignSelf: "center", paddingLeft: "10px" }}>
 						{[StudentPageMode.view, StudentPageMode.edit].includes(mode) ? `${student.name} ${student.surname}` : "Nuevo alumno"}
 					</Typography>
-					{student.status === "pending" ? (
+					{student.group ? (
 						<Chip
 							sx={{ alignSelf: "center", marginLeft: "10px" }}
-							icon={<PriorityHighIcon color="warning" />}
-							label="Alumno pendiente"
+							label={`${student.group.grade_name} ${student.group.name} (${student.group.year})`}
 							variant="outlined"
 						/>
 					) : (
 						""
 					)}
-					{student.group ? (
+					{student.status === "pending" ? (
 						<Chip
 							sx={{ alignSelf: "center", marginLeft: "10px" }}
-							label={`${student.group.grade_name} ${student.group.name} (${student.group.year})`}
+							icon={<PriorityHighIcon color="warning" />}
+							label="Alumno pendiente"
 							variant="outlined"
 						/>
 					) : (

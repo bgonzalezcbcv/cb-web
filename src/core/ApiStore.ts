@@ -56,8 +56,6 @@ axios.interceptors.response.use(
 	(error) => {
 		if (error.response.state === 403 && error.response.config.baseURL === baseConfig.baseURL) dataStore.logOut();
 
-		console.error(error);
-
 		return Promise.reject(error);
 	}
 );
@@ -314,7 +312,7 @@ export async function editStudent(studentToEdit: Student): Promise<DefaultApiRes
 		const formDataFromStudent = getFormDataFromObject({
 			...studentToEdit,
 			...studentToEdit.administrative_info,
-			group_id: studentToEdit.group?.id
+			group_id: studentToEdit.group?.id,
 		});
 
 		const config = {
