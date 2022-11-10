@@ -213,7 +213,7 @@ export async function createStudent(studentToCreate: Student): Promise<DefaultAp
 			...baseConfig,
 			method: "post",
 			url: "/api/students/",
-			data: JSON.stringify({ ...studentToCreate, group_id: studentToCreate.group.id }),
+			data: JSON.stringify({ ...studentToCreate, group_id: studentToCreate.group?.id }),
 		};
 		const { family: unfilteredFamily } = studentToCreate;
 		const familyCIs: string[] = [];
@@ -247,7 +247,7 @@ export async function editStudent(studentToEdit: Student): Promise<DefaultApiRes
 			...baseConfig,
 			method: "patch",
 			url: `/api/students/${studentToEdit.id}`,
-			data: JSON.stringify({ ...studentToEdit, group_id: studentToEdit.group.id }),
+			data: JSON.stringify({ ...studentToEdit, group_id: studentToEdit.group?.id }),
 		};
 
 		const { id, family } = studentToEdit;
