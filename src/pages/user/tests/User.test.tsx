@@ -20,22 +20,20 @@ const userMock: UserInfo = {
 	ci: "11113334",
 	phone: "22223333",
 	token: "",
-	complementary_info: {
-		beginning_date: "01-03-1999",
-		academic_training: [{ title: "Profesorado de Ingles", date: "01-01-1999", attachment: "" }],
-	},
+	complementary_informations: [{ id: 1, description: "Profesorado de Ingles", date: "01-01-1999", attachment_url: "" }],
 	absences: [
 		{
-			starting_date: "01-01-2022",
-			ending_date: "05-01-2022",
+			id: 1,
+			start_date: "01-01-2022",
+			end_date: "05-01-2022",
 			reason: "Covid",
-			attachment: "",
+			certificate_url: "",
 		},
 	],
 	documents: [
 		{
-			type: DocumentType.Evaluation,
-			attachment: "",
+			document_type: DocumentType.Evaluation,
+			certificate_url: "",
 			upload_date: "01-05-2022",
 		},
 	],

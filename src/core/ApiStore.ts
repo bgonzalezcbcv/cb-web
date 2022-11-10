@@ -6,7 +6,6 @@ import { reaction } from "mobx";
 import {
 	Grade,
 	Group,
-	DocumentType,
 	FamilyMember,
 	FinalEvaluation,
 	FinalReportCardRequest,
@@ -27,6 +26,9 @@ import {
 	TypeScholarship,
 	StudentTypeScholarship,
 	Comment,
+	Document,
+	ComplementaryInfoWithFile,
+	AbsencesWithFile,
 } from "./Models";
 import { DefaultApiResponse, UserRole } from "./interfaces";
 import { DataStore } from "./DataStore";
@@ -401,64 +403,52 @@ export async function createUser(userToCreate: UserInfo): Promise<DefaultApiResp
 	}
 }
 
+export async function updateUser(userToEdit: UserInfo): Promise<DefaultApiResponse<undefined>> {
+	try {
+		const strippedUser: Partial<UserInfo> = { ...userToEdit };
+
+		delete strippedUser.role;
+		delete strippedUser.absences;
+		delete strippedUser.complementary_informations;
+		delete strippedUser.documents;
+
+		const config = {
+			...baseConfig,
+			method: "patch",
+			url: `/api/users/${userToEdit.id}`,
+			data: JSON.stringify({
+				user: strippedUser,
+			}),
+		};
+
+		await axios(config);
+
+		return defaultResponse(undefined);
+	} catch (e) {
+		return defaultErrorResponse("No se ha podido crear el usuario.");
+	}
+}
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function fetchUser(id: string): Promise<DefaultApiResponse<UserInfo>> {
 	try {
-		const fetchUserMockResponse: UserInfo = {
-			id: 1,
-			role: UserRole.Administrador,
-			email: "test@test.com",
-			name: "Testing",
-			surname: "Tester",
-			address: "Avenida Siempre viva 123",
-			birthdate: "01-01-1999",
-			ci: "11113334",
-			phone: "22223333",
-			token: "",
-			complementary_info: {
-				beginning_date: "01-03-1999",
-				academic_training: [{ title: "Profesorado de Ingles", date: "01-01-1999", attachment: "" }],
-			},
-			absences: [
-				{
-					starting_date: "01-01-2022",
-					ending_date: "05-01-2022",
-					reason: "Covid",
-					attachment: "",
-				},
-			],
-			documents: [
-				{
-					type: DocumentType.Evaluation,
-					attachment: "",
-					upload_date: "01-05-2022",
-				},
-			],
-			groups: [],
-			password: "",
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: `/api/users/${id}`,
 		};
 
-		return defaultResponse(fetchUserMockResponse);
-		//
-		// const config = {
-		// 	...baseConfig,
-		// 	method: "get",
-		// 	url: `/api/users/${id}`,
-		// };
-		//
-		// const response = await axios(config);
-		//
-		// if (![200, 304].includes(response.status) || response.data.user === undefined)
-		// 	return {
-		// 		success: false,
-		// 		err: "Unabled to fetch user",
-		// 	};
-		//
-		// return {
-		// 	success: true,
-		// 	data: response.data.user as UserInfo,
-		// 	err: "",
-		// };
+		const response = await axios(config);
+
+		const user: UserInfo = response.data.user;
+
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
+		return defaultResponse({
+			...user,
+			birthdate: user.birthdate ? reverseDate(user.birthdate) : null,
+			starting_date: user.starting_date ? reverseDate(user.starting_date) : null,
+		});
 
 		//eslint-disable-next-line
 	} catch (error: any) {
@@ -925,7 +915,7 @@ export async function addUserToGroup(user_id: string, group_id: string, role: Us
 					user_id: user_id,
 					group_id: group_id,
 					role: role,
-				}
+				},
 			}),
 		};
 
@@ -948,7 +938,7 @@ export async function removeUserFromGroup(user_id: string, group_id: string, rol
 					user_id: user_id,
 					group_id: group_id,
 					role: role,
-				}
+				},
 			}),
 		};
 
@@ -960,3 +950,113 @@ export async function removeUserFromGroup(user_id: string, group_id: string, rol
 	}
 }
 
+export async function createDocument(userId: number, newDocument: Document): Promise<DefaultApiResponse<undefined>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "post",
+			url: `/api/users/${userId}/documents`,
+			headers: {
+				...baseConfig.headers,
+				"Content-Type": "multipart/form-data",
+			},
+			data: getFormDataFromObject(newDocument),
+		};
+
+		await axios(config);
+
+		return defaultResponse(undefined);
+	} catch (e) {
+		return defaultErrorResponse("No se pudo crear el documento.");
+	}
+}
+
+export async function deleteDocument(userId: number, documentId: number): Promise<DefaultApiResponse<undefined>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "delete",
+			url: `/api/users/${userId}/documents/${documentId}`,
+		};
+
+		await axios(config);
+
+		return defaultResponse(undefined);
+	} catch (e) {
+		return defaultErrorResponse("No se pudo eliminar el documento.");
+	}
+}
+
+export async function createComplementaryInformation(userId: number, newCompInfo: ComplementaryInfoWithFile): Promise<DefaultApiResponse<undefined>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "post",
+			url: `/api/users/${userId}/complementary_informations`,
+			headers: {
+				...baseConfig.headers,
+				"Content-Type": "multipart/form-data",
+			},
+			data: getFormDataFromObject(newCompInfo),
+		};
+
+		await axios(config);
+
+		return defaultResponse(undefined);
+	} catch (e) {
+		return defaultErrorResponse("No se pudo crear el documento.");
+	}
+}
+
+export async function deleteComplementaryInformation(userId: number, complementaryInformationId: number): Promise<DefaultApiResponse<undefined>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "delete",
+			url: `/api/users/${userId}/complementary_informations/${complementaryInformationId}`,
+		};
+
+		await axios(config);
+
+		return defaultResponse(undefined);
+	} catch (e) {
+		return defaultErrorResponse("No se pudo eliminar la información complementaria.");
+	}
+}
+
+export async function createAbsences(userId: number, newAbscence: AbsencesWithFile): Promise<DefaultApiResponse<undefined>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "post",
+			url: `/api/users/${userId}/absences`,
+			headers: {
+				...baseConfig.headers,
+				"Content-Type": "multipart/form-data",
+			},
+			data: getFormDataFromObject(newAbscence),
+		};
+
+		await axios(config);
+
+		return defaultResponse(undefined);
+	} catch (e) {
+		return defaultErrorResponse("No se pudo crear la inasistencia.");
+	}
+}
+
+export async function deleteAbsences(userId: number, absenceId: number): Promise<DefaultApiResponse<undefined>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "delete",
+			url: `/api/users/${userId}/absences/${absenceId}`,
+		};
+
+		await axios(config);
+
+		return defaultResponse(undefined);
+	} catch (e) {
+		return defaultErrorResponse("No se pudo eliminar la inasistencia.");
+	}
+}

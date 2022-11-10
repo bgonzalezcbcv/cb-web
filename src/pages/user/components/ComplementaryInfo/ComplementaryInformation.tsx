@@ -1,22 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { Box, Button, Dialog, Link, Typography } from "@mui/material";
-import { DataGrid, GridRowId } from "@mui/x-data-grid";
+import { Alert, Box, Button, IconButton, Link, Typography } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import AddIcon from "@mui/icons-material/Add";
-import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
-import { JsonFormsCore, Translator } from "@jsonforms/core";
-import { JsonForms } from "@jsonforms/react";
 
 import { UserInfo } from "../../../../core/Models";
-import { ajv as userAjv } from "../../../../core/AJVHelper";
-import { requiredFieldsTranslator } from "../../../../core/CoreHelper";
+import { reverseDate } from "../../../../core/CoreHelper";
 import ProfileCard from "../ProfileCard/ProfileCard";
 
-import schema from "../../../../core/schemas/user_info.json";
-import ui from "./complementary-info-ui.json";
-import addItemUi from "./complementary-info-add-item-ui.json";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddComplementaryInformation from "./AddComplementaryInformation";
+import { FetchStatus } from "../../../../hooks/useFetchFromAPI";
+import { deleteComplementaryInformation } from "../../../../core/ApiStore";
 
 interface ComplementaryInformationProps {
 	user: UserInfo;
@@ -24,63 +20,54 @@ interface ComplementaryInformationProps {
 	editable: boolean;
 	canAdd: boolean;
 	canDelete: boolean;
+	refetch: () => void;
 }
 
-//todo: usar date input de eva.
 function ComplementaryInformation(props: ComplementaryInformationProps): JSX.Element {
-	const { user, setUser, editable, canAdd, canDelete } = props;
-	const { complementary_info } = user;
+	const { user, editable, canAdd, canDelete, refetch } = props;
+	const { complementary_informations } = user;
 
-	const [selectedRows, setSelectedRows] = useState<GridRowId[]>([]);
+	const { Initial, Fetching, Error } = FetchStatus;
+
 	const [isAddingRowOpen, setIsAddingRowOpen] = useState(false);
-	const [newRow, setNewRow] = useState<Pick<JsonFormsCore, "data" | "errors">>({ data: undefined, errors: [] });
+	const [deleteState, setDeleteState] = useState<FetchStatus>(Initial);
+	const [errorID, setErrorID] = useState<null | number>(null);
 
-	const [beginningDateError, setBeginningDateError] = useState<unknown[]>([]);
-
-	if (!complementary_info) return <></>;
-
-	const { beginning_date, academic_training } = complementary_info;
-
-	function handleDeleteAcademicTrainingRows(): void {
-		setUser({
-			...user,
-			complementary_info: {
-				beginning_date,
-				academic_training: academic_training.filter((row, index) => !selectedRows.includes(index)) ?? [],
-			},
-		});
+	function dismissTimeout(): void {
+		if (errorID) window.clearTimeout(errorID);
 	}
 
-	function openAddDialog(): void {
+	useEffect(() => {
+		if (deleteState === Error) {
+			dismissTimeout();
+
+			setErrorID(window.setTimeout(() => setDeleteState(Initial), 5000));
+		}
+	}, [deleteState]);
+
+	function handleOpenDialog(): void {
 		setIsAddingRowOpen(true);
 	}
 
-	function closeAddDialog(): void {
+	function handleCloseDialog(created = false): void {
 		setIsAddingRowOpen(false);
+
+		if (created) refetch();
 	}
 
-	function addTitleRow(): void {
-		if (!newRow.data) return;
+	async function handleDelete(id: number): Promise<void> {
+		if (window.confirm("¿Desea eliminar información complementaria?")) {
+			setDeleteState(Fetching);
 
-		setUser({
-			...user,
-			complementary_info: {
-				beginning_date,
-				academic_training: [...academic_training, newRow.data],
-			},
-		});
+			const { success } = await deleteComplementaryInformation(user.id, id);
 
-		setNewRow({ data: undefined, errors: [] });
+			setDeleteState(Initial);
 
-		setIsAddingRowOpen(false);
-	}
-
-	function onSave(): void {
-		alert("Not implemented");
-	}
-
-	function canSave(): boolean {
-		return beginningDateError.length === 0;
+			if (success) refetch();
+			else {
+				setDeleteState(Error);
+			}
+		}
 	}
 
 	return (
@@ -90,100 +77,52 @@ function ComplementaryInformation(props: ComplementaryInformationProps): JSX.Ele
 					<Box display="flex" flexGrow={1} justifyContent="flex-start">
 						<Typography variant="h5">Información complementaria</Typography>
 					</Box>
-
-					{editable && (
-						<Box display="flex" justifyContent="flex-end" alignItems="flex-end">
-							<Button variant="outlined" onClick={onSave} disabled={!canSave()}>
-								Guardar
-							</Button>
-						</Box>
-					)}
 				</Box>
 			}>
-			<JsonForms
-				i18n={{ translate: requiredFieldsTranslator as Translator }}
-				ajv={userAjv}
-				schema={schema.properties.complementary_info.properties.beginning_date}
-				uischema={ui}
-				renderers={materialRenderers}
-				cells={materialCells}
-				data={beginning_date}
-				readonly={!editable}
-				onChange={({ data, errors }): void => {
-					setUser({
-						...user,
-						complementary_info: {
-							academic_training: academic_training,
-							beginning_date: data ?? beginning_date,
-						},
-					});
-					setBeginningDateError(errors ?? []);
-				}}
-			/>
+			{deleteState === Error && (
+				<Alert variant="outlined" severity="error">
+					No se pudo eliminar la información complementaria. Intente de nuevo.
+				</Alert>
+			)}
 
 			<Box display="flex" justifyContent="flex-end" width="100%">
-				{editable && (
-					<>
-						{canDelete && (
-							<Button onClick={handleDeleteAcademicTrainingRows}>
-								<DeleteOutlineIcon />
-							</Button>
-						)}
-
-						{canAdd && (
-							<Button onClick={openAddDialog}>
-								<AddIcon />
-							</Button>
-						)}
-					</>
+				{editable && canAdd && (
+					<Button onClick={handleOpenDialog}>
+						<AddIcon />
+					</Button>
 				)}
 
-				<Dialog open={isAddingRowOpen} onClose={closeAddDialog}>
-					<Box width="400px" padding="12px">
-						<Typography variant="h5">Agregar título</Typography>
-
-						<JsonForms
-							i18n={{ translate: requiredFieldsTranslator as Translator }}
-							ajv={userAjv}
-							schema={schema.properties.complementary_info.properties.academic_training.items}
-							uischema={addItemUi}
-							renderers={materialRenderers}
-							cells={materialCells}
-							data={newRow.data}
-							onChange={setNewRow}
-						/>
-
-						<Box display="flex" width="100%" justifyContent="flex-end">
-							<Button variant="outlined" disabled={(newRow?.errors as unknown[]).length > 0 ?? false} onClick={addTitleRow}>
-								Guardar
-							</Button>
-						</Box>
-					</Box>
-				</Dialog>
+				<AddComplementaryInformation isOpen={isAddingRowOpen} userId={user.id} onClose={handleCloseDialog} />
 			</Box>
 			<Box sx={{ height: 400, width: "100%" }}>
 				<DataGrid
 					columns={[
-						{ field: "title", headerName: "Descripción título", width: 200 },
-						{ field: "date", headerName: "Fecha", width: 120 },
+						{ field: "description", headerName: "Descripción título", flex: 2 },
+						{ field: "date", headerName: "Fecha", flex: 1, renderCell: ({ value }) => reverseDate(value, "/") },
 						{
-							field: "attachment",
+							field: "attachment_url",
 							headerName: "Adjunto título/curso",
-							width: 200,
-							renderCell: (cell) => (
-								<Link href={cell.value} target="_blank">
-									<AttachFileIcon />
-								</Link>
+							flex: 1,
+							renderCell: ({ value: url }) =>
+								url ? (
+									<Link href={url} target="_blank">
+										<AttachFileIcon />
+									</Link>
+								) : null,
+						},
+						{
+							field: "",
+							headerName: "Borrar",
+							flex: 1,
+							hide: !(canDelete && editable),
+							renderCell: ({ row }) => (
+								<IconButton disabled={!editable && !canDelete} onClick={(): Promise<void> => handleDelete(row.id)}>
+									<DeleteIcon />
+								</IconButton>
 							),
 						},
 					]}
-					rows={academic_training.map((training, id) => ({
-						id,
-						...training,
-						date: training.date.replaceAll("-", "/"),
-					}))}
-					checkboxSelection={editable}
-					onSelectionModelChange={setSelectedRows}
+					rows={complementary_informations ?? []}
 					pageSize={5}
 					rowsPerPageOptions={[5]}
 				/>

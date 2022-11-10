@@ -178,14 +178,22 @@ export function stringToDateString(stringDate: string | undefined): string | nul
 	return new Date(parseInt(aux[2]), parseInt(aux[1]) - 1, parseInt(aux[0])).toString();
 }
 
-export function reverseDate(date: string | undefined | null, desiredSeparator = "-"): string | undefined | null {
+export function reverseDate(date: string | undefined | null, desiredSeparator = "-", separator = "-"): string | undefined | null {
 	if (!date) return date;
 
-	const [year, month, day] = date.split("-");
+	const [year, month, day] = date.split(separator);
 
 	return `${day}-${month}-${year}`.replaceAll("-", desiredSeparator);
 }
 
 export function groupString(group: StudentGroup): string {
 	return `${group.grade_name} ${group.name} (${group.year})`;
+}
+
+export function getDateInStringFormat(date = new Date(), separator = "-"): string {
+	const day = date.getDate();
+	const month = date.getMonth();
+	const year = date.getFullYear();
+
+	return addLeadingZeroToDate(day + separator + month + separator + year);
 }

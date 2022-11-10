@@ -1,165 +1,130 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { Alert, Box, Button, Dialog, Link, Typography } from "@mui/material";
-import { DataGrid, GridRowId } from "@mui/x-data-grid";
+import { Alert, Box, Button, IconButton, Link } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import AddIcon from "@mui/icons-material/Add";
-import { materialCells, materialRenderers } from "@jsonforms/material-renderers";
-import { JsonFormsCore, Translator } from "@jsonforms/core";
-import { JsonForms } from "@jsonforms/react";
 
 import { UserInfo } from "../../../../core/Models";
-import { ajv as userAjv } from "../../../../core/AJVHelper";
-import schema from "../../../../core/schemas/user_info.json";
-import { dateBeforeOrEqualThan, requiredFieldsTranslator } from "../../../../core/CoreHelper";
 import ProfileCard from "../ProfileCard/ProfileCard";
-
-import ui from "./absences-ui.json";
+import AddAbsence from "./AddAbsence";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { reverseDate } from "../../../../core/CoreHelper";
+import { FetchStatus } from "../../../../hooks/useFetchFromAPI";
+import { deleteAbsences } from "../../../../core/ApiStore";
 
 interface AbscencesProps {
 	user: UserInfo;
-	setUser: (newUser: UserInfo) => void;
 	editable: boolean;
 	canAdd: boolean;
 	canDelete: boolean;
+	refetch: () => void;
 }
 
 //todo: usar date input de eva.
 function Absences(props: AbscencesProps): JSX.Element {
-	const { user, setUser, editable, canAdd, canDelete } = props;
+	const { user, editable, canAdd, canDelete, refetch } = props;
 	const { absences } = user;
 
-	const [selectedRows, setSelectedRows] = useState<GridRowId[]>([]);
+	const { Initial, Fetching, Error } = FetchStatus;
+
 	const [isAddingRowOpen, setIsAddingRowOpen] = useState(false);
-	const [newRow, setNewRow] = useState<Pick<JsonFormsCore, "data" | "errors">>({ data: undefined, errors: [] });
+	const [deleteState, setDeleteState] = useState<FetchStatus>(Initial);
+	const [errorID, setErrorID] = useState<null | number>(null);
 
-	if (!absences) return <></>;
-
-	function handleDeleteAbsencesRows(): void {
-		setUser({
-			...user,
-			absences: absences?.filter((absence, index) => !selectedRows.includes(index)),
-		});
+	function dismissTimeout(): void {
+		if (errorID) window.clearTimeout(errorID);
 	}
+
+	useEffect(() => {
+		if (deleteState === Error) {
+			dismissTimeout();
+
+			setErrorID(window.setTimeout(() => setDeleteState(Initial), 5000));
+		}
+	}, [deleteState]);
 
 	function openAddDialog(): void {
 		setIsAddingRowOpen(true);
 	}
 
-	function closeAddDialog(): void {
+	function closeAddDialog(creation = false): void {
 		setIsAddingRowOpen(false);
+
+		if (creation) refetch();
 	}
 
-	function areSchemaErrors(): boolean {
-		return (newRow?.errors as unknown[]).length > 0;
-	}
+	async function handleDelete(id: number): Promise<void> {
+		if (window.confirm("¿Desea eliminar inasistencia?")) {
+			setDeleteState(Fetching);
 
-	function areDatesCorrect(): boolean {
-		if (!newRow.data) return true;
+			const { success } = await deleteAbsences(user.id, id);
 
-		const { starting_date, ending_date } = newRow.data;
+			setDeleteState(Initial);
 
-		if (!(starting_date && ending_date)) return false;
-
-		return dateBeforeOrEqualThan(starting_date, ending_date);
-	}
-
-	function enableAddingRow(): boolean {
-		if (!newRow.data || areSchemaErrors()) return false;
-
-		return areDatesCorrect();
-	}
-
-	function addTitleRow(): void {
-		if (!newRow.data) return;
-
-		setUser({
-			...user,
-			absences: absences ? [...absences, newRow.data] : [newRow.data],
-		});
-
-		setNewRow({ data: undefined, errors: [] });
-
-		setIsAddingRowOpen(false);
+			if (success) refetch();
+			else {
+				setDeleteState(Error);
+			}
+		}
 	}
 
 	return (
 		<ProfileCard title="Inasistencias">
+			{deleteState === Error && (
+				<Alert variant="outlined" severity="error">
+					No se pudo eliminar la inasistencia. Intente de nuevo.
+				</Alert>
+			)}
+
 			<Box display="flex" justifyContent="flex-end" width="100%">
 				{editable && (
 					<>
-						{canDelete && (
-							<Button onClick={handleDeleteAbsencesRows}>
-								<DeleteOutlineIcon />
-							</Button>
-						)}
-
 						{canAdd && (
 							<Button onClick={openAddDialog}>
 								<AddIcon />
 							</Button>
 						)}
+
+						<AddAbsence userId={user.id} isOpen={isAddingRowOpen} onClose={closeAddDialog} />
 					</>
 				)}
-
-				<Dialog open={isAddingRowOpen} onClose={closeAddDialog}>
-					<Box width="400px" padding="12px">
-						<Typography variant="h5">Agregar inasistencia</Typography>
-
-						<JsonForms
-							i18n={{ translate: requiredFieldsTranslator as Translator }}
-							ajv={userAjv}
-							schema={schema.properties.absences.items}
-							uischema={ui}
-							renderers={materialRenderers}
-							cells={materialCells}
-							data={newRow.data}
-							onChange={setNewRow}
-						/>
-
-						<Box display="flex" width="100%" justifyContent="flex-end">
-							<Button variant="outlined" disabled={!enableAddingRow()} onClick={addTitleRow}>
-								Guardar
-							</Button>
-						</Box>
-
-						{!areDatesCorrect() && (
-							<Box paddingTop="6px">
-								<Alert severity={"error"}>
-									<Typography>Fecha de inicio ha de ser menor o igual a la fecha de finalización.</Typography>
-								</Alert>
-							</Box>
-						)}
-					</Box>
-				</Dialog>
 			</Box>
 
 			<Box sx={{ height: 400, width: "100%", paddingTop: "12px" }}>
 				<DataGrid
 					columns={[
-						{ field: "starting_date", headerName: "Inicio", width: 150 },
-						{ field: "ending_date", headerName: "Finalización", width: 150 },
-						{ field: "reason", headerName: "Motivo", width: 120 },
+						{ field: "start_date", headerName: "Inicio", flex: 1 },
+						{ field: "end_date", headerName: "Finalización", flex: 1 },
+						{ field: "reason", headerName: "Motivo", flex: 3 },
 						{
-							field: "attachment",
+							field: "certificate_url",
 							headerName: "Adjunto certificado/constancia",
-							width: 300,
-							renderCell: (cell) => (
-								<Link href={cell.value} target="_blank">
-									<AttachFileIcon />
-								</Link>
+							flex: 2,
+							renderCell: ({ value }) =>
+								value ? (
+									<Link href={value} target="_blank">
+										<AttachFileIcon />
+									</Link>
+								) : null,
+						},
+						{
+							field: "",
+							headerName: "Borrar",
+							flex: 1,
+							hide: !(canDelete && editable),
+							renderCell: ({ row }) => (
+								<IconButton disabled={!editable && !canDelete} onClick={(): Promise<void> => handleDelete(row.id)}>
+									<DeleteIcon />
+								</IconButton>
 							),
 						},
 					]}
-					rows={absences.map((absence, id) => ({
-						id,
+					rows={(absences ?? []).map((absence) => ({
 						...absence,
-						starting_date: absence.starting_date.replaceAll("-", "/"),
-						ending_date: absence.ending_date.replaceAll("-", "/"),
+						start_date: reverseDate(absence.start_date, "/"),
+						end_date: reverseDate(absence.end_date, "/"),
 					}))}
-					checkboxSelection={editable}
-					onSelectionModelChange={setSelectedRows}
 					pageSize={5}
 					rowsPerPageOptions={[5]}
 				/>
