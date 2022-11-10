@@ -107,7 +107,7 @@ export default function StudentActivationModal(props: {
 			</DialogContent>
 
 			<DialogActions>
-				<Button onClick={props.onClose}>Cancel</Button>
+				<Button onClick={props.onClose}>Cancelar</Button>
 				<Button disabled={showAlert || showFailureMessage} onClick={handleActivation}>
 					Activar
 				</Button>
