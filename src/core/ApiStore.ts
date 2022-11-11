@@ -460,27 +460,28 @@ export async function fetchReports(studentId: string): Promise<{ success: boolea
 	}
 }
 
-export async function deleteReport(studentId: string, reportId: number): Promise<{ success: boolean }> {
+export async function deleteReport(studentId: string, reportId: number, isFinal: boolean): Promise<{ success: boolean }> {
+	let url = "";
+
+	if (isFinal) {
+		url = `/api/students/${studentId}/final_evaluations/${reportId}`;
+	} else {
+		url = `/api/students/${studentId}/intermediate_evaluations/${reportId}`;
+	}
+
 	try {
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		const config = {
 			...baseConfig,
 			method: "delete",
-			url: `/api/reports/${reportId}`,
+			url: url,
 		};
 
-		// const response = await axios(config);
-
-		// const response = {
-		// 	status: 200,
-		// };
+		await axios(config);
 
 		return {
 			success: true,
 		};
-
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	} catch (error: any) {
+	} catch (e) {
 		return {
 			success: false,
 		};

@@ -43,6 +43,7 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 	const [fetchState, setFetchState] = useState(FetchState.initial);
 
 	const [reportToDeleteId, setReportToDeleteId] = useState<number | null>(null);
+	const [reportToDeleteType, setReportToDeleteType] = useState<string | null>(null);
 	const [showDeleteAlert, setShowDeleteAlert] = useState(false);
 	const [deletionSuccess, setDeletionSuccess] = useState(false);
 	const [showDeletionSuccessAlert, setShowDeletionSuccessAlert] = useState(false);
@@ -72,17 +73,21 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 		getReports();
 	}, []);
 
-	const handleDeleteAlert = (reportId: number): void => {
+	const handleDeleteAlert = (reportId: number, type: string): void => {
 		setShowDeleteAlert(true);
 		setReportToDeleteId(reportId);
+		setReportToDeleteType(type);
 	};
 
 	const handleDeletion = async (setOpen: boolean, shouldDelete: boolean): Promise<void> => {
 		setShowDeleteAlert(setOpen);
 		if (shouldDelete) {
-			const response = await API.deleteReport(student.id, reportToDeleteId as number);
+			const isFinal = reportToDeleteType === "Final";
+			const response = await API.deleteReport(student.id, reportToDeleteId as number, isFinal);
 			setDeletionSuccess(response.success);
 			setShowDeletionSuccessAlert(true);
+
+			if (response.success) getReports();
 		}
 	};
 
@@ -193,7 +198,7 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 			renderCell: (params): React.ReactElement => {
 				return (
 					<Box>
-						<IconButton disabled={!editable && !canDelete} onClick={(): void => handleDeleteAlert(params.row.id)}>
+						<IconButton disabled={!editable && !canDelete} onClick={(): void => handleDeleteAlert(params.row.id, params.row.type)}>
 							<DeleteIcon />
 						</IconButton>
 					</Box>
@@ -220,17 +225,6 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 
 	return (
 		<Box>
-			{/*<Box className="SearchAndGroupFilter">*/}
-			{/*	<Input*/}
-			{/*		style={{ flex: 1, marginRight: "10%" }}*/}
-			{/*		id="search"*/}
-			{/*		type="text"*/}
-			{/*		placeholder="Buscar..."*/}
-			{/*		value={searchText}*/}
-			{/*		onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => setSearchText(e.target.value)}*/}
-			{/*	/>*/}
-			{/*</Box>*/}
-
 			<Box
 				sx={{
 					display: "flex",
