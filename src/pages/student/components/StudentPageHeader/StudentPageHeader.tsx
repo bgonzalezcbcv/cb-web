@@ -1,10 +1,9 @@
-/* eslint-disable */
 import * as React from "react";
 
 import { Student } from "../../../../core/Models";
-import { StudentPageMode } from "../../../../core/interfaces";
+import {DefaultApiResponse, StudentPageMode} from "../../../../core/interfaces";
 
-import { Box, Button, Chip, Typography } from "@mui/material";
+import {Box, Button, Chip, Typography} from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import EditIcon from "@mui/icons-material/Edit";
 import EditOffIcon from "@mui/icons-material/EditOff";
@@ -13,8 +12,13 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 
 import FormUploadDialog from "../FormUploadDialog/FormUploadDialog";
+import Modal from "../../../../components/modal/Modal";
+import DeactivateStudent, { DeactivationInfo } from "../DeactivateStudent/DeactivateStudent";
 
 import "./Student.scss";
+import {useCallback} from "react";
+import * as API from "../../../../core/ApiStore";
+import DeactivateStudentDialog from "./DeactivateStudent/DeactivateStudentDialog";
 
 interface StudentPageHeaderProps {
 	mode: StudentPageMode;
@@ -28,6 +32,28 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 	const { mode, setStudent, setIsEditable, isEditable, student } = props;
 
 	const [isFormUploadOpen, setIsFormUploadOpen] = React.useState(false);
+	const [isDeactivateStudentModalVisible, setIsDeactivateStudentModalVisible] = React.useState(false);
+	const [deactivationInfo, setDeactivationInfo] = React.useState<DeactivationInfo>({} as DeactivationInfo);
+	const [hasErrors, setHasErrors] = React.useState(true);
+	const [studentDeactivationState, setStudentDeactivationState] = React.useState<DefaultApiResponse<Student>>();
+	const [showDialog, setShowDialog] = React.useState(false);
+
+	const handleDeactivateStudent = useCallback(async (): Promise<Student | void> => {
+		if (hasErrors) return;
+
+		setStudentDeactivationState({} as DefaultApiResponse<Student>);
+
+		const deactivationResponse = await API.deactivateStudent(student, deactivationInfo.reason, deactivationInfo.lastDay, deactivationInfo.description);
+
+		setStudentDeactivationState(deactivationResponse);
+		setShowDialog(true);
+
+		if (deactivationResponse.success) {
+			setDeactivationInfo({} as DeactivationInfo);
+			setIsDeactivateStudentModalVisible(false);
+			deactivationResponse.data && setStudent(deactivationResponse.data);
+		}
+	}, [deactivationInfo, hasErrors, student]);
 
 	return (
 		<>
@@ -86,9 +112,9 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 						</Button>
 					) : null}
 
-					{mode === StudentPageMode.edit ? (
-						<Button color={"secondary"} startIcon={<DeleteIcon />}>
-							Bajar
+					{mode === StudentPageMode.edit && student.status !== "inactive"? (
+						<Button color={"secondary"} startIcon={<DeleteIcon />} onClick={(): void => setIsDeactivateStudentModalVisible(true)}>
+							Dar de baja
 						</Button>
 					) : (
 						""
@@ -105,6 +131,21 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 					setIsFormUploadOpen(false);
 				}}
 			/>
+
+			<Modal
+				show={isDeactivateStudentModalVisible}
+				title={"Dar de baja estudiante"}
+				acceptText={"Dar de baja"}
+				onClose={(): void => setIsDeactivateStudentModalVisible(false)}
+				onAccept={handleDeactivateStudent}
+				acceptEnabled={!hasErrors}>
+				<DeactivateStudent
+					deactivationInfo={(value: DeactivationInfo): void => setDeactivationInfo(value)}
+					onError={(value): void => setHasErrors(value)}
+				/>
+			</Modal>
+
+			{showDialog && studentDeactivationState && <DeactivateStudentDialog apiResponse={studentDeactivationState} show={(value): void => setShowDialog(value)} />}
 		</>
 	);
 }

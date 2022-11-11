@@ -361,6 +361,27 @@ export async function editStudent(studentToEdit: Student): Promise<DefaultApiRes
 	}
 }
 
+export async function deactivateStudent(student: Student, motive: string, lastDay: string, description: string): Promise<DefaultApiResponse<Student>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "post",
+			url: `api/students/${student.id}/deactivate`,
+			data: JSON.stringify({
+				motive: motive,
+				last_day: lastDay,
+				description: description,
+			}),
+		};
+
+		const response = await axios(config);
+
+		return defaultResponse(response.data.student);
+	} catch (e) {
+		return defaultErrorResponse("No se ha podido dar de baja el alumno.");
+	}
+}
+
 export async function createUser(userToCreate: UserInfo): Promise<DefaultApiResponse<User>> {
 	try {
 		const config = {
