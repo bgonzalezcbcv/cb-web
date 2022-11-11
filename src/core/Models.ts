@@ -153,6 +153,17 @@ export interface Student {
 	group?: StudentGroup;
 }
 
+export interface InactiveStudentInfo extends Student {
+	last_motive_inactivate: InactiveMotive;
+}
+
+export interface InactiveMotive {
+	id: string;
+	motive: string;
+	last_day: string;
+	description: string;
+}
+
 export interface StudentCreationForm {
 	Email: string;
 	"Apellidos:": string;

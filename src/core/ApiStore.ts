@@ -10,6 +10,7 @@ import {
 	FamilyMember,
 	FinalEvaluation,
 	FinalReportCardRequest,
+	InactiveStudentInfo,
 	IntermediateEvaluation,
 	IntermediateReportCardRequest,
 	Discount,
@@ -243,6 +244,23 @@ export async function fetchPendingStudents(): Promise<DefaultApiResponse<Student
 			...baseConfig,
 			method: "get",
 			url: `/api/students/pending/`,
+		};
+
+		const response = await axios(config);
+
+		return defaultResponse(response.data.students);
+		//eslint-disable-next-line
+	} catch (error: any) {
+		return defaultErrorResponse("No se pudieron listar los alumnos.");
+	}
+}
+
+export async function fetchInactiveStudents(): Promise<DefaultApiResponse<InactiveStudentInfo[]>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: `/api/students/inactive`,
 		};
 
 		const response = await axios(config);
