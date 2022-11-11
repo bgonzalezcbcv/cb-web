@@ -1,5 +1,5 @@
 import { UserRole } from "./interfaces";
-import { DocumentType, UserInfo } from "./Models";
+import { DocumentType, UserInfo, Grade } from "./Models";
 
 export const mockUser: UserInfo = {
 	id: 1,
@@ -40,8 +40,8 @@ export const teachersMock = new Array<UserInfo>(10) //
 			...user,
 			id: id,
 			groups: [
-				{ id: "1", grade: { id: "1", name: "3ro" }, name: "A", year: "2022" },
-				{ id: "2", grade: { id: "2", name: "4to" }, name: "B", year: "2022" },
+				{ id: "1", grade: { id: "1", name: "3ro" } as Grade, name: "A", year: "2022" },
+				{ id: "2", grade: { id: "2", name: "4to" } as Grade, name: "B", year: "2022" },
 			],
 		})
 	);
