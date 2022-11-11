@@ -17,6 +17,8 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import Students from "./pages/students/Students";
 import PendigStudents from "./pages/students/PendingStudents";
 import Teachers from "./pages/teachers/Teachers";
+import AddTeacher from "./pages/addTeachersToGroup/AddTeachersToGroup";
+import { groupMock } from "./core/ApiMocks";
 import { Box } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 
@@ -55,6 +57,7 @@ function App(): React.ReactElement {
 												<Route path="/teachers/:id/edit" element={<Teachers editable />} />
 												<Route path="/teachers" element={<Teachers editable={false} />} />
 												<Route path="/teachers/edit" element={<Teachers editable={true} />} />
+												<Route path="/addteachers/:id" element={<AddTeacher group={groupMock} />} />
 												<Route path="*" element={<Navigate to="/student" />} />
 											</>
 										) : (

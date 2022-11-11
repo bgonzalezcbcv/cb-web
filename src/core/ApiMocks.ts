@@ -1,5 +1,5 @@
 import { UserRole } from "./interfaces";
-import { DocumentType, UserInfo } from "./Models";
+import { DocumentType, UserInfo, Group } from "./Models";
 
 export const mockUser: UserInfo = {
 	id: 1,
@@ -40,8 +40,13 @@ export const teachersMock = new Array<UserInfo>(10) //
 			...user,
 			id: id,
 			groups: [
-				{ id: "1", name: "3A" },
-				{ id: "2", name: "4B" },
+				{ id: 1, name: "3A" },
+				{ id: 2, name: "4B" },
 			],
 		})
 	);
+
+export const groupMock: Group = {
+	id: 51,
+	name: "A",
+};

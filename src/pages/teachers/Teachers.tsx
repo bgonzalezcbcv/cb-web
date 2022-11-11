@@ -1,6 +1,5 @@
 import _ from "lodash";
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
 
 import { Alert, Box, Button, Card, Chip, CircularProgress, Link, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
@@ -22,13 +21,12 @@ interface TeachersProps {
 
 function Teachers(props: TeachersProps): JSX.Element {
 	const { teachers: teachersProps, editable, canAdd, canDelete } = props;
-	const { id } = useParams();
 
 	const [teachers, setTeachers] = useState(teachersProps);
 	const [filteredTeachers, setFilteredTeachers] = useState(teachers);
 
 	const { fetchStatus, refetch } = useFetchFromAPI<UserInfo[]>(
-		() => fetchTeachers(Number(id), true),
+		() => fetchTeachers(),
 		(fetchedTeachers) => {
 			setTeachers(fetchedTeachers);
 			setFilteredTeachers(fetchedTeachers);

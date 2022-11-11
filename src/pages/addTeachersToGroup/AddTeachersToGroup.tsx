@@ -1,7 +1,5 @@
-/*eslint-disable*/
 import React, { useCallback, useState } from "react";
-
-import { DataGrid, GridApi, GridCellValue, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridApi, GridCellValue, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import * as APIStore from "../../core/ApiStore";
 import { Alert, Box, Button, Card, CircularProgress, Input, Paper, Typography } from "@mui/material";
 import useFetchFromAPI, { FetchStatus } from "../../hooks/useFetchFromAPI";
@@ -9,41 +7,40 @@ import { Group, UserInfo } from "../../core/Models";
 
 interface TeachersProps {
 	rows?: UserInfo[];
-	groupName: string; //por ahora, luego se cambia el tipo
+	group: Group;
 }
 
-export default function AddTeacher(props: TeachersProps) {
-	const { rows, groupName } = props;
+export default function AddTeacher(props: TeachersProps): JSX.Element {
+	const { rows, group } = props;
 
 	const [teachers, setTeachers] = useState<UserInfo[]>(rows ?? []);
 	const [searchText, setSearchText] = React.useState("");
 
-	const { fetchStatus, refetch } = useFetchFromAPI(() => APIStore.fetchTeachers(undefined, true), setTeachers, !rows);
+	const { fetchStatus, refetch } = useFetchFromAPI(() => APIStore.fetchTeachers(), setTeachers, !rows);
 
-	const onClickAdd = (params: any) => {
+	const onClickAdd = (params: GridRenderCellParams): void => {
 		const api: GridApi = params.api;
 		const thisRow: Record<string, GridCellValue> = {};
 
 		api.getAllColumns()
-			.filter((c: any) => c.field !== "__check__" && !!c)
-			.forEach((c: any) => (thisRow[c.field] = params.getValue(params.id, c.field)));
-		//endpoint
-		alert("No implementado!");
+			.filter((c: GridColDef) => c.field !== "__check__" && !!c)
+			.forEach((c: GridColDef) => (thisRow[c.field] = params.getValue(params.id, c.field)));
+
+		APIStore.addTeacherToGroup(params.row.id, group.id);
 	};
 
-	const onClickRemove = (params: any) => {
+	const onClickRemove = (params: GridRenderCellParams): void => {
 		const api: GridApi = params.api;
 		const thisRow: Record<string, GridCellValue> = {};
 
 		api.getAllColumns()
-			.filter((c: any) => c.field !== "__check__" && !!c)
-			.forEach((c: any) => (thisRow[c.field] = params.getValue(params.id, c.field)));
-		//endpoint
-		alert("No implementado!");
+			.filter((c: GridColDef) => c.field !== "__check__" && !!c)
+			.forEach((c: GridColDef) => (thisRow[c.field] = params.getValue(params.id, c.field)));
+
+		APIStore.removeTeacherToGroup(params.row.id, group.id);
 	};
 
 	const columns: GridColDef[] = [
-		{ field: "ci", headerName: "CI", disableColumnMenu: false, flex: 2 },
 		{ field: "name", headerName: "Nombre", disableColumnMenu: false, flex: 3 },
 		{ field: "surname", headerName: "Apellido", disableColumnMenu: false, flex: 3 },
 		{
@@ -53,13 +50,13 @@ export default function AddTeacher(props: TeachersProps) {
 			disableColumnMenu: true,
 			sortable: false,
 			flex: 1,
-			renderCell: (params) => {
-				return !((params.row.groups as Group[]) ?? []).find((group): boolean => group.name === groupName) ? (
+			renderCell: (params): JSX.Element => {
+				return !((params.row.groups as Group[]) ?? []).find((gr): boolean => gr.name === group.name) ? (
 					<Button
 						variant="contained"
 						color="success"
 						style={{ maxWidth: "10px", maxHeight: "20px", minWidth: "10px", minHeight: "20px" }}
-						onClick={() => onClickAdd(params)}>
+						onClick={(): void => onClickAdd(params)}>
 						+
 					</Button>
 				) : (
@@ -67,7 +64,7 @@ export default function AddTeacher(props: TeachersProps) {
 						variant="contained"
 						color="error"
 						style={{ maxWidth: "10px", maxHeight: "20px", minWidth: "10px", minHeight: "20px" }}
-						onClick={() => onClickRemove(params)}>
+						onClick={(): void => onClickRemove(params)}>
 						-
 					</Button>
 				);
@@ -75,7 +72,7 @@ export default function AddTeacher(props: TeachersProps) {
 		},
 	];
 
-	const toNoFormatText = (str: string) => {
+	const toNoFormatText = (str: string): string => {
 		return str
 			.normalize("NFD")
 			.replace(/[\u0300-\u036f]/g, "")
@@ -99,21 +96,13 @@ export default function AddTeacher(props: TeachersProps) {
 						</Alert>
 					</Box>
 				);
-			case FetchStatus.Initial:
+			case FetchStatus.Initial: {
 				const foundItems = teachers.filter((teacher) =>
 					Object.values(teacher).some((value) => value && toNoFormatText(value.toString()).includes(toNoFormatText(searchText)))
 				);
 
-				return (
-					<DataGrid
-						style={{ height: 380, width: "100%" }}
-						rows={foundItems}
-						getRowId={(row) => row.id}
-						columns={columns}
-						pageSize={5}
-						rowsPerPageOptions={[5]}
-					/>
-				);
+				return <DataGrid style={{ height: 380, width: "100%" }} rows={foundItems} columns={columns} pageSize={5} rowsPerPageOptions={[5]} />;
+			}
 			default:
 				return null;
 		}
@@ -131,7 +120,7 @@ export default function AddTeacher(props: TeachersProps) {
 				boxShadow: "rgba(0, 0, 0, 0.25) 0px 3px 8px",
 			}}>
 			<Box display="flex" justifyContent="flex-start" width="100%">
-				<Typography variant="h4"> Grupo:{groupName}</Typography>
+				<Typography variant="h4"> Grupo:{group.name}</Typography>
 				<br></br>
 			</Box>
 			<Box
@@ -148,7 +137,7 @@ export default function AddTeacher(props: TeachersProps) {
 					type="text"
 					placeholder="Buscar..."
 					value={searchText}
-					onChange={(e: React.ChangeEvent<any>) => setSearchText(e.target.value)}
+					onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setSearchText(e.target.value)}
 				/>
 			</Box>
 			<Paper>{printTable()}</Paper>
