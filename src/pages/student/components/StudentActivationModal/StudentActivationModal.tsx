@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { calculateReferenceNumber } from "../../../../core/CoreHelper";
 import { Student } from "../../../../core/Models";
-import { Alert, AlertTitle, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, TextField, Typography } from "@mui/material";
+import { Alert, AlertTitle, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { activateStudent } from "../../../../core/ApiStore";
 
@@ -18,7 +18,7 @@ export default function StudentActivationModal(props: {
 	const [showAlert, setShowAlert] = useState(false);
 	const [showFailureMessage, setShowFailureMessage] = useState(false);
 
-	const handleActivation = async () => {
+	const handleActivation = async (): Promise<void> => {
 		const student = await activateStudent(props.studentProp.id, calculatedReferenceNumber);
 
 		student.success && student.data && props.onAccept(student.data);
@@ -52,7 +52,7 @@ export default function StudentActivationModal(props: {
 						variant="standard"
 						sx={{ marginBottom: "10px" }}
 						inputProps={{ inputMode: "numeric", pattern: "[0-9]^4" }}
-						onChange={(e) => setTuitionNumber(e.target.value)}
+						onChange={(e): void => setTuitionNumber(e.target.value)}
 					/>
 
 					<TextField
@@ -62,7 +62,7 @@ export default function StudentActivationModal(props: {
 						label="Número de de referencia"
 						variant="standard"
 						inputProps={{ inputMode: "numeric", pattern: "[0-9]^5" }}
-						onChange={(e) => setReferenceNumber(e.target.value)}
+						onChange={(e): void => setReferenceNumber(e.target.value)}
 					/>
 
 					{showAlert ? (
@@ -71,10 +71,10 @@ export default function StudentActivationModal(props: {
 							sx={{ marginTop: "10px" }}
 							action={
 								<Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-									<Button color="inherit" size="small" onClick={() => setShowAlert(false)}>
+									<Button color="inherit" size="small" onClick={(): void => setShowAlert(false)}>
 										Se lo que hago
 									</Button>
-									<Button color="inherit" size="small" onClick={() => setReferenceNumber(calculatedReferenceNumber)}>
+									<Button color="inherit" size="small" onClick={(): void => setReferenceNumber(calculatedReferenceNumber)}>
 										Deshacer
 									</Button>
 								</Box>
@@ -92,7 +92,7 @@ export default function StudentActivationModal(props: {
 							sx={{ marginTop: "10px" }}
 							action={
 								<Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-									<Button color="inherit" size="small" onClick={() => setShowFailureMessage(false)}>
+									<Button color="inherit" size="small" onClick={(): void => setShowFailureMessage(false)}>
 										Volver a intentar
 									</Button>
 								</Box>
