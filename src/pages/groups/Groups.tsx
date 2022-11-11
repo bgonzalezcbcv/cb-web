@@ -27,6 +27,7 @@ import { restrictEditionTo } from "../../core/userRoleHelper";
 import { UserRole } from "../../core/interfaces";
 import useFetchFromAPI, { FetchStatus } from "../../hooks/useFetchFromAPI";
 import Modal from "../../components/modal/Modal";
+import UserList from "./components/UserList";
 import AddUser from "../adduserstogroup/components/AddUser";
 import NumericInputControl, { NumericInputControlTester } from "../../components/NumericInput/NumericInputControl";
 
@@ -34,7 +35,6 @@ import schema from "./schema.json";
 import uischema from "./ui.json";
 
 import "./Groups.scss";
-import UserList from "./components/UserList";
 
 type GroupData = {
 	gradeId: string;
@@ -112,12 +112,12 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 		hide: !restrictEditionTo([UserRole.Administrador], true),
 		align: "center",
 		renderCell: (params): React.ReactNode => {
-			return <AddUser params={params} role={"principal"} />
+			return <AddUser params={params} role={"principal"} />;
 			},
 		},
 		{
 			field: "support_teachers",
-			headerName: "Adscripto",
+			headerName: "Adscriptos",
 			sortable: false,
 			disableColumnMenu: true,
 			flex: 1,
@@ -130,15 +130,15 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 			},
 		},
 		{
-			field: "addSupportTeacher",
-			headerName: "Agregar adscripto",
+			field: "addSupportTeachers",
+			headerName: "Agregar adscriptos",
 			sortable: false,
 		disableColumnMenu: true,
-		flex: 1,
+		width: 150,
 		hide: !restrictEditionTo([UserRole.Administrador, UserRole.Director], true),
 		align: "center",
 		renderCell: (params): React.ReactNode => {
-			return <AddUser params={params} role={"support_teacher"} />
+			return <AddUser params={params} role={"support_teacher"} />;
 			},
 		},
 		{
@@ -146,7 +146,7 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 			headerName: "Ver estudiantes",
 			align: "center",
 			sortable: false,
-			flex: 1,
+			width: 120,
 			disableColumnMenu: true,
 			renderCell: (params): React.ReactNode => {
 				const navigate = useNavigate();
