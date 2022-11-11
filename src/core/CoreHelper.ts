@@ -1,7 +1,7 @@
 import _ from "lodash";
 import * as XLSX from "xlsx";
 import { JsonSchema7 } from "@jsonforms/core";
-import { FinalEvaluation, IntermediateEvaluation, ReportApprovalState, ReportCard } from "./Models";
+import { FinalEvaluation, IntermediateEvaluation, ReportApprovalState, ReportCard, StudentGroup } from "./Models";
 
 /**
  * @param xlsxFile Excel file with .xlsx format.
@@ -184,4 +184,8 @@ export function reverseDate(date: string | undefined | null, desiredSeparator = 
 	const [year, month, day] = date.split("-");
 
 	return `${day}-${month}-${year}`.replaceAll("-", desiredSeparator);
+}
+
+export function groupString(group: StudentGroup): string {
+	return `${group.grade_name} ${group.name} (${group.year})`;
 }

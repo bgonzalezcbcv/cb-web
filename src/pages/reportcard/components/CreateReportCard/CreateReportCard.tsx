@@ -11,6 +11,7 @@ import { createFinalReportCard, createIntermediateReportCard } from "../../../..
 
 import schema from "./schema.json";
 import uiSchema from "./ui.json";
+import { groupString } from "../../../../core/CoreHelper";
 
 export type CreateReportCardModalProps = {
 	show: boolean;
@@ -59,13 +60,14 @@ export default function CreateReportCardModal(props: CreateReportCardModalProps)
 
 	async function createReportCard(): Promise<void> {
 		if (file === undefined) return;
+		if (student.group === null) return;
 		setShowingResponse(true);
 		setResponse("Procesando...");
 		setAcceptEnabled(false);
 		let response;
 		if (isFinalReport) {
 			const finalReportCard = {
-				group_id: "8", //should be student.group.id or something similar
+				group_id: student.group.id,
 				student_id: student.id,
 				report_card: file,
 			} as FinalReportCardRequest;
@@ -73,7 +75,7 @@ export default function CreateReportCardModal(props: CreateReportCardModalProps)
 			response = await createFinalReportCard(finalReportCard, student.id);
 		} else {
 			const intermediateReportCard = {
-				group_id: "8", //should be student.group.id or something similar
+				group_id: student.group.id,
 				starting_month: `01-${startPeriod}`,
 				ending_month: `01-${endPeriod}`,
 				report_card: file,
@@ -105,7 +107,7 @@ export default function CreateReportCardModal(props: CreateReportCardModalProps)
 	return (
 		<Modal
 			show={show}
-			title={"Agregar un nuevo boletín"}
+			title={`Agregar un nuevo boletín para el grupo ${student.group ? groupString(student.group) : ""}`}
 			onClose={onClose}
 			onAccept={(): void => {
 				if (showingResponse) {

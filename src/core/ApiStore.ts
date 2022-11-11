@@ -547,7 +547,7 @@ export async function createFinalReportCard(finalReport: FinalReportCardRequest,
 		const config = {
 			..._.set(baseConfig, "headers.Content-Type", "multipart/form-data"),
 			method: "post",
-			url: `/api/students/${studentId}/final_evaluation`,
+			url: `/api/students/${studentId}/final_evaluations`,
 			data: finalReport,
 		};
 
@@ -573,7 +573,7 @@ export async function createIntermediateReportCard(
 		const config = {
 			..._.set(baseConfig, "headers.Content-Type", "multipart/form-data"),
 			method: "post",
-			url: `/api/students/${studentId}/intermediate_evaluation`,
+			url: `/api/students/${studentId}/intermediate_evaluations`,
 			data: formData,
 		};
 

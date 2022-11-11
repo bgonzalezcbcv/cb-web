@@ -225,6 +225,7 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 
 	return (
 		<Box>
+			{canAdd && !student.group ? <Alert severity="info">El estudiante no está asignado a ningún grupo.</Alert> : null}
 			<Box
 				sx={{
 					display: "flex",
@@ -232,7 +233,7 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 					alignItems: "flex-end",
 				}}>
 				{canAdd && (
-					<IconButton disabled={!editable} color="secondary" onClick={(): void => setShowCreateReport(true)}>
+					<IconButton disabled={!editable || !student.group} color="secondary" onClick={(): void => setShowCreateReport(true)}>
 						<AddCircleOutlineIcon />
 					</IconButton>
 				)}
