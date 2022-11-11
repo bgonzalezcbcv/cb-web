@@ -54,7 +54,7 @@ interface StudentsProps {
 
 export default function Students(props: StudentsProps) {
 	const { rows } = props;
-	const { id } = useParams();
+	const { groupId } = useParams();
 
 	const [students, setStudents] = useState<StudentModel[]>(rows ?? []);
 	const [fetchState, setFetchState] = React.useState(FetchState.initial);
@@ -65,7 +65,7 @@ export default function Students(props: StudentsProps) {
 
 		setFetchState(FetchState.loading);
 
-		const response = await APIStore.fetchStudents(id);
+		const response = await APIStore.fetchStudents(groupId);
 
 		if (response.success && response.data) {
 			setStudents(response.data);
