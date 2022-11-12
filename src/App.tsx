@@ -45,7 +45,7 @@ function App(): React.ReactElement {
 									<Routes>
 										{loggedUser ? (
 											<>
-												<Route path="/student" element={<Student mode={StudentPageMode.create} />} />
+												<Route path="/createstudent" element={<Student mode={StudentPageMode.create} />} />
 												<Route path="/student/:id" element={<Student mode={StudentPageMode.view} />} />
 												<Route path="/student/:id/edit" element={<Student mode={StudentPageMode.edit} />} />
 												<Route path="/students" element={<Students />} />
@@ -58,7 +58,7 @@ function App(): React.ReactElement {
 												<Route path="/teachers" element={<Teachers editable={false} />} />
 												<Route path="/teachers/edit" element={<Teachers editable={true} />} />
 												<Route path="/addteachers/:id" element={<AddTeacher group={groupMock} />} />
-												<Route path="*" element={<Navigate to="/student" />} />
+												<Route path="*" element={<Navigate to="/students" />} />
 											</>
 										) : (
 											<>
