@@ -87,7 +87,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 						},
 						{
 							title: "Dar de alta",
-							navigationRoute: "/student",
+							navigationRoute: "/createstudent",
 						},
 					],
 				},
