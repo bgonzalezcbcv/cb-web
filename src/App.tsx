@@ -15,6 +15,7 @@ import Student from "./pages/student/Student";
 import AddUsersToGroup from "./pages/adduserstogroup/AddUsersToGroup";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
+import Home from "./pages/home/Home";
 import Students from "./pages/students/Students";
 import PendigStudents from "./pages/students/PendingStudents";
 import InactiveStudents from "./pages/students/inactive/InactiveStudents";
@@ -50,6 +51,7 @@ function App(): React.ReactElement {
 												<Route path="/student/:id" element={<Student mode={StudentPageMode.view} />} />
 												<Route path="/student/:id/edit" element={<Student mode={StudentPageMode.edit} />} />
 												<Route path="/students" element={<Students />} />
+												<Route path="/students/:id" element={<Students />} />
 												<Route path="/students/:groupId" element={<Students />} />
 												<Route path="/pending" element={<PendigStudents />} />
 												<Route path="/students/inactive" element={<InactiveStudents />} />
@@ -63,7 +65,8 @@ function App(): React.ReactElement {
 												<Route path="/groups" element={<Groups />} />
 												<Route path="/groups/:id" element={<Groups />} />
 												<Route path="/addUsers/:role/:id" element={<AddUsersToGroup />} />
-												<Route path="*" element={<Navigate to="/student" />} />
+												<Route path="/" element={<Home />} />
+												<Route path="*" element={<Navigate to="/" />} />
 											</>
 										) : (
 											<>

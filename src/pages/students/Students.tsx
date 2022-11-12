@@ -1,6 +1,6 @@
 /*eslint-disable*/
 import React, { useCallback, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import {useNavigate, useParams } from "react-router-dom";
 
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Alert, Box, Button, Card, CircularProgress, Input, Paper, Typography } from "@mui/material";
@@ -52,7 +52,7 @@ interface StudentsProps {
 
 export default function Students(props: StudentsProps) {
 	const { rows } = props;
-	const { groupId } = useParams();
+	const { id, groupId } = useParams();
 
 	const [students, setStudents] = useState<StudentModel[]>(rows ?? []);
 	const [fetchState, setFetchState] = React.useState(FetchState.initial);
@@ -63,7 +63,7 @@ export default function Students(props: StudentsProps) {
 
 		setFetchState(FetchState.loading);
 
-		const response = await APIStore.fetchStudents(groupId);
+		const response = await APIStore.fetchStudents(id, groupId);
 
 		if (response.success && response.data) {
 			setStudents(response.data);

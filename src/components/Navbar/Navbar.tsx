@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { DataStore } from "../../core/DataStore";
 import { getColorByUserRole, getRoleNameByUserRole } from "../../core/userRoleHelper";
-import { AppBar, Avatar, Badge, Box, Button, Chip, IconButton, Menu, MenuItem, Toolbar, Typography } from "@mui/material";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+import { AppBar, Avatar, Box, Button, Chip, IconButton, Menu, MenuItem, Toolbar, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
 import "./Navbar.scss";
@@ -26,8 +25,6 @@ function Navbar(): React.ReactElement {
 
 	const [isOpenUserProfileMenu, setIsOpenUserProfileMenu] = useState(false);
 	const [anchorElProfile, setAnchorElProfile] = useState<null | HTMLElement>(null);
-	const [isOpenNotificationsMenu, setIsOpenNotificationsMenu] = useState(false);
-	const [anchorElNotifications, setAnchorElNotifications] = useState<null | HTMLElement>(null);
 
 	const handleHamburgerClick = (): void => dataStore.setIsDrawerOpen();
 
@@ -36,19 +33,9 @@ function Navbar(): React.ReactElement {
 		setAnchorElProfile(event?.currentTarget);
 	};
 
-	const handleNotificationsClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
-		setIsOpenNotificationsMenu(true);
-		setAnchorElNotifications(event?.currentTarget);
-	};
-
 	const handleCloseProfileMenu = (): void => {
 		setIsOpenUserProfileMenu(false);
 		setAnchorElProfile(null);
-	};
-
-	const handleCloseNotificationsMenu = (): void => {
-		setIsOpenNotificationsMenu(false);
-		setAnchorElNotifications(null);
 	};
 
 	const handleLogout = (): void => {
@@ -84,10 +71,6 @@ function Navbar(): React.ReactElement {
 		);
 	};
 
-	const renderNotificationseMenuContent = (): React.ReactElement => {
-		return <div>Nada por aquí aún</div>;
-	};
-
 	return (
 		<Box sx={{ display: "flex", flexGrow: 1 }}>
 			<AppBar position="static" sx={{ display: "flex", flexDirection: "row", padding: "6px 0 0 20px" }}>
@@ -100,20 +83,6 @@ function Navbar(): React.ReactElement {
 				<Toolbar sx={{ justifyContent: "flex-end", bgcolor: "primary", flexGrow: 1 }}>
 					{loggedUser ? (
 						<div className="logged-user-controls">
-							<Button onClick={handleNotificationsClick}>
-								<Badge badgeContent={3} color="secondary">
-									<NotificationsIcon className="notifications-icon" sx={{ color: "white" }} />
-								</Badge>
-							</Button>
-
-							<Menu
-								open={isOpenNotificationsMenu}
-								onClose={handleCloseNotificationsMenu}
-								anchorEl={anchorElNotifications}
-								className="profile-menu">
-								{renderNotificationseMenuContent()}
-							</Menu>
-
 							<Button onClick={handleProfileClick}>{renderUserAvatar()}</Button>
 
 							<Menu open={isOpenUserProfileMenu} onClose={handleCloseProfileMenu} anchorEl={anchorElProfile} className="profile-menu">
