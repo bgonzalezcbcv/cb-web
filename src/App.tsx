@@ -15,6 +15,7 @@ import Student from "./pages/student/Student";
 import AddTeachersToGroup from "./pages/addTeachersToGroup/AddTeachersToGroup";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
+import Home from "./pages/home/Home";
 import Students from "./pages/students/Students";
 import PendigStudents from "./pages/students/PendingStudents";
 import InactiveStudents from "./pages/students/inactive/InactiveStudents";
@@ -63,7 +64,8 @@ function App(): React.ReactElement {
 												<Route path="/groups" element={<Groups />} />
 												<Route path="/groups/:id" element={<Groups />} />
 												<Route path="/addTeachers/:id" element={<AddTeachersToGroup />} />
-												<Route path="*" element={<Navigate to="/student" />} />
+												<Route path="/" element={<Home />} />
+												<Route path="*" element={<Navigate to="/" />} />
 											</>
 										) : (
 											<>

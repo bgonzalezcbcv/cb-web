@@ -58,13 +58,15 @@ export class DataStore {
 			role,
 		};
 
+		this.isDrawerOpen = true;
+
 		return true;
 	}
 
 	@action
 	public logOut(): void {
-		this.loggedUser = null;
 		this.isDrawerOpen = false;
+		setTimeout(() => {this.loggedUser = null}, 200);
 	}
 
 	@action
