@@ -21,11 +21,9 @@ const columns: GridColDef[] = [
 		headerName: "Grupo",
 		disableColumnMenu: true,
 		flex: 1,
-		renderCell: (params): React.ReactNode => {
+		valueGetter: (params): string => {
 			const group = params.value;
-			if (!group) return;
-
-			return <Typography fontSize={14}>{group.grade_name + " " + group.name + " " + group.year}</Typography>;
+			return group ? group.grade_name + " " + group.name + " " + group.year : "";
 		},
 	},
 	{

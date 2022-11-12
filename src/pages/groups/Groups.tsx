@@ -18,7 +18,7 @@ import {
 	Select,
 	Typography,
 } from "@mui/material";
-import {DataGrid, GridApi, GridCellValue, GridColDef, GridRenderCellParams} from "@mui/x-data-grid";
+import { DataGrid, GridApi, GridCellValue, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import AddIcon from "@mui/icons-material/Add";
 
@@ -56,11 +56,9 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 			disableColumnMenu: false,
 			width: 120,
 			align: "center",
-			renderCell: (params): React.ReactNode => {
+			valueGetter: (params): string => {
 				const grade = params.value;
-				if (grade === undefined) return;
-
-				return <Typography fontSize={12}>{grade.name}</Typography>;
+				return grade ? grade.name : "";
 			},
 		},
 		{ field: "name", headerName: "Subgrupo", disableColumnMenu: false, width: 120, align: "center" },
