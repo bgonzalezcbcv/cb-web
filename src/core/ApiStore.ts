@@ -621,6 +621,38 @@ export async function fetchTeachers(id?: number): Promise<DefaultApiResponse<Use
 	}
 }
 
+export async function fetchPrincipals(): Promise<DefaultApiResponse<UserInfo[]>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: "/api/principals/",
+		};
+
+		const response = await axios(config);
+
+		return defaultResponse(response.data.principals);
+	} catch (e) {
+		return defaultErrorResponse("No se pudieron obtener los directores.");
+	}
+}
+
+export async function fetchSupportTeachers(): Promise<DefaultApiResponse<UserInfo[]>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: "/api/support_teachers/",
+		};
+
+		const response = await axios(config);
+
+		return defaultResponse(response.data.support_teachers);
+	} catch (e) {
+		return defaultErrorResponse("No se pudieron obtener los adscriptos.");
+	}
+}
+
 export async function fetchGroups(id?: string): Promise<DefaultApiResponse<Group[]>> {
 	try {
 		const config = {
@@ -882,3 +914,49 @@ export async function createComment(studentId: number, text: string): Promise<De
 		return defaultErrorResponse("No se pudo crear el comentario.");
 	}
 }
+export async function addUserToGroup(user_id: string, group_id: string, role: UserRole): Promise<boolean> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "post",
+			url: `/api/user_groups`,
+			data: JSON.stringify({
+				user_group: {
+					user_id: user_id,
+					group_id: group_id,
+					role: role,
+				}
+			}),
+		};
+
+		const response = await axios(config);
+
+		return response.status === 201;
+	} catch (e) {
+		return false;
+	}
+}
+
+export async function removeUserFromGroup(user_id: string, group_id: string, role: UserRole): Promise<boolean> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "delete",
+			url: `/api/user_groups`,
+			data: JSON.stringify({
+				user_group: {
+					user_id: user_id,
+					group_id: group_id,
+					role: role,
+				}
+			}),
+		};
+
+		const response = await axios(config);
+
+		return response.status === 201;
+	} catch (e) {
+		return false;
+	}
+}
+

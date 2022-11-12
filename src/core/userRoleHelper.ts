@@ -155,7 +155,7 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 						},
 						{
 							title: "Pendientes",
-							navigationRoute: `/students/${id}/pending`,
+							navigationRoute: `/pending`,
 						},
 					],
 				},

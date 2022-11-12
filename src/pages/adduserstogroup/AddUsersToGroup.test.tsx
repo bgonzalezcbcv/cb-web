@@ -4,11 +4,9 @@ import { render } from "@testing-library/react";
 
 import * as API from "../../core/ApiStore";
 import { teachersMock } from "../../core/ApiMocks";
-import AddTeachersToGroup from "./AddTeachersToGroup";
+import AddUsersToGroup from "./AddUsersToGroup";
 
 describe("Teachers", () => {
-	const groupValue = "3A";
-
 	it("should render the list", async () => {
 		jest.spyOn(API, "fetchTeachers").mockResolvedValue({
 			success: true,
@@ -17,14 +15,14 @@ describe("Teachers", () => {
 		});
 
 		const wrapper = render(
-			<MemoryRouter initialEntries={["/addTeachers/1"]}>
+			<MemoryRouter initialEntries={["/addUsers/teacher/1"]}>
 				<Routes>
-					<Route path="/addTeachers/:id" element={<AddTeachersToGroup groupName={groupValue} />} />
+					<Route path="/addUsers/:role/:id" element={<AddUsersToGroup />} />
 				</Routes>
 			</MemoryRouter>
 		);
 
-		expect(await wrapper.findByText(`Grupo:${groupValue}`)).toBeVisible();
+		expect(await wrapper.findByText("Agregar docentes")).toBeVisible();
 		expect(await wrapper.findByPlaceholderText(`Buscar...`)).toBeVisible();
 		expect(wrapper).toMatchSnapshot(); //TODO que ande
 	});
@@ -37,9 +35,9 @@ describe("Teachers", () => {
 		});
 
 		const wrapper = render(
-			<MemoryRouter initialEntries={["/addTeachers/1"]}>
+			<MemoryRouter initialEntries={["/addUsers/teacher/1"]}>
 				<Routes>
-					<Route path="/addTeachers/:id" element={<AddTeachersToGroup groupName={groupValue} />} />
+					<Route path="/addUsers/:role/:id" element={<AddUsersToGroup />} />
 				</Routes>
 			</MemoryRouter>
 		);

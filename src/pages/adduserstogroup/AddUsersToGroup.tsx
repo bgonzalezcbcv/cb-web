@@ -1,45 +1,45 @@
 /*eslint-disable*/
 import React, { useCallback, useState } from "react";
 
-import { DataGrid, GridApi, GridCellValue, GridColDef } from "@mui/x-data-grid";
+import {DataGrid, GridColDef, GridRenderCellParams} from "@mui/x-data-grid";
 import * as APIStore from "../../core/ApiStore";
 import { Alert, Box, Button, Card, CircularProgress, Input, Paper, Typography } from "@mui/material";
 import useFetchFromAPI, { FetchStatus } from "../../hooks/useFetchFromAPI";
 import { Group, UserInfo } from "../../core/Models";
+import { UserRole } from "../../core/interfaces";
+import { useParams } from "react-router-dom";
 
-interface TeachersProps {
-	rows?: UserInfo[];
-	groupName?: string; //por ahora, luego se cambia el tipo
-}
+export default function AddUsersToGroup() {
+	const { role, id } = useParams();
 
-export default function AddTeacher(props: TeachersProps) {
-	const { rows, groupName } = props;
+	const groupId = id;
 
-	const [teachers, setTeachers] = useState<UserInfo[]>(rows ?? []);
+	const userRoleName = role === "teacher" ? "docentes" : role === "principal" ? "directores" : "adscriptos";
+	const userRole = role === "teacher" ? UserRole.Docente : role === "principal" ? UserRole.Director : UserRole.Adscripto;
+
+	const [users, setUsers] = useState<UserInfo[]>([]);
 	const [searchText, setSearchText] = React.useState("");
 
-	const { fetchStatus, refetch } = useFetchFromAPI(() => APIStore.fetchTeachers(undefined), setTeachers, !rows);
+	const fetchFunction = role === "teacher" ? () => APIStore.fetchTeachers() : role === "principal" ? () => APIStore.fetchPrincipals() : () => APIStore.fetchSupportTeachers();
 
-	const onClickAdd = (params: any) => {
-		const api: GridApi = params.api;
-		const thisRow: Record<string, GridCellValue> = {};
+	const { fetchStatus, refetch } = useFetchFromAPI(fetchFunction, setUsers);
 
-		api.getAllColumns()
-			.filter((c: any) => c.field !== "__check__" && !!c)
-			.forEach((c: any) => (thisRow[c.field] = params.getValue(params.id, c.field)));
-		//endpoint
-		alert("No implementado!");
+	const onClickAdd = async (params: GridRenderCellParams) => {
+		if (!groupId) return;
+
+		const userId = params.row.id;
+
+		await APIStore.addUserToGroup(userId, groupId, userRole);
+		refetch();
 	};
 
-	const onClickRemove = (params: any) => {
-		const api: GridApi = params.api;
-		const thisRow: Record<string, GridCellValue> = {};
+	const onClickRemove = async (params: GridRenderCellParams) => {
+		if (!groupId) return;
 
-		api.getAllColumns()
-			.filter((c: any) => c.field !== "__check__" && !!c)
-			.forEach((c: any) => (thisRow[c.field] = params.getValue(params.id, c.field)));
-		//endpoint
-		alert("No implementado!");
+		const userId = params.row.id;
+
+		await APIStore.removeUserFromGroup(userId, groupId, userRole);
+		refetch();
 	};
 
 	const columns: GridColDef[] = [
@@ -53,22 +53,24 @@ export default function AddTeacher(props: TeachersProps) {
 			disableColumnMenu: true,
 			sortable: false,
 			flex: 1,
-			renderCell: (params) => {
-				return !((params.row.groups as Group[]) ?? []).find((group): boolean => group.name === groupName) ? (
-					<Button
-						variant="contained"
-						color="success"
-						style={{ maxWidth: "10px", maxHeight: "20px", minWidth: "10px", minHeight: "20px" }}
-						onClick={() => onClickAdd(params)}>
-						+
-					</Button>
-				) : (
+			renderCell: (params: GridRenderCellParams) => {
+				const isInGroup = (params.row.groups as Group[]).find((group) => Number(group.id) === Number(groupId));
+
+				return isInGroup ? (
 					<Button
 						variant="contained"
 						color="error"
 						style={{ maxWidth: "10px", maxHeight: "20px", minWidth: "10px", minHeight: "20px" }}
 						onClick={() => onClickRemove(params)}>
 						-
+					</Button>
+				) : (
+					<Button
+						variant="contained"
+						color="success"
+						style={{ maxWidth: "10px", maxHeight: "20px", minWidth: "10px", minHeight: "20px" }}
+						onClick={() => onClickAdd(params)}>
+						+
 					</Button>
 				);
 			},
@@ -95,13 +97,13 @@ export default function AddTeacher(props: TeachersProps) {
 				return (
 					<Box style={{ padding: "20px", display: "flex", justifyContent: "center", alignItems: "center" }}>
 						<Alert severity="error" variant="outlined" onClick={refetch}>
-							Falló la carga de docentes. Clickear aquí para reintentar.
+							{`Falló la carga de ${userRoleName}. Clickear aquí para reintentar.`}
 						</Alert>
 					</Box>
 				);
 			case FetchStatus.Initial:
-				const foundItems = teachers.filter((teacher) =>
-					Object.values(teacher).some((value) => value && toNoFormatText(value.toString()).includes(toNoFormatText(searchText)))
+				const foundItems = users.filter((user) =>
+					Object.values(user).some((value) => value && toNoFormatText(value.toString()).includes(toNoFormatText(searchText)))
 				);
 
 				return (
@@ -117,7 +119,7 @@ export default function AddTeacher(props: TeachersProps) {
 			default:
 				return null;
 		}
-	}, [fetchStatus, teachers, searchText]);
+	}, [fetchStatus, users, searchText]);
 
 	return (
 		<Card
@@ -131,7 +133,7 @@ export default function AddTeacher(props: TeachersProps) {
 				boxShadow: "rgba(0, 0, 0, 0.25) 0px 3px 8px",
 			}}>
 			<Box display="flex" justifyContent="flex-start" width="100%">
-				<Typography variant="h4"> Grupo:{groupName}</Typography>
+				<Typography variant="h4">{`Agregar ${userRoleName}`}</Typography>
 				<br></br>
 			</Box>
 			<Box
@@ -143,7 +145,7 @@ export default function AddTeacher(props: TeachersProps) {
 					padding: "10px",
 				}}>
 				<Input
-					style={{ flex: 3, marginRight: "10%" }}
+					style={{ flex: 3, width: "100%" }}
 					id="search"
 					type="text"
 					placeholder="Buscar..."

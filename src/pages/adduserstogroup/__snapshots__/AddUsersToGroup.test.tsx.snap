@@ -14,8 +14,7 @@ Object {
           <h4
             class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
           >
-             Grupo:
-            3A
+            Agregar docentes
           </h4>
           <br />
         </div>
@@ -24,7 +23,7 @@ Object {
         >
           <div
             class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary css-1tcs2i1-MuiInputBase-root-MuiInput-root"
-            style="flex: 3; margin-right: 10%;"
+            style="flex: 3; width: 100%;"
           >
             <input
               class="MuiInputBase-input MuiInput-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
@@ -82,8 +81,7 @@ Object {
         <h4
           class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
         >
-           Grupo:
-          3A
+          Agregar docentes
         </h4>
         <br />
       </div>
@@ -92,7 +90,7 @@ Object {
       >
         <div
           class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary css-1tcs2i1-MuiInputBase-root-MuiInput-root"
-          style="flex: 3; margin-right: 10%;"
+          style="flex: 3; width: 100%;"
         >
           <input
             class="MuiInputBase-input MuiInput-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
@@ -207,8 +205,7 @@ Object {
           <h4
             class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
           >
-             Grupo:
-            3A
+            Agregar docentes
           </h4>
           <br />
         </div>
@@ -217,7 +214,7 @@ Object {
         >
           <div
             class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary css-1tcs2i1-MuiInputBase-root-MuiInput-root"
-            style="flex: 3; margin-right: 10%;"
+            style="flex: 3; width: 100%;"
           >
             <input
               class="MuiInputBase-input MuiInput-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
@@ -269,8 +266,7 @@ Object {
         <h4
           class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
         >
-           Grupo:
-          3A
+          Agregar docentes
         </h4>
         <br />
       </div>
@@ -279,7 +275,7 @@ Object {
       >
         <div
           class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary css-1tcs2i1-MuiInputBase-root-MuiInput-root"
-          style="flex: 3; margin-right: 10%;"
+          style="flex: 3; width: 100%;"
         >
           <input
             class="MuiInputBase-input MuiInput-input css-1x51dt5-MuiInputBase-input-MuiInput-input"

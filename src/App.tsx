@@ -12,7 +12,7 @@ import CreateUser from "./pages/createuser/CreateUser";
 import Login from "./pages/login/Login";
 import User from "./pages/user/User";
 import Student from "./pages/student/Student";
-import AddTeachersToGroup from "./pages/addTeachersToGroup/AddTeachersToGroup";
+import AddUsersToGroup from "./pages/adduserstogroup/AddUsersToGroup";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Home from "./pages/home/Home";
@@ -64,7 +64,7 @@ function App(): React.ReactElement {
 												<Route path="/teachers/edit" element={<Teachers editable={true} />} />
 												<Route path="/groups" element={<Groups />} />
 												<Route path="/groups/:id" element={<Groups />} />
-												<Route path="/addTeachers/:id" element={<AddTeachersToGroup />} />
+												<Route path="/addUsers/:role/:id" element={<AddUsersToGroup />} />
 												<Route path="/" element={<Home />} />
 												<Route path="*" element={<Navigate to="/" />} />
 											</>
