@@ -1,27 +1,33 @@
 /*eslint-disable*/
-import _ from "lodash";
 import React, { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-import { DataGrid, GridApi, GridCellValue, GridColDef } from "@mui/x-data-grid";
-import { Alert, Autocomplete, Box, Button, Card, CircularProgress, Input, Paper, TextField, Typography } from "@mui/material";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { Alert, Box, Button, Card, CircularProgress, Input, Paper, Typography } from "@mui/material";
 import * as APIStore from "../../core/ApiStore";
 import { FetchState } from "../../core/interfaces";
 import { normalizeText } from "../../core/CoreHelper";
 import { Student as StudentModel } from "../../core/Models";
-import { emptyStudents } from "../student/DefaultStudent";
 
 import "./Students.scss";
+
 const columns: GridColDef[] = [
-	{ field: "id", headerName: "ID", disableColumnMenu: false, flex: 1, hide: true },
 	{ field: "reference_number", headerName: "Nº de referencia", disableColumnMenu: false, flex: 1 },
 	{ field: "ci", headerName: "CI", disableColumnMenu: false, flex: 2 },
 	{ field: "name", headerName: "Nombres", disableColumnMenu: false, flex: 2 },
 	{ field: "surname", headerName: "Apellidos", disableColumnMenu: false, flex: 2 },
-	//{ field: "", headerName: "Grupo", disableColumnMenu: true, flex: 1 }, TODO change here when implemented
-	//{ field: "", headerName: "Sub Grupo", disableColumnMenu: true, flex: 1 }, TODO change here when implemented
 	{
-		field: "",
+		field: "group",
+		headerName: "Grupo",
+		disableColumnMenu: true,
+		flex: 1,
+		valueGetter: (params): string => {
+			const group = params.value;
+			return group ? group.grade_name + " " + group.name + " " + group.year : "";
+		},
+	},
+	{
+		field: "id",
 		headerName: "Ir al alumno",
 		align: "center",
 		sortable: false,
@@ -30,18 +36,12 @@ const columns: GridColDef[] = [
 		renderCell: (params) => {
 			let navigate = useNavigate();
 
-			const onClick = (e: any) => {
-				e.stopPropagation();
+			const onClick = () => {
+				const id = params.value;
 
-				const api: GridApi = params.api;
-				const thisRow: Record<string, GridCellValue> = {};
-
-				api.getAllColumns()
-					.filter((c: any) => c.field !== "__check__" && !!c)
-					.forEach((c: any) => (thisRow[c.field] = params.getValue(params.id, c.field)));
-				navigate("/student/" + thisRow.id);
+				navigate(`/student/${id}`);
 			};
-			return <Button onClick={onClick}>Ir</Button>; //Link component
+			return <Button onClick={onClick}>Ir</Button>;
 		},
 	},
 ];
@@ -52,22 +52,21 @@ interface StudentsProps {
 
 export default function Students(props: StudentsProps) {
 	const { rows } = props;
+	const { groupId } = useParams();
 
 	const [students, setStudents] = useState<StudentModel[]>(rows ?? []);
 	const [fetchState, setFetchState] = React.useState(FetchState.initial);
 	const [searchText, setSearchText] = React.useState("");
-
-	const grupos = ["Todos", "3A", "3B", "3C", "3D"]; // TODO: remove this when the groups are established in the API.
 
 	const getStudents = useCallback(async (): Promise<void> => {
 		if (rows) return;
 
 		setFetchState(FetchState.loading);
 
-		const response = await APIStore.fetchStudents();
+		const response = await APIStore.fetchStudents(groupId);
 
 		if (response.success && response.data) {
-			setStudents(_.merge(emptyStudents, response.data));
+			setStudents(response.data);
 			setFetchState(FetchState.initial);
 		} else setFetchState(FetchState.failure);
 	}, [rows, setFetchState, setStudents]);
@@ -128,18 +127,12 @@ export default function Students(props: StudentsProps) {
 
 			<Box className="SearchAndGroupFilter">
 				<Input
-					style={{ flex: 3, marginRight: "10%" }}
+					style={{ flex: 3, width: "100%" }}
 					id="search"
 					type="text"
 					placeholder="Buscar..."
 					value={searchText}
 					onChange={(e: React.ChangeEvent<any>) => setSearchText(e.target.value)}
-				/>
-
-				<Autocomplete
-					style={{ width: 200, flex: 1 }}
-					options={grupos}
-					renderInput={(params) => <TextField {...params} label="Filtrar por grupo" variant="outlined" />}
 				/>
 			</Box>
 

@@ -221,12 +221,12 @@ export async function fetchStudent(id: string): Promise<DefaultApiResponse<Stude
 	}
 }
 
-export async function fetchStudents(): Promise<DefaultApiResponse<Student[]>> {
+export async function fetchStudents(groupId?: string): Promise<DefaultApiResponse<Student[]>> {
 	try {
 		const config = {
 			...baseConfig,
 			method: "get",
-			url: `/api/students/`,
+			url: groupId !== undefined ? `/api/groups/${groupId}/students`: `/api/students/`,
 		};
 
 		const response = await axios(config);
@@ -626,7 +626,7 @@ export async function fetchGroups(id?: string): Promise<DefaultApiResponse<Group
 		const config = {
 			...baseConfig,
 			method: "get",
-			url: id ? `/api/groups/${id}` : `/api/groups/`,
+			url: id ? `/api/me/groups/` : `/api/groups/`,
 		};
 
 		const response = await axios(config);

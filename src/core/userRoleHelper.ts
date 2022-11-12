@@ -52,10 +52,6 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 							title: "Ver todos",
 							navigationRoute: "/groups",
 						},
-						{
-							title: "Asignar director",
-							navigationRoute: "/teachers",
-						},
 					],
 				},
 				{
