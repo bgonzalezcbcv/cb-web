@@ -28,7 +28,7 @@ import { UserRole } from "../../core/interfaces";
 import useFetchFromAPI, { FetchStatus } from "../../hooks/useFetchFromAPI";
 import Modal from "../../components/modal/Modal";
 import UserList from "./components/UserList";
-import AddUser from "../adduserstogroup/components/AddUser";
+import AddUser from "./components/AddUser";
 import NumericInputControl, { NumericInputControlTester } from "../../components/NumericInput/NumericInputControl";
 
 import schema from "./schema.json";
@@ -54,15 +54,15 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 			field: "grade",
 			headerName: "Clase",
 			disableColumnMenu: false,
-			width: 120,
+			width: 110,
 			align: "center",
 			valueGetter: (params): string => {
 				const grade = params.value;
 				return grade ? grade.name : "";
 			},
 		},
-		{ field: "name", headerName: "Subgrupo", disableColumnMenu: false, width: 120, align: "center" },
-		{ field: "year", headerName: "Año", disableColumnMenu: false, width: 120, align: "center" },
+		{ field: "name", headerName: "Subgrupo", disableColumnMenu: false, width: 110, align: "center" },
+		{ field: "year", headerName: "Año", disableColumnMenu: false, width: 110, align: "center" },
 		{
 			field: "teachers",
 			headerName: "Docentes",
@@ -72,7 +72,11 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 			disableColumnMenu: true,
 			renderCell: (params): React.ReactNode => {
 				if (params.value === undefined || params.value?.length === 0) {
-					return <Typography fontSize={12}>Sin docentes asignados</Typography>;
+					return (
+						<Box className="teachers-wrapper">
+							<Typography fontSize={12}>Sin docentes asignados</Typography>
+						</Box>
+					);
 				}
 
 				return <UserList users={params.value} />;
@@ -84,35 +88,40 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 			sortable: false,
 			disableColumnMenu: true,
 			hide: !restrictEditionTo([UserRole.Administrador, UserRole.Director], true),
-			flex: 1,
+			width: 150,
 			align: "center",
 			renderCell: (params: GridRenderCellParams): React.ReactNode => {
-				return <AddUser params={params} role={"teacher"} />
+				return <AddUser params={params} role={"teacher"} />;
 			},
 		},
 		{
 			field: "principals",
-			headerName: "Director",
+			headerName: "Directores",
 			sortable: false,
 			disableColumnMenu: true,
 			flex: 1,
 			renderCell: (params): React.ReactNode => {
 				if (params.value === undefined || params.value?.length === 0) {
-					return <Typography fontSize={12}>Sin directores asignados</Typography>;
+					return (
+						<Box className="teachers-wrapper">
+							<Typography fontSize={12}>Sin directores asignados</Typography>
+						</Box>
+					);
 				}
 
 				return <UserList users={params.value} />;
 			},
 		},
 		{
-			field: "addPrincipal",
-			headerName: "Agregar director",
-			sortable: false,disableColumnMenu: true,
-		flex: 1,
-		hide: !restrictEditionTo([UserRole.Administrador], true),
-		align: "center",
-		renderCell: (params): React.ReactNode => {
-			return <AddUser params={params} role={"principal"} />;
+			field: "addPrincipals",
+			headerName: "Agregar directores",
+			sortable: false,
+			disableColumnMenu: true,
+			width: 150,
+			hide: !restrictEditionTo([UserRole.Administrador], true),
+			align: "center",
+			renderCell: (params): React.ReactNode => {
+				return <AddUser params={params} role={"principal"} />;
 			},
 		},
 		{
@@ -123,7 +132,11 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 			flex: 1,
 			renderCell: (params): React.ReactNode => {
 				if (params.value === undefined || params.value?.length === 0) {
-					return <Typography fontSize={12}>Sin adscriptos asignados</Typography>;
+					return (
+						<Box className="teachers-wrapper">
+							<Typography fontSize={12}>Sin adscriptos asignados</Typography>
+						</Box>
+					);
 				}
 
 				return <UserList users={params.value} />;
@@ -133,12 +146,12 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 			field: "addSupportTeachers",
 			headerName: "Agregar adscriptos",
 			sortable: false,
-		disableColumnMenu: true,
-		width: 150,
-		hide: !restrictEditionTo([UserRole.Administrador, UserRole.Director], true),
-		align: "center",
-		renderCell: (params): React.ReactNode => {
-			return <AddUser params={params} role={"support_teacher"} />;
+			disableColumnMenu: true,
+			width: 150,
+			hide: !restrictEditionTo([UserRole.Administrador, UserRole.Director], true),
+			align: "center",
+			renderCell: (params): React.ReactNode => {
+				return <AddUser params={params} role={"support_teacher"} />;
 			},
 		},
 		{
