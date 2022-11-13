@@ -35,24 +35,22 @@
 			"errorMessage": "Este campo es requerido."
 		},
 		"ci": {
-			"type": "string",
+			"type": ["string", "null"],
 			"pattern": "^((\\d+)|([a-zA-Z]+))+$",
 			"title": "Cédula de identidad",
-			"errorMessage": {
-				"pattern": "Se deben ingresar solo números y letras."
-			}
+			"errorMessage": "Se deben ingresar solo números y letras."
 		},
 		"phone": {
-			"type": "string",
+			"type": ["string", "null"],
 			"pattern": "\\d{9}|\\d{8}",
 			"title": "Teléfono",
-			"errorMessage": {
-				"pattern": "Se deben ingresar 8 o 9 dígitos."
-			}
+			"maxLength": 9,
+			"errorMessage": "Se deben ingresar 8 o 9 dígitos."
 		},
 		"address": {
-			"type": "string",
-			"title": "Dirección"
+			"type": ["string", "null"],
+			"title": "Dirección",
+			"errorMessage": "Tiene que ingresar una dirección."
 		},
 		"role": {
 			"oneOf": [
@@ -98,7 +96,7 @@
 					"items": {
 						"type": "object",
 						"properties": {
-							"title": {
+							"description": {
 								"type": "string",
 								"title": "Título/Curso",
 								"minLength": 1,
@@ -110,13 +108,13 @@
 								"pattern": "^(\\d\\d-){2}\\d{4}$",
 								"errorMessage": "Tiene que ser una fecha válida."
 							},
-							"attachment": {
+							"attachment_url": {
 								"type": "string",
 								"title": "Adjunto",
 								"minLength": 1
 							}
 						},
-						"required": ["title", "date", "attachment"]
+						"required": ["description", "date", "attachment_url"]
 					},
 					"minItems": 0
 				}
@@ -128,13 +126,13 @@
 			"items": {
 				"type": "object",
 				"properties": {
-					"starting_date": {
+					"start_date": {
 						"type": "string",
 						"title": "Fecha de inicio",
 						"pattern": "^(\\d\\d-){2}\\d{4}$",
 						"errorMessage": "Tiene que ser una fecha válida."
 					},
-					"ending_date": {
+					"end_date": {
 						"type": "string",
 						"pattern": "^(\\d\\d-){2}\\d{4}$",
 						"title": "Fecha de finalización",
@@ -146,12 +144,12 @@
 						"minLength": 1,
 						"errorMessage": "Tiene que ingresar un motivo."
 					},
-					"attachment": {
+					"cerificate_url": {
 						"type": "string",
 						"title": "Adjunto"
 					}
 				},
-				"required": ["starting_date", "ending_date", "reason", "attachment"]
+				"required": ["start_date", "end_date", "reason"]
 			}
 		},
 		"documents": {
@@ -159,7 +157,7 @@
 			"items": {
 				"type": "object",
 				"properties": {
-					"type": {
+					"document_type": {
 						"type": "string",
 						"oneOf": [
 							{
@@ -174,7 +172,7 @@
 						"title": "Tipo de documento",
 						"errorMessage": "Tiene que ser alguna de las opciones disponibles."
 					},
-					"attachment": {
+					"certificate_url": {
 						"type": "string",
 						"title": "Adjunto"
 					},
@@ -185,8 +183,20 @@
 						"errorMessage": "Tiene que ser una fecha válida."
 					}
 				},
-				"required": ["type", "attachment"]
+				"required": ["document_type"]
 			}
+		},
+		"birthdate": {
+			"type": ["string", "null"],
+			"title": "Fecha de nacimiento",
+			"pattern": "^(\\d\\d-){2}\\d{4}$",
+			"errorMessage": "Tiene que ser una fecha válida."
+		},
+		"starting_date": {
+			"type": ["string", "null"],
+			"title": "Fecha de inicio",
+			"pattern": "^(\\d\\d-){2}\\d{4}$",
+			"errorMessage": "Tiene que ser una fecha válida."
 		}
 	},
 	"required": ["email", "password", "name", "surname", "role"]

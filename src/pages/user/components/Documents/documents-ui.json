@@ -3,20 +3,7 @@
 	"elements": [
 		{
 			"type": "Control",
-			"scope": "properties/type"
-		},
-		{
-			"type": "Control",
-			"scope": "properties/attachment"
-		},
-		{
-			"type": "Control",
-			"scope": "properties/upload_date",
-			"options": {
-				"format": "date",
-				"dateFormat": "DD/MM/YYYY",
-				"dateSaveFormat": "DD-MM-YYYY"
-			}
+			"scope": "properties/document_type"
 		}
 	]
 }

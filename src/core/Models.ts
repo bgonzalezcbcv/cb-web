@@ -272,28 +272,50 @@ export enum DocumentTypeLabel {
 	project = "Proyecto",
 }
 
+export interface Document {
+	document_type: DocumentType;
+	certificate_url: string;
+	upload_date: string;
+}
+
+export interface DocumentWithFile extends Document {
+	certificate?: File;
+}
+
+export interface ComplementaryInfo {
+	id: number;
+	description: string;
+	date: string;
+	attachment_url: string;
+}
+
+export interface ComplementaryInfoWithFile {
+	attachment?: File;
+}
+
+export interface Absences {
+	id: number;
+	start_date: string;
+	end_date: string;
+	reason: string;
+	certificate_url: string;
+}
+
+export interface AbsencesWithFile extends Absences {
+	certificate?: File;
+}
+
 export interface UserInfo extends User {
 	id: number;
 	address?: string;
 	birthdate?: string;
+	starting_date?: string;
 	ci?: string;
 	password?: string;
 	phone?: string;
-	complementary_info?: {
-		beginning_date: string;
-		academic_training: { title: string; date: string; attachment: string }[];
-	};
-	absences?: {
-		starting_date: string;
-		ending_date: string;
-		reason: string;
-		attachment: string;
-	}[];
-	documents?: {
-		type: DocumentType;
-		attachment: string;
-		upload_date: string;
-	}[];
+	complementary_informations?: ComplementaryInfo[];
+	absences?: Absences[];
+	documents?: Document[];
 	groups?: Group[];
 }
 

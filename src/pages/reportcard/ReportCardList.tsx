@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import * as API from "../../core/ApiStore";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { ReportApprovalState, ReportCard, ReportCard as ReportCardModel, Student } from "../../core/Models";
-import { Alert, Box, CircularProgress, IconButton } from "@mui/material";
+import { Alert, Box, CircularProgress, IconButton, Link } from "@mui/material";
 import { FetchState } from "../../core/interfaces";
 import { DeleteReportCardDialog, ReportDeletionSuccessDialog } from "./components/DeleteReportCardDialog";
 import { ApprovalReportCardDialog, ReportApprovalSuccessDialog } from "./components/ApprovalReportCardDialog";
@@ -160,16 +160,20 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 			},
 		},
 		{
-			field: "download",
+			field: "report_url",
 			headerName: "Descargar",
 			disableColumnMenu: false,
 			flex: 1,
-			renderCell: (params): React.ReactElement => {
-				return (
-					<IconButton onClick={(): void => alert("No implementado!")} href={params.row.report_card_url}>
-						<DownloadIcon />
-					</IconButton>
-				);
+			renderCell: ({ value: url }): React.ReactElement | null => {
+				console.log(url);
+
+				return url ? (
+					<Link href={url} target="_blank">
+						<IconButton>
+							<DownloadIcon />
+						</IconButton>
+					</Link>
+				) : null;
 			},
 		},
 		{

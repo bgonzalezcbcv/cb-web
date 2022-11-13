@@ -3,7 +3,7 @@
 	"elements": [
 		{
 			"type": "Control",
-			"scope": "properties/title"
+			"scope": "properties/description"
 		},
 		{
 			"type": "Control",
@@ -13,10 +13,6 @@
 				"dateFormat": "DD/MM/YYYY",
 				"dateSaveFormat": "DD-MM-YYYY"
 			}
-		},
-		{
-			"type": "Control",
-			"scope": "properties/attachment"
 		}
 	]
 }

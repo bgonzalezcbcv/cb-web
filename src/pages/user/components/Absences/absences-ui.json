@@ -3,7 +3,7 @@
 	"elements": [
 		{
 			"type": "Control",
-			"scope": "properties/starting_date",
+			"scope": "properties/start_date",
 			"options": {
 				"format": "date",
 				"dateFormat": "DD/MM/YYYY",
@@ -12,7 +12,7 @@
 		},
 		{
 			"type": "Control",
-			"scope": "properties/ending_date",
+			"scope": "properties/end_date",
 			"options": {
 				"format": "date",
 				"dateFormat": "DD/MM/YYYY",
@@ -22,10 +22,6 @@
 		{
 			"type": "Control",
 			"scope": "properties/reason"
-		},
-		{
-			"type": "Control",
-			"scope": "properties/attachment"
 		}
 	]
 }

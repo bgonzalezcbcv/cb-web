@@ -24,6 +24,15 @@
 		},
 		{
 			"type": "Control",
+			"scope": "properties/starting_date",
+			"options": {
+				"format": "date",
+				"dateFormat": "DD/MM/YYYY",
+				"dateSaveFormat": "DD-MM-YYYY"
+			}
+		},
+		{
+			"type": "Control",
 			"scope": "properties/address"
 		},
 		{
