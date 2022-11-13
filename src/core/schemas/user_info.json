@@ -40,7 +40,7 @@
 			"title": "Cédula de identidad",
 			"errorMessage": "Se deben ingresar solo números y letras."
 		},
-		"phone": {
+		"phone_number": {
 			"type": ["string", "null"],
 			"pattern": "\\d{9}|\\d{8}",
 			"title": "Teléfono",
