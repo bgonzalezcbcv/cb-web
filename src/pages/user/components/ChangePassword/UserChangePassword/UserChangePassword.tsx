@@ -6,10 +6,12 @@ import { materialCells, materialRenderers } from "@jsonforms/material-renderers"
 import Modal from "../../../../../components/modal/Modal";
 
 import * as API from "../../../../../core/ApiStore";
-import schema from "./change-password-schema.json";
-import uiSchema from "./change-password-ui.json";
+import { ajv } from "../../../../../core/AJVHelper";
 import { Container } from "@mui/material";
 import { ChangePasswordDialog } from "../ChangePasswordDialog";
+
+import schema from "./change-password-schema.json";
+import uiSchema from "./change-password-ui.json";
 
 interface ChangePasswordProps {
 	isOpen: boolean;
@@ -68,6 +70,7 @@ export function UserChangePassword(props: ChangePasswordProps): React.ReactEleme
 			<Container>
 				<JsonForms
 					i18n={{ translate: translator as Translator }}
+					ajv={ajv}
 					schema={schema as JsonSchema7}
 					uischema={uiSchema}
 					data={{
