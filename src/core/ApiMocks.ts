@@ -10,7 +10,7 @@ export const mockUser: UserInfo = {
 	address: "Avenida Siempre viva 123",
 	birthdate: "01-01-1999",
 	ci: "11113334",
-	phone: "22223333",
+	phone_number: "22223333",
 	token: "",
 	complementary_informations: [{ id: 1, description: "Profesorado de Ingles", date: "01-01-1999", attachment_url: "" }],
 	absences: [

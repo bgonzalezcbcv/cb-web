@@ -312,7 +312,7 @@ export interface UserInfo extends User {
 	starting_date?: string;
 	ci?: string;
 	password?: string;
-	phone?: string;
+	phone_number?: string;
 	complementary_informations?: ComplementaryInfo[];
 	absences?: Absences[];
 	documents?: Document[];
