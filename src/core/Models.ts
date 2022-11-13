@@ -415,3 +415,20 @@ export interface StudentGroup {
 	year: string;
 	grade_name: string;
 }
+
+export enum EventTypeName {
+	event = "Evento",
+}
+
+export enum EventType {
+	Event = "event",
+}
+
+export interface RelevantEvent {
+	title: string;
+	description: string;
+	event_type: EventType;
+	date: string;
+	author: User;
+	attachment_url: string;
+}
