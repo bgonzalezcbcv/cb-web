@@ -4,6 +4,7 @@ import { AxiosError } from "axios";
 import { reaction } from "mobx";
 
 import {
+	CicleQuestions,
 	Grade,
 	Group,
 	FamilyMember,
@@ -21,7 +22,9 @@ import {
 	Student,
 	User,
 	UserInfo,
-	Cycle,
+	Question,
+	Cicle,
+	Answer,
 	PaymentMethodWithFile,
 	TypeScholarship,
 	StudentTypeScholarship,
@@ -34,7 +37,7 @@ import {
 } from "./Models";
 import { DefaultApiResponse, UserRole } from "./interfaces";
 import { DataStore } from "./DataStore";
-import { getFormDataFromObject, reverseDate, setFinalReports, setIntermediateReports } from "./CoreHelper";
+import { getFormDataFromObject, reverseDate, mergeQuestionsAndAnswers, setFinalReports, setIntermediateReports, getCicleFromGroup } from "./CoreHelper";
 
 const dataStore = DataStore.getInstance();
 
@@ -190,6 +193,48 @@ export async function fetchFamilyMembers(studentId: number): Promise<DefaultApiR
 	}
 }
 
+export async function fetchCicles(): Promise<{ success: boolean; cicle_questions: CicleQuestions[] }> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: "/api/cicles",
+		};
+
+		const response = await axios(config);
+
+		const result = {
+			success: [200, 304].includes(response.status),
+			cicle_questions: response.data.cicles,
+		};
+
+		return result;
+	} catch (e) {
+		return { success: false, cicle_questions: [] };
+	}
+}
+
+export async function fetchStudentAnswers(studentId: number): Promise<{ success: boolean; answers: Answer[] }> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: `api/students/${studentId}/answers`,
+		};
+
+		const response = await axios(config);
+
+		const result = {
+			success: true,
+			answers: response.data.student.answers,
+		};
+
+		return result;
+	} catch (e) {
+		return { success: false, answers: [] };
+	}
+}
+
 export async function fetchStudent(id: string): Promise<DefaultApiResponse<Student>> {
 	try {
 		const config = {
@@ -204,10 +249,26 @@ export async function fetchStudent(id: string): Promise<DefaultApiResponse<Stude
 
 		if (!fetchFamilySuccess) return defaultErrorResponse("No se pudo obtener el estudiante.");
 
+		const { success: fetchQuestionsSuccess, cicle_questions } = await fetchCicles();
+		if (!fetchQuestionsSuccess) return defaultErrorResponse("No se pudo obtener el estudiante.");
+
+		const { success: fetchAnswerSuccess, answers } = await fetchStudentAnswers(Number(id));
+		if (!fetchAnswerSuccess) return defaultErrorResponse("No se pudo obtener el estudiante.");
+
+		const merged_cicle_questions = mergeQuestionsAndAnswers(cicle_questions, answers);
+
+		const group = response.data.student.group;
+		let cicle = Cicle.None;
+		if (group != null) {
+			cicle = getCicleFromGroup(group);
+		}
+
 		const student: Student = {
 			...response.data.student,
 			id: response.data.student.id.toString(),
 			family: _.uniqWith(familyMembers, _.isEqual),
+			cicle: cicle,
+			cicle_questions: _.uniqWith(merged_cicle_questions, _.isEqual),
 			administrative_info: {
 				inscription_date: reverseDate(response.data.student.inscription_date),
 				starting_date: reverseDate(response.data.student.starting_date),
@@ -295,6 +356,34 @@ export async function createFamilyMember(studentId: number, family_member: Famil
 	}
 }
 
+export async function sendAnswersEnrollmentQuestions(studentId: string, answer: Question): Promise<{ success: boolean; err: string }> {
+	let method = "";
+	let url = `api/students/${studentId}/answers`;
+	answer.httpRequest === "PATCH" ? (method = "patch") : (method = "post");
+
+	if (method === "patch") url += `/${answer.answerId}`;
+
+	try {
+		const config = {
+			...baseConfig,
+			method: method,
+			url: url,
+			data: JSON.stringify({
+				answer: {
+					answer: answer.answer,
+					question_id: answer.id,
+				},
+			}),
+		};
+
+		await axios(config);
+
+		return { success: true, err: "" };
+	} catch (e) {
+		return { success: false, err: "Error al enviar preguntas." };
+	}
+}
+
 export async function createStudent(studentToCreate: Student): Promise<DefaultApiResponse<Student>> {
 	try {
 		const config = {
@@ -322,6 +411,13 @@ export async function createStudent(studentToCreate: Student): Promise<DefaultAp
 			//todo: ver de marcar estos errors de alguna forma.
 			if (!success) error = error + "\n" + errorFM;
 		}
+
+		const enrollmentQuestions = studentToCreate.cicle_questions.filter((c) => c.name === Cicle.None)[0];
+		enrollmentQuestions.questions.forEach(async (question) => {
+			const { success, err: errorEQ } = await sendAnswersEnrollmentQuestions(id, question);
+
+			if (!success) error = error + "\n" + errorEQ;
+		});
 
 		return defaultResponse(response.data.student as Student, error);
 	} catch (e) {
@@ -358,6 +454,13 @@ export async function editStudent(studentToEdit: Student): Promise<DefaultApiRes
 
 			if (!success) error = error + "\n" + errorFM;
 		}
+
+		const enrollmentQuestions = studentToEdit.cicle_questions.filter((c) => c.name === studentToEdit.cicle)[0];
+		enrollmentQuestions.questions.forEach(async (question) => {
+			const { success, err: errorEQ } = await sendAnswersEnrollmentQuestions(id, question);
+
+			if (!success) error = error + "\n" + errorEQ;
+		});
 
 		return defaultResponse(response.data.student as Student);
 	} catch (e) {
@@ -728,37 +831,6 @@ export async function fetchGrades(): Promise<{ success: boolean; data?: Grade[];
 		return {
 			success: true,
 			data: response.data.grades as Grade[],
-			err: "",
-		};
-
-		//eslint-disable-next-line
-	} catch (error: any) {
-		return {
-			success: false,
-			err: error.message,
-		};
-	}
-}
-
-export async function fetchCycles(): Promise<{ success: boolean; data?: Cycle[]; err: string }> {
-	try {
-		const config = {
-			...baseConfig,
-			method: "get",
-			url: `/api/cicles`,
-		};
-
-		const response = await axios(config);
-
-		if (![200, 304].includes(response.status) || response.data.cicles === undefined)
-			return {
-				success: false,
-				err: "Unable to fetch cycles",
-			};
-
-		return {
-			success: true,
-			data: response.data.cicles,
 			err: "",
 		};
 

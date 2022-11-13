@@ -1,4 +1,4 @@
-import { Student } from "../../core/Models";
+import { Student, Cicle } from "../../core/Models";
 
 export const defaultStudent: Student = {
 	id: "",
@@ -48,39 +48,52 @@ export const defaultStudent: Student = {
 			workplace_phone: "",
 		},
 	],
-	question_categories: [
+	cicle_questions: [
 		{
-			category: "Categoria",
+			id: 1,
+			name: Cicle.None,
 			questions: [
 				{
-					id: "1",
-					question: "Pregunta",
+					id: 1,
+					text: "Pregunta",
 					answer: "Respuesta",
+					answerId: 1,
+					httpRequest: "POST",
 				},
 				{
-					id: "1",
-					question: "Pregunta",
+					id: 2,
+					text: "Pregunta",
 					answer: "Respuesta",
+					answerId: 2,
+					httpRequest: "POST",
 				},
 				{
-					id: "1",
-					question: "Pregunta",
+					id: 3,
+					text: "Pregunta",
 					answer: "Respuesta",
+					answerId: 3,
+					httpRequest: "POST",
 				},
 				{
-					id: "1",
-					question: "Pregunta",
+					id: 4,
+					text: "Pregunta",
 					answer: "Respuesta",
+					answerId: 4,
+					httpRequest: "POST",
 				},
 				{
-					id: "1",
-					question: "Pregunta",
+					id: 5,
+					text: "Pregunta",
 					answer: "Respuesta",
+					answerId: 5,
+					httpRequest: "POST",
 				},
 				{
-					id: "1",
-					question: "Pregunta",
+					id: 6,
+					text: "Pregunta",
 					answer: "Respuesta",
+					answerId: 6,
+					httpRequest: "POST",
 				},
 			],
 		},
@@ -91,6 +104,7 @@ export const defaultStudent: Student = {
 		enrollment_commitment_url: "",
 		agreement_type: "Ninguno",
 	},
+	cicle: Cicle.None,
 };
 
 export const defaultStudents: [Student] = [defaultStudent];
@@ -120,7 +134,7 @@ export const emptyStudent: Student = {
 	neighborhood: "",
 	office: "",
 	phone_number: "",
-	question_categories: [],
+	cicle_questions: [],
 	reference_number: "",
 	schedule_end: "",
 	schedule_start: "",
@@ -129,6 +143,7 @@ export const emptyStudent: Student = {
 	surname: "",
 	tuition: "",
 	vaccine_expiration: "",
+	cicle: Cicle.None,
 };
 
 export const emptyStudents: [Student] = [emptyStudent];

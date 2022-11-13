@@ -1,14 +1,33 @@
 import { UserRole } from "./interfaces";
 
-export type Question = {
-	id: string;
-	question: string;
-	answer: string;
-};
+export enum Cicle {
+	None = "Pre Inscripción",
+	Nursery = "Maternal",
+	Primary = "Inicial/Primaria",
+	HighSchool = "Secundaria",
+}
 
-export interface QuestionCategories {
-	category: string;
+export interface Question {
+	id: number;
+	text: string;
+	answer?: string;
+	answerId: number;
+	httpRequest: "POST" | "PATCH";
+}
+
+export interface CicleQuestions {
+	id: number;
+	name: Cicle;
 	questions: Question[];
+}
+
+export interface Answer {
+	id: number;
+	answer: string;
+	question: {
+		id: number;
+		text: string;
+	};
 }
 
 export interface FamilyMember {
@@ -148,8 +167,9 @@ export interface Student {
 	contact_phone: string;
 	email: string;
 	family: FamilyMember[];
-	question_categories: QuestionCategories[];
 	administrative_info: AdministrativeInfo;
+	cicle: Cicle;
+	cicle_questions: CicleQuestions[];
 	group?: StudentGroup;
 }
 
@@ -392,11 +412,6 @@ export interface IntermediateEvaluation {
 	};
 }
 
-export interface Cycle {
-	id: string;
-	name: string;
-}
-
 export interface Grade {
 	id: string;
 	name: string;
@@ -442,4 +457,9 @@ export interface RelevantEvent {
 
 export interface RelevantEventWithFile extends RelevantEvent {
 	attachment?: File;
+}
+
+export interface EnrollmentAnswerPayload {
+	answer: string;
+	question_id: number;
 }

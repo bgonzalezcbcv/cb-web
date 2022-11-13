@@ -1,9 +1,10 @@
 import _ from "lodash";
 import React, { useEffect, useState } from "react";
 
-import { Question as QuestionModel, Student } from "../../../../core/Models";
-import { Box, Divider, Grid, List, ListItem, TextField, Typography } from "@mui/material";
-import useDebounce from "../../../../hooks/useDebounce";
+import { Box, FormControl, InputLabel, List, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+
+import { Student, Cicle } from "../../../../core/Models";
+import Question from "./components/Question";
 
 export interface EnrollmentQuestionsProps {
 	student: Student;
@@ -11,92 +12,84 @@ export interface EnrollmentQuestionsProps {
 	onChange: (newStudent: Student, debounce?: boolean) => void;
 }
 
-function Question(props: {
-	question: QuestionModel;
-	questionIndex: number;
-	editable: boolean;
-	onChangeQuestion: (debouncedAnswerText: string) => void;
-}): React.ReactElement {
-	const { question, questionIndex, editable, onChangeQuestion } = props;
-
-	const [answer, setAnswer] = useState(question.answer);
-	const debouncedAnswer = useDebounce<string>(answer, 50);
-
-	useEffect(() => {
-		onChangeQuestion(debouncedAnswer);
-	}, [debouncedAnswer]);
-
-	return (
-		<Grid item sm={12} lg={6} xl={4} key={"question" + question.id + questionIndex} sx={{ width: "100%" }}>
-			<ListItem sx={{ flex: 1, height: "100%" }}>
-				<Box
-					sx={{
-						flexDirection: "column",
-						justifyContent: "space-between",
-						display: "flex",
-						flex: 1,
-						height: "100%",
-						alignContent: "center",
-					}}>
-					<Typography component={"span"} variant="body1" style={{ paddingRight: 20 }} gutterBottom>
-						{question.question}
-					</Typography>
-
-					<TextField
-						multiline
-						minRows={4}
-						disabled={!editable}
-						maxRows={4}
-						fullWidth
-						value={answer}
-						onChange={(event): void => {
-							setAnswer(event.target.value);
-						}}
-					/>
-				</Box>
-			</ListItem>
-		</Grid>
-	);
-}
-
 export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): React.ReactElement {
 	const { student, editable, onChange } = props;
-	const { question_categories } = student;
 
-	const onChangeHandler = (changedQuestionCategoryIndex: number, changedQuestionIndex: number, newAnswerValue: string): void => {
+	const cicle_questions = _.cloneDeep(student.cicle_questions);
+
+	const [selectedCicle, setSelectedCicle] = useState<Cicle>(Cicle.None);
+	const [questions, setQuestions] = useState(cicle_questions[0].questions);
+	const [error, setError] = useState<string | null>(null);
+
+	const studentCicles = Object.keys(Cicle) as Array<keyof typeof Cicle>;
+	const indexOfCicle = Object.values(Cicle).indexOf(student.cicle);
+	const validCicles = studentCicles.splice(0, indexOfCicle + 1);
+
+	const onChangeHandler = (changedQuestionIndex: number, newAnswerValue: string): void => {
 		const newStudentData: Student = _.cloneDeep(student);
-		newStudentData.question_categories[changedQuestionCategoryIndex].questions[changedQuestionIndex].answer = newAnswerValue;
+		const newQuestion = newStudentData.cicle_questions.filter((q) => q.name == selectedCicle)[0].questions[changedQuestionIndex];
+		newQuestion.answer = newAnswerValue;
 
 		onChange(newStudentData);
 	};
 
+	useEffect(() => {
+		if (error) window.setTimeout(() => setError(null), 3000);
+	}, [error]);
+
+	useEffect(() => {
+		const selectedCicleIndex = Object.values(Cicle).indexOf(selectedCicle);
+		setQuestions(cicle_questions[selectedCicleIndex].questions);
+	}, [student.cicle_questions, selectedCicle]);
+
+	const handleCicleChange = (event: SelectChangeEvent): void => {
+		const cicleString = event.target.value;
+		const cicleList = Object.keys(Cicle) as Array<keyof typeof Cicle>;
+		const cicleIndex = Object.values(Cicle).indexOf(cicleString as Cicle);
+		const cicleKey = cicleList[cicleIndex];
+		const cicle = Cicle[cicleKey];
+
+		setSelectedCicle(cicle);
+	};
+
+	console.log(questions);
+
 	return (
-		<List>
-			{question_categories.map((category, categoryIndex): React.ReactElement => {
-				return (
-					<div key={"category" + categoryIndex}>
-						<Typography component={"span"} variant="h4" gutterBottom>
-							{category.category}
-						</Typography>
-
-						<Grid container spacing={2} sx={{ justifyContent: "space-between" }}>
-							{category.questions.map(
-								(question, questionIndex): React.ReactElement => (
-									<Question
-										key={`${category}-${categoryIndex}-question-${questionIndex}`}
-										question={question}
-										questionIndex={questionIndex}
-										editable={editable}
-										onChangeQuestion={(newAnswer): void => onChangeHandler(categoryIndex, questionIndex, newAnswer)}
-									/>
-								)
-							)}
-						</Grid>
-
-						{categoryIndex < question_categories.length - 1 && <Divider />}
-					</div>
-				);
-			})}
-		</List>
+		<Box>
+			<Box display="flex">
+				<Box
+					sx={{
+						display: "flex",
+						justifyContent: "flex-start",
+						width: "50%",
+					}}>
+					<FormControl variant="standard" sx={{ width: "50%" }}>
+						<InputLabel>Seleccionar Ciclo</InputLabel>
+						<Select value={selectedCicle} onChange={handleCicleChange}>
+							{validCicles.map((key: keyof typeof Cicle) => {
+								return (
+									<MenuItem key={key} value={Cicle[key]}>
+										{Cicle[key]}
+									</MenuItem>
+								);
+							})}
+						</Select>
+					</FormControl>
+				</Box>
+			</Box>
+			<List>
+				{questions.map(
+					(question, questionIndex): React.ReactElement => (
+						<Question
+							key={`question-${question.id}`}
+							question={question}
+							questionIndex={questionIndex}
+							editable={editable && student.cicle == selectedCicle}
+							onChangeQuestion={(newAnswer): void => onChangeHandler(questionIndex, newAnswer)}
+						/>
+					)
+				)}
+			</List>
+		</Box>
 	);
 }

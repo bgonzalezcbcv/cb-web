@@ -81,7 +81,7 @@ describe("UploadStudentForm", () => {
 	});
 
 	test("Should show error on parse error", async () => {
-		jest.spyOn(Parsers, "parseFormToStudent").mockReturnValue(null);
+		jest.spyOn(Parsers, "parseFormToStudent").mockResolvedValue(null);
 
 		const wrapper = render(<UploadStudentForm studentProp={defaultStudent} onUpload={console.log} />, { wrapper: BrowserRouter });
 
@@ -99,7 +99,7 @@ describe("UploadStudentForm", () => {
 	});
 
 	test("Should load file with correct extension when dropped", async () => {
-		jest.spyOn(Parsers, "parseFormToStudent").mockReturnValue(defaultStudent);
+		jest.spyOn(Parsers, "parseFormToStudent").mockResolvedValue(defaultStudent);
 
 		const wrapper = render(<UploadStudentForm studentProp={defaultStudent} onUpload={console.log} />, { wrapper: BrowserRouter });
 
@@ -117,7 +117,7 @@ describe("UploadStudentForm", () => {
 	});
 
 	test("Should load file with correct extension when clicked", async () => {
-		jest.spyOn(Parsers, "parseFormToStudent").mockReturnValue(defaultStudent);
+		jest.spyOn(Parsers, "parseFormToStudent").mockResolvedValue(defaultStudent);
 
 		const wrapper = render(<UploadStudentForm studentProp={defaultStudent} onUpload={console.log} />, { wrapper: BrowserRouter });
 
@@ -155,7 +155,7 @@ describe("UploadStudentForm", () => {
 	});
 
 	test("Should call callback on 'Crear Alumno'", async () => {
-		jest.spyOn(Parsers, "parseFormToStudent").mockReturnValue(defaultStudent);
+		jest.spyOn(Parsers, "parseFormToStudent").mockResolvedValue(defaultStudent);
 
 		const onUploadCallback = jest.fn();
 
