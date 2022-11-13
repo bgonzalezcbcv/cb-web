@@ -456,6 +456,23 @@ export async function fetchUser(id: string): Promise<DefaultApiResponse<UserInfo
 	}
 }
 
+export async function fetchUsers(): Promise<DefaultApiResponse<UserInfo[]>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: `/api/users`,
+		};
+
+		const response = await axios(config);
+
+		return defaultResponse(response.data.users);
+		//eslint-disable-next-line
+	} catch (error: any) {
+		return defaultErrorResponse(error.message);
+	}
+}
+
 export async function fetchReports(studentId: string): Promise<{ success: boolean; data?: ReportCard[]; err: string }> {
 	try {
 		const config = {
