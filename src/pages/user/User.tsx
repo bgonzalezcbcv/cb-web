@@ -16,11 +16,9 @@ import Absences from "./components/Absences/Absences";
 import Documents from "./components/Documents/Documents";
 import Restrict from "../../components/Restrict/Restrict";
 import useIsAuthenticated from "../../hooks/useIsAuthenticated";
+import useFetchFromAPI, { FetchStatus } from "../../hooks/useFetchFromAPI";
 import { UserChangePassword } from "./components/ChangePassword/UserChangePassword/UserChangePassword";
 import { AdminChangePassword } from "./components/ChangePassword/AdminChangePassword/AdminChangePassword";
-import useFetchFromAPI, { FetchStatus } from "../../hooks/useFetchFromAPI";
-
-import style from "./User.module.scss";
 
 interface UserProps {
 	editable: boolean;
@@ -60,26 +58,12 @@ function User(props: UserProps): JSX.Element {
 		(loggedUser) => !(loggedUser.role === UserRole.Docente && loggedUser.id.toString() !== id)
 	);
 
-	const { fetchStatus, refetch } = useFetchFromAPI(() => fetchUser(id as string), setUser, id !== undefined);
-
-		setFetchStatus(FetchStatus.Fetching);
-
-		const response = await fetchUser(id);
-
-		if (response.success && response.data) {
-			setUser(response.data);
-			setFetchStatus(FetchStatus.Initial);
-		} else setFetchStatus(FetchStatus.Error);
-	}, [id]);
-
-	useEffect(() => {
-		fetchUserFromAPI();
-	}, [fetchUserFromAPI]);
-
 	const handleChangePassword = (isOpen: boolean, isChanged: boolean): void => {
 		setPasswordDialogOpen(isOpen);
 		console.log(isChanged);
 	};
+
+	const { fetchStatus, refetch } = useFetchFromAPI(() => fetchUser(id as string), setUser, id !== undefined);
 
 	if (fetchStatus === FetchStatus.Fetching)
 		return (
@@ -114,6 +98,7 @@ function User(props: UserProps): JSX.Element {
 					<Link href={`mailto:${email}`}>
 						<MailOutlineIcon />
 					</Link>
+
 					<Box display="flex">
 						<Button variant="contained" onClick={(): void => setPasswordDialogOpen(true)}>
 							Cambiar Contraseña
@@ -198,13 +183,13 @@ function User(props: UserProps): JSX.Element {
 						</Restrict>
 					</Grid>
 				</Grid>
+				<Restrict to={[UserRole.Administrativo, UserRole.Adscripto, UserRole.Director, UserRole.Docente, UserRole.Recepcion]}>
+					<UserChangePassword isOpen={passwordDialogOpen} setOpen={handleChangePassword} />
+				</Restrict>
+				<Restrict to={[UserRole.Administrador]}>
+					<AdminChangePassword user={user} isOpen={passwordDialogOpen} setOpen={handleChangePassword} />
+				</Restrict>
 			</>
-			<Restrict to={[UserRole.Administrativo, UserRole.Adscripto, UserRole.Director, UserRole.Docente, UserRole.Recepcion]}>
-				<UserChangePassword isOpen={passwordDialogOpen} setOpen={handleChangePassword} />
-			</Restrict>
-			<Restrict to={[UserRole.Administrador]}>
-				<AdminChangePassword user={user} isOpen={passwordDialogOpen} setOpen={handleChangePassword} />
-			</Restrict>
 		</Content>
 	);
 }
