@@ -1,9 +1,9 @@
 import * as React from "react";
 
 import { Student } from "../../../../core/Models";
-import {DefaultApiResponse, StudentPageMode} from "../../../../core/interfaces";
+import { DefaultApiResponse, StudentPageMode } from "../../../../core/interfaces";
 
-import {Box, Button, Chip, Typography} from "@mui/material";
+import { Box, Button, Chip, Typography } from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import EditIcon from "@mui/icons-material/Edit";
 import EditOffIcon from "@mui/icons-material/EditOff";
@@ -18,7 +18,7 @@ import DeactivateStudent, { DeactivationInfo } from "../DeactivateStudent/Deacti
 import StudentActivationModal from "../StudentActivationModal/StudentActivationModal";
 
 import "./Student.scss";
-import {useCallback} from "react";
+import { useCallback } from "react";
 import * as API from "../../../../core/ApiStore";
 import DeactivateStudentDialog from "./DeactivateStudent/DeactivateStudentDialog";
 
@@ -116,7 +116,7 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 					{
 						//TODO: add this to the condition: && student.status === "pending"
 
-						[StudentPageMode.edit].includes(mode) ? (
+						[StudentPageMode.edit].includes(mode) && student.status !== "active" ? (
 							<Button
 								data-cy={"studentActivateButton"}
 								color={"secondary"}
@@ -126,7 +126,7 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 							</Button>
 						) : null
 					}
-					{mode === StudentPageMode.edit && student.status !== "inactive"? (
+					{mode === StudentPageMode.edit && student.status !== "inactive" ? (
 						<Button color={"secondary"} startIcon={<DeleteIcon />} onClick={(): void => setIsDeactivateStudentModalVisible(true)}>
 							Dar de baja
 						</Button>
@@ -171,7 +171,9 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 				/>
 			</Modal>
 
-			{showDialog && studentDeactivationState && <DeactivateStudentDialog apiResponse={studentDeactivationState} show={(value): void => setShowDialog(value)} />}
+			{showDialog && studentDeactivationState && (
+				<DeactivateStudentDialog apiResponse={studentDeactivationState} show={(value): void => setShowDialog(value)} />
+			)}
 		</>
 	);
 }

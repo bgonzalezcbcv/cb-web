@@ -5,6 +5,7 @@ import { Student } from "../../../../core/Models";
 import { Alert, AlertTitle, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { activateStudent } from "../../../../core/ApiStore";
+import { useNavigate } from "react-router-dom";
 
 export default function StudentActivationModal(props: {
 	open: boolean;
@@ -17,13 +18,16 @@ export default function StudentActivationModal(props: {
 	const [tuitionNumber, setTuitionNumber] = useState("");
 	const [showAlert, setShowAlert] = useState(false);
 	const [showFailureMessage, setShowFailureMessage] = useState(false);
+	const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+	const navigate = useNavigate();
 
 	const handleActivation = async (): Promise<void> => {
 		const student = await activateStudent(props.studentProp.id, calculatedReferenceNumber, tuitionNumber);
 
 		student.success && student.data && props.onAccept(student.data);
 
-		setShowFailureMessage(true);
+		if (student.success) setShowSuccessMessage(true);
+		else setShowFailureMessage(true);
 	};
 
 	useEffect(() => {
@@ -59,7 +63,7 @@ export default function StudentActivationModal(props: {
 						type="number"
 						value={referenceNumber}
 						id="reference-number"
-						label="Número de de referencia"
+						label="Número de referencia"
 						variant="standard"
 						inputProps={{ inputMode: "numeric", pattern: "[0-9]^5" }}
 						onChange={(e): void => setReferenceNumber(e.target.value)}
@@ -98,7 +102,31 @@ export default function StudentActivationModal(props: {
 								</Box>
 							}>
 							<AlertTitle>Error</AlertTitle>
-							Algo salió mal
+							Algo salió mal: Asegurese que el estudiante tiene informacion basica completa, un familiar y un método de pago válido.
+						</Alert>
+					) : (
+						""
+					)}
+
+					{showSuccessMessage ? (
+						<Alert
+							severity="success"
+							sx={{ marginTop: "10px" }}
+							action={
+								<Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+									<Button
+										color="inherit"
+										size="small"
+										onClick={(): void => {
+											props.onClose();
+											navigate(0);
+										}}>
+										Aceptar
+									</Button>
+								</Box>
+							}>
+							<AlertTitle>Exito</AlertTitle>
+							El alumno se activo correctamente
 						</Alert>
 					) : (
 						""
