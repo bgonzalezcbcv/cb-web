@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 
-import { Box, Button, Card, Dialog, Link, Typography } from "@mui/material";
-import { DataGrid, GridRowId } from "@mui/x-data-grid";
+import { Alert, Box, Link, Typography } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import AddIcon from "@mui/icons-material/Add";
-import { JsonFormsCore } from "@jsonforms/core";
+
+import { RelevantEvent } from "../../../../core/Models";
+import * as Api from "../../../../core/ApiStore";
 import AddRelevantEvent from "./AddRelevantEvent";
+import useFetchFromAPI, { FetchStatus } from "../../../../hooks/useFetchFromAPI";
+import { LoadingButton } from "@mui/lab";
 
 interface RelevantEventsProps {
 	studentId: number;
@@ -19,11 +23,10 @@ function RelevantEvents(props: RelevantEventsProps): JSX.Element {
 	const { studentId, editable, canAdd, canDelete } = props;
 
 	const [isAddingRowOpen, setIsAddingRowOpen] = useState(false);
-	const [newRow, setNewRow] = useState<Pick<JsonFormsCore, "data" | "errors">>({ data: undefined, errors: [] });
+	const [relevantEvents, setRelevantEvents] = useState<RelevantEvent[]>([]);
+	const [deletionStatus, setDeletionStatus] = useState<FetchStatus>(FetchStatus.Initial);
 
-	function handleDeleteDocumentsRows(): void {
-		return;
-	}
+	const { fetchStatus, refetch } = useFetchFromAPI(() => Api.fetchRelevantEvents(studentId), setRelevantEvents);
 
 	function openAddDialog(): void {
 		setIsAddingRowOpen(true);
@@ -33,35 +36,30 @@ function RelevantEvents(props: RelevantEventsProps): JSX.Element {
 		setIsAddingRowOpen(false);
 	}
 
-	function areSchemaErrors(): boolean {
-		return (newRow?.errors as unknown[]).length > 0;
-	}
+	async function handleDeletion(id: number): Promise<void> {
+		if (window.confirm("¿Quiere eliminar este evento?")) {
+			setDeletionStatus(FetchStatus.Fetching);
+			const { success, error } = await Api.deleteRelevantEvent(studentId, id);
 
-	function enableAddingRow(): boolean {
-		return !areSchemaErrors();
-	}
-
-	function addTitleRow(): void {
-		return;
+			setDeletionStatus(FetchStatus.Initial);
+			if (success) refetch();
+			else window.alert(error);
+		}
 	}
 
 	return (
 		<Box display="flex" flexDirection="column" width="100%" height="100%">
-			<Box display="flex" justifyContent="flex-start">
-				<Typography variant="h5">Eventos relevantes</Typography>
-			</Box>
+			{fetchStatus === FetchStatus.Error && (
+				<Alert variant="outlined" severity="error" onClick={refetch} style={{ cursor: "pointer" }}>
+					No se pudieron obtener los eventos relevantes. Haga click aquí para reintenar.
+				</Alert>
+			)}
 
 			<Box display="flex" justifyContent="flex-end" width="100%">
-				{editable && (
-					<>
-						<Button onClick={handleDeleteDocumentsRows}>
-							<DeleteOutlineIcon />
-						</Button>
-
-						<Button onClick={openAddDialog}>
-							<AddIcon />
-						</Button>
-					</>
+				{editable && canAdd && (
+					<LoadingButton onClick={openAddDialog} loading={fetchStatus === FetchStatus.Fetching || deletionStatus === FetchStatus.Fetching}>
+						<AddIcon />
+					</LoadingButton>
 				)}
 
 				<AddRelevantEvent studentId={studentId} isOpen={isAddingRowOpen} onClose={closeAddDialog} />
@@ -94,8 +92,18 @@ function RelevantEvents(props: RelevantEventsProps): JSX.Element {
 								</Link>
 							),
 						},
+						{
+							field: "",
+							headerName: "Borrar",
+							width: 100,
+							hide: !canDelete,
+							renderCell: (params): React.ReactElement => (
+								<DeleteOutlineIcon onClick={(): Promise<void> => handleDeletion(params.row.id)} style={{ cursor: "pointer" }} />
+							),
+						},
 					]}
-					rows={[]}
+					rows={relevantEvents}
+					loading={fetchStatus === FetchStatus.Fetching || deletionStatus === FetchStatus.Fetching}
 				/>
 			</Box>
 		</Box>

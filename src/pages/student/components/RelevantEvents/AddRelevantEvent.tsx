@@ -1,18 +1,21 @@
 import _ from "lodash";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ErrorObject } from "ajv";
 
-import { Box, Dialog, DialogContent, DialogTitle } from "@mui/material";
+import { Alert, Box, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { JsonFormsCore, JsonSchema7 } from "@jsonforms/core";
 import { JsonForms } from "@jsonforms/react";
 import { materialRenderers } from "@jsonforms/material-renderers";
 
-import { EventType, EventTypeName, RelevantEvent } from "../../../../core/Models";
+import { EventType, EventTypeName, RelevantEventWithFile } from "../../../../core/Models";
+import * as Api from "../../../../core/ApiStore";
 import { getCustomAjv } from "../../../../core/AJVHelper";
+import { FetchStatus } from "../../../../hooks/useFetchFromAPI";
 
 import incompleteSchema from "./adding_schema.json";
 import ui from "./ui.json";
+import FileUploader from "../../../../components/fileUploader/FileUploader";
 
 const schema = _.set(
 	incompleteSchema,
@@ -36,19 +39,51 @@ interface AddRelevantEventProps {
 function AddRelevantEvent(props: AddRelevantEventProps): JSX.Element {
 	const { studentId, isOpen, onClose } = props;
 
-	const [newRelevantEvent, setNewRelevantEvent] = useState<RelevantEvent>({} as RelevantEvent);
+	const [newRelevantEvent, setNewRelevantEvent] = useState<RelevantEventWithFile>({} as RelevantEventWithFile);
 	const [errors, setErrors] = useState<ErrorObject[]>([]);
+	const [creationState, setCreationState] = useState<FetchStatus>(FetchStatus.Initial);
+	const [timeoutId, setTimeoutId] = useState<number | null>(null);
+
+	useEffect(() => {
+		if (creationState === FetchStatus.Error && !timeoutId) {
+			setTimeoutId(
+				window.setTimeout(() => {
+					setCreationState(FetchStatus.Initial);
+					setTimeoutId(null);
+				}, 5000)
+			);
+		}
+	}, [creationState, timeoutId]);
 
 	function handleDismiss(created = false): void {
+		setNewRelevantEvent({} as RelevantEventWithFile);
+		setErrors([]);
+		setCreationState(FetchStatus.Initial);
+		setTimeoutId(null);
 		onClose(created);
 	}
 
 	function handleChange(state: Pick<JsonFormsCore, "data" | "errors">): void {
 		const { data, errors } = state;
 
-		console.log(data);
 		setNewRelevantEvent(data);
 		setErrors(errors ?? []);
+	}
+
+	async function handleCreate(): Promise<void> {
+		if (timeoutId) {
+			window.clearTimeout(timeoutId);
+			setTimeoutId(null);
+		}
+
+		setCreationState(FetchStatus.Fetching);
+
+		const { success } = await Api.createRelevantEvent(studentId, newRelevantEvent);
+
+		setCreationState(FetchStatus.Initial);
+
+		if (success) handleDismiss(true);
+		else setCreationState(FetchStatus.Error);
 	}
 
 	return (
@@ -66,8 +101,16 @@ function AddRelevantEvent(props: AddRelevantEventProps): JSX.Element {
 						validationMode="ValidateAndShow"
 					/>
 
+					<FileUploader label="Adjunto" width="100%" uploadedFile={(file): void => setNewRelevantEvent({ ...newRelevantEvent, attachment: file })} />
+
+					{creationState === FetchStatus.Error && (
+						<Alert variant="outlined" severity="error">
+							No se pudo crear el evento. Intente otra vez.
+						</Alert>
+					)}
+
 					<Box display="flex" justifyContent="flex-end">
-						<LoadingButton variant="outlined" disabled={errors.length > 0}>
+						<LoadingButton variant="outlined" disabled={errors.length > 0} onClick={handleCreate} loading={creationState === FetchStatus.Fetching}>
 							Crear
 						</LoadingButton>
 					</Box>

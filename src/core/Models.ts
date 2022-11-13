@@ -425,10 +425,15 @@ export enum EventType {
 }
 
 export interface RelevantEvent {
+	id: number;
 	title: string;
 	description: string;
 	event_type: EventType;
 	date: string;
 	author: User;
 	attachment_url: string;
+}
+
+export interface RelevantEventWithFile extends RelevantEvent {
+	attachment?: File;
 }

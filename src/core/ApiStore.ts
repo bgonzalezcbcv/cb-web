@@ -29,6 +29,8 @@ import {
 	Document,
 	ComplementaryInfoWithFile,
 	AbsencesWithFile,
+	RelevantEvent,
+	RelevantEventWithFile,
 } from "./Models";
 import { DefaultApiResponse, UserRole } from "./interfaces";
 import { DataStore } from "./DataStore";
@@ -1058,6 +1060,58 @@ export async function deleteAbsences(userId: number, absenceId: number): Promise
 		return defaultResponse(undefined);
 	} catch (e) {
 		return defaultErrorResponse("No se pudo eliminar la inasistencia.");
+	}
+}
+export async function createRelevantEvent(studentId: number, newRelevantEvent: RelevantEventWithFile): Promise<DefaultApiResponse<undefined>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "post",
+			url: `/api/students/${studentId}/relevant_events`,
+			headers: {
+				...baseConfig.headers,
+				"Content-Type": "multipart/form-data",
+			},
+			data: getFormDataFromObject(newRelevantEvent),
+		};
+
+		await axios(config);
+
+		return defaultResponse(undefined);
+	} catch (error: unknown) {
+		return defaultErrorResponse((error as AxiosError).message ?? "");
+	}
+}
+
+export async function fetchRelevantEvents(studentId: number): Promise<DefaultApiResponse<RelevantEvent[]>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: `/api/students/${studentId}/relevant_events`,
+		};
+
+		const response = await axios(config);
+
+		return defaultResponse(response.data.student.relevant_events);
+	} catch (e) {
+		return defaultErrorResponse("No se pudieron obtener los docentes.");
+	}
+}
+
+export async function deleteRelevantEvent(studentId: number, id: number): Promise<DefaultApiResponse<undefined>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "delete",
+			url: `/api/students/${studentId}/relevant_events/${id}`,
+		};
+
+		await axios(config);
+
+		return defaultResponse(undefined);
+	} catch (e) {
+		return defaultErrorResponse("No se pudo borrar el evento.");
 	}
 }
 
