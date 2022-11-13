@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Alert, Box, Link, Typography } from "@mui/material";
+import { Alert, Box, Link } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
