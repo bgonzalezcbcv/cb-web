@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 
-import { Alert, Box, Card, CardContent, Chip, CircularProgress, Divider, Grid, Link, Typography } from "@mui/material";
+import { Alert, Box, Button, Card, CardContent, Chip, CircularProgress, Divider, Grid, Link, Typography } from "@mui/material";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 
 import { UserInfo } from "../../core/Models";
@@ -16,7 +16,11 @@ import Absences from "./components/Absences/Absences";
 import Documents from "./components/Documents/Documents";
 import Restrict from "../../components/Restrict/Restrict";
 import useIsAuthenticated from "../../hooks/useIsAuthenticated";
+import { UserChangePassword } from "./components/ChangePassword/UserChangePassword/UserChangePassword";
+import { AdminChangePassword } from "./components/ChangePassword/AdminChangePassword/AdminChangePassword";
 import useFetchFromAPI, { FetchStatus } from "../../hooks/useFetchFromAPI";
+
+import style from "./User.module.scss";
 
 interface UserProps {
 	editable: boolean;
@@ -49,6 +53,7 @@ function User(props: UserProps): JSX.Element {
 	const loggedUser = DataStore.getInstance().loggedUser;
 
 	const [user, setUser] = useState<UserInfo | null>(null);
+	const [passwordDialogOpen, setPasswordDialogOpen] = useState(false);
 
 	useIsAuthenticated(
 		[UserRole.Recepcion, UserRole.Administrativo, UserRole.Director, UserRole.Docente, UserRole.Adscripto, UserRole.Administrador],
@@ -56,6 +61,25 @@ function User(props: UserProps): JSX.Element {
 	);
 
 	const { fetchStatus, refetch } = useFetchFromAPI(() => fetchUser(id as string), setUser, id !== undefined);
+
+		setFetchStatus(FetchStatus.Fetching);
+
+		const response = await fetchUser(id);
+
+		if (response.success && response.data) {
+			setUser(response.data);
+			setFetchStatus(FetchStatus.Initial);
+		} else setFetchStatus(FetchStatus.Error);
+	}, [id]);
+
+	useEffect(() => {
+		fetchUserFromAPI();
+	}, [fetchUserFromAPI]);
+
+	const handleChangePassword = (isOpen: boolean, isChanged: boolean): void => {
+		setPasswordDialogOpen(isOpen);
+		console.log(isChanged);
+	};
 
 	if (fetchStatus === FetchStatus.Fetching)
 		return (
@@ -90,6 +114,11 @@ function User(props: UserProps): JSX.Element {
 					<Link href={`mailto:${email}`}>
 						<MailOutlineIcon />
 					</Link>
+					<Box display="flex">
+						<Button variant="contained" onClick={(): void => setPasswordDialogOpen(true)}>
+							Cambiar Contraseña
+						</Button>
+					</Box>
 				</Box>
 
 				<Divider />
@@ -170,6 +199,12 @@ function User(props: UserProps): JSX.Element {
 					</Grid>
 				</Grid>
 			</>
+			<Restrict to={[UserRole.Administrativo, UserRole.Adscripto, UserRole.Director, UserRole.Docente, UserRole.Recepcion]}>
+				<UserChangePassword isOpen={passwordDialogOpen} setOpen={handleChangePassword} />
+			</Restrict>
+			<Restrict to={[UserRole.Administrador]}>
+				<AdminChangePassword user={user} isOpen={passwordDialogOpen} setOpen={handleChangePassword} />
+			</Restrict>
 		</Content>
 	);
 }

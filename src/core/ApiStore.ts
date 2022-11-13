@@ -1060,3 +1060,47 @@ export async function deleteAbsences(userId: number, absenceId: number): Promise
 		return defaultErrorResponse("No se pudo eliminar la inasistencia.");
 	}
 }
+
+export async function userChangePassword(oldPassword: string, newPassword: string, confirmPassword: string): Promise<{ success: boolean }> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "patch",
+			url: `/api/me/password`,
+			data: JSON.stringify({
+				user: {
+					current_password: oldPassword,
+					password: newPassword,
+					password_confirmation: confirmPassword,
+				},
+			}),
+		};
+
+		await axios(config);
+
+		return { success: true };
+	} catch (e) {
+		return defaultErrorResponse("No se pudo cambiar la contraseña.");
+	}
+}
+
+export async function adminChangePassword(userId: number, newPassword: string): Promise<{ success: boolean }> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "patch",
+			url: `api/users/${userId}`,
+			data: JSON.stringify({
+				user: {
+					password: newPassword,
+				},
+			}),
+		};
+
+		await axios(config);
+
+		return { success: true };
+	} catch (e) {
+		return { success: false };
+	}
+}
