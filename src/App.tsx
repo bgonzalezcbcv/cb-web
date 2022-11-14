@@ -24,6 +24,7 @@ import InactiveStudents from "./pages/students/inactive/InactiveStudents";
 import Teachers from "./pages/teachers/Teachers";
 import Groups from "./pages/groups/Groups";
 import Users from "./pages/users/Users";
+import ActiveStudents from "./pages/students/ActiveStudents";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
 
@@ -57,6 +58,7 @@ function App(): React.ReactElement {
 												<Route path="/students/:id" element={<Students />} />
 												<Route path="/students/:groupId" element={<Students />} />
 												<Route path="/pending" element={<PendigStudents />} />
+												<Route path="/students/active" element={<ActiveStudents />} />
 												<Route path="/students/inactive" element={<InactiveStudents />} />
 												<Route path="/createuser" element={<CreateUser />} />
 												<Route path="/users" element={<Users />} />
