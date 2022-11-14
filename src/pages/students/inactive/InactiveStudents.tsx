@@ -56,7 +56,7 @@ const columns: GridColDef[] = [
 			const onClick = (e: any) => {
 				e.stopPropagation();
 
-				navigate("/student/" + params.value);
+				navigate("/student/" + params.value + "/edit");
 			};
 			return <Button onClick={onClick}>Ir</Button>; //Link component
 		},

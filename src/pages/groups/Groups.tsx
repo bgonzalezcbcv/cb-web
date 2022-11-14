@@ -166,7 +166,7 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 				const id: string = params.value;
 
 				const onClick = (): void => {
-					navigate(`/students/${id}`);
+					navigate(`/students/${id}/edit`);
 				};
 				return (
 					<IconButton onClick={onClick}>

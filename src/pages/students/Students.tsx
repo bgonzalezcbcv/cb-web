@@ -1,6 +1,6 @@
 /*eslint-disable*/
 import React, { useCallback, useEffect, useState } from "react";
-import {useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Alert, Box, Button, Card, CircularProgress, Input, Paper, Typography } from "@mui/material";
@@ -39,7 +39,7 @@ const columns: GridColDef[] = [
 			const onClick = () => {
 				const id = params.value;
 
-				navigate(`/student/${id}`);
+				navigate(`/student/${id}/edit`);
 			};
 			return <Button onClick={onClick}>Ir</Button>;
 		},

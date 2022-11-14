@@ -83,7 +83,10 @@ export default function Student(props: StudentProps): React.ReactElement {
 				<StudentInfo
 					student={student}
 					onChange={debouncedSetStudent}
-					editable={isEditable}
+					editable={restrictEditionTo(
+						[UserRole.Recepcion, UserRole.Adscripto, UserRole.Director, UserRole.Administrativo, UserRole.Administrador],
+						isEditable
+					)}
 					translator={translator}
 					isCreating={[StudentPageMode.create].includes(mode)}
 				/>

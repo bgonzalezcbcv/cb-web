@@ -34,7 +34,7 @@ const columns: GridColDef[] = [
 				api.getAllColumns()
 					.filter((c: GridColDef) => c.field !== "__check__" && !!c)
 					.forEach((c: GridColDef) => (thisRow[c.field] = params.getValue(params.id, c.field)));
-				navigate("/student/" + thisRow.id);
+				navigate("/student/" + thisRow.id + "/edit");
 			};
 			return <Button onClick={onClick}>Ir</Button>; //Link component
 		},
