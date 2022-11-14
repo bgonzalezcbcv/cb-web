@@ -245,3 +245,27 @@ export function getCicleFromGroup(group: StudentGroup): Cicle {
 			return Cicle.None;
 	}
 }
+
+export const calculateReferenceNumber = (baseNumber: string): string => {
+	const digits = baseNumber.split("");
+	const weightVector = [5, 6, 3, 9];
+
+	// For the i(th) step of the calc the rule is step_i = weightVector[i] * digits[i]
+	const weightedDigits = digits.map((digit, index) => {
+		return parseInt(digit) * weightVector[index];
+	});
+
+	const fifthStep = weightedDigits.reduce((previousValue, sum) => previousValue + sum, 0);
+
+	const sixthStep = Math.floor(fifthStep / 11);
+
+	const seventhStep = sixthStep * 11;
+
+	const eighthStep = fifthStep - seventhStep;
+
+	const verificationDigit = eighthStep < 10 ? eighthStep : 0;
+
+	digits.push(verificationDigit.toString());
+
+	return digits.join("");
+};

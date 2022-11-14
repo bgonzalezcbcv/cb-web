@@ -1,22 +1,24 @@
 import * as React from "react";
 
 import { Student } from "../../../../core/Models";
-import {DefaultApiResponse, StudentPageMode} from "../../../../core/interfaces";
+import { DefaultApiResponse, StudentPageMode } from "../../../../core/interfaces";
 
-import {Box, Button, Chip, Typography} from "@mui/material";
+import { Box, Button, Chip, Typography } from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import EditIcon from "@mui/icons-material/Edit";
 import EditOffIcon from "@mui/icons-material/EditOff";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
+import AddTaskIcon from "@mui/icons-material/AddTask";
 
 import FormUploadDialog from "../FormUploadDialog/FormUploadDialog";
 import Modal from "../../../../components/modal/Modal";
 import DeactivateStudent, { DeactivationInfo } from "../DeactivateStudent/DeactivateStudent";
+import StudentActivationModal from "../StudentActivationModal/StudentActivationModal";
 
 import "./Student.scss";
-import {useCallback} from "react";
+import { useCallback } from "react";
 import * as API from "../../../../core/ApiStore";
 import DeactivateStudentDialog from "./DeactivateStudent/DeactivateStudentDialog";
 
@@ -54,6 +56,7 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 			deactivationResponse.data && setStudent(deactivationResponse.data);
 		}
 	}, [deactivationInfo, hasErrors, student]);
+	const [showActivationModal, setShowActivationModal] = React.useState(false);
 
 	return (
 		<>
@@ -101,7 +104,6 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 							{"Subir formulario"}
 						</Button>
 					) : null}
-
 					{[StudentPageMode.edit].includes(mode) ? (
 						<Button
 							data-cy={"studentEditInfoButton"}
@@ -111,8 +113,20 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 							{"Editar"}
 						</Button>
 					) : null}
+					{
+						//TODO: add this to the condition: && student.status === "pending"
 
-					{mode === StudentPageMode.edit && student.status !== "inactive"? (
+						[StudentPageMode.edit].includes(mode) && student.status !== "active" ? (
+							<Button
+								data-cy={"studentActivateButton"}
+								color={"secondary"}
+								startIcon={<AddTaskIcon />}
+								onClick={(): void => setShowActivationModal(true)}>
+								{"Activar"}
+							</Button>
+						) : null
+					}
+					{mode === StudentPageMode.edit && student.status !== "inactive" ? (
 						<Button color={"secondary"} startIcon={<DeleteIcon />} onClick={(): void => setIsDeactivateStudentModalVisible(true)}>
 							Dar de baja
 						</Button>
@@ -132,6 +146,18 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 				}}
 			/>
 
+			<StudentActivationModal
+				open={showActivationModal}
+				onClose={(): void => {
+					setShowActivationModal(false);
+				}}
+				onAccept={(newStudent: Student): void => {
+					setStudent(newStudent);
+					setIsFormUploadOpen(false);
+				}}
+				studentProp={student}
+			/>
+
 			<Modal
 				show={isDeactivateStudentModalVisible}
 				title={"Dar de baja estudiante"}
@@ -145,7 +171,9 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 				/>
 			</Modal>
 
-			{showDialog && studentDeactivationState && <DeactivateStudentDialog apiResponse={studentDeactivationState} show={(value): void => setShowDialog(value)} />}
+			{showDialog && studentDeactivationState && (
+				<DeactivateStudentDialog apiResponse={studentDeactivationState} show={(value): void => setShowDialog(value)} />
+			)}
 		</>
 	);
 }

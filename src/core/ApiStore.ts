@@ -1247,3 +1247,20 @@ export async function adminChangePassword(userId: number, newPassword: string): 
 		return { success: false };
 	}
 }
+
+export async function activateStudent(id: string, referenceNumber: string, tuition: string): Promise<DefaultApiResponse<Student>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "post",
+			url: `/api/students/${id}/activate`,
+			data: JSON.stringify({ student: { reference_number: referenceNumber, tuition: tuition } }),
+		};
+
+		const response = await axios(config);
+
+		return defaultResponse(response.data.students);
+	} catch (e) {
+		return defaultErrorResponse("Algo salió mal al activar el alumno");
+	}
+}

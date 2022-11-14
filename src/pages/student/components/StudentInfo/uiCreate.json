@@ -54,6 +54,23 @@
 			"elements": [
 				{
 					"type": "Control",
+					"scope": "#/properties/schedule_start"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/schedule_end"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/office"
+				}
+			]
+		},
+		{
+			"type": "HorizontalLayout",
+			"elements": [
+				{
+					"type": "Control",
 					"scope": "#/properties/neighborhood"
 				},
 				{
@@ -63,6 +80,10 @@
 				{
 					"type": "Control",
 					"scope": "#/properties/phone_number"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/contact_phone"
 				}
 			]
 		},
@@ -76,6 +97,10 @@
 				{
 					"type": "Control",
 					"scope": "#/properties/emergency"
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/vaccine_name"
 				},
 				{
 					"type": "Control",
