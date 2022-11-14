@@ -246,7 +246,7 @@ export function getCicleFromGroup(group: StudentGroup): Cicle {
 	}
 }
 
-export const calculateReferenceNumber = (baseNumber: string) => {
+export const calculateReferenceNumber = (baseNumber: string): string => {
 	const digits = baseNumber.split("");
 	const weightVector = [5, 6, 3, 9];
 

@@ -148,7 +148,7 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 
 			<StudentActivationModal
 				open={showActivationModal}
-				onClose={() => {
+				onClose={(): void => {
 					setShowActivationModal(false);
 				}}
 				onAccept={(newStudent: Student): void => {
