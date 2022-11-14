@@ -722,7 +722,7 @@ export async function fetchTeachers(id?: number): Promise<DefaultApiResponse<Use
 		const config = {
 			...baseConfig,
 			method: "get",
-			url: id ? `/api/teachers/${id}` : "/api/teachers/",
+			url: id ? "api/me/teachers/" : "/api/teachers/",
 		};
 
 		const response = await axios(config);
