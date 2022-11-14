@@ -4,25 +4,28 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 
 // Secondly we import our types, core elements, pages, components and lastly images.
+import { Box } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+
 import { DataStore } from "./core/DataStore";
 import { StudentPageMode } from "./core/interfaces";
 import { getSidebarSectionsByUser } from "./core/userRoleHelper";
 import { theme } from "./core/theme";
+
 import CreateUser from "./pages/createuser/CreateUser";
 import Login from "./pages/login/Login";
 import User from "./pages/user/User";
 import Student from "./pages/student/Student";
 import AddUsersToGroup from "./pages/adduserstogroup/AddUsersToGroup";
-import Navbar from "./components/Navbar/Navbar";
-import Sidebar from "./components/Sidebar/Sidebar";
 import Home from "./pages/home/Home";
 import Students from "./pages/students/Students";
 import PendigStudents from "./pages/students/PendingStudents";
 import InactiveStudents from "./pages/students/inactive/InactiveStudents";
 import Teachers from "./pages/teachers/Teachers";
 import Groups from "./pages/groups/Groups";
-import { Box } from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
+import Users from "./pages/users/Users";
+import Navbar from "./components/Navbar/Navbar";
+import Sidebar from "./components/Sidebar/Sidebar";
 
 // Lastly we import our stylesheets.
 import "./App.css";
@@ -56,6 +59,7 @@ function App(): React.ReactElement {
 												<Route path="/pending" element={<PendigStudents />} />
 												<Route path="/students/inactive" element={<InactiveStudents />} />
 												<Route path="/createuser" element={<CreateUser />} />
+												<Route path="/users" element={<Users />} />
 												<Route path="/user/:id" element={<User editable={false} />} />
 												<Route path="/user/:id/edit" element={<User editable />} />
 												<Route path="/teachers/:id" element={<Teachers editable={false} />} />
