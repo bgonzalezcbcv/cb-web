@@ -1,7 +1,7 @@
 import _ from "lodash";
 import * as XLSX from "xlsx";
 import { JsonSchema7 } from "@jsonforms/core";
-import { FinalEvaluation, IntermediateEvaluation, ReportApprovalState, ReportCard, StudentGroup } from "./Models";
+import { Answer, Cicle, CicleQuestions, FinalEvaluation, IntermediateEvaluation, ReportApprovalState, ReportCard, StudentGroup } from "./Models";
 
 /**
  * @param xlsxFile Excel file with .xlsx format.
@@ -196,4 +196,52 @@ export function getDateInStringFormat(date = new Date(), separator = "-"): strin
 	const year = date.getFullYear();
 
 	return addLeadingZeroToDate(day + separator + month + separator + year);
+}
+
+export function mergeQuestionsAndAnswers(cicle_questions: CicleQuestions[], answers: Answer[]): CicleQuestions[] {
+	const cicleQuestionsWithAnswers: CicleQuestions[] = _.cloneDeep(cicle_questions);
+
+	cicleQuestionsWithAnswers.forEach((cicleQuestion) => {
+		cicleQuestion.questions.forEach((q) => {
+			const filteredAnswers = answers.filter((a) => a.question.id === q.id);
+			if (filteredAnswers.length > 0) {
+				q.answer = filteredAnswers[0].answer;
+				q.answerId = filteredAnswers[0].id;
+				q.httpRequest = "PATCH";
+			} else {
+				q.answer = "-";
+				q.httpRequest = "POST";
+			}
+		});
+	});
+
+	return cicleQuestionsWithAnswers;
+}
+
+export function getCicleFromGroup(group: StudentGroup): Cicle {
+	switch (group.grade_name) {
+		case "Nivel 0":
+		case "Nivel 1":
+		case "Nivel 2":
+			return Cicle.Nursery;
+
+		case "Nivel 3":
+		case "Nivel 4":
+		case "Nivel 5":
+		case "1ero":
+		case "2do":
+		case "3ero":
+		case "4to":
+		case "5to":
+		case "6to":
+			return Cicle.Primary;
+
+		case "1 CBU":
+		case "2 CBU":
+		case "3 CBU":
+			return Cicle.HighSchool;
+
+		default:
+			return Cicle.None;
+	}
 }

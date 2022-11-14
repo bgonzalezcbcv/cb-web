@@ -113,7 +113,7 @@ export default function Student(props: StudentProps): React.ReactElement {
 			dataCY: "complementaryInfoTab",
 			panel: (
 				<Restrict
-					to={[UserRole.Director, UserRole.Docente, UserRole.Adscripto, UserRole.Administrador]}
+					to={[UserRole.Director, UserRole.Docente, UserRole.Adscripto, UserRole.Administrador, UserRole.Administrativo]}
 					fallback={
 						<Alert severity="info" variant="outlined">
 							<Typography variant="body1">No tiene permisos para ver esta información.</Typography>
@@ -122,7 +122,7 @@ export default function Student(props: StudentProps): React.ReactElement {
 					<EnrollmentQuestions
 						student={student}
 						onChange={debouncedSetStudent}
-						editable={restrictEditionTo([UserRole.Director, UserRole.Administrativo], isEditable)}
+						editable={restrictEditionTo([UserRole.Director, UserRole.Administrativo, UserRole.Administrador], isEditable)}
 					/>
 				</Restrict>
 			),
