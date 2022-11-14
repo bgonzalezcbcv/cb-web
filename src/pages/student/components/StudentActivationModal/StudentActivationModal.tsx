@@ -76,7 +76,7 @@ export default function StudentActivationModal(props: {
 							action={
 								<Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
 									<Button color="inherit" size="small" onClick={(): void => setShowAlert(false)}>
-										Se lo que hago
+										Sé lo que hago
 									</Button>
 									<Button color="inherit" size="small" onClick={(): void => setReferenceNumber(calculatedReferenceNumber)}>
 										Deshacer
