@@ -58,9 +58,9 @@ function User(props: UserProps): JSX.Element {
 		(loggedUser) => !(loggedUser.role === UserRole.Docente && loggedUser.id.toString() !== id)
 	);
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const handleChangePassword = (isOpen: boolean, isChanged: boolean): void => {
 		setPasswordDialogOpen(isOpen);
-		console.log(isChanged);
 	};
 
 	const { fetchStatus, refetch } = useFetchFromAPI(() => fetchUser(id as string), setUser, id !== undefined);

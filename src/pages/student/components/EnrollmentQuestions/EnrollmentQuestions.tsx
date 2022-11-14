@@ -52,8 +52,6 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 		setSelectedCicle(cicle);
 	};
 
-	console.log(questions);
-
 	return (
 		<Box>
 			<Box display="flex">

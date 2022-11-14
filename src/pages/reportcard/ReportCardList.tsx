@@ -165,8 +165,6 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 			disableColumnMenu: false,
 			flex: 1,
 			renderCell: ({ value: url }): React.ReactElement | null => {
-				console.log(url);
-
 				return url ? (
 					<Link href={url} target="_blank">
 						<IconButton>
