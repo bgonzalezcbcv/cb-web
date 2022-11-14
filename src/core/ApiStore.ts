@@ -14,7 +14,6 @@ import {
 	Student,
 	User,
 	UserInfo,
-	Group,
 } from "./Models";
 import { DefaultApiResponse, UserRole } from "./interfaces";
 
@@ -174,7 +173,7 @@ export async function fetchPendingStudents(): Promise<DefaultApiResponse<Student
 		const config = {
 			...baseConfig,
 			method: "get",
-			url: `/api/pending/`,
+			url: `/api/students/pending/`,
 		};
 
 		const response = await axios(config);
@@ -505,55 +504,5 @@ export async function fetchTeachers(): Promise<DefaultApiResponse<UserInfo[]>> {
 		// eslint-disable-next-line
 	} catch (error: any) {
 		return defaultErrorResponse("No se pudieron obtener los docentes.");
-	}
-}
-
-export async function addTeacherToGroup(user_id: number, group_id: number): Promise<DefaultApiResponse<Group>> {
-	const role = dataStore.loggedUser?.role;
-	try {
-		const config = {
-			...baseConfig,
-			method: "post",
-			url: `/api/user_group/add`,
-			//url: `/api/user_group/${user_id}/add/${group_id}/${role}`,
-			data: JSON.stringify({
-				user_group: {
-					user_id: user_id,
-					group_id: group_id,
-					role: role,
-				},
-			}),
-		};
-
-		const response = await axios(config);
-
-		return defaultResponse(response.data.user);
-	} catch (e) {
-		return defaultErrorResponse("No se ha podido asociar al docente al grupo.");
-	}
-}
-
-export async function removeTeacherToGroup(user_id: number, group_id: number): Promise<DefaultApiResponse<Group>> {
-	const role = dataStore.loggedUser?.role;
-	try {
-		const config = {
-			...baseConfig,
-			method: "delete",
-			url: `/api/user_group/`,
-			//url: `/api/user_group/${user_id}/remove/${group_id}/${role}`,
-			data: JSON.stringify({
-				user_group: {
-					user_id: user_id,
-					group_id: group_id,
-					role: role,
-				},
-			}),
-		};
-
-		const response = await axios(config);
-
-		return defaultResponse(response.data.user);
-	} catch (e) {
-		return defaultErrorResponse("No se ha podido remover al docente del grupo.");
 	}
 }
