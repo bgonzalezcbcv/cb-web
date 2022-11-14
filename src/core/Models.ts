@@ -418,10 +418,16 @@ export interface StudentGroup {
 
 export enum EventTypeName {
 	event = "Evento",
+	family_situation = "Situación familiar",
+	school_situation = "Situación escolar",
+	external_report = "Reporte externo",
 }
 
 export enum EventType {
 	Event = "event",
+	FamilySituation = "family_situation",
+	SchoolSituation = "school_situation",
+	ExternalReport = "external_report",
 }
 
 export interface RelevantEvent {

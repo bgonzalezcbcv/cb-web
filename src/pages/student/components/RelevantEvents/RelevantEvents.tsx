@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 
-import { Alert, Box, Link } from "@mui/material";
+import { Alert, Box, Link, Tooltip } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import AddIcon from "@mui/icons-material/Add";
 
-import { RelevantEvent } from "../../../../core/Models";
+import { EventTypeName, RelevantEvent, UserInfo } from "../../../../core/Models";
 import * as Api from "../../../../core/ApiStore";
 import AddRelevantEvent from "./AddRelevantEvent";
 import useFetchFromAPI, { FetchStatus } from "../../../../hooks/useFetchFromAPI";
 import { LoadingButton } from "@mui/lab";
+import { reverseDate } from "../../../../core/CoreHelper";
 
 interface RelevantEventsProps {
 	studentId: number;
@@ -32,8 +33,10 @@ function RelevantEvents(props: RelevantEventsProps): JSX.Element {
 		setIsAddingRowOpen(true);
 	}
 
-	function closeAddDialog(): void {
+	function closeAddDialog(created = false): void {
 		setIsAddingRowOpen(false);
+
+		if (created) refetch();
 	}
 
 	async function handleDeletion(id: number): Promise<void> {
@@ -65,32 +68,52 @@ function RelevantEvents(props: RelevantEventsProps): JSX.Element {
 				<AddRelevantEvent studentId={studentId} isOpen={isAddingRowOpen} onClose={closeAddDialog} />
 			</Box>
 
-			<Box sx={{ height: 350, width: "100%", paddingTop: "12px" }}>
+			<Box sx={{ height: "80%", width: "100%", paddingTop: "12px" }}>
 				<DataGrid
 					columns={[
-						{ field: "event_date", headerName: "Fecha", width: 120 },
-						{ field: "name", headerName: "Nombre", width: 150 },
-						{ field: "event_type", headerName: "Tipo", width: 100 },
-						{ field: "description", headerName: "Descripción", width: 250 },
+						{ field: "date", headerName: "Fecha", flex: 1, renderCell: ({ value }) => reverseDate(value, "/") },
 						{
-							field: "user",
-							headerName: "Creador",
-							width: 120,
-							renderCell: ({ value }) => (
-								<Link href={value.id} target="_blank">
-									${value.name} ${value.surname}
-								</Link>
+							field: "title",
+							headerName: "Nombre",
+							flex: 2,
+							renderCell: ({ value }): React.ReactElement => (
+								<Tooltip title={value}>
+									<p style={{ whiteSpace: "break-spaces", overflowWrap: "break-word" }}>{value}</p>
+								</Tooltip>
+							),
+						},
+						{ field: "event_type", headerName: "Tipo", flex: 2, renderCell: ({ value }) => EventTypeName[value as keyof typeof EventTypeName] },
+						{
+							field: "description",
+							headerName: "Descripción",
+							resizable: true,
+							flex: 3,
+							renderCell: ({ value }): React.ReactElement => (
+								<Tooltip title={value}>
+									<p style={{ whiteSpace: "break-spaces", overflowWrap: "break-word" }}>{value}</p>
+								</Tooltip>
 							),
 						},
 						{
-							field: "attachment",
+							field: "user",
+							headerName: "Creador",
+							flex: 2,
+							renderCell: ({ value }): React.ReactElement => {
+								const { id, name, surname } = value as UserInfo;
+
+								return <Link href={`/user/${id}`}>{`${name} ${surname}`}</Link>;
+							},
+						},
+						{
+							field: "attachment_url",
 							headerName: "Adjunto",
-							width: 120,
-							renderCell: ({ value }) => (
-								<Link href={value} target="_blank">
-									<AttachFileIcon />
-								</Link>
-							),
+							flex: 1,
+							renderCell: ({ value }): React.ReactElement | null =>
+								value ? (
+									<Link href={value} target="_blank">
+										<AttachFileIcon />
+									</Link>
+								) : null,
 						},
 						{
 							field: "",
@@ -102,6 +125,7 @@ function RelevantEvents(props: RelevantEventsProps): JSX.Element {
 							),
 						},
 					]}
+					autoPageSize
 					rows={relevantEvents}
 					loading={fetchStatus === FetchStatus.Fetching || deletionStatus === FetchStatus.Fetching}
 				/>
