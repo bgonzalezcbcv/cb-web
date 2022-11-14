@@ -1,7 +1,7 @@
 import _ from "lodash";
 
 import { Cicle, CicleQuestions, Question, Student, StudentCreationForm } from "./Models";
-import { addLeadingZeroToDate, normalizeText } from "./CoreHelper";
+import { addLeadingZeroAndFixSeparatorToDate, normalizeText, cleanCI } from "./CoreHelper";
 import * as API from "./ApiStore";
 
 function fillAnswers(inscriptionQuestions: CicleQuestions, questionsKey: string[], form: StudentCreationForm): CicleQuestions {
@@ -49,26 +49,26 @@ export async function parseFormToStudent(form: StudentCreationForm, student: Stu
 			email: form.Email,
 			name: form["Nombres:"],
 			surname: form["Apellidos:"],
-			birthdate: addLeadingZeroToDate(form["Fecha de nacimiento:"]),
+			birthdate: addLeadingZeroAndFixSeparatorToDate(form["Fecha de nacimiento:"]),
 			birthplace: form["Lugar de nacimiento:"],
 			nationality: form["Nacionalidad:"],
-			ci: form["Cédula de Identidad:"].replaceAll(".", "").replaceAll("-", ""),
+			ci: cleanCI(form["Cédula de Identidad:"]),
 			address: form["Dirección:"],
 			neighborhood: form["Barrio:"],
 			phone_number: form["Teléfono:"],
 			first_language: form["Lengua materna:"],
 			medical_assurance: form["Cobertura médica:"],
 			emergency: form["Emergencia médica:"],
-			vaccine_expiration: addLeadingZeroToDate(form["Fecha de vencimiento de vacunas:"]),
+			vaccine_expiration: addLeadingZeroAndFixSeparatorToDate(form["Fecha de vencimiento de vacunas:"]),
 			family: [
 				{
 					role: form["Datos correspondientes a:"],
 					full_name: form["Apellidos, nombre:"],
-					birthdate: addLeadingZeroToDate(form["Fecha de nacimiento:2"]),
+					birthdate: addLeadingZeroAndFixSeparatorToDate(form["Fecha de nacimiento:2"]),
 					birthplace: form["País de nacimiento:"],
 					nationality: form["Nacionalidad:2"],
 					first_language: form["Lengua materna:2"],
-					ci: form["Cédula de identidad:2"].replaceAll(".", "").replaceAll("-", ""),
+					ci: cleanCI(form["Cédula de identidad:2"]),
 					marital_status: form["Estado Civil:"],
 					cellphone: form["Celular:"],
 					email: form["Mail personal:"],
@@ -84,11 +84,11 @@ export async function parseFormToStudent(form: StudentCreationForm, student: Stu
 				{
 					role: form["Datos correspondientes a:2"],
 					full_name: form["Apellidos, nombre:2"],
-					birthdate: addLeadingZeroToDate(form["Fecha de nacimiento:3"]),
+					birthdate: addLeadingZeroAndFixSeparatorToDate(form["Fecha de nacimiento:3"]),
 					birthplace: form["País de nacimiento:2"],
 					nationality: form["Nacionalidad:3"],
 					first_language: form["Lengua materna:3"],
-					ci: form["Cédula de identidad:3"].replaceAll(".", "").replaceAll("-", ""),
+					ci: cleanCI(form["Cédula de identidad:3"]),
 					marital_status: form["Estado Civil:2"],
 					cellphone: form["Celular:2"],
 					email: form["Mail personal:2"],
