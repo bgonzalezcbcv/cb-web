@@ -26,6 +26,7 @@ import * as APIStore from "../../core/ApiStore";
 import { restrictEditionTo } from "../../core/userRoleHelper";
 import { UserRole } from "../../core/interfaces";
 import useFetchFromAPI, { FetchStatus } from "../../hooks/useFetchFromAPI";
+import Restrict from "../../components/Restrict/Restrict";
 import Modal from "../../components/modal/Modal";
 import UserList from "./components/UserList";
 import AddUser from "./components/AddUser";
@@ -274,9 +275,11 @@ export default function Groups(props: GroupsProps): React.ReactElement {
 			}}>
 			<Box display="flex" justifyContent="space-between" width="100%" marginBottom="30px">
 				<Typography variant="h4">Grupos</Typography>
-				<Button variant={"outlined"} onClick={handleCreateGroupModalOpen}>
-					Crear grupo
-				</Button>
+				<Restrict to={[UserRole.Administrador]}>
+					<Button variant={"outlined"} onClick={handleCreateGroupModalOpen}>
+						Crear grupo
+					</Button>
+				</Restrict>
 			</Box>
 
 			<Paper sx={{ height: "75vh" }}>{printTable()}</Paper>
