@@ -30,6 +30,11 @@ describe("Student", () => {
 			data: undefined,
 			error: "",
 		});
+		jest.spyOn(ApiStore, "fetchRelevantEvents").mockResolvedValue({
+			success: true,
+			data: [],
+			error: "",
+		});
 		jest.spyOn(ReactRouter, "useNavigate").mockImplementation(() => jest.fn);
 		mockRestrictionsComponent();
 	});

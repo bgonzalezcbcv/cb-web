@@ -16,6 +16,7 @@ import ReportCardList from "../reportcard/ReportCardList";
 import { defaultStudent, emptyStudent } from "./DefaultStudent";
 
 import "./Student.scss";
+import RelevantEvents from "./components/RelevantEvents/RelevantEvents";
 
 const { FamilyForm, StudentInfo, AdministrativeInfo, CreateStudentDialog, TabPanel, StudentPageHeader, StudentPageTabs, EnrollmentQuestions } =
 	StudentComponents;
@@ -72,8 +73,8 @@ export default function Student(props: StudentProps): React.ReactElement {
 	};
 
 	const createTabs = ["Básica", "Familiar", "Complementaria"];
-	const viewTabs = ["Básica", "Familiar", "Complementaria", "Administrativa", "Boletines"];
-	const editableTabs = ["Básica", "Familiar", "Complementaria", "Administrativa", "Boletines"];
+	const viewTabs = ["Básica", "Familiar", "Complementaria", "Administrativa", "Boletines", "Eventos relevantes"];
+	const editableTabs = ["Básica", "Familiar", "Complementaria", "Administrativa", "Boletines", "Eventos relevantes"];
 
 	const tabsData: TabData[] = [
 		{
@@ -165,6 +166,26 @@ export default function Student(props: StudentProps): React.ReactElement {
 						canAdd={isEditable}
 						canDelete={restrictEditionTo([UserRole.Director, UserRole.Administrador], isEditable)}
 						canApprove={restrictEditionTo([UserRole.Director, UserRole.Administrador], isEditable)}
+					/>
+				</Restrict>
+			),
+		},
+		{
+			label: "Eventos relevantes",
+			dataCY: "eventsTab",
+			panel: (
+				<Restrict
+					to={[UserRole.Docente, UserRole.Adscripto, UserRole.Director, UserRole.Administrador]}
+					fallback={
+						<Alert severity="info" variant="outlined">
+							<Typography variant="body1">No tiene permisos para ver esta información.</Typography>
+						</Alert>
+					}>
+					<RelevantEvents //
+						studentId={Number(student.id)}
+						editable={isEditable}
+						canAdd={isEditable}
+						canDelete={restrictEditionTo([UserRole.Director, UserRole.Administrador], isEditable)}
 					/>
 				</Restrict>
 			),

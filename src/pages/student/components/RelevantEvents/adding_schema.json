@@ -1,0 +1,38 @@
+{
+	"type": "object",
+	"properties": {
+		"title": {
+			"title": "Nombre",
+			"type": "string",
+			"minLength": 1,
+			"default": null,
+			"errorMessage": "Tiene que tener nombre."
+		},
+		"date": {
+			"type": "string",
+			"title": "Fecha de evento",
+			"pattern": "^(\\d\\d-){2}\\d{4}$",
+			"minLength": 1,
+			"default": null,
+			"errorMessage": "Tiene que ser una fecha válida."
+		},
+		"event_type": {
+			"title": "Tipo",
+			"type": "string",
+			"default": null,
+			"errorMessage": "Ha de seleccionarse un tipo."
+		},
+		"description": {
+			"type": "string",
+			"title": "Descripción",
+			"minLength": 1,
+			"default": null,
+			"errorMessage": "Evento tiene que tener descripción."
+		},
+		"attachment_url": {
+			"type": ["string", "null"],
+			"default": null
+		}
+	},
+	"required": ["title", "date", "event_type", "description"]
+}

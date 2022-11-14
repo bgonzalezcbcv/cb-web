@@ -1,11 +1,15 @@
 import _ from "lodash";
-import Ajv, { ErrorObject } from "ajv";
+import Ajv, { ErrorObject, Options } from "ajv";
 import ajvErrors from "ajv-errors";
 import ajvFormat from "ajv-formats";
 
-const newAjv = new Ajv({ allErrors: true, verbose: true, strictRequired: true });
+export function getCustomAjv(options: Options = { allErrors: true, verbose: true, strictRequired: true }): Ajv {
+	const newAjv = new Ajv(options);
 
-export const ajv = ajvErrors(ajvFormat(newAjv));
+	return ajvErrors(ajvFormat(newAjv));
+}
+
+export const ajv = getCustomAjv();
 
 export function getAjvErrors(ajvValidator = ajv): ErrorObject[] | null | undefined {
 	return ajvValidator.errors;

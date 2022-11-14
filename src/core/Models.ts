@@ -415,3 +415,31 @@ export interface StudentGroup {
 	year: string;
 	grade_name: string;
 }
+
+export enum EventTypeName {
+	event = "Evento",
+	family_situation = "Situación familiar",
+	school_situation = "Situación escolar",
+	external_report = "Reporte externo",
+}
+
+export enum EventType {
+	Event = "event",
+	FamilySituation = "family_situation",
+	SchoolSituation = "school_situation",
+	ExternalReport = "external_report",
+}
+
+export interface RelevantEvent {
+	id: number;
+	title: string;
+	description: string;
+	event_type: EventType;
+	date: string;
+	author: User;
+	attachment_url: string;
+}
+
+export interface RelevantEventWithFile extends RelevantEvent {
+	attachment?: File;
+}
