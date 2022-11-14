@@ -169,8 +169,8 @@ function User(props: UserProps): JSX.Element {
 						<Restrict to={[UserRole.Director, UserRole.Administrativo, UserRole.Administrador]}>
 							<Documents //
 								user={user}
-								editable={editable && id === loggedUser?.id.toString()}
-								canAdd={editable}
+								editable={editable}
+								canAdd={editable && id === loggedUser?.id.toString()}
 								canDelete={restrictEditionTo([UserRole.Director, UserRole.Administrador], editable)}
 								refetch={refetch}
 							/>
