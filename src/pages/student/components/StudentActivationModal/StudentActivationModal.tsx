@@ -31,7 +31,7 @@ export default function StudentActivationModal(props: {
 	};
 
 	useEffect(() => {
-		if (tuitionNumber.length === 4) {
+		if (tuitionNumber.length >= 4) {
 			const calculatedNumber = calculateReferenceNumber(tuitionNumber);
 
 			setCalculatedReferenceNumber(calculatedNumber);
@@ -102,7 +102,8 @@ export default function StudentActivationModal(props: {
 								</Box>
 							}>
 							<AlertTitle>Error</AlertTitle>
-							Algo salió mal: Asegurese que el estudiante tiene informacion basica completa, un familiar y un método de pago válido.
+							Algo salió mal: Asegurese que el estudiante tiene informacion basica completa, fecha de incio e inscripción, un familiar y un método
+							de pago válido.
 						</Alert>
 					) : (
 						""
