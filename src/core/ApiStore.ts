@@ -242,6 +242,23 @@ export async function fetchStudents(id?: string, groupId?: string): Promise<Defa
 	}
 }
 
+export async function fetchActiveStudents(): Promise<DefaultApiResponse<Student[]>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "get",
+			url: `/api/students/active`,
+		};
+
+		const response = await axios(config);
+
+		return defaultResponse(response.data.students);
+		//eslint-disable-next-line
+	} catch (error: any) {
+		return defaultErrorResponse("No se pudieron listar los alumnos activos.");
+	}
+}
+
 export async function fetchPendingStudents(): Promise<DefaultApiResponse<Student[]>> {
 	try {
 		const config = {

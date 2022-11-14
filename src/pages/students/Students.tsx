@@ -47,11 +47,12 @@ const columns: GridColDef[] = [
 ];
 
 interface StudentsProps {
+	title?: string;
 	rows?: StudentModel[];
 }
 
 export default function Students(props: StudentsProps) {
-	const { rows } = props;
+	const { title, rows } = props;
 	const { id, groupId } = useParams();
 
 	const [students, setStudents] = useState<StudentModel[]>(rows ?? []);
@@ -98,10 +99,10 @@ export default function Students(props: StudentsProps) {
 
 				return (
 					<DataGrid //
-						style={{ height: 380, width: "100%" }}
+						style={{ height: "100%", width: "100%" }}
 						rows={foundItems}
 						columns={columns}
-						pageSize={5}
+						pageSize={12}
 						rowsPerPageOptions={[5]}
 					/>
 				);
@@ -114,6 +115,7 @@ export default function Students(props: StudentsProps) {
 		<Card
 			sx={{
 				width: "90%",
+				height: "90%",
 				padding: "20px",
 				alignSelf: "flex-start",
 				marginTop: "20px",
@@ -122,7 +124,7 @@ export default function Students(props: StudentsProps) {
 				boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
 			}}>
 			<Box display="flex" justifyContent="flex-start" width="100%">
-				<Typography variant="h4">Alumnos</Typography>
+				<Typography variant="h4">{title ?? "Alumnos"}</Typography>
 			</Box>
 
 			<Box className="SearchAndGroupFilter">
@@ -136,7 +138,7 @@ export default function Students(props: StudentsProps) {
 				/>
 			</Box>
 
-			<Paper>{printTable()}</Paper>
+			<Paper style={{ height: "100%" }}>{printTable()}</Paper>
 		</Card>
 	);
 }
