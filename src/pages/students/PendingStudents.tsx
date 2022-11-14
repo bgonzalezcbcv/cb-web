@@ -16,7 +16,7 @@ export default function PendingStudents(): JSX.Element {
 	if (fetchStatus === FetchStatus.Error)
 		return (
 			<Alert severity="error" variant="outlined" onClick={refetch} style={{ cursor: "pointer" }}>
-				No se pudieron obtener los alumnos activos.
+				No se pudieron obtener los alumnos pendientes.
 			</Alert>
 		);
 
