@@ -1095,7 +1095,7 @@ export async function fetchRelevantEvents(studentId: number): Promise<DefaultApi
 
 		return defaultResponse(response.data.student.relevant_events);
 	} catch (e) {
-		return defaultErrorResponse("No se pudieron obtener los docentes.");
+		return defaultErrorResponse("No se pudieron obtener los eventos relevantes.");
 	}
 }
 
