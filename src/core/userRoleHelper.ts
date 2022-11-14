@@ -55,6 +55,31 @@ export function getSidebarSectionsByUser(user: User | null): SidebarSection[] {
 					],
 				},
 				{
+					sectionTitle: "Alumnos",
+					items: [
+						{
+							title: "Activos",
+							navigationRoute: `/students/active`,
+						},
+						{
+							title: "Pendientes",
+							navigationRoute: `/pending`,
+						},
+						{
+							title: "Inactivos",
+							navigationRoute: `/students/inactive`,
+						},
+						{
+							title: "Ver todos",
+							navigationRoute: `/students`,
+						},
+						{
+							title: "Dar de alta",
+							navigationRoute: "/createstudent",
+						},
+					],
+				},
+				{
 					sectionTitle: "Convenios",
 					items: [
 						{
