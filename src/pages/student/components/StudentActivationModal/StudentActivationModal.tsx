@@ -127,7 +127,7 @@ export default function StudentActivationModal(props: {
 								</Box>
 							}>
 							<AlertTitle>Exito</AlertTitle>
-							El alumno se activo correctamente
+							El alumno se activó correctamente
 						</Alert>
 					) : (
 						""
