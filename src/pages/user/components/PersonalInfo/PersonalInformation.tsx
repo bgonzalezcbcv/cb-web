@@ -20,12 +20,11 @@ import { LoadingButton } from "@mui/lab";
 interface PersonalInformationProps {
 	user: UserInfo;
 	setUser: (newUser: UserInfo) => void;
-	editable: boolean;
 	refetch: () => void;
 }
 
 function PersonalInformation(props: PersonalInformationProps): JSX.Element {
-	const { user, setUser, editable, refetch } = props;
+	const { user, setUser, refetch } = props;
 
 	const [errors, setErrors] = useState<ErrorObject<string, Record<string, unknown>, unknown>[]>([]);
 	const [updateState, setUpdateState] = useState<FetchStatus>(FetchStatus.Initial);
@@ -73,13 +72,11 @@ function PersonalInformation(props: PersonalInformationProps): JSX.Element {
 						<Typography variant="h5">Información básica</Typography>
 					</Box>
 
-					{editable && (
-						<Box display="flex" justifyContent="flex-end" alignItems="flex-start" paddingLeft="12px">
-							<LoadingButton variant="outlined" onClick={onSave} disabled={!canSave()} loading={updateState === FetchStatus.Fetching}>
-								Guardar
-							</LoadingButton>
-						</Box>
-					)}
+					<Box display="flex" justifyContent="flex-end" alignItems="flex-start" paddingLeft="12px">
+						<LoadingButton variant="outlined" onClick={onSave} disabled={!canSave()} loading={updateState === FetchStatus.Fetching}>
+							Guardar
+						</LoadingButton>
+					</Box>
 				</Box>
 			}>
 			<JsonForms
@@ -90,7 +87,7 @@ function PersonalInformation(props: PersonalInformationProps): JSX.Element {
 				renderers={materialRenderers}
 				cells={materialCells}
 				data={user}
-				readonly={!editable}
+				readonly={false}
 				onChange={({ data, errors }): void => {
 					setUser(data);
 					setErrors(errors ?? []);

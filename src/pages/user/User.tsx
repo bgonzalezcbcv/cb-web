@@ -58,8 +58,7 @@ function User(props: UserProps): JSX.Element {
 		(loggedUser) => !(loggedUser.role === UserRole.Docente && loggedUser.id.toString() !== id)
 	);
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const handleChangePassword = (isOpen: boolean, isChanged: boolean): void => {
+	const handleChangePassword = (isOpen: boolean): void => {
 		setPasswordDialogOpen(isOpen);
 	};
 
@@ -118,7 +117,6 @@ function User(props: UserProps): JSX.Element {
 						<PersonalInformation
 							user={user}
 							setUser={setUser}
-							editable={restrictEditionTo([UserRole.Adscripto, UserRole.Director, UserRole.Administrativo, UserRole.Administrador], editable)}
 							refetch={refetch}
 						/>
 					</Grid>
@@ -128,9 +126,9 @@ function User(props: UserProps): JSX.Element {
 							<ComplementaryInformation //
 								user={user}
 								setUser={setUser}
-								editable={restrictEditionTo([UserRole.Adscripto, UserRole.Director, UserRole.Administrativo, UserRole.Administrador], editable)}
-								canAdd={restrictEditionTo([UserRole.Adscripto, UserRole.Director, UserRole.Administrativo, UserRole.Administrador], editable)}
-								canDelete={restrictEditionTo([UserRole.Director, UserRole.Administrativo, UserRole.Administrador], editable)}
+								editable={restrictEditionTo([UserRole.Adscripto, UserRole.Director, UserRole.Administrativo, UserRole.Administrador, UserRole.Docente], editable)}
+								canAdd={restrictEditionTo([UserRole.Adscripto, UserRole.Director, UserRole.Administrativo, UserRole.Administrador, UserRole.Docente], editable)}
+								canDelete={restrictEditionTo([UserRole.Director, UserRole.Administrativo, UserRole.Administrador, UserRole.Docente], editable)}
 								refetch={refetch}
 							/>
 						</Restrict>
