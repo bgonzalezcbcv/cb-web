@@ -1,0 +1,30 @@
+{
+	"type": "VerticalLayout",
+	"elements": [
+		{
+			"type": "Control",
+			"scope": "properties/scholarship"
+		},
+		{
+			"type": "Control",
+			"scope": "properties/description"
+		},
+		{
+			"type": "Control",
+			"scope": "properties/contact_name"
+		},
+		{
+			"type": "Control",
+			"scope": "properties/contact_phone"
+		},
+		{
+			"type": "Control",
+			"scope": "properties/signed_date",
+			"options": {
+				"format": "date",
+				"dateFormat": "DD/MM/YYYY",
+				"dateSaveFormat": "DD-MM-YYYY"
+			}
+		}
+	]
+}
