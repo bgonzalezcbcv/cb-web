@@ -170,7 +170,7 @@ function User(props: UserProps): JSX.Element {
 							<Documents //
 								user={user}
 								editable={editable}
-								canAdd={editable && id === loggedUser?.id.toString()}
+								canAdd={editable}
 								canDelete={restrictEditionTo([UserRole.Director, UserRole.Administrador], editable)}
 								refetch={refetch}
 							/>
@@ -179,7 +179,7 @@ function User(props: UserProps): JSX.Element {
 							<Documents //
 								user={user}
 								editable={editable && id === loggedUser?.id.toString()}
-								canAdd={editable}
+								canAdd={editable && id === loggedUser?.id.toString()}
 								canDelete={false}
 								refetch={refetch}
 							/>
