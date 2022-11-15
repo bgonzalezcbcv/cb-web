@@ -138,7 +138,7 @@ function User(props: UserProps): JSX.Element {
 								setUser={setUser}
 								editable={editable && id === loggedUser?.id.toString()}
 								canAdd={editable}
-								canDelete={editable}
+								canDelete={!editable}
 								refetch={refetch}
 							/>
 						</Restrict>
