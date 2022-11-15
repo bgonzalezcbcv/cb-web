@@ -53,6 +53,10 @@ export default function DatePickerToString(props: DatePickerProps): React.ReactE
 	}
 
 	useEffect(() => {
+		setPickerDate(stringToDateString(date));
+	}, [date]);
+
+	useEffect(() => {
 		assignDate(debouncePickerDate, debounceErrorMessage);
 	}, [debouncePickerDate, debounceErrorMessage]);
 
