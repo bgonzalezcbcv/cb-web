@@ -33,9 +33,16 @@ export function downloadFile(fileName: string, file: Blob): void {
 	link.parentNode?.removeChild(link);
 }
 
-//1/2/1998 -> 01/02/1998
-export function addLeadingZeroToDate(date: string): string {
-	return date.replaceAll(/\b(\d)(?=\/)/gm, "0$1");
+//1/2/1998 -> 01-02-1998
+export function addLeadingZeroAndFixSeparatorToDate(date: string): string {
+	return date.replaceAll(/\b(\d)(?=\/)/gm, "0$1").replaceAll(/(\/)/gm, "-");
+}
+
+export function cleanCI(data: string | number): string {
+	if (typeof data == "number") {
+		return data.toString();
+	}
+	return data.replaceAll(".", "").replaceAll("-", "");
 }
 
 export const basicTranslator =
@@ -172,18 +179,21 @@ export function getFormDataFromObject(object: unknown): FormData {
 	return formData;
 }
 
-export function stringToDateString(stringDate: string | undefined): string | null {
-	if (!stringDate || !/^(\d{2}-){2}\d{4}$/gm.test(stringDate)) return null;
-	const aux = stringDate.split("-");
-	return new Date(parseInt(aux[2]), parseInt(aux[1]) - 1, parseInt(aux[0])).toString();
-}
-
 export function reverseDate(date: string | undefined | null, desiredSeparator = "-", separator = "-"): string | undefined | null {
 	if (!date) return date;
 
 	const [year, month, day] = date.split(separator);
 
 	return `${day}-${month}-${year}`.replaceAll("-", desiredSeparator);
+}
+
+export function stringToDateString(stringDate: string | undefined | null): string | null {
+	if (!stringDate) return null;
+	// First try to convert it from backend date type.
+	if (!/^(\d{2}-){2}\d{4}$/gm.test(stringDate)) stringDate = reverseDate(stringDate);
+	if (!stringDate || !/^(\d{2}-){2}\d{4}$/gm.test(stringDate)) return null;
+	const aux = stringDate.split("-");
+	return new Date(parseInt(aux[2]), parseInt(aux[1]) - 1, parseInt(aux[0])).toString();
 }
 
 export function groupString(group: StudentGroup): string {
@@ -195,7 +205,7 @@ export function getDateInStringFormat(date = new Date(), separator = "-"): strin
 	const month = date.getMonth();
 	const year = date.getFullYear();
 
-	return addLeadingZeroToDate(day + separator + month + separator + year);
+	return addLeadingZeroAndFixSeparatorToDate(day + separator + month + separator + year);
 }
 
 export function mergeQuestionsAndAnswers(cicle_questions: CicleQuestions[], answers: Answer[]): CicleQuestions[] {

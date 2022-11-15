@@ -185,7 +185,6 @@ export async function fetchFamilyMembers(studentId: number): Promise<DefaultApiR
 		};
 
 		const response = await axios(config);
-
 		return defaultResponse(response.data.student.family_members);
 		//eslint-disable-next-line
 	} catch (error: any) {
@@ -277,8 +276,13 @@ export async function fetchStudent(id: string): Promise<DefaultApiResponse<Stude
 				comments: response.data.student.comments, //todo: And these?
 				agreement_type: response.data.student.agreement_type, //todo: And these?
 			},
+			birthdate: reverseDate(response.data.student.birthdate),
+			vaccine_expiration: reverseDate(response.data.student.vaccine_expiration),
 		};
-
+		student.family.forEach((element: FamilyMember) => {
+			const date = reverseDate(element.birthdate);
+			element.birthdate = date === null ? "" : date === undefined ? "" : date;
+		});
 		return defaultResponse(student);
 		//eslint-disable-next-line
 	} catch (error: any) {
