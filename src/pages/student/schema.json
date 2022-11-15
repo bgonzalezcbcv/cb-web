@@ -123,8 +123,9 @@
 			"errorMessage": "Se deben ingresar 8 o 9 dígitos."
 		},
 		"vaccine_name": {
-			"type": "string",
-			"title": "Vacuna"
+			"type": ["string", "null"],
+			"title": "Vacuna",
+			"errorMessage": "Debe ser un nombre válido."
 		},
 		"vaccine_expiration": {
 			"type": "string",
@@ -334,37 +335,6 @@
 				"minItems": "El alumno ha de tener al menos un familiar."
 			}
 		},
-		"question_categories": {
-			"type": "array",
-			"items": {
-				"type": "object",
-				"properties": {
-					"category": {
-						"type": "string"
-					},
-					"questions": {
-						"type": "array",
-						"items": {
-							"type": "object",
-							"properties": {
-								"id": {
-									"type": "string"
-								},
-								"question": {
-									"type": "string"
-								},
-								"answer": {
-									"type": "string"
-								}
-							},
-							"required": ["id", "question", "answer"]
-						}
-					}
-				},
-				"required": ["category", "questions"]
-			},
-			"minItems": 0
-		},
 		"administrative_info": {
 			"type": "object",
 			"title": "Información administrativa",
@@ -523,7 +493,6 @@
 		"neighborhood",
 		"medical_assurance",
 		"phone_number",
-		"vaccine_expiration",
-		"question_categories"
+		"vaccine_expiration"
 	]
 }
