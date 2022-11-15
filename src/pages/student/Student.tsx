@@ -44,6 +44,7 @@ export default function Student(props: StudentProps): React.ReactElement {
 
 	useEffect(() => {
 		if (mode === StudentPageMode.create) setStudent(defaultStudent);
+		setIsEditable(mode === StudentPageMode.create);
 	}, [mode]);
 
 	const getStudent = useCallback(async (): Promise<void> => {
