@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useParams } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 
@@ -63,7 +63,8 @@ function User(props: UserProps): JSX.Element {
 		setPasswordDialogOpen(isOpen);
 	};
 
-	const { fetchStatus, refetch } = useFetchFromAPI(() => fetchUser(id as string), setUser, id !== undefined);
+	const fetchFunction = useCallback(() => fetchUser(id as string), [id]);
+	const { fetchStatus, refetch } = useFetchFromAPI(fetchFunction, setUser, id !== undefined, [fetchFunction]);
 
 	if (fetchStatus === FetchStatus.Fetching)
 		return (
@@ -99,11 +100,15 @@ function User(props: UserProps): JSX.Element {
 						<MailOutlineIcon />
 					</Link>
 
-					<Box display="flex">
-						<Button variant="contained" onClick={(): void => setPasswordDialogOpen(true)}>
-							Cambiar Contraseña
-						</Button>
-					</Box>
+					{id === loggedUser?.id.toString() ? (
+						<Box display="flex">
+							<Button variant="contained" onClick={(): void => setPasswordDialogOpen(true)}>
+								Cambiar Contraseña
+							</Button>
+						</Box>
+					) : (
+						<></>
+					)}
 				</Box>
 
 				<Divider />
@@ -184,7 +189,7 @@ function User(props: UserProps): JSX.Element {
 					</Grid>
 				</Grid>
 				<Restrict to={[UserRole.Administrativo, UserRole.Adscripto, UserRole.Director, UserRole.Docente, UserRole.Recepcion]}>
-					<UserChangePassword isOpen={passwordDialogOpen} setOpen={handleChangePassword} />
+					{id === loggedUser?.id.toString() ? <UserChangePassword isOpen={passwordDialogOpen} setOpen={handleChangePassword} /> : <></>}
 				</Restrict>
 				<Restrict to={[UserRole.Administrador]}>
 					<AdminChangePassword user={user} isOpen={passwordDialogOpen} setOpen={handleChangePassword} />
