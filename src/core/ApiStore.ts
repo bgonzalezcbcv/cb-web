@@ -943,6 +943,39 @@ export async function fetchTypeScholarships(): Promise<DefaultApiResponse<TypeSc
 	}
 }
 
+export async function createTypeScholarship(newScholarship: TypeScholarship): Promise<DefaultApiResponse<undefined>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "post",
+			url: `/api/type_scholarships`,
+			data: JSON.stringify(newScholarship),
+		};
+
+		await axios(config);
+
+		return defaultResponse(undefined);
+	} catch (e) {
+		return defaultErrorResponse("No se pudo crear el convenio.");
+	}
+}
+
+export async function deleteTypeScholarship(idToDelete: number): Promise<DefaultApiResponse<undefined>> {
+	try {
+		const config = {
+			...baseConfig,
+			method: "delete",
+			url: `/api/type_scholarships/${idToDelete}`,
+		};
+
+		await axios(config);
+
+		return defaultResponse(undefined);
+	} catch (e) {
+		return defaultErrorResponse("No se pudo crear el convenio.");
+	}
+}
+
 export async function fetchStudentTypeScholarships(id: number): Promise<DefaultApiResponse<StudentTypeScholarship[]>> {
 	try {
 		const config = {

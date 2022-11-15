@@ -1,0 +1,50 @@
+{
+	"type": "object",
+	"properties": {
+		"scholarship": {
+			"type": "string",
+			"title": "Tipo de escolaridad",
+			"oneOf": [
+				{
+					"title": "Convenio",
+					"const": "agreement"
+				},
+				{
+					"title": "Licitación",
+					"const": "bidding"
+				}
+			],
+			"default": null,
+			"errorMessage": "Tiene que elegir un tipo de escolaridad."
+		},
+		"description": {
+			"type": "string",
+			"title": "Nombre",
+			"minLength": 1,
+			"default": null,
+			"errorMessage": "Tiene que ingresar un nombre."
+		},
+		"contact_name": {
+			"type": "string",
+			"title": "Nombre del contacto",
+			"minLength": 1,
+			"default": null,
+			"errorMessage": "Tiene que ingresar un nombre de contacto."
+		},
+		"contact_phone": {
+			"type": ["string", "null"],
+			"pattern": "\\d{9}|\\d{8}",
+			"title": "Teléfono",
+			"maxLength": 9,
+			"errorMessage": "Se deben ingresar 8 ó 9 dígitos."
+		},
+		"signed_date": {
+			"type": "string",
+			"title": "Fecha de firmado",
+			"pattern": "^(\\d\\d-){2}\\d{4}$",
+			"minLength": 0,
+			"errorMessage": "Tiene que ser una fecha válida."
+		}
+	},
+	"required": ["scholarship", "description", "contact_name", "contact_phone", "signed_date"]
+}

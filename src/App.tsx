@@ -25,6 +25,7 @@ import Teachers from "./pages/teachers/Teachers";
 import Groups from "./pages/groups/Groups";
 import Users from "./pages/users/Users";
 import ActiveStudents from "./pages/students/ActiveStudents";
+import Scholarship from "./pages/typescholarship/Scholarship";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
 
@@ -71,6 +72,7 @@ function App(): React.ReactElement {
 												<Route path="/groups" element={<Groups />} />
 												<Route path="/groups/:id" element={<Groups />} />
 												<Route path="/addUsers/:role/:id" element={<AddUsersToGroup />} />
+												<Route path="/scholarship" element={<Scholarship editable={true} canAdd={true} canDelete={true} />} />
 												<Route path="/" element={<Home />} />
 												<Route path="*" element={<Navigate to="/" />} />
 											</>
