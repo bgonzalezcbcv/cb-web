@@ -185,10 +185,6 @@ export async function fetchFamilyMembers(studentId: number): Promise<DefaultApiR
 		};
 
 		const response = await axios(config);
-		// const familyMembers: FamilyMember[] = response.data.student.family_members.array.forEach((element:FamilyMember) => {
-		// 	const date = reverseDate(element.birthdate);
-		// 	element.birthdate = date === null?"":date === undefined ?"": date;
-		// });
 		return defaultResponse(response.data.student.family_members);
 		//eslint-disable-next-line
 	} catch (error: any) {
