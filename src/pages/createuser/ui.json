@@ -30,7 +30,7 @@
 		},
 		{
 			"type": "Control",
-			"scope": "#/properties/phone"
+			"scope": "#/properties/phone_number"
 		},
 		{
 			"type": "Control",
