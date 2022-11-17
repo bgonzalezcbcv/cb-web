@@ -100,7 +100,7 @@ function User(props: UserProps): JSX.Element {
 						<MailOutlineIcon />
 					</Link>
 
-					{id === loggedUser?.id.toString() ? (
+					{id === loggedUser?.id.toString() || loggedUser?.role === UserRole.Administrador ? (
 						<Box display="flex">
 							<Button variant="contained" onClick={(): void => setPasswordDialogOpen(true)}>
 								Cambiar Contraseña
