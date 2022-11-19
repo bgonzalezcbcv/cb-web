@@ -19,7 +19,6 @@ const columns: GridColDef[] = [
 	{
 		field: "group",
 		headerName: "Grupo",
-		disableColumnMenu: true,
 		flex: 1,
 		valueGetter: (params): string => {
 			const group = params.value;
@@ -93,8 +92,11 @@ export default function Students(props: StudentsProps) {
 					</Box>
 				);
 			case "initial":
-				const foundItems = students.filter((student) =>
-					Object.values(student).some((value) => value && normalizeText(value.toString()).includes(normalizeText(searchText)))
+				const foundItems = students.filter(
+					(student) =>
+						Object.values(student).some((value) => value && normalizeText(value.toString()).includes(normalizeText(searchText))) ||
+						(student.group != undefined &&
+							Object.values(student.group).some((value) => value && normalizeText(value.toString()).includes(normalizeText(searchText))))
 				);
 
 				return (
