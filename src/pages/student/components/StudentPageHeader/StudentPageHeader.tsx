@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { Student } from "../../../../core/Models";
-import { DefaultApiResponse, StudentPageMode } from "../../../../core/interfaces";
+import {DefaultApiResponse, StudentPageMode, UserRole} from "../../../../core/interfaces";
 
 import { Box, Button, Chip, Typography } from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
@@ -21,6 +21,7 @@ import "./Student.scss";
 import { useCallback } from "react";
 import * as API from "../../../../core/ApiStore";
 import DeactivateStudentDialog from "./DeactivateStudent/DeactivateStudentDialog";
+import {restrictEditionTo} from "../../../../core/userRoleHelper";
 
 interface StudentPageHeaderProps {
 	mode: StudentPageMode;
@@ -116,7 +117,10 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 					{
 						//TODO: add this to the condition: && student.status === "pending"
 
-						[StudentPageMode.edit].includes(mode) && student.status !== "active" ? (
+						[StudentPageMode.edit].includes(mode) && student.status !== "active" && restrictEditionTo(
+							[UserRole.Administrativo, UserRole.Administrador],
+							isEditable
+						) ? (
 							<Button
 								data-cy={"studentActivateButton"}
 								color={"secondary"}
@@ -126,7 +130,10 @@ export default function StudentPageHeader(props: StudentPageHeaderProps): React.
 							</Button>
 						) : null
 					}
-					{mode === StudentPageMode.edit && student.status !== "inactive" ? (
+					{mode === StudentPageMode.edit && student.status !== "inactive" && restrictEditionTo(
+						[UserRole.Administrativo, UserRole.Administrador],
+						isEditable
+					) ? (
 						<Button color={"secondary"} startIcon={<DeleteIcon />} onClick={(): void => setIsDeactivateStudentModalVisible(true)}>
 							Dar de baja
 						</Button>
