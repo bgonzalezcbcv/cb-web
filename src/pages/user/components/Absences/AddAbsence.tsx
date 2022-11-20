@@ -104,7 +104,7 @@ function AddAbsence(props: AddAbsenceProps): JSX.Element {
 					onChange={handleChange}
 				/>
 
-				<FileUploader label="Cerificado" width="100%" uploadedFile={(file): void => setNewAbscence({ ...newAbscence, certificate: file })} />
+				<FileUploader label="Certificado" width="100%" uploadedFile={(file): void => setNewAbscence({ ...newAbscence, certificate: file })} />
 
 				<Box display="flex" width="100%" justifyContent="flex-end">
 					<LoadingButton variant="outlined" disabled={!enableAdd()} onClick={handleAdd} loading={creationState === FetchStatus.Fetching}>

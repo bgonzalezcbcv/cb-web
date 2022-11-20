@@ -8,6 +8,8 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import AddIcon from "@mui/icons-material/Add";
 
+import {DataStore} from "../../core/DataStore";
+import {UserRole} from "../../core/interfaces";
 import { Group, UserInfo } from "../../core/Models";
 import { fetchTeachers } from "../../core/ApiStore";
 import useFetchFromAPI, { FetchStatus } from "../../hooks/useFetchFromAPI";
@@ -21,6 +23,9 @@ interface TeachersProps {
 }
 
 function Teachers(props: TeachersProps): JSX.Element {
+	const dataStore = DataStore.getInstance();
+	const user = dataStore.loggedUser;
+
 	const { teachers: teachersProps, editable, canAdd, canDelete } = props;
 	const { id } = useParams();
 
@@ -138,7 +143,7 @@ function Teachers(props: TeachersProps): JSX.Element {
 						rows={filteredTeachers.map((teacher) => ({
 							...teacher,
 							groups: teacher.groups ?? [],
-							profile: `/user/${teacher.id}`,
+							profile: (user?.role === UserRole.Administrador || user?.role === UserRole.Administrativo || user?.role === UserRole.Director) ? `/user/${teacher.id}/edit` : `/user/${teacher.id}`,
 						}))}
 						checkboxSelection={editable}
 						pageSize={10}

@@ -235,6 +235,18 @@ Object {
                             Información básica
                           </h5>
                         </div>
+                        <div
+                          class="MuiBox-root css-t4qsil"
+                        >
+                          <button
+                            class="MuiButtonBase-root MuiButton-root MuiLoadingButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-root MuiLoadingButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium css-6m3mwv-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root"
+                            id=":ra:"
+                            tabindex="0"
+                            type="button"
+                          >
+                            Guardar
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -807,6 +819,18 @@ Object {
                         >
                           Información básica
                         </h5>
+                      </div>
+                      <div
+                        class="MuiBox-root css-t4qsil"
+                      >
+                        <button
+                          class="MuiButtonBase-root MuiButton-root MuiLoadingButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-root MuiLoadingButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium css-6m3mwv-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root"
+                          id=":ra:"
+                          tabindex="0"
+                          type="button"
+                        >
+                          Guardar
+                        </button>
                       </div>
                     </div>
                   </div>
