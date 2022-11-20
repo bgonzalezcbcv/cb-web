@@ -143,7 +143,7 @@ function Teachers(props: TeachersProps): JSX.Element {
 						rows={filteredTeachers.map((teacher) => ({
 							...teacher,
 							groups: teacher.groups ?? [],
-							profile: (user?.role === UserRole.Administrador || user?.role === UserRole.Administrativo) ? `/user/${teacher.id}/edit` : `/user/${teacher.id}`,
+							profile: (user?.role === UserRole.Administrador || user?.role === UserRole.Administrativo || user?.role === UserRole.Director) ? `/user/${teacher.id}/edit` : `/user/${teacher.id}`,
 						}))}
 						checkboxSelection={editable}
 						pageSize={10}
