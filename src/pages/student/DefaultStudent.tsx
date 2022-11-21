@@ -24,7 +24,7 @@ export const defaultStudent: Student = {
 	inscription_date: "",
 	starting_date: "",
 	contact: "",
-	contact_phone: "12312312",
+	contact_phone: "",
 	email: "",
 	family: [
 		{
