@@ -29,8 +29,10 @@ function Login(): JSX.Element {
 	const [validationMode, setValidationMode] = useState<ValidationMode>("ValidateAndHide");
 	const [errMsg, setErrMsg] = useState<string | undefined>(undefined);
 	const [isLoading, setIsLoading] = useState(false);
+	const [unlockLogin, setUnlockLogin] = useState(false);
 
 	const debouncedSetLoginInfo = React.useCallback(_.debounce(setLoginInfo, debounceTime), []);
+	const debouncedSetErrors = React.useCallback(_.debounce(setErrors, debounceTime), []);
 
 	const navigate = useNavigate();
 
@@ -101,13 +103,15 @@ function Login(): JSX.Element {
 							renderers={materialRenderers}
 							cells={materialCells}
 							onChange={({ errors, data }): void => {
-								setErrors(errors ?? []);
+								debouncedSetErrors(errors ?? []);
 								debouncedSetLoginInfo(data);
+
+								setUnlockLogin(true);
 							}}
 							validationMode={validationMode}
 						/>
 
-						{!isLoading ? (
+						{!isLoading && unlockLogin ? (
 							<Button className={styles.loginButton} disabled={errors.length > 0} data-cy="loginButton" onClick={handleSubmit}>
 								Iniciar Sesión
 							</Button>
