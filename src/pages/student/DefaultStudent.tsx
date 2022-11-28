@@ -48,56 +48,7 @@ export const defaultStudent: Student = {
 			workplace_phone: "",
 		},
 	],
-	cicle_questions: [
-		{
-			id: 1,
-			name: Cicle.None,
-			questions: [
-				{
-					id: 1,
-					text: "Pregunta",
-					answer: "Respuesta",
-					answerId: 1,
-					httpRequest: "POST",
-				},
-				{
-					id: 2,
-					text: "Pregunta",
-					answer: "Respuesta",
-					answerId: 2,
-					httpRequest: "POST",
-				},
-				{
-					id: 3,
-					text: "Pregunta",
-					answer: "Respuesta",
-					answerId: 3,
-					httpRequest: "POST",
-				},
-				{
-					id: 4,
-					text: "Pregunta",
-					answer: "Respuesta",
-					answerId: 4,
-					httpRequest: "POST",
-				},
-				{
-					id: 5,
-					text: "Pregunta",
-					answer: "Respuesta",
-					answerId: 5,
-					httpRequest: "POST",
-				},
-				{
-					id: 6,
-					text: "Pregunta",
-					answer: "Respuesta",
-					answerId: 6,
-					httpRequest: "POST",
-				},
-			],
-		},
-	],
+	cicle_questions: [],
 	administrative_info: {
 		inscription_date: "01/02/2022",
 		starting_date: "01/03/2022",

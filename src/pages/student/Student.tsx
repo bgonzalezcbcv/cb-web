@@ -43,8 +43,16 @@ export default function Student(props: StudentProps): React.ReactElement {
 	const [warnings, setWarnings] = React.useState<string[][]>([[], [], [], []]);
 
 	useEffect(() => {
-		if (mode === StudentPageMode.create) setStudent(defaultStudent);
-		setIsEditable(mode === StudentPageMode.create);
+		APIStore.fetchCicles()
+			.then((response) => {
+				defaultStudent.cicle_questions = response.cicle_questions;
+				if (mode === StudentPageMode.create) setStudent(defaultStudent);
+				setIsEditable(mode === StudentPageMode.create);
+			})
+			.catch(() => {
+				if (mode === StudentPageMode.create) setStudent(defaultStudent);
+				setIsEditable(mode === StudentPageMode.create);
+			});
 	}, [mode]);
 
 	const getStudent = useCallback(async (): Promise<void> => {
