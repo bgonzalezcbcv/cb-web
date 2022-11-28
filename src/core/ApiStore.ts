@@ -47,7 +47,7 @@ let baseConfig = {
 		"access-control-allow-origin": "*",
 		"Content-Type": "application/json",
 	},
-	baseURL: process.env["REACT_APP_API_URL"],
+	baseURL: process.env["REACT_APP_API_URL"] + ":3000",
 };
 
 reaction(
