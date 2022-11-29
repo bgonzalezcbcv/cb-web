@@ -660,23 +660,25 @@ export async function deleteReport(studentId: string, reportId: number, isFinal:
 	}
 }
 
-export async function setReportApprovalState(studentId: string, reportId: number, approvalState: ReportApprovalState): Promise<{ success: boolean }> {
+export async function setReportApprovalState(
+	studentId: string,
+	groupId: string,
+	reportId: number,
+	approvalState: ReportApprovalState
+): Promise<{ success: boolean }> {
 	try {
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		const config = {
 			...baseConfig,
-			method: "put",
-			url: `/api/reports/${studentId}`,
-			parameters: {
-				approvalState: approvalState,
-			},
+			method: "patch",
+			url: `/api/students/${studentId}/final_evaluations/${reportId}`,
+			data: JSON.stringify({
+				status: approvalState,
+				group_id: groupId,
+			}),
 		};
 
-		// const response = await axios(config);
-
-		// const response = {
-		// 	status: 200,
-		// };
+		await axios(config);
 
 		return {
 			success: true,

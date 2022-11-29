@@ -92,15 +92,19 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 	};
 
 	const handleGrading = async (setOpen: boolean, approved: boolean | null): Promise<void> => {
+		console.log(setOpen, approved);
 		setIsGradingModalOpen(false);
 		let response;
-		if (approved != null) {
-			if (approved) response = await API.setReportApprovalState(student.id, reportStateId as number, ReportApprovalState.Approved);
-			else response = await API.setReportApprovalState(student.id, reportStateId as number, ReportApprovalState.Failed);
+		if (approved != null && student.group?.id !== undefined) {
+			console.log(approved);
+			if (approved) response = await API.setReportApprovalState(student.id, student.group.id, reportStateId as number, ReportApprovalState.Approved);
+			else response = await API.setReportApprovalState(student.id, student.group.id, reportStateId as number, ReportApprovalState.Failed);
 
 			if (response.success) {
 				setShowApprovalSuccesAlert(true);
 			}
+
+			getReports();
 		}
 	};
 
@@ -150,7 +154,7 @@ export default function ReportCardList(props: ReportCardListProps): React.ReactE
 			renderCell: (params): React.ReactElement => {
 				let cellValue = "N/A";
 				const isFinal = params.row.type === "Final";
-				const passed = params.row.passed === true;
+				const passed = params.row.passed === ReportApprovalState.Approved;
 
 				if (isFinal) {
 					passed ? (cellValue = "SI") : (cellValue = "NO");
