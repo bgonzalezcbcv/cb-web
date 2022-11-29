@@ -25,6 +25,11 @@ export default function EnrollmentQuestions(props: EnrollmentQuestionsProps): Re
 	const indexOfCicle = Object.values(Cicle).indexOf(student.cicle);
 	const validCicles = studentCicles.splice(0, indexOfCicle + 1);
 
+	useEffect(() => {
+		console.log(student.cicle_questions[0].questions);
+		setQuestions(student.cicle_questions[0].questions);
+	}, [student.cicle_questions]);
+
 	const onChangeHandler = (changedQuestionIndex: number, newAnswerValue: string): void => {
 		const newStudentData: Student = _.cloneDeep(student);
 		const newQuestion = newStudentData.cicle_questions.filter((q) => q.name == selectedCicle)[0].questions[changedQuestionIndex];
