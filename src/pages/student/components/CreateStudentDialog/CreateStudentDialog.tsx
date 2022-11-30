@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -11,6 +12,15 @@ import { LoadingButton } from "@mui/lab";
 import ErrorList from "../../../../components/ErrorList/ErrorList";
 
 import studentSchema from "../../schema.json";
+
+let creationSchema = _.cloneDeep(studentSchema);
+_.unset(creationSchema, "properties.administrative_info");
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+creationSchema = _.pickBy(creationSchema, (v) => v !== undefined);
+
+console.dir(creationSchema);
+console.dir(studentSchema);
 
 interface CreateStudentDialogProps {
 	student: Student;
@@ -68,7 +78,7 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 	};
 
 	const onCreateClickHandler = (): void => {
-		studentAjv.validate(studentSchema, student);
+		studentAjv.validate(mode === StudentPageMode.create ? creationSchema : studentSchema, student);
 
 		const errors = getAjvErrors(studentAjv);
 
@@ -116,7 +126,7 @@ function CreateStudentDialog(props: CreateStudentDialogProps): React.ReactElemen
 						)}
 
 						<Box height="400px" overflow="auto" paddingTop="12px">
-							<ErrorList name="Errores" path="" value={errors} schema={studentSchema} />
+							<ErrorList name="Errores" path="" value={errors} schema={mode === StudentPageMode.create ? creationSchema : studentSchema} />
 							{warnings ? (
 								warnings.length > 0 ? (
 									<Alert variant="outlined" severity="warning">
